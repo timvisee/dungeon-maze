@@ -160,8 +160,8 @@ public class DungeonMazeGenerator extends ChunkGenerator {
 			}
 		}
 		 //======================================================================================
-		//Random random = new Random(world.getSeed());
-		SimplexOctaveGenerator octave = new SimplexOctaveGenerator(rand, 8);
+		Random random = new Random(world.getSeed());
+		SimplexOctaveGenerator octave = new SimplexOctaveGenerator(random, 8);
 		octave.setScale(1 / 48.0);
 		//=======================================================================================
 		
