@@ -80,6 +80,9 @@ public class DungeonMaze extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
+		// Set plugin
+		DungeonMazeAPI.setPlugin(this);
+		
 		// Check if all the config file exists
 		try {
 			checkConigFilesExist();
