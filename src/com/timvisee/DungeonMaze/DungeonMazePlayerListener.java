@@ -24,13 +24,11 @@ public class DungeonMazePlayerListener implements Listener {
 		Location loc = p.getLocation();
 		String w = loc.getWorld().getName();
 		double y = loc.getY();
-		
-		List<String> dmworlds = plugin.dmWorlds;
 					
 		if(y >= 75) {
 			// The player is above the surface
 			
-			if(dmworlds.contains(w)) {
+			if(plugin.getDMWorldManager().isDMWorld(w)) {
 				
 				if(plugin.getConfig().getBoolean("allowSurface", false) == false) {
 					// The player is not allowed on the surface

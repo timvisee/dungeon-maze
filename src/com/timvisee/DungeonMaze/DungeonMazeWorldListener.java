@@ -13,8 +13,7 @@ public class DungeonMazeWorldListener {
 	}
 	
 	public void onWorldLoad(WorldLoadEvent e) {
-		// Refresh the list with Dungeon Maze worlds
-		plugin.getDungeonMazeWorlds();
-		plugin.getDungeonMazePreloadWorlds();
+		// Refresh the list with DM worlds
+		plugin.getDMWorldManager().refresh();
 	}
 }

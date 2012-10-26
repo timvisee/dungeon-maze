@@ -38,6 +38,8 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import com.timvisee.DungeonMaze.Metrics.Graph;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class DungeonMaze extends JavaPlugin {	
 	public static final Logger log = Logger.getLogger("Minecraft");
@@ -74,13 +76,13 @@ public class DungeonMaze extends JavaPlugin {
 	private PermissionHandler defaultPermsissions;
 	private GroupManager groupManagerPermissions;
 	
-	// Worlds which use Dungeon Maze
-	List<String> dmWorlds = new ArrayList<String>();
-	List<String> dmPreloadWorlds = new ArrayList<String>();
+	private DMWorldManager dmWorldManager = new DMWorldManager(this);
+	
+	/*public static DungeonMazeAPI DMApi;*/
 	
 	@Override
 	public void onEnable() {
-		// Set plugin
+		// Setup API
 		DungeonMazeAPI.setPlugin(this);
 		
 		// Check if all the config file exists
@@ -89,16 +91,13 @@ public class DungeonMaze extends JavaPlugin {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-		
+	    
 		// Load the config file
 		loadConfig();
 		
-		// Refresh the list with Dungeon Maze worlds
-		getDungeonMazeWorlds();
-		getDungeonMazePreloadWorlds();
-		
-		// Preload all the Dungeon Maze worlds
-		loadWorlds();
+		// Setup the DM world manager and preload the worlds
+		setupDMWorldManager();
+		getDMWorldManager().preloadWorlds();
 
 		// Setup permissions usage
 		setupPermissions();
@@ -156,6 +155,10 @@ public class DungeonMaze extends JavaPlugin {
 		log.info("[DungeonMaze] Dungeon Maze Disabled");
 	}
 	
+	/*public DungeonMazeAPI getDungeonMazeAPI() {
+		return DMApi;
+	}*/
+	
 	public void checkConigFilesExist() throws Exception {
 		// Check if the config files exist
 		if(!getDataFolder().exists()) {
@@ -185,6 +188,14 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	/**
+	 * Get the DM world manager
+	 * @return
+	 */
+	public DMWorldManager getDMWorldManager() {
+		return dmWorldManager;
+	}
+	
+	/**
 	 * Setup the metrics statics feature
 	 * @return false if an error occurred
 	 */
@@ -200,7 +211,7 @@ public class DungeonMaze extends JavaPlugin {
 	            	List<Player> players = Arrays.asList(getServer().getOnlinePlayers());
 	            	int count = 0;
 	            	for(Player p : players) {
-	            		if(dmWorlds.contains(p.getWorld().getName()))
+	            		if(getDMWorldManager().isDMWorld(p.getWorld().getName()))
 	            			count++;
 	            	}
 	            	return count;
@@ -241,6 +252,12 @@ public class DungeonMaze extends JavaPlugin {
 		log.info("[DungeonMaze] Hooked into Multiverse");
 		useMultiverse = true;
 		multiverseCore = new MultiverseCore();
+	}
+	
+	private void setupDMWorldManager() {
+		// Setup the DM world manager
+		this.dmWorldManager = new DMWorldManager(this);
+		this.dmWorldManager.refresh();
 	}
 	
 	private void setupPermissions() {
@@ -328,37 +345,7 @@ public class DungeonMaze extends JavaPlugin {
 			System.out.println("[DungeonMaze] Bypass permissions disabled!");
 		}
 	}
-	
-	public List<String> getDungeonMazeWorlds() {
-		// Load the list from the config
-		List<String> worlds = config.getStringList("worlds");
-		if(worlds == null) 
-			return new ArrayList<String>();
 		
-		// Get DM worlds from Dungeon Maze
-		if(useMultiverse) {
-			Collection<MultiverseWorld> mvworlds = multiverseCore.getMVWorldManager().getMVWorlds();
-			if(mvworlds != null) {
-				for(MultiverseWorld mvw : mvworlds) {
-					if(mvw.getCBWorld().getGenerator().equals(dmGenerator))
-						if(!worlds.contains(worlds.add(mvw.getCBWorld().getName())))
-							worlds.add(mvw.getCBWorld().getName());
-				}
-			}
-		}
-		dmWorlds = worlds;
-		return worlds;
-	}
-	
-	public List<String> getDungeonMazePreloadWorlds() {
-		// Load the list from the config
-		List<String> worlds = config.getStringList("preloadWorlds");
-		if(worlds == null) 
-			return new ArrayList<String>();
-		dmPreloadWorlds = dmWorlds;
-		return worlds;
-	}
-	
 	public boolean usePermissions() {
 		if(getConfig().getBoolean("usePermissions", true)) {
 			return true;
@@ -426,32 +413,6 @@ public class DungeonMaze extends JavaPlugin {
 		}
 
 		return def;
-	}
-	
-	public void loadWorlds() {
-		// Edit the server config file
-		System.out.println("Editing bukkit.yml file...");
-		FileConfiguration serverConfig = getConfigFromPath(new File("bukkit.yml"));
-		List<String> worlds = getDungeonMazeWorlds();
-		if(serverConfig != null) {
-			for(String w : worlds) {
-				serverConfig.set("worlds." + w + ".generator", "DungeonMaze");
-			}
-			try {
-				serverConfig.save(new File("bukkit.yml"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Editing finished!");
-		}
-		
-		// Preload worlds
-		List<String> preloadWorlds = getDungeonMazePreloadWorlds();
-		for(String w : preloadWorlds) {
-			WorldCreator newWorld = new WorldCreator(w);
-			newWorld.generator(dmGenerator);
-			newWorld.createWorld();
-		}
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -578,16 +539,17 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				
 				sender.sendMessage(ChatColor.YELLOW + "==========[ DUNGEON MAZE WORLDS ]==========");
-				List<String> worlds = config.getStringList("worlds");
-				if(worlds != null) {
+				List<String> worlds = getDMWorldManager().getDMWorlds();
+				if(worlds.size() > 0) {
 					for(String w : worlds) {
-						if(worldIsLoaded(w)) {
+						if(getDMWorldManager().isLoadedDMWorld(w)) {
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
 						} else {
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");
 						}
 					}
-				}
+				} else
+					sender.sendMessage(ChatColor.DARK_RED + "You don't have any Dungeon Maze world yet!");
 				return true;
 				
 			} else if(args[0].equalsIgnoreCase("reload")) {
@@ -614,7 +576,7 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Reload configs and worlds
 				loadConfig();
-				loadWorlds();
+				getDMWorldManager().preloadWorlds();
 				
 				// Show a succes message
 				log.info("[DungeonMaze] Dungeon Maze has been reloaded!");
@@ -760,6 +722,10 @@ public class DungeonMaze extends JavaPlugin {
 
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+		return dmGenerator;
+	}
+	
+	public ChunkGenerator getDMWorldGenerator() {
 		return dmGenerator;
 	}
 	

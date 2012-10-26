@@ -13,7 +13,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 
-import com.timvisee.DungeonMaze.Populators.*;
+import com.timvisee.DungeonMaze.populators.*;
 
 public class DungeonMazeGenerator extends ChunkGenerator {
 	

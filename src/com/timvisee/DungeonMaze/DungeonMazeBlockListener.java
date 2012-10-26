@@ -25,9 +25,7 @@ public class DungeonMazeBlockListener implements Listener {
 		Block b = e.getBlockPlaced();
 		String w = b.getWorld().getName();
 		
-		List<String> dmWorlds = plugin.dmWorlds;
-		
-		if(dmWorlds.contains(w)) {
+		if(plugin.getDMWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(plugin.getConfig().getBoolean("worldProtection", false)) {
@@ -48,9 +46,7 @@ public class DungeonMazeBlockListener implements Listener {
 		Block b = e.getBlock();
 		String w = b.getWorld().getName();
 		
-		List<String> dmWorlds = plugin.dmWorlds;
-		
-		if(dmWorlds.contains(w)) {
+		if(plugin.getDMWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(plugin.getConfig().getBoolean("worldProtection", false)) {

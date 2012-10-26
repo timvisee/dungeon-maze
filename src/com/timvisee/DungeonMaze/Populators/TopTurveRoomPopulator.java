@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze.Populators;
+package com.timvisee.DungeonMaze.populators;
 
 import java.util.Random;
 
@@ -97,7 +97,6 @@ public class TopTurveRoomPopulator extends BlockPopulator {
 								source.getBlock(x + 4, y + 5 + yceilingRelative, z + 3).setTypeId(52);
 								CreatureSpawner PigSpawner2 = (CreatureSpawner) source.getBlock(x + 4, y + 5 + yceilingRelative, z + 3).getState();
 								PigSpawner2.setSpawnedType(EntityType.SKELETON);
-
 							}	
 						}
 					}
