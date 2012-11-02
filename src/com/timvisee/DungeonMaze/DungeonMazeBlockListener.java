@@ -1,6 +1,5 @@
 package com.timvisee.DungeonMaze;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -25,7 +24,8 @@ public class DungeonMazeBlockListener implements Listener {
 		Block b = e.getBlockPlaced();
 		String w = b.getWorld().getName();
 		
-		if(plugin.getDMWorldManager().isDMWorld(w)) {
+		plugin.getDMWorldManager();
+		if(DMWorldManager.isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(plugin.getConfig().getBoolean("worldProtection", false)) {
@@ -46,7 +46,8 @@ public class DungeonMazeBlockListener implements Listener {
 		Block b = e.getBlock();
 		String w = b.getWorld().getName();
 		
-		if(plugin.getDMWorldManager().isDMWorld(w)) {
+		plugin.getDMWorldManager();
+		if(DMWorldManager.isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(plugin.getConfig().getBoolean("worldProtection", false)) {
