@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze.populators;
+package com.timvisee.DungeonMaze.Populators;
 
 import java.util.Random;
 

@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -36,9 +35,7 @@ import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import com.timvisee.DungeonMaze.Metrics.Graph;
-import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class DungeonMaze extends JavaPlugin {	
@@ -82,9 +79,7 @@ public class DungeonMaze extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		// Setup API
-		DungeonMazeAPI.setPlugin(this);
-		
+	
 		// Check if all the config file exists
 		try {
 			checkConigFilesExist();
@@ -97,7 +92,8 @@ public class DungeonMaze extends JavaPlugin {
 		
 		// Setup the DM world manager and preload the worlds
 		setupDMWorldManager();
-		getDMWorldManager().preloadWorlds();
+		getDMWorldManager();
+		DMWorldManager.preloadWorlds();
 
 		// Setup permissions usage
 		setupPermissions();
@@ -109,7 +105,10 @@ public class DungeonMaze extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.blockListener, this);
 		pm.registerEvents(this.playerListener, this);
-		
+
+		// Setup API
+		DungeonMazeAPI.setPlugin(this);
+
 		// Show a startup message
 		PluginDescriptionFile pdfFile = getDescription();
 		log.info("[DungeonMaze] Dungeon Maze v" + pdfFile.getVersion() + " Started");
@@ -211,7 +210,8 @@ public class DungeonMaze extends JavaPlugin {
 	            	List<Player> players = Arrays.asList(getServer().getOnlinePlayers());
 	            	int count = 0;
 	            	for(Player p : players) {
-	            		if(getDMWorldManager().isDMWorld(p.getWorld().getName()))
+	            		getDMWorldManager();
+						if(DMWorldManager.isDMWorld(p.getWorld().getName()))
 	            			count++;
 	            	}
 	            	return count;
@@ -257,7 +257,7 @@ public class DungeonMaze extends JavaPlugin {
 	private void setupDMWorldManager() {
 		// Setup the DM world manager
 		this.dmWorldManager = new DMWorldManager(this);
-		this.dmWorldManager.refresh();
+		DMWorldManager.refresh();
 	}
 	
 	private void setupPermissions() {
@@ -539,10 +539,12 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				
 				sender.sendMessage(ChatColor.YELLOW + "==========[ DUNGEON MAZE WORLDS ]==========");
-				List<String> worlds = getDMWorldManager().getDMWorlds();
+				getDMWorldManager();
+				List<String> worlds = DMWorldManager.getDMWorlds();
 				if(worlds.size() > 0) {
 					for(String w : worlds) {
-						if(getDMWorldManager().isLoadedDMWorld(w)) {
+						getDMWorldManager();
+						if(DMWorldManager.isLoadedDMWorld(w)) {
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
 						} else {
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");
@@ -576,7 +578,8 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Reload configs and worlds
 				loadConfig();
-				getDMWorldManager().preloadWorlds();
+				getDMWorldManager();
+				DMWorldManager.preloadWorlds();
 				
 				// Show a succes message
 				log.info("[DungeonMaze] Dungeon Maze has been reloaded!");
@@ -786,4 +789,5 @@ public class DungeonMaze extends JavaPlugin {
 		}
 		return constantRooms.contains(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
+
 }

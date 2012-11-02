@@ -1,6 +1,5 @@
 package com.timvisee.DungeonMaze;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
@@ -28,7 +27,8 @@ public class DungeonMazePlayerListener implements Listener {
 		if(y >= 75) {
 			// The player is above the surface
 			
-			if(plugin.getDMWorldManager().isDMWorld(w)) {
+			plugin.getDMWorldManager();
+			if(DMWorldManager.isDMWorld(w)) {
 				
 				if(plugin.getConfig().getBoolean("allowSurface", false) == false) {
 					// The player is not allowed on the surface
