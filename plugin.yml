@@ -1,0 +1,12 @@
+name: DungeonMaze
+main: com.timvisee.DungeonMaze.DungeonMaze
+version: 0.1.5.1
+load: startup
+softdepend: [Multiverse-Core, PermissionsBukkit, Permissions, PermissionsEX, EssentialsGroupManager]
+commands:
+  dm:
+    description: Dungeon Maze command
+    usage: /dm
+  dungeonmaze:
+    description: Dungeon Maze command
+    usage: /dungeonmaze

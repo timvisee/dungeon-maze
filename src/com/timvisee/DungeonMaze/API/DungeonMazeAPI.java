@@ -2,7 +2,6 @@ package com.timvisee.DungeonMaze.API;
 
 import java.util.List;
 
-import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -17,7 +16,7 @@ public class DungeonMazeAPI {
 	 * Get the DM world manager
 	 * @return DM world manager
 	 */
-	public DMWorldManager getDMWorldManager() {
+	public static DMWorldManager getDMWorldManager() {
 		return plugin.getDMWorldManager();
 	}
 
@@ -25,16 +24,18 @@ public class DungeonMazeAPI {
 	 * Get all DM worlds
 	 * @return DM worlds
 	 */
-	public List<String> getDMWorlds() {
-		return plugin.getDMWorldManager().getDMWorlds();
+	public static List<String> getDMWorlds() {
+		plugin.getDMWorldManager();
+		return DMWorldManager.getDMWorlds();
 	}
 
 	/**
 	 * Get all loaded DM worlds
 	 * @return loaded DM worlds
 	 */
-	public List<String> getLoadedDMWorlds() {
-		return plugin.getDMWorldManager().getLoadedDMWorlds();
+	public static List<String> getLoadedDMWorlds() {
+		plugin.getDMWorldManager();
+		return DMWorldManager.getLoadedDMWorlds();
 	}
 
 	/**
@@ -42,7 +43,7 @@ public class DungeonMazeAPI {
 	 * @param w the world
 	 * @return true if the world is a DM world
 	 */
-	public boolean isDMWorld(World w) {
+	public static boolean isDMWorld(World w) {
 		return isDMWorld(w.getName());
 	}
 
@@ -51,8 +52,9 @@ public class DungeonMazeAPI {
 	 * @param w the world name
 	 * @return true if the world is a DM world
 	 */
-	public boolean isDMWorld(String w) {
-		return plugin.getDMWorldManager().isDMWorld(w);
+	public static boolean isDMWorld(String w) {
+		plugin.getDMWorldManager();
+		return DMWorldManager.isDMWorld(w);
 	}
 
 	/**
@@ -60,8 +62,8 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return true if the player is in an DM world
 	 */
-	public boolean isInDMWorld(Player p) {
-		return plugin.getDMWorldManager().isDMWorld(p.getWorld().getName());
+	public static boolean isInDMWorld(Player p) {
+		return isDMWorld(p.getWorld());
 	}
 	
 	/**
@@ -69,9 +71,10 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return the DM world a player is in, returns null when a player isn't in a DM world
 	 */
-	public World getDMWorld(Player p) {
+	public static World getDMWorld(Player p) {
+		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(plugin.getDMWorldManager().isDMWorld(p.getWorld().getName()))
+		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
 			return p.getWorld();
 		return null;
 	}
@@ -81,9 +84,10 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return the DM world name a player is in, returns an empty string when the player isn't in a DM world
 	 */
-	public String getDMWorldName(Player p) {
+	public static String getDMWorldName(Player p) {
+		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(plugin.getDMWorldManager().isDMWorld(p.getWorld().getName()))
+		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
 			return p.getWorld().getName();
 		return "";
 	}
@@ -94,8 +98,9 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return true if the player is allowed to build
 	 */
-	public boolean canBuildInDMWorld(String w, Player p) {
-		if(plugin.getDMWorldManager().isDMWorld(w))
+	public static boolean canBuildInDMWorld(String w, Player p) {
+		plugin.getDMWorldManager();
+		if(DMWorldManager.isDMWorld(w))
 			if(plugin.getConfig().getBoolean("worldProtection", false))
 				return plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
@@ -107,8 +112,9 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return true if the player is allowed to go on the surface
 	 */
-	public boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
-		if(plugin.getDMWorldManager().isDMWorld(w))
+	public static boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
+		plugin.getDMWorldManager();
+		if(DMWorldManager.isDMWorld(w))
 			if(!plugin.getConfig().getBoolean("allowSurface", true))
 				return plugin.hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;

@@ -10,7 +10,7 @@ public class DungeonMazeAPI {
 	private static DungeonMaze plugin;
 		
 	public static boolean isInDMWorld(Player player) {
-		List<String> worlds = plugin.getDungeonMazeWorlds();
+		List<String> worlds = DMWorldManager.getDMWorlds();
 		boolean result = false;
 		for (String world : worlds) {
 			if (player.getWorld().getName() == world) {
@@ -21,7 +21,7 @@ public class DungeonMazeAPI {
 	}
 	
 	public static List<String> getDMWorlds() {
-		return plugin.getDungeonMazeWorlds();
+		return DMWorldManager.getDMWorlds();
 	}
 
 	public static World getDMWorld(Player player) {
@@ -41,7 +41,7 @@ public class DungeonMazeAPI {
 	}
 	
 	public static boolean isADMWorld (World w) {
-		List<String> worlds = plugin.getDungeonMazeWorlds();
+		List<String> worlds = DMWorldManager.getDMWorlds();
 		boolean result = false;
 		for (String world : worlds) {
 			if (w.getName() == world) {
@@ -53,7 +53,7 @@ public class DungeonMazeAPI {
 	
 	public static boolean canBuildInDMWorld (World world, Player player) {
 		boolean result = true;
-		if (isADMWorld(world.getName())) {
+		if (isADMWorld(world)) {
 			if (plugin.getConfig().getBoolean("worldProtection", false)) {
 				if (plugin.hasPermission(player, "dungeonmaze.bypass.build", player.isOp()) == false) {
 					result = false;
@@ -65,7 +65,7 @@ public class DungeonMazeAPI {
 	
 	public static boolean isPlayerAllowOnWorldSurface (World world, Player player) {
 		boolean result = true;
-		if (isADMWorld(world.getName())) {
+		if (isADMWorld(world)) {
 			if ((plugin.getConfig().getBoolean("allowSurface", false) == false)) {
 				if (plugin.hasPermission(player, "dungeonmaze.bypass.surface", player.isOp()) == false) {
 					result = false;

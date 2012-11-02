@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -21,13 +21,13 @@ public class DMWorldManager {
 	}
 
 	// DM worlds
-	private List<String> worlds = new ArrayList<String>();
-	private List<String> preloadWorlds = new ArrayList<String>();
+	private static List<String> worlds = new ArrayList<String>();
+	private static List<String> preloadWorlds = new ArrayList<String>();
 	
 	/**
 	 * Refresh the list with Dungeon Maze worlds
 	 */
-	public void refresh() {
+	public static void refresh() {
 		// Load the list from the config
 		List<String> w = plugin.getConfig().getStringList("worlds");
 		if(w != null)  {
@@ -42,19 +42,19 @@ public class DMWorldManager {
 					}
 				}
 			}
-			this.worlds = w;
+			DMWorldManager.worlds = w;
 		}
 		
 		// Load the list from the config
 		List<String> pw = plugin.getConfig().getStringList("preloadWorlds");
 		if(pw != null) {
-			this.preloadWorlds = pw;
+			preloadWorlds = pw;
 		}
 		
 		// Put all the DM worlds into the bukkit.yml file
 		System.out.println("Editing bukkit.yml file...");
 		FileConfiguration bukkitConfig = plugin.getConfigFromPath(new File("bukkit.yml"));
-		if(bukkitConfig != null) {
+		if(bukkitConfig != null && !plugin.useMultiverse) {
 			for(String entry : w) {
 				bukkitConfig.set("worlds." + w + ".generator", entry);
 			}
@@ -71,18 +71,18 @@ public class DMWorldManager {
 	 * Get all DM worlds
 	 * @return all DM worlds
 	 */
-	public List<String> getDMWorlds() {
-		return this.worlds;
+	public static List<String> getDMWorlds() {
+		return DMWorldManager.worlds;
 	}
 	
 	/**
 	 * Get all loaded DM worlds
 	 * @return
 	 */
-	public List<String> getLoadedDMWorlds() {
+	public static List<String> getLoadedDMWorlds() {
 		List<String> loadedWorlds = new ArrayList<String>();
-		
-		for(String entry : this.worlds) {
+		refresh();
+		for(String entry : DMWorldManager.worlds) {
 			World w = plugin.getServer().getWorld(entry);
 			if(w != null)
 				loadedWorlds.add(entry);
@@ -95,8 +95,8 @@ public class DMWorldManager {
 	 * Get all preload worlds of DM
 	 * @return all preload worlds
 	 */
-	public List<String> getPreloadWorlds() {
-		return this.preloadWorlds;
+	public static List<String> getPreloadWorlds() {
+		return preloadWorlds;
 	}
 	
 	/**
@@ -104,7 +104,7 @@ public class DMWorldManager {
 	 * @param w the world name
 	 * @return true if the world is a DM world
 	 */
-	public boolean isDMWorld(String w) {
+	public static boolean isDMWorld(String w) {
 		return getDMWorlds().contains(w);
 	}
 	
@@ -113,18 +113,24 @@ public class DMWorldManager {
 	 * @param w the world name
 	 * @return true if the world is a loaded DM world
 	 */
-	public boolean isLoadedDMWorld(String w) {
+	public static boolean isLoadedDMWorld(String w) {
 		return getLoadedDMWorlds().contains(w);
 	}
 	
 	/**
 	 * Preload all 'preload' DM worlds
 	 */
-	public void preloadWorlds() {
-		for(String w : this.preloadWorlds) {
-			WorldCreator newWorld = new WorldCreator(w);
-			newWorld.generator(plugin.getDMWorldGenerator());
-			newWorld.createWorld();
+	public static void preloadWorlds() {
+		if (preloadWorlds != null) {
+			for(String w : preloadWorlds) {
+					WorldCreator newWorld = new WorldCreator(w);
+					newWorld.generator(plugin.getDMWorldGenerator());
+					if (Bukkit.getWorld(w) != null) {
+						newWorld.createWorld();
+					}
+
+
+			}
 		}
 	}
 }
