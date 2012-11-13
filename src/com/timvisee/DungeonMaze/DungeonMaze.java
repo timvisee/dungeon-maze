@@ -1,10 +1,7 @@
 package com.timvisee.DungeonMaze;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +42,14 @@ public class DungeonMaze extends JavaPlugin {
 	private final DungeonMazeBlockListener blockListener = new DungeonMazeBlockListener(this);
 	private final DungeonMazePlayerListener playerListener = new DungeonMazePlayerListener(this);
 	
-	FileConfiguration config;
+	public static FileConfiguration config;
+	
+	public static boolean unloadWorldsOnPluginDisable;
+	public static boolean allowSurface;
+	public static boolean worldProtection;
+	public static boolean enableUpdateCheckerOnStartup;
+	public static boolean usePermissions;
+	public static boolean useBypassPermissions;
 	
 	public static String lastWorld = "";
 	public static List<String> constantRooms = new ArrayList<String>(); // x;y;z
@@ -75,21 +79,16 @@ public class DungeonMaze extends JavaPlugin {
 	
 	private DMWorldManager dmWorldManager = new DMWorldManager(this);
 	
-	/*public static DungeonMazeAPI DMApi;*/
 	
 	@Override
 	public void onEnable() {
-	
+		
 		// Check if all the config file exists
-		try {
-			checkConigFilesExist();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		checkConfigFilesExist();
 	    
 		// Load the config file
 		loadConfig();
-		
+
 		// Setup the DM world manager and preload the worlds
 		setupDMWorldManager();
 		getDMWorldManager();
@@ -118,7 +117,7 @@ public class DungeonMaze extends JavaPlugin {
 		setupMetrics();
 		
 		// Enable update checker on startup if it's enabled
-		if(getConfig().getBoolean("enableUpdateCheckerOnStartup", true)) {
+		if(config.getBoolean("enableUpdateCheckerOnStartup", true)) {
 			checkUpdates();
 		}
 	}
@@ -150,40 +149,17 @@ public class DungeonMaze extends JavaPlugin {
 			log.info("[DungeonMaze] Unloading worlds has been disabled!");
 		}
 		
+
 		// Show an disabled message
 		log.info("[DungeonMaze] Dungeon Maze Disabled");
 	}
+
 	
-	/*public DungeonMazeAPI getDungeonMazeAPI() {
-		return DMApi;
-	}*/
-	
-	public void checkConigFilesExist() throws Exception {
-		// Check if the config files exist
-		if(!getDataFolder().exists()) {
-			log.info("[DungeonMaze] Creating default files");
-			getDataFolder().mkdirs();
+	public void checkConfigFilesExist() {
+		if(!new File(getDataFolder()+File.separator+"config.yml").exists()){
+			getConfig().options().copyDefaults(true);
+			saveDefaultConfig();
 		}
-		File f = new File(getDataFolder(), "config.yml");
-		if(!f.exists()) {
-			log.info("[DungeonMaze] Generating new config file");
-			copy(getResource("res/defaultFiles/DungeonMaze/config.yml"), f);
-		}
-	}
-	
-	private void copy(InputStream in, File file) {
-	    try {
-	        OutputStream out = new FileOutputStream(file);
-	        byte[] buf = new byte[1024];
-	        int len;
-	        while((len=in.read(buf))>0){
-	            out.write(buf,0,len);
-	        }
-	        out.close();
-	        in.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
 	}
 	
 	/**
@@ -265,7 +241,7 @@ public class DungeonMaze extends JavaPlugin {
 		// Reset permissions
 		permissionsSystem = 0;
 		
-		if(!getConfig().getBoolean("usePermissions", true)) {
+		if(!usePermissions) {
 			permissionsSystem = 0;
 			System.out.println("[DungeonMaze] Permissions usage disabled in config file!");
 			if(useBypassPermissions()) {
@@ -347,14 +323,14 @@ public class DungeonMaze extends JavaPlugin {
 	}
 		
 	public boolean usePermissions() {
-		if(getConfig().getBoolean("usePermissions", true)) {
+		if(usePermissions) {
 			return true;
 		}
 		return false;
 	}
 	
 	public boolean useBypassPermissions() {
-		if(getConfig().getBoolean("useBypassPermissions", false)) {
+		if(useBypassPermissions) {
 			return true;
 		}
 		return false;
@@ -706,21 +682,17 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	public void loadConfig() {
-		config = getConfigFromPath(new File(getDataFolder(), "config.yml"));
+		config = getConfig();
+		getConfig();
+		saveConfig();
+		unloadWorldsOnPluginDisable = config.getBoolean("unloadWorldsOnPluginDisable", true);
+		allowSurface = config.getBoolean("allowSurface", true);
+		worldProtection = config.getBoolean("worldProtection", false);
+		enableUpdateCheckerOnStartup = config.getBoolean("enableUpdateCheckerOnStartup", true);
+		usePermissions = config.getBoolean("usePermissions", true);
+		useBypassPermissions = config.getBoolean("useBypassPermissions", true);
 	}
-	
-	public void saveConfig() {
-		try {
-			config.save(new File(getDataFolder(), "config.yml"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Override
-	public FileConfiguration getConfig() {
-		return config;
-	}
+
 	
 
 	@Override

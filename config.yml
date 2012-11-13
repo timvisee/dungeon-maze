@@ -1,0 +1,17 @@
+# Dungeon Maze worlds
+worlds: []
+preloadWorlds: []
+
+# World mangement
+unloadWorldsOnPluginDisable: true
+
+# Gameplay settings
+allowSurface: true
+worldProtection: false
+
+# Update checker
+enableUpdateCheckerOnStartup: true
+
+# Permission Support
+usePermissions : true
+useBypassPermissions : true
