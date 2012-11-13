@@ -47,6 +47,7 @@ public class DungeonMaze extends JavaPlugin {
 	public static boolean unloadWorldsOnPluginDisable;
 	public static boolean allowSurface;
 	public static boolean worldProtection;
+	public static List<Object> blockWhiteList;
 	public static boolean enableUpdateCheckerOnStartup;
 	public static boolean usePermissions;
 	public static boolean useBypassPermissions;
@@ -681,6 +682,7 @@ public class DungeonMaze extends JavaPlugin {
 	    return c;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void loadConfig() {
 		config = getConfig();
 		getConfig();
@@ -691,6 +693,7 @@ public class DungeonMaze extends JavaPlugin {
 		enableUpdateCheckerOnStartup = config.getBoolean("enableUpdateCheckerOnStartup", true);
 		usePermissions = config.getBoolean("usePermissions", true);
 		useBypassPermissions = config.getBoolean("useBypassPermissions", true);
+		blockWhiteList = (List<Object>) config.getList("blockWhiteList");
 	}
 
 	

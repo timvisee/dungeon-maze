@@ -32,7 +32,7 @@ public class DungeonMazeBlockListener implements Listener {
 			if(DungeonMaze.worldProtection) {
 				// The world protection is enable
 				
-				if(!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) {
+				if((!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
@@ -53,7 +53,7 @@ public class DungeonMazeBlockListener implements Listener {
 			if(DungeonMaze.worldProtection) {
 				// The world protection is enable
 				
-				if(plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp()) == false) {
+				if((!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");

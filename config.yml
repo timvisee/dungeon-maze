@@ -8,6 +8,7 @@ unloadWorldsOnPluginDisable: true
 # Gameplay settings
 allowSurface: true
 worldProtection: false
+blockWhiteList: []
 
 # Update checker
 enableUpdateCheckerOnStartup: true

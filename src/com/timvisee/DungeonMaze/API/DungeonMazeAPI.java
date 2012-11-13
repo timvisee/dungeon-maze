@@ -138,4 +138,11 @@ public class DungeonMazeAPI {
 	public static DungeonMaze getPlugin() {
 		return plugin;
 	}
+	
+	public static boolean isInWhiteList(Object target){
+		List<Object> list = DungeonMaze.blockWhiteList;
+		if(list == null) return(false);
+		for(int x = 0; x < list.size(); ++x) if(list.get(x).equals(target)) return(true);
+		return(false);
+		}
 }
