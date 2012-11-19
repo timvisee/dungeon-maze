@@ -10,6 +10,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+
 public class DungeonMazeBlockListener implements Listener {
 	public static Logger log = Logger.getLogger("Minecraft");
 	public static DungeonMaze plugin;
@@ -24,14 +26,13 @@ public class DungeonMazeBlockListener implements Listener {
 		Block b = e.getBlockPlaced();
 		String w = b.getWorld().getName();
 		
-		plugin.getDMWorldManager();
-		if(DMWorldManager.isDMWorld(w)) {
+		if(DungeonMazeAPI.isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(plugin.getConfig().getBoolean("worldProtection", false)) {
-				// The player is not allowed on the surface
+			if(DungeonMaze.worldProtection) {
+				// The world protection is enable
 				
-				if(!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) {
+				if((!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
@@ -46,14 +47,13 @@ public class DungeonMazeBlockListener implements Listener {
 		Block b = e.getBlock();
 		String w = b.getWorld().getName();
 		
-		plugin.getDMWorldManager();
-		if(DMWorldManager.isDMWorld(w)) {
+		if(DungeonMazeAPI.isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(plugin.getConfig().getBoolean("worldProtection", false)) {
-				// The player is not allowed on the surface
+			if(DungeonMaze.worldProtection) {
+				// The world protection is enable
 				
-				if(plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp()) == false) {
+				if((!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");

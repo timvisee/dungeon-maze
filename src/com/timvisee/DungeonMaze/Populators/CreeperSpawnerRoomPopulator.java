@@ -10,6 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class CreeperSpawnerRoomPopulator extends BlockPopulator {
 	public static final int CHANCE_OF_SPAWNER = 3; //Promile
@@ -46,9 +47,11 @@ public class CreeperSpawnerRoomPopulator extends BlockPopulator {
 									source.getBlock(x + 2, y + yfloorRelative + 1, z + 3).setTypeId(112);
 									source.getBlock(x + 3, y + yfloorRelative + 2, z + 3).setTypeId(112);
 									//spawner
-									source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).setTypeId(52);
-									CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).getState();
-									PigSpawner.setSpawnedType(EntityType.CREEPER);
+									if (DungeonMazeAPI.allowMobSpawner("Creeper")) {
+										source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).setTypeId(52);
+										CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).getState();
+										PigSpawner.setSpawnedType(EntityType.CREEPER);
+									}
 								}	
 							}
 						}
