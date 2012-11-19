@@ -15,6 +15,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class BlazeSpawnerRoomPopulator extends BlockPopulator {
 	public static final int CHANCE_OF_SPANWER_ROOM = 2; //Promile
@@ -125,14 +126,16 @@ public class BlazeSpawnerRoomPopulator extends BlockPopulator {
 									source.getBlock(x + 5, y + yfloorRelative + 2, z + 5).setTypeId(113);
 									
 									// Generate the spawner
-									int spawnerX = x + 3 + random.nextInt(2);
-									int spawnerY = y + yfloorRelative + 2;
-									int spawnerZ = z + 3 + random.nextInt(2);
-									Block spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
-									spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
-									spawnerBlock.setTypeId(52);
-									CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-									theSpawner.setSpawnedType(EntityType.BLAZE);
+									if (DungeonMazeAPI.allowMobSpawner("Blaze")) {
+										int spawnerX = x + 3 + random.nextInt(2);
+										int spawnerY = y + yfloorRelative + 2;
+										int spawnerZ = z + 3 + random.nextInt(2);
+										Block spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
+										spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
+										spawnerBlock.setTypeId(52);
+										CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+										theSpawner.setSpawnedType(EntityType.BLAZE);
+									}
 								
 									// Generate hidden content/recourses underneath the platform
 									Block block1 = source.getBlock(x + 3, y + yfloorRelative, z + 3);

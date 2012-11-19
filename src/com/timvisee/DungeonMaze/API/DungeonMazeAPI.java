@@ -74,8 +74,9 @@ public class DungeonMazeAPI {
 	public static World getDMWorld(Player p) {
 		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
-			return p.getWorld();
+		if(DMWorldManager.isDMWorld(p.getWorld().getName())) {
+			return p.getWorld();			
+		}
 		return null;
 	}
 	
@@ -87,8 +88,9 @@ public class DungeonMazeAPI {
 	public static String getDMWorldName(Player p) {
 		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
-			return p.getWorld().getName();
+		if(DMWorldManager.isDMWorld(p.getWorld().getName())) {
+			return p.getWorld().getName();	
+		}
 		return "";
 	}
 	
@@ -101,8 +103,9 @@ public class DungeonMazeAPI {
 	public static boolean canBuildInDMWorld(String w, Player p) {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
-			if(plugin.getConfig().getBoolean("worldProtection", false))
-				return plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
+			if(DungeonMaze.worldProtection) {
+				return plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp());	
+			}
 		return true;
 	}
 	
@@ -115,7 +118,7 @@ public class DungeonMazeAPI {
 	public static boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
-			if(!plugin.getConfig().getBoolean("allowSurface", true))
+			if(!DungeonMaze.allowSurface)
 				return plugin.hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
@@ -134,5 +137,16 @@ public class DungeonMazeAPI {
 	 */
 	public static DungeonMaze getPlugin() {
 		return plugin;
+	}
+	
+	public static boolean isInWhiteList(Object target){
+		List<Object> list = DungeonMaze.blockWhiteList;
+		if(list == null) return(false);
+		for(int x = 0; x < list.size(); ++x) if(list.get(x).equals(target)) return(true);
+		return(false);
+		}
+	
+	public static boolean allowMobSpawner(String mob) {
+		return DungeonMaze.mobs.contains(mob);
 	}
 }

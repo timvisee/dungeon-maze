@@ -13,6 +13,7 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class BossRoomInsanePopulator extends BlockPopulator {
 	public static final int CHANCE_OF_BOSSROOM = 1; //Promile
@@ -138,43 +139,68 @@ public class BossRoomInsanePopulator extends BlockPopulator {
 					     source.getBlock(x + 8, y + 4, z + 7).setTypeId(112);
 					     source.getBlock(x + 8, y + 4, z + 8).setTypeId(112);
 					     //core spawners
-					     source.getBlock(x + 7, y + 2, z + 7).setTypeId(52);
-					     CreatureSpawner CS1 = (CreatureSpawner) source.getBlock(x + 7, y + 2, z + 7).getState();
-					     CS1.setSpawnedType(EntityType.GHAST);
-					     source.getBlock(x + 7, y + 2, z + 8).setTypeId(52);
-					     CreatureSpawner CS2 = (CreatureSpawner) source.getBlock(x + 7, y + 2, z + 8).getState();
-					     CS2.setSpawnedType(EntityType.ZOMBIE);
-					     source.getBlock(x + 8, y + 2, z + 7).setTypeId(52);
-					     CreatureSpawner CS3 = (CreatureSpawner) source.getBlock(x + 8, y + 2, z + 7).getState();
-					     CS3.setSpawnedType(EntityType.PIG_ZOMBIE);
-					     source.getBlock(x + 8, y + 2, z + 8).setTypeId(52);
-					     CreatureSpawner CS4 = (CreatureSpawner) source.getBlock(x + 8, y + 2, z + 8).getState();
-					     CS4.setSpawnedType(EntityType.PIG_ZOMBIE);
-					     source.getBlock(x + 7, y + 3, z + 7).setTypeId(52);
-					     CreatureSpawner CTS1 = (CreatureSpawner) source.getBlock(x + 7, y + 3, z + 7).getState();
-					     CTS1.setSpawnedType(EntityType.SKELETON);
-					     source.getBlock(x + 7, y + 3, z + 8).setTypeId(52);
-					     CreatureSpawner CTS2 = (CreatureSpawner) source.getBlock(x + 7, y + 3, z + 8).getState();
-					     CTS2.setSpawnedType(EntityType.ZOMBIE);
-					     source.getBlock(x + 8, y + 3, z + 7).setTypeId(52);
-					     CreatureSpawner CTS3 = (CreatureSpawner) source.getBlock(x + 8, y + 3, z + 7).getState();
-					     CTS3.setSpawnedType(EntityType.PIG_ZOMBIE);
-					     source.getBlock(x + 8, y + 3, z + 8).setTypeId(52);
-					     CreatureSpawner CTS4 = (CreatureSpawner) source.getBlock(x + 8, y + 3, z + 8).getState();
-					     CTS4.setSpawnedType(EntityType.ZOMBIE);
+					     if (DungeonMazeAPI.allowMobSpawner("Ghast")) {
+					    	 source.getBlock(x + 7, y + 2, z + 7).setTypeId(52);
+					    	 CreatureSpawner CS1 = (CreatureSpawner) source.getBlock(x + 7, y + 2, z + 7).getState();
+					    	 CS1.setSpawnedType(EntityType.GHAST);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+					    	 source.getBlock(x + 7, y + 2, z + 8).setTypeId(52);
+					     	CreatureSpawner CS2 = (CreatureSpawner) source.getBlock(x + 7, y + 2, z + 8).getState();
+					     	CS2.setSpawnedType(EntityType.ZOMBIE);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+					    	 source.getBlock(x + 8, y + 2, z + 7).setTypeId(52);
+					    	 CreatureSpawner CS3 = (CreatureSpawner) source.getBlock(x + 8, y + 2, z + 7).getState();
+					    	 CS3.setSpawnedType(EntityType.PIG_ZOMBIE);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+					    	 source.getBlock(x + 8, y + 2, z + 8).setTypeId(52);
+					    	 CreatureSpawner CS4 = (CreatureSpawner) source.getBlock(x + 8, y + 2, z + 8).getState();
+					    	 CS4.setSpawnedType(EntityType.PIG_ZOMBIE);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("Skeleton")) {
+					    	 source.getBlock(x + 7, y + 3, z + 7).setTypeId(52);
+					     	CreatureSpawner CTS1 = (CreatureSpawner) source.getBlock(x + 7, y + 3, z + 7).getState();
+					     	CTS1.setSpawnedType(EntityType.SKELETON);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+					    	 source.getBlock(x + 7, y + 3, z + 8).setTypeId(52);
+					    	 CreatureSpawner CTS2 = (CreatureSpawner) source.getBlock(x + 7, y + 3, z + 8).getState();
+					    	 CTS2.setSpawnedType(EntityType.ZOMBIE);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+					     	source.getBlock(x + 8, y + 3, z + 7).setTypeId(52);
+					     	CreatureSpawner CTS3 = (CreatureSpawner) source.getBlock(x + 8, y + 3, z + 7).getState();
+					     	CTS3.setSpawnedType(EntityType.PIG_ZOMBIE);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+					    	 source.getBlock(x + 8, y + 3, z + 8).setTypeId(52);
+					    	 CreatureSpawner CTS4 = (CreatureSpawner) source.getBlock(x + 8, y + 3, z + 8).getState();
+					    	 CTS4.setSpawnedType(EntityType.ZOMBIE);
+					     }
 					     //loose spawners
-					     source.getBlock(x + 3, y + 1, z + 3).setTypeId(52);
-					     CreatureSpawner LS1 = (CreatureSpawner) source.getBlock(x + 3, y + 1, z + 3).getState();
-					     LS1.setSpawnedType(EntityType.ZOMBIE);
-					     source.getBlock(x + 3, y + 1, z + 12).setTypeId(52);
-					     CreatureSpawner LS2 = (CreatureSpawner) source.getBlock(x + 3, y + 1, z + 12).getState();
-					     LS2.setSpawnedType(EntityType.SKELETON);
-					     source.getBlock(x + 12, y + 1, z + 3).setTypeId(52);
-					     CreatureSpawner LS3 = (CreatureSpawner) source.getBlock(x + 12, y + 1, z + 3).getState();
-					     LS3.setSpawnedType(EntityType.ZOMBIE);
-					     source.getBlock(x + 12, y + 1, z + 12).setTypeId(52);
-					     CreatureSpawner LS4 = (CreatureSpawner) source.getBlock(x + 12, y + 1, z + 12).getState();
-					     LS4.setSpawnedType(EntityType.SPIDER);
+					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+					    	 source.getBlock(x + 3, y + 1, z + 3).setTypeId(52);
+					    	 CreatureSpawner LS1 = (CreatureSpawner) source.getBlock(x + 3, y + 1, z + 3).getState();
+					    	 LS1.setSpawnedType(EntityType.ZOMBIE);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("Skeleton")) {
+					    	 source.getBlock(x + 3, y + 1, z + 12).setTypeId(52);
+					    	 CreatureSpawner LS2 = (CreatureSpawner) source.getBlock(x + 3, y + 1, z + 12).getState();
+					    	 LS2.setSpawnedType(EntityType.SKELETON);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+					    	 source.getBlock(x + 12, y + 1, z + 3).setTypeId(52);
+					    	 CreatureSpawner LS3 = (CreatureSpawner) source.getBlock(x + 12, y + 1, z + 3).getState();
+					    	 LS3.setSpawnedType(EntityType.ZOMBIE);
+					     }
+					     if (DungeonMazeAPI.allowMobSpawner("Spider")) {
+					    	 source.getBlock(x + 12, y + 1, z + 12).setTypeId(52);
+					    	 CreatureSpawner LS4 = (CreatureSpawner) source.getBlock(x + 12, y + 1, z + 12).getState();
+					    	 LS4.setSpawnedType(EntityType.SPIDER);
+					     }
+					     
 					}
 				}
 			}
