@@ -10,6 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class TopTurveRoomPopulator extends BlockPopulator {
 	public static final int CHANCE_OF_TOPTURVE = 1; //Promile
@@ -91,12 +92,16 @@ public class TopTurveRoomPopulator extends BlockPopulator {
 								source.getBlock(x + 5, y + 5 + yceilingRelative, z + 3).setTypeId(20);
 								source.getBlock(x + 5, y + 5 + yceilingRelative, z + 4).setTypeId(87);
 								//spawners
-								source.getBlock(x + 3, y + 5 + yceilingRelative, z + 4).setTypeId(52);
-								CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + 5 + yceilingRelative, z + 4).getState();
-								PigSpawner.setSpawnedType(EntityType.PIG);
-								source.getBlock(x + 4, y + 5 + yceilingRelative, z + 3).setTypeId(52);
-								CreatureSpawner PigSpawner2 = (CreatureSpawner) source.getBlock(x + 4, y + 5 + yceilingRelative, z + 3).getState();
-								PigSpawner2.setSpawnedType(EntityType.SKELETON);
+								if (DungeonMazeAPI.allowMobSpawner("Pig")) {
+									source.getBlock(x + 3, y + 5 + yceilingRelative, z + 4).setTypeId(52);
+									CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + 5 + yceilingRelative, z + 4).getState();
+									PigSpawner.setSpawnedType(EntityType.PIG);
+								}
+								if (DungeonMazeAPI.allowMobSpawner("Skeleton")) {
+									source.getBlock(x + 4, y + 5 + yceilingRelative, z + 3).setTypeId(52);
+									CreatureSpawner PigSpawner2 = (CreatureSpawner) source.getBlock(x + 4, y + 5 + yceilingRelative, z + 3).getState();
+									PigSpawner2.setSpawnedType(EntityType.SKELETON);
+								}
 							}	
 						}
 					}

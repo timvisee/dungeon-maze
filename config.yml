@@ -16,3 +16,17 @@ enableUpdateCheckerOnStartup: true
 # Permission Support
 usePermissions : true
 useBypassPermissions : true
+
+# Mob Spawner Populator
+mobs:
+- Blaze
+- Creeper
+- Enderman
+- Ghast
+- MagmaCube
+- Pig
+- PigZombie
+- Silverfish
+- Skeleton
+- Spider
+- Zombie

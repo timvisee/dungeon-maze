@@ -10,6 +10,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class BossRoomEasyPopulator extends BlockPopulator {
 	public static final int CHANCE_OF_BOSSROOM = 2; //Promile
@@ -44,15 +45,21 @@ public class BossRoomEasyPopulator extends BlockPopulator {
 									    }
 									}
 									//spawners
-									source.getBlock(x + 1, y + yfloorRelative + 1, z + 1).setTypeId(52);
-									CreatureSpawner S1 = (CreatureSpawner) source.getBlock(x + 1, y + 1 + yfloorRelative, z + 1).getState();
-									S1.setSpawnedType(EntityType.ZOMBIE);
-									source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).setTypeId(52);
-									CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + 1 + yfloorRelative, z + 3).getState();
-									PigSpawner.setSpawnedType(EntityType.PIG_ZOMBIE);
-									source.getBlock(x + 5, y + yfloorRelative + 1, z + 5).setTypeId(52);
-									CreatureSpawner S2 = (CreatureSpawner) source.getBlock(x + 5, y + 1 + yfloorRelative, z + 5).getState();
-									S2.setSpawnedType(EntityType.SPIDER);
+									if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+										source.getBlock(x + 1, y + yfloorRelative + 1, z + 1).setTypeId(52);
+										CreatureSpawner S1 = (CreatureSpawner) source.getBlock(x + 1, y + 1 + yfloorRelative, z + 1).getState();
+										S1.setSpawnedType(EntityType.ZOMBIE);
+									}
+									if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+										source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).setTypeId(52);
+										CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + 1 + yfloorRelative, z + 3).getState();
+										PigSpawner.setSpawnedType(EntityType.PIG_ZOMBIE);
+									}
+									if (DungeonMazeAPI.allowMobSpawner("Spider")) {
+										source.getBlock(x + 5, y + yfloorRelative + 1, z + 5).setTypeId(52);
+										CreatureSpawner S2 = (CreatureSpawner) source.getBlock(x + 5, y + 1 + yfloorRelative, z + 5).getState();
+										S2.setSpawnedType(EntityType.SPIDER); 
+									}
 									//coal ores
 									source.getBlock(x + 1, y + yfloorRelative + 1, z + 5).setTypeId(16);
 									source.getBlock(x + 5, y + yfloorRelative + 1, z + 1).setTypeId(16);

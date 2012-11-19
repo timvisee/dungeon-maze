@@ -145,4 +145,8 @@ public class DungeonMazeAPI {
 		for(int x = 0; x < list.size(); ++x) if(list.get(x).equals(target)) return(true);
 		return(false);
 		}
+	
+	public static boolean allowMobSpawner(String mob) {
+		return DungeonMaze.mobs.contains(mob);
+	}
 }

@@ -51,6 +51,7 @@ public class DungeonMaze extends JavaPlugin {
 	public static boolean enableUpdateCheckerOnStartup;
 	public static boolean usePermissions;
 	public static boolean useBypassPermissions;
+	public static List<String> mobs;
 	
 	public static String lastWorld = "";
 	public static List<String> constantRooms = new ArrayList<String>(); // x;y;z
@@ -694,6 +695,7 @@ public class DungeonMaze extends JavaPlugin {
 		usePermissions = config.getBoolean("usePermissions", true);
 		useBypassPermissions = config.getBoolean("useBypassPermissions", true);
 		blockWhiteList = (List<Object>) config.getList("blockWhiteList");
+		mobs = config.getStringList("mobs");
 	}
 
 	

@@ -11,6 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class SpawnerPopulator extends BlockPopulator {
 	public static final int CHANCE_OF_SPAWNER = 6;
@@ -55,30 +56,32 @@ public class SpawnerPopulator extends BlockPopulator {
 												CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
 												
 												int i = random.nextInt(25) + 1;
-												
-												if(i >= 1 && i <= 10) {
+												if(i >= 1 && i <= 10 && DungeonMazeAPI.allowMobSpawner("Zombie")) {
 													theSpawner.setSpawnedType(EntityType.ZOMBIE);
 													
-												} else if(i >= 11 && i <= 15) {
+												} else if(i >= 11 && i <= 15 && DungeonMazeAPI.allowMobSpawner("Skeleton")) {
 													theSpawner.setSpawnedType(EntityType.SKELETON);
 													
-												} else if(i >= 16 && i <= 20) {
+												} else if(i >= 16 && i <= 20 && DungeonMazeAPI.allowMobSpawner("Spider")) {
 													theSpawner.setSpawnedType(EntityType.SPIDER);
 													
-												} else if(i >= 21 && i <= 22) {
+												} else if(i >= 21 && i <= 22 && DungeonMazeAPI.allowMobSpawner("PigZombie")) {
 													theSpawner.setSpawnedType(EntityType.PIG_ZOMBIE);
 													
-												} else if(i == 23) {
+												} else if(i == 23 && DungeonMazeAPI.allowMobSpawner("Enderman")) {
 													theSpawner.setSpawnedType(EntityType.ENDERMAN);
 													
-												} else if(i == 24) {
+												} else if(i == 24 && DungeonMazeAPI.allowMobSpawner("MagmaCube")) {
 													theSpawner.setSpawnedType(EntityType.MAGMA_CUBE);
 													
-												} else if(i == 25) {
+												} else if(i == 25 && DungeonMazeAPI.allowMobSpawner("Silverfish")) {
 													theSpawner.setSpawnedType(EntityType.SILVERFISH);
 													
-												} else {
+												} else if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
 													theSpawner.setSpawnedType(EntityType.ZOMBIE);
+												} else {
+													// if no zombie is allow and the random return none value, remove the spawner
+													spawnerBlock.setTypeId(0);
 												}
 												
 												
