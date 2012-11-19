@@ -2,8 +2,10 @@ package com.timvisee.DungeonMaze.API;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import com.timvisee.DungeonMaze.DMWorldManager;
 import com.timvisee.DungeonMaze.DungeonMaze;
@@ -11,6 +13,18 @@ import com.timvisee.DungeonMaze.DungeonMaze;
 public class DungeonMazeAPI {
 	
 	private static DungeonMaze plugin;
+	
+	/**
+	 * 
+	 * @return instance
+	 */
+    public static DungeonMaze hookDungeonMaze() {
+    	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("DungeonMaze");
+        if (plugin == null && !(plugin instanceof DungeonMaze)) {
+        	return null;
+         }
+    	return (DungeonMaze) plugin;
+    }
 
 	/**
 	 * Get the DM world manager
@@ -139,6 +153,11 @@ public class DungeonMazeAPI {
 		return plugin;
 	}
 	
+	/**
+	 * 
+	 * @param Object (int)
+	 * @return true if the object is in the list
+	 */
 	public static boolean isInWhiteList(Object target){
 		List<Object> list = DungeonMaze.blockWhiteList;
 		if(list == null) return(false);
@@ -146,6 +165,11 @@ public class DungeonMazeAPI {
 		return(false);
 		}
 	
+	/**
+	 * 
+	 * @param String mobName
+	 * @return true if the mobspawner is allow for this mob
+	 */
 	public static boolean allowMobSpawner(String mob) {
 		return DungeonMaze.mobs.contains(mob);
 	}
