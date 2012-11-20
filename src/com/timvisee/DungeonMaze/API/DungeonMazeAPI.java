@@ -7,8 +7,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.timvisee.DungeonMaze.DMWorldManager;
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.manager.DMWorldManager;
 
 public class DungeonMazeAPI {
 	
@@ -118,7 +118,7 @@ public class DungeonMazeAPI {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
 			if(DungeonMaze.worldProtection) {
-				return plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp());	
+				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());	
 			}
 		return true;
 	}
@@ -133,7 +133,7 @@ public class DungeonMazeAPI {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
 			if(!DungeonMaze.allowSurface)
-				return plugin.hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
+				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
 	

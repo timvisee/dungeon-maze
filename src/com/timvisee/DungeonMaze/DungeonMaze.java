@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.anjocaido.groupmanager.GroupManager;
-import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -24,20 +22,18 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import ru.tehkode.permissions.PermissionManager;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
-
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
-
 import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.timvisee.DungeonMaze.Metrics.Graph;
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+import com.timvisee.DungeonMaze.event.DMEventHandler;
+import com.timvisee.DungeonMaze.listener.DungeonMazeBlockListener;
+import com.timvisee.DungeonMaze.listener.DungeonMazePlayerListener;
+import com.timvisee.DungeonMaze.manager.DMWorldManager;
+import com.timvisee.DungeonMaze.manager.PermissionsManager;
+import com.timvisee.DungeonMaze.Metrics.Graph;
 
 public class DungeonMaze extends JavaPlugin {	
 	public static final Logger log = Logger.getLogger("Minecraft");
-	private static final DungeonMazeGenerator dmGenerator = new DungeonMazeGenerator();
+	private final DungeonMazeGenerator dmGenerator = new DungeonMazeGenerator(this);
 
 	private final DungeonMazeBlockListener blockListener = new DungeonMazeBlockListener(this);
 	private final DungeonMazePlayerListener playerListener = new DungeonMazePlayerListener(this);
@@ -60,44 +56,36 @@ public class DungeonMaze extends JavaPlugin {
 	// Update Checker
 	boolean isUpdateAvailable = false;
 	String newestVersion = "1.0";
+
+	// Permissions and Economy manager
+	private PermissionsManager pm;
 	
 	/* Multiverse */
-	boolean useMultiverse = false;
-	MultiverseCore multiverseCore;
-	
-	/* Permissions */
-	/*
-	 * 0 = none
-	 * 1 = PermissionsEx
-	 * 2 = PermissionsBukkit
-	 * 3 = bPermissions
-	 * 4 = Essentials Group Manager
-	 * 5 = Permissions
-	 */
-	private int permissionsSystem = 0;
-	private PermissionManager pexPermissions;
-	private PermissionHandler defaultPermsissions;
-	private GroupManager groupManagerPermissions;
+	public boolean useMultiverse = false;
+	public MultiverseCore multiverseCore;
 	
 	private DMWorldManager dmWorldManager = new DMWorldManager(this);
 	
+	public static DMEventHandler dmEventHandler;
 	
 	@Override
-	public void onEnable() {
-		
+	public void onEnable() {		
 		// Check if all the config file exists
 		checkConfigFilesExist();
 	    
 		// Load the config file
 		loadConfig();
-
+		
+		// Setup the DM Event Handler
+		setupDMEventHandler();
+		
 		// Setup the DM world manager and preload the worlds
 		setupDMWorldManager();
 		getDMWorldManager();
 		DMWorldManager.preloadWorlds();
 
 		// Setup permissions usage
-		setupPermissions();
+		setupPermissionsManager();
 		
 		// Setup multiverse usage
 		setupMultiverse();
@@ -156,12 +144,36 @@ public class DungeonMaze extends JavaPlugin {
 		log.info("[DungeonMaze] Dungeon Maze Disabled");
 	}
 
-	
 	public void checkConfigFilesExist() {
 		if(!new File(getDataFolder()+File.separator+"config.yml").exists()){
 			getConfig().options().copyDefaults(true);
 			saveDefaultConfig();
 		}
+	}
+	
+	public void setupDMEventHandler() {
+		dmEventHandler = new DMEventHandler(getServer());
+	}
+	
+	public static DMEventHandler getDMEventHandler() {
+		return dmEventHandler;
+	}
+	
+	/**
+	 * Setup the permissions manager
+	 */
+	public void setupPermissionsManager() {
+		// Setup the permissions manager
+		this.pm = new PermissionsManager(this.getServer(), this);
+		this.pm.setup();
+	}
+	
+	/**
+	 * Get the permissions manager
+	 * @return permissions manager
+	 */
+	public PermissionsManager getPermissionsManager() {
+		return this.pm;
 	}
 	
 	/**
@@ -237,160 +249,13 @@ public class DungeonMaze extends JavaPlugin {
 		this.dmWorldManager = new DMWorldManager(this);
 		DMWorldManager.refresh();
 	}
-	
-	private void setupPermissions() {
-		// Setup the permissions systems
-		// Reset permissions
-		permissionsSystem = 0;
-		
-		if(!usePermissions) {
-			permissionsSystem = 0;
-			System.out.println("[DungeonMaze] Permissions usage disabled in config file!");
-			if(useBypassPermissions()) {
-				System.out.println("[DungeonMaze] Bypass permissions auto disabled!");
-			} else {
-				System.out.println("[DungeonMaze] Bypass permissions disabled!");
-			}
-			return;
-		}
-		
-		// Check PermissionsEx system
-		Plugin testPex = this.getServer().getPluginManager().getPlugin("PermissionsEx");
-		if(testPex != null) {
-			pexPermissions = PermissionsEx.getPermissionManager();
-			if(pexPermissions != null) {
-				permissionsSystem = 1;
-				
-				System.out.println("[DungeonMaze] Hooked into PermissionsEx!");
-				if(useBypassPermissions()) {
-					System.out.println("[DungeonMaze] Bypass permissions enabled!");
-				} else {
-					System.out.println("[DungeonMaze] Bypass permissions disabled!");
-				}
-				return;
-			}
-		}
-		
-		// Check PermissionsBukkit system
-		Plugin testBukkitPerms = this.getServer().getPluginManager().getPlugin("PermissionsBukkit");
-		if(testBukkitPerms != null) {
-			permissionsSystem = 2;
-			System.out.println("[DungeonMaze] Hooked into PermissionsBukkit!");
-			if(useBypassPermissions()) {
-				System.out.println("[DungeonMaze] Bypass permissions enabled!");
-			} else {
-				System.out.println("[DungeonMaze] Bypass permissions disabled!");
-			}
-			return;
-		}
-		
-		// Check bPermissions system
-		// Not available yet!
-		
-		// Check Essentials Group Manager system
-		final PluginManager pluginManager = getServer().getPluginManager();
-		final Plugin GMplugin = pluginManager.getPlugin("GroupManager");
-		if (GMplugin != null && GMplugin.isEnabled())
-		{
-			permissionsSystem = 4;
-			groupManagerPermissions = (GroupManager)GMplugin;
-            System.out.println("[DungeonMaze] Hooked into Essentials Group Manager!");
-			if(useBypassPermissions()) {
-				System.out.println("[DungeonMaze] Bypass permissions enabled!");
-			} else {
-				System.out.println("[DungeonMaze] Bypass permissions disabled!");
-			}
-            return;
-		}
-		
-		// Check Permissions system
-	    Plugin testPerms = this.getServer().getPluginManager().getPlugin("Permissions");
-	    if (this.defaultPermsissions == null) {
-	        if (testPerms != null) {
-	        	permissionsSystem = 5;
-	            this.defaultPermsissions = ((Permissions) testPerms).getHandler();
-	            System.out.println("[DungeonMaze] Hooked into Permissions!");
-	            return;
-	        }
-	    }
-	    
-	    // None of the permissions systems worked >:c.
-	    permissionsSystem = 0;
-	    System.out.println("[DungeonMaze] No Permissions system found! Permissions disabled!");
-		if(useBypassPermissions()) {
-			System.out.println("[DungeonMaze] Bypass permissions auto disabled!");
-		} else {
-			System.out.println("[DungeonMaze] Bypass permissions disabled!");
-		}
-	}
 		
 	public boolean usePermissions() {
-		if(usePermissions) {
-			return true;
-		}
-		return false;
+		return usePermissions;
 	}
 	
 	public boolean useBypassPermissions() {
-		if(useBypassPermissions) {
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isPermissionsSystemEnabled() {
-		if(permissionsSystem == 0) {
-			return false;
-		}
-		return true;
-	}
-	
-	public int getPermissionsSystem() {
-		return permissionsSystem;
-	}
-	
-	public boolean hasPermission(Player player, String permissionNode) {
-		return hasPermission(player, permissionNode, player.isOp());
-	}
-	
-	public boolean hasPermission(Player player, String permissionNode, boolean def) {
-		if(!usePermissions()) {
-			return def;
-		}
-		if(!isPermissionsSystemEnabled()) {
-			return def;
-		}
-		
-		// Using PermissionsEx
-		if(getPermissionsSystem() == 1) {
-			PermissionUser user  = PermissionsEx.getUser(player);
-			return user.has(permissionNode);
-		}
-		
-		// Using PermissionsBukkit
-		if(getPermissionsSystem() == 2) {
-			return player.hasPermission(permissionNode);
-		}
-		
-		// Using bPemissions
-		// Comming soon!
-		
-		// Using Essentials Group Manager
-		if(getPermissionsSystem() == 4) {
-			final AnjoPermissionsHandler handler = groupManagerPermissions.getWorldsHolder().getWorldPermissions(player);
-			if (handler == null)
-			{
-				return false;
-			}
-			return handler.has(player, permissionNode);
-		}
-		
-		// Using Permissions
-		if(getPermissionsSystem() == 5) {
-			return this.defaultPermsissions.has(player, permissionNode);
-		}
-
-		return def;
+		return useBypassPermissions;
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -404,7 +269,7 @@ public class DungeonMaze extends JavaPlugin {
 			if(args[0].toString().equalsIgnoreCase("createworld") || args[0].toString().equalsIgnoreCase("cw") || args[0].toString().equalsIgnoreCase("create")) {
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "dungeonmaze.command.createworld", sender.isOp())) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.createworld", sender.isOp())) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
@@ -450,7 +315,7 @@ public class DungeonMaze extends JavaPlugin {
 
 				// Create the world
 				WorldCreator newWorld = new WorldCreator(w);
-				newWorld.generator(dmGenerator);
+				newWorld.generator(this.dmGenerator);
 				World world = newWorld.createWorld();
 				
 				// If the sender is a player, teleport him!
@@ -462,7 +327,7 @@ public class DungeonMaze extends JavaPlugin {
 			} else if(args[0].toString().equalsIgnoreCase("teleport") || args[0].toString().equalsIgnoreCase("tp") || args[0].toString().equalsIgnoreCase("warp")) {
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "dungeonmaze.command.teleport", sender.isOp())) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.teleport", sender.isOp())) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
@@ -510,7 +375,7 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "dungeonmaze.command.listworlds", sender.isOp())) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.listworlds", sender.isOp())) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
@@ -542,7 +407,7 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "dungeonmaze.command.reload")) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.reload")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
@@ -552,7 +417,7 @@ public class DungeonMaze extends JavaPlugin {
 				sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze");
 				
 				// Setup permissions
-				setupPermissions();
+				setupPermissionsManager();
 				
 				// Reload configs and worlds
 				loadConfig();
@@ -574,14 +439,14 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "dungeonmaze.command.reloadpermissions")) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.reloadpermissions")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
 				}
 				
 				// Setup permissions
-				setupPermissions();
+				setupPermissionsManager();
 				
 				// Show a succes message
 				sender.sendMessage(ChatColor.GREEN + "Permissions succesfully reloaded!");
@@ -597,7 +462,7 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!hasPermission((Player) sender, "dungeonmaze.command.checkupdates")) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.checkupdates")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
@@ -702,11 +567,11 @@ public class DungeonMaze extends JavaPlugin {
 
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-		return dmGenerator;
+		return this.dmGenerator;
 	}
 	
 	public ChunkGenerator getDMWorldGenerator() {
-		return dmGenerator;
+		return this.dmGenerator;
 	}
 	
 	public boolean isAnyPlayerOnline() {
