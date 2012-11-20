@@ -24,7 +24,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
-import com.timvisee.DungeonMaze.event.DMEventHandler;
 import com.timvisee.DungeonMaze.listener.DungeonMazeBlockListener;
 import com.timvisee.DungeonMaze.listener.DungeonMazePlayerListener;
 import com.timvisee.DungeonMaze.manager.DMWorldManager;
@@ -66,7 +65,6 @@ public class DungeonMaze extends JavaPlugin {
 	
 	private DMWorldManager dmWorldManager = new DMWorldManager(this);
 	
-	public static DMEventHandler dmEventHandler;
 	
 	@Override
 	public void onEnable() {		
@@ -77,7 +75,7 @@ public class DungeonMaze extends JavaPlugin {
 		loadConfig();
 		
 		// Setup the DM Event Handler
-		setupDMEventHandler();
+		DungeonMazeAPI.setupDMEventHandler();
 		
 		// Setup the DM world manager and preload the worlds
 		setupDMWorldManager();
@@ -149,14 +147,6 @@ public class DungeonMaze extends JavaPlugin {
 			getConfig().options().copyDefaults(true);
 			saveDefaultConfig();
 		}
-	}
-	
-	public void setupDMEventHandler() {
-		dmEventHandler = new DMEventHandler(getServer());
-	}
-	
-	public static DMEventHandler getDMEventHandler() {
-		return dmEventHandler;
 	}
 	
 	/**

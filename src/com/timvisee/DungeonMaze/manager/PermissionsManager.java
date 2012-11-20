@@ -264,7 +264,7 @@ public class PermissionsManager {
 			
 		case Z_PERMISSIONS:
 			//zPermissions
-			return new ArrayList(zPermissionsService.getPlayerGroups(p.getName()));
+			return new ArrayList<String>(zPermissionsService.getPlayerGroups(p.getName()));
 			
 		case VAULT:
 			// Vault
