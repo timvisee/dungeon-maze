@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.DungeonMaze.manager.DMWorldManager;
 
 public class DungeonMazeAPI {
@@ -172,5 +173,10 @@ public class DungeonMazeAPI {
 	 */
 	public static boolean allowMobSpawner(String mob) {
 		return DungeonMaze.mobs.contains(mob);
+	}
+	
+	
+	public static DMGenerationChestEvent setupDMEventHandler() {
+		return (DMGenerationChestEvent) DMGenerationChestEvent.getServer();
 	}
 }
