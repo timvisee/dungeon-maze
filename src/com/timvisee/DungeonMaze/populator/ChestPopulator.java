@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.event.Event;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 
@@ -63,7 +64,7 @@ public class ChestPopulator extends BlockPopulator {
 										DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, contents);
 										//DungeonMaze.getServer().getPluginManager().callEvent(event);
 										//plugin.getDMEventHandler().callEvent(event);
-										plugin.getServer().getPluginManager().callEvent(event);
+										Bukkit.getServer().getPluginManager().callEvent(event);
 										
 										// Do the event
 										if(!event.isCancelled()) {
@@ -84,7 +85,8 @@ public class ChestPopulator extends BlockPopulator {
 			}
 		}	
 	}
-	
+
+
 	public List<ItemStack> generateChestContents(Random random) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		if(random.nextInt(100) < 80) {

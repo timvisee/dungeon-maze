@@ -11,10 +11,12 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+import com.timvisee.DungeonMaze.manager.PermissionsManager;
 
 public class DungeonMazeBlockListener implements Listener {
 	public static Logger log = Logger.getLogger("Minecraft");
 	public static DungeonMaze plugin;
+	public static PermissionsManager perms;
 
 	public DungeonMazeBlockListener(DungeonMaze instance) {
 		plugin = instance;
@@ -32,7 +34,7 @@ public class DungeonMazeBlockListener implements Listener {
 			if(DungeonMaze.worldProtection) {
 				// The world protection is enable
 				
-				if((!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
+				if((!perms.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
@@ -53,7 +55,7 @@ public class DungeonMazeBlockListener implements Listener {
 			if(DungeonMaze.worldProtection) {
 				// The world protection is enable
 				
-				if((!plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
+				if((!perms.hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");

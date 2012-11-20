@@ -4,19 +4,16 @@ import java.util.List;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.timvisee.DungeonMaze.event.DMCancellableEvent;
-import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.event.EventHandler.DMEventHandler;
 
-public class DMGenerationChestEvent extends DMCancellableEvent {
+public class DMGenerationChestEvent extends DMEventHandler {
 	
 	private Block b;
 	private List<ItemStack> is;
 	
 	public DMGenerationChestEvent(Block b, List<ItemStack> is) {
-		super();
 		this.b = b;
 		this.is = is;
 	}
@@ -37,4 +34,5 @@ public class DMGenerationChestEvent extends DMCancellableEvent {
 	public World getWorld() {
 		return this.b.getWorld();
 	}
+
 }
