@@ -9,7 +9,6 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.event.Event;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 
@@ -59,22 +58,42 @@ public class ChestPopulator extends BlockPopulator {
 										
 										// Generate new inventory contents
 										List<ItemStack> contents = generateChestContents(random);
-										
+										chestBlock.setTypeId(54);
 										// Call the chest generation event
-										DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, contents);
+										DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, random, contents);
 										//DungeonMaze.getServer().getPluginManager().callEvent(event);
 										//plugin.getDMEventHandler().callEvent(event);
 										Bukkit.getServer().getPluginManager().callEvent(event);
 										
 										// Do the event
 										if(!event.isCancelled()) {
-											// Set the block to a chest
-											chestBlock.setTypeId(54);
 											
 											// Add the contents to the chest
-											addItemsToChest(random, (Chest) chestBlock.getState(), event.getContents());
+											event.addItemsToChest(random, (Chest) chestBlock.getState(), event.getContents());
 										} else {
-											// The event has been cancelled, do nothing
+											// do nothing
+										}
+									}
+									else if (chestBlock.getTypeId() == 54 ) {
+										// The follow is for rare case when the chest is generate before the plugin does the event
+										Chest chest = (Chest) chestBlock.getState();
+										if (chest.getInventory() != null) {
+											// Generate new inventory contents
+											List<ItemStack> contents = generateChestContents(random);
+										
+											// Call the chest generation event
+											DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, random, contents);
+											//DungeonMaze.getServer().getPluginManager().callEvent(event);
+											//plugin.getDMEventHandler().callEvent(event);
+											Bukkit.getServer().getPluginManager().callEvent(event);
+										
+											// Do the event
+											if(!event.isCancelled()) {	
+												// Add the contents to the chest
+												event.addItemsToChest(random, (Chest) chestBlock.getState(), event.getContents());
+											} else {
+												// do nothing
+											}
 										}
 									}
 								}
@@ -259,14 +278,5 @@ public class ChestPopulator extends BlockPopulator {
 			newContents.add(items.get(random.nextInt(items.size())));
 		}
 		return newContents;
-	}
-	
-	public void addItemsToChest(Random random, Chest chest, List<ItemStack> newContents) {
-		// Add new content to a chest
-		chest.getInventory().clear();
-		for (int i = 0; i < newContents.size(); i++) {
-			chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), newContents.get(i));
-		}
-		chest.update();
 	}
 }
