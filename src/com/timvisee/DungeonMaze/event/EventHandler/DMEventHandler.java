@@ -31,7 +31,4 @@ public class DMEventHandler extends Event {
 	public static Server getServer() {
 		return s;
 	}
-	
-	
-
 }

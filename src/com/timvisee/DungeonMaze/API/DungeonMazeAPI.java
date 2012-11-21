@@ -16,8 +16,8 @@ public class DungeonMazeAPI {
 	private static DungeonMaze plugin;
 	
 	/**
-	 * 
-	 * @return instance
+	 * Hook into Dungeon Maze
+	 * @return instance DM instance
 	 */
     public static DungeonMaze hookDungeonMaze() {
     	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("DungeonMaze");
@@ -175,7 +175,10 @@ public class DungeonMazeAPI {
 		return DungeonMaze.mobs.contains(mob);
 	}
 	
-	
+	/**
+	 * Setup and get the DM Event handler
+	 * @return DM Event handler
+	 */
 	public static DMEventHandler setupDMEventHandler() {
 		return (DMEventHandler) DMEventHandler.getServer();
 	}

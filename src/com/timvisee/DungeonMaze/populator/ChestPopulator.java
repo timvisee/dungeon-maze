@@ -59,22 +59,26 @@ public class ChestPopulator extends BlockPopulator {
 										// Generate new inventory contents
 										List<ItemStack> contents = generateChestContents(random);
 										chestBlock.setTypeId(54);
+										
 										// Call the chest generation event
 										DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, random, contents);
-										//DungeonMaze.getServer().getPluginManager().callEvent(event);
-										//plugin.getDMEventHandler().callEvent(event);
 										Bukkit.getServer().getPluginManager().callEvent(event);
 										
 										// Do the event
 										if(!event.isCancelled()) {
+											// Make sure the chest is still there, a developer could change the chest through the event!
+											if(chestBlock.getTypeId() != 54)
+												continue;
 											
 											// Add the contents to the chest
-											event.addItemsToChest(random, (Chest) chestBlock.getState(), event.getContents());
+											addItemsToChest(event.getAddContentsInOrder(), random, (Chest) chestBlock.getState(), event.getContents());
 										} else {
-											// do nothing
+											// The event is cancelled
+											// Put the chest back to it's orrigional state (air)
+											chestBlock.setTypeId(0);
 										}
-									}
-									else if (chestBlock.getTypeId() == 54 ) {
+										
+									} else if (chestBlock.getTypeId() == 54 ) {
 										// The follow is for rare case when the chest is generate before the plugin does the event
 										Chest chest = (Chest) chestBlock.getState();
 										if (chest.getInventory() != null) {
@@ -83,16 +87,16 @@ public class ChestPopulator extends BlockPopulator {
 										
 											// Call the chest generation event
 											DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, random, contents);
-											//DungeonMaze.getServer().getPluginManager().callEvent(event);
-											//plugin.getDMEventHandler().callEvent(event);
 											Bukkit.getServer().getPluginManager().callEvent(event);
-										
+											
 											// Do the event
-											if(!event.isCancelled()) {	
+											if(!event.isCancelled()) {
+												// Make sure the chest is still there, a developer could change the chest through the event!
+												if(chestBlock.getTypeId() != 54)
+													continue;
+												
 												// Add the contents to the chest
-												event.addItemsToChest(random, (Chest) chestBlock.getState(), event.getContents());
-											} else {
-												// do nothing
+												addItemsToChest(event.getAddContentsInOrder(), random, (Chest) chestBlock.getState(), event.getContents());
 											}
 										}
 									}
@@ -278,5 +282,40 @@ public class ChestPopulator extends BlockPopulator {
 			newContents.add(items.get(random.nextInt(items.size())));
 		}
 		return newContents;
+	}
+
+	public void addItemsToChest(boolean addInOrder, Random random, Chest chest, List<ItemStack> newContents) {
+		// Clear the chest inventory first
+		chest.getInventory().clear();
+		
+		// Add all the items
+		if(addInOrder) {
+			// Add the contents in order
+			for(int i = 0; i < newContents.size(); i++) {
+				ItemStack curStack = newContents.get(i);
+				
+				// Make sure the current ItemStack isn't null
+				if(curStack == null)
+					continue;
+				
+				// Make sure the current item fits in the chest, to prevent errors
+				if(i >= chest.getInventory().getSize())
+					continue;
+				
+				chest.getInventory().setItem(i, curStack);
+			}
+		} else {
+			// Add the contents randomly
+			for(ItemStack curStack : newContents) {
+				// Make sure the current ItemStack isn't null
+				if(curStack == null)
+					continue;
+				
+				chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), curStack);
+			}
+		}
+		
+		// Make sure to 'update' the chest block to update it's inventory
+		chest.update();
 	}
 }

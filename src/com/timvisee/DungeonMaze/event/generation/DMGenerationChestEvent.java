@@ -13,8 +13,9 @@ import com.timvisee.DungeonMaze.event.EventHandler.DMEventHandler;
 public class DMGenerationChestEvent extends DMEventHandler {
 	
 	private Block b;
-	private List<ItemStack> is;
 	private Random random;
+	private List<ItemStack> is;
+	private boolean addContentsInOrder = false;
 	
 	public DMGenerationChestEvent(Block b, Random random, List<ItemStack> is) {
 		this.b = b;
@@ -22,33 +23,60 @@ public class DMGenerationChestEvent extends DMEventHandler {
 		this.random = random;
 	}
 	
+	/**
+	 * Get the block location where the chest will be created
+	 * @return the chest location as a block
+	 */
 	public Block getBlock() {
 		return this.b;
 	}
 	
+	/**
+	 * Get the world the chest will be created in
+	 * @return the world
+	 */
+	public World getWorld() {
+		return this.b.getWorld();
+	}
+	
+	/**
+	 * Get the contents wich will be added into the chest
+	 * @return chest contents
+	 */
 	public List<ItemStack> getContents() {
 		return this.is;
 	}
 	
-	public Random getRandom() {
-		return this.random;
-	}
-	
+	/**
+	 * Set the contents of the chest
+	 * @param is ItemStack list
+	 */
 	public void setContents(List<ItemStack> is) {
 		if(is != null)
 			this.is = is;
 	}
-	
-	public World getWorld() {
-		return this.b.getWorld();
+		
+	/**
+	 * Get the random object from the generator, to get the ability to add support for seeds in your listener
+	 * @return Random
+	 */
+	public Random getRandom() {
+		return this.random;
 	}
-
-	public void addItemsToChest(Random random, Chest chest, List<ItemStack> newContents) {
-		// Add new content to a chest
-		chest.getInventory().clear();
-		for (int i = 0; i < newContents.size(); i++) {
-			chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), newContents.get(i));
-		}
-		chest.update();
+	
+	/**
+	 * Will the chest contents be placed in order into the chest, or will they be placed randomly
+	 * @return true if placed in order
+	 */
+	public boolean getAddContentsInOrder() {
+		return this.addContentsInOrder;
+	}
+	
+	/**
+	 * Set if the chests contents should be added in order, or if they should be added randomly
+	 * @param addInOrder true if they should be added in order
+	 */
+	public void setAddContentsInOrder(boolean addInOrder) {
+		this.addContentsInOrder = addInOrder;
 	}
 }
