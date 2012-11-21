@@ -7,16 +7,17 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.timvisee.DungeonMaze.DMWorldManager;
 import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.event.EventHandler.DMEventHandler;
+import com.timvisee.DungeonMaze.manager.DMWorldManager;
 
 public class DungeonMazeAPI {
 	
 	private static DungeonMaze plugin;
 	
 	/**
-	 * 
-	 * @return instance
+	 * Hook into Dungeon Maze
+	 * @return instance DM instance
 	 */
     public static DungeonMaze hookDungeonMaze() {
     	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("DungeonMaze");
@@ -118,7 +119,7 @@ public class DungeonMazeAPI {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
 			if(DungeonMaze.worldProtection) {
-				return plugin.hasPermission(p, "dungeonmaze.bypass.build", p.isOp());	
+				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());	
 			}
 		return true;
 	}
@@ -133,7 +134,7 @@ public class DungeonMazeAPI {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
 			if(!DungeonMaze.allowSurface)
-				return plugin.hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
+				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
 	
@@ -172,5 +173,13 @@ public class DungeonMazeAPI {
 	 */
 	public static boolean allowMobSpawner(String mob) {
 		return DungeonMaze.mobs.contains(mob);
+	}
+	
+	/**
+	 * Setup and get the DM Event handler
+	 * @return DM Event handler
+	 */
+	public static DMEventHandler setupDMEventHandler() {
+		return (DMEventHandler) DMEventHandler.getServer();
 	}
 }

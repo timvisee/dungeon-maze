@@ -13,9 +13,15 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 
-import com.timvisee.DungeonMaze.Populators.*;
+import com.timvisee.DungeonMaze.populator.*;
 
 public class DungeonMazeGenerator extends ChunkGenerator {
+	
+	public static DungeonMaze plugin;
+	
+	public DungeonMazeGenerator(DungeonMaze instance) {
+		plugin = instance;
+	}
 	
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world) {
@@ -56,7 +62,7 @@ public class DungeonMazeGenerator extends ChunkGenerator {
 				new TopTurveRoomPopulator(),
 				new CreeperSpawnerRoomPopulator(),
 				new GravePopulator(),
-				new ChestPopulator(),
+				new ChestPopulator(plugin),
 				new SpawnerPopulator(),
 				new SandPopulator(),
 				new GravelPopulator(),
@@ -166,7 +172,7 @@ public class DungeonMazeGenerator extends ChunkGenerator {
 		//=======================================================================================
 		
 		// Generate the ceiling and the grass land
-		//NoiseGenerator noise = new SimplexNoiseGenerator(world);
+		// NoiseGenerator noise = new SimplexNoiseGenerator(world);
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 				/*int height = getHeight(world, chunkx + x * 0.0625, chunkz + z * 0.0625, 2) + 30+(7*6) + 7;*/

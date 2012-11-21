@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze;
+package com.timvisee.DungeonMaze.listener;
 
 import java.util.logging.Logger;
 
@@ -9,12 +9,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.timvisee.DungeonMaze.manager.PermissionsManager;
+import com.timvisee.DungeonMaze.DungeonMaze;
+import com.timvisee.DungeonMaze.manager.DMWorldManager;
 
 public class DungeonMazePlayerListener implements Listener {
 	public static Logger log = Logger.getLogger("Minecraft");
 	public static DungeonMaze plugin;
-	public static PermissionsManager perms;
 
 	public DungeonMazePlayerListener(DungeonMaze instance) {
 		plugin = instance;
@@ -35,7 +35,7 @@ public class DungeonMazePlayerListener implements Listener {
 				if(DungeonMaze.allowSurface == false) {
 					// The player is not allowed on the surface
 					
-					if(perms.hasPermission(p, "dungeonmaze.bypass.surface", p.isOp()) == false) {
+					if(plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp()) == false) {
 						// The player doesn't have the bypass permission
 						double x = loc.getX();
 						double z = loc.getZ();
