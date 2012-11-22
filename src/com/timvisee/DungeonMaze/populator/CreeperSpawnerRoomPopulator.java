@@ -2,6 +2,7 @@ package com.timvisee.DungeonMaze.populator;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -10,6 +11,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerCause;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.DungeonMaze.DungeonMaze;
 
 public class CreeperSpawnerRoomPopulator extends BlockPopulator {
@@ -46,11 +49,26 @@ public class CreeperSpawnerRoomPopulator extends BlockPopulator {
 									source.getBlock(x + 3, y + yfloorRelative + 1, z + 2).setTypeId(112);
 									source.getBlock(x + 2, y + yfloorRelative + 1, z + 3).setTypeId(112);
 									source.getBlock(x + 3, y + yfloorRelative + 2, z + 3).setTypeId(112);
+									
 									//spawner
 									if (DungeonMazeAPI.allowMobSpawner("Creeper")) {
-										source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).setTypeId(52);
-										CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).getState();
-										PigSpawner.setSpawnedType(EntityType.CREEPER);
+										Block spawnerBlock = source.getBlock(x + 3, y + yfloorRelative + 1, z + 3);
+										
+										// Call the spawner generation event
+										DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.CREEPER, DMGenerationSpawnerCause.CREEPER_SPAWNER_ROOM, random);
+										Bukkit.getServer().getPluginManager().callEvent(event);
+										
+										// Make sure the event isn't cancelled yet
+										if(!event.isCancelled()) {
+											// Change the block into a creature spawner
+											spawnerBlock.setTypeId(52);
+											
+											// Cast the created s pawner into a CreatureSpawner object
+											CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+											
+											// Set the spawned type of the spawner
+											theSpawner.setSpawnedType(event.getSpawnedType());
+										}
 									}
 								}	
 							}

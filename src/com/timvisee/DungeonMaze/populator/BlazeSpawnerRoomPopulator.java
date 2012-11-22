@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -15,6 +16,8 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerCause;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.DungeonMaze.DungeonMaze;
 
 public class BlazeSpawnerRoomPopulator extends BlockPopulator {
@@ -132,9 +135,22 @@ public class BlazeSpawnerRoomPopulator extends BlockPopulator {
 										int spawnerZ = z + 3 + random.nextInt(2);
 										Block spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
 										spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
-										spawnerBlock.setTypeId(52);
-										CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-										theSpawner.setSpawnedType(EntityType.BLAZE);
+										
+										// Call the spawner generation event
+										DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.BLAZE, DMGenerationSpawnerCause.BLAZE_SPAWNER_ROOM, random);
+										Bukkit.getServer().getPluginManager().callEvent(event);
+										
+										// Make sure the event isn't cancelled yet
+										if(!event.isCancelled()) {
+											// Change the block into a creature spawner
+											spawnerBlock.setTypeId(52);
+											
+											// Cast the created s pawner into a CreatureSpawner object
+											CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+											
+											// Set the spawned type of the spawner
+											theSpawner.setSpawnedType(event.getSpawnedType());
+										}
 									}
 								
 									// Generate hidden content/recourses underneath the platform
@@ -147,53 +163,9 @@ public class BlazeSpawnerRoomPopulator extends BlockPopulator {
 									block2.setTypeId(54);
 									Chest chestBlock2 = (Chest) block2.getState();
 									addItemsToChest(random, chestBlock2);
-	
-									/*Block block3 = source.getBlock(x + 4, y + yfloorRelative, z + 3);
-									switch(random.nextInt(5)) {
-									case 0:
-										block3.setTypeId(14);
-										break;
-									case 1:
-										block3.setTypeId(15);
-										break;
-									case 2:
-										block3.setTypeId(16);
-										break;
-									case 3:
-										block3.setTypeId(21);
-										break;
-									case 4:
-										block3.setTypeId(56);
-										break;
-									default:
-										block3.setTypeId(16);
-									}
-	
-									Block block4 = source.getBlock(x + 4, y + yfloorRelative, z + 4);
-									switch(random.nextInt(5)) {
-									case 0:
-										block4.setTypeId(14);
-										break;
-									case 1:
-										block4.setTypeId(15);
-										break;
-									case 2:
-										block4.setTypeId(16);
-										break;
-									case 3:
-										block4.setTypeId(21);
-										break;
-									case 4:
-										block4.setTypeId(56);
-										break;
-									default:
-										block4.setTypeId(16);
-									}*/
 								}	
 							}
 						}
-						
-							
 					}
 				}
 			}

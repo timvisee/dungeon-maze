@@ -2,6 +2,7 @@ package com.timvisee.DungeonMaze.populator;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -10,6 +11,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerCause;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.DungeonMaze.DungeonMaze;
 
 public class BossRoomEasyPopulator extends BlockPopulator {
@@ -46,19 +49,61 @@ public class BossRoomEasyPopulator extends BlockPopulator {
 									}
 									//spawners
 									if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
-										source.getBlock(x + 1, y + yfloorRelative + 1, z + 1).setTypeId(52);
-										CreatureSpawner S1 = (CreatureSpawner) source.getBlock(x + 1, y + 1 + yfloorRelative, z + 1).getState();
-										S1.setSpawnedType(EntityType.ZOMBIE);
+										Block spawnerBlock = source.getBlock(x + 1, y + yfloorRelative + 1, z + 1);
+										
+										// Call the spawner generation event
+										DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_EASY, random);
+										Bukkit.getServer().getPluginManager().callEvent(event);
+										
+										// Make sure the event isn't cancelled yet
+										if(!event.isCancelled()) {
+											// Change the block into a creature spawner
+											spawnerBlock.setTypeId(52);
+											
+											// Cast the created s pawner into a CreatureSpawner object
+											CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+											
+											// Set the spawned type of the spawner
+											theSpawner.setSpawnedType(event.getSpawnedType());
+										}
 									}
 									if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
-										source.getBlock(x + 3, y + yfloorRelative + 1, z + 3).setTypeId(52);
-										CreatureSpawner PigSpawner = (CreatureSpawner) source.getBlock(x + 3, y + 1 + yfloorRelative, z + 3).getState();
-										PigSpawner.setSpawnedType(EntityType.PIG_ZOMBIE);
+										Block spawnerBlock = source.getBlock(x + 3, y + yfloorRelative + 1, z + 3);
+										
+										// Call the spawner generation event
+										DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_EASY, random);
+										Bukkit.getServer().getPluginManager().callEvent(event);
+										
+										// Make sure the event isn't cancelled yet
+										if(!event.isCancelled()) {
+											// Change the block into a creature spawner
+											spawnerBlock.setTypeId(52);
+											
+											// Cast the created s pawner into a CreatureSpawner object
+											CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+											
+											// Set the spawned type of the spawner
+											theSpawner.setSpawnedType(event.getSpawnedType());
+										}
 									}
 									if (DungeonMazeAPI.allowMobSpawner("Spider")) {
-										source.getBlock(x + 5, y + yfloorRelative + 1, z + 5).setTypeId(52);
-										CreatureSpawner S2 = (CreatureSpawner) source.getBlock(x + 5, y + 1 + yfloorRelative, z + 5).getState();
-										S2.setSpawnedType(EntityType.SPIDER); 
+										Block spawnerBlock = source.getBlock(x + 5, y + yfloorRelative + 1, z + 5);
+										
+										// Call the spawner generation event
+										DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, DMGenerationSpawnerCause.BOSSROOM_EASY, random);
+										Bukkit.getServer().getPluginManager().callEvent(event);
+										
+										// Make sure the event isn't cancelled yet
+										if(!event.isCancelled()) {
+											// Change the block into a creature spawner
+											spawnerBlock.setTypeId(52);
+											
+											// Cast the created s pawner into a CreatureSpawner object
+											CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+											
+											// Set the spawned type of the spawner
+											theSpawner.setSpawnedType(event.getSpawnedType());
+										}
 									}
 									//coal ores
 									source.getBlock(x + 1, y + yfloorRelative + 1, z + 5).setTypeId(16);

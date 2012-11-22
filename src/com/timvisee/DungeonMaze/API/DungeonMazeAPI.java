@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -181,5 +182,30 @@ public class DungeonMazeAPI {
 	 */
 	public static DMEventHandler setupDMEventHandler() {
 		return (DMEventHandler) DMEventHandler.getServer();
+	}
+	
+	/**
+	 * Get the level a block is on in Dungeon Maze
+	 * @param b the block
+	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
+	 */
+	public static int getDMLevel(Block b) {
+		// Get the height of the spawner
+		int y = b.getY();
+		
+		// Is the block bellow the Dungeon Maze?
+		if(y < 30)
+			return 0;
+		
+		// Check if the block is inside the Dungeon Maze, if so return it's level
+		int curLevel = 1;
+		for (int dml=30; dml < 30+(7*6); dml+=6) {
+			if(dml >= y && dml + 6 < y)
+				return curLevel;
+			curLevel++;
+		}
+		
+		// The block was above the Dungeon Maze, return zero
+		return 0;
 	}
 }

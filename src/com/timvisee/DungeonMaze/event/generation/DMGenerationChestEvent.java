@@ -5,22 +5,22 @@ import java.util.Random;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
+import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 import com.timvisee.DungeonMaze.event.EventHandler.DMEventHandler;
 
 public class DMGenerationChestEvent extends DMEventHandler {
 	
 	private Block b;
-	private Random random;
+	private Random rand;
 	private List<ItemStack> is;
 	private boolean addContentsInOrder = false;
 	
-	public DMGenerationChestEvent(Block b, Random random, List<ItemStack> is) {
+	public DMGenerationChestEvent(Block b, Random rand, List<ItemStack> is) {
 		this.b = b;
 		this.is = is;
-		this.random = random;
+		this.rand = rand;
 	}
 	
 	/**
@@ -29,6 +29,14 @@ public class DMGenerationChestEvent extends DMEventHandler {
 	 */
 	public Block getBlock() {
 		return this.b;
+	}
+	
+	/**
+	 * Get the level of the chest is on in Dungeon Maze
+	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
+	 */
+	public int getDMLevel() {
+		return DungeonMazeAPI.getDMLevel(this.b);
 	}
 	
 	/**
@@ -61,7 +69,7 @@ public class DMGenerationChestEvent extends DMEventHandler {
 	 * @return Random
 	 */
 	public Random getRandom() {
-		return this.random;
+		return this.rand;
 	}
 	
 	/**

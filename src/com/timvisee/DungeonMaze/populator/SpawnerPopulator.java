@@ -3,6 +3,7 @@ package com.timvisee.DungeonMaze.populator;
 import java.util.Random;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -11,6 +12,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationChestEvent;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerCause;
+import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.DungeonMaze.DungeonMaze;
 
 public class SpawnerPopulator extends BlockPopulator {
@@ -49,44 +53,54 @@ public class SpawnerPopulator extends BlockPopulator {
 										Block spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
 										spawnerBlock = source.getBlock(spawnerX, spawnerY, spawnerZ);
 										if(spawnerBlock.getTypeId() == 0) {
+											
+											// Generate a random spawnedType for the spawner
+											EntityType spawnedType = null;
+											int i = random.nextInt(25) + 1;
+											if(i >= 1 && i <= 10 && DungeonMazeAPI.allowMobSpawner("Zombie"))
+												spawnedType = EntityType.ZOMBIE;
+												
+											else if(i >= 11 && i <= 15 && DungeonMazeAPI.allowMobSpawner("Skeleton"))
+												spawnedType = EntityType.SKELETON;
+												
+											else if(i >= 16 && i <= 20 && DungeonMazeAPI.allowMobSpawner("Spider"))
+												spawnedType = EntityType.SPIDER;
+												
+											else if(i >= 21 && i <= 22 && DungeonMazeAPI.allowMobSpawner("PigZombie"))
+												spawnedType = EntityType.PIG_ZOMBIE;
+												
+											else if(i == 23 && DungeonMazeAPI.allowMobSpawner("Enderman"))
+												spawnedType = EntityType.ENDERMAN;
+											
+											else if(i == 24 && DungeonMazeAPI.allowMobSpawner("MagmaCube"))
+												spawnedType = EntityType.MAGMA_CUBE;
+												
+											else if(i == 25 && DungeonMazeAPI.allowMobSpawner("Silverfish"))
+												spawnedType = EntityType.SILVERFISH;
+												
+											else if (DungeonMazeAPI.allowMobSpawner("Zombie"))
+												spawnedType = EntityType.ZOMBIE;
+											else {
+												// if no entity type is allowed and the random return none value, continue the for loop
+												continue;
+											}
+											
+											// Call the spawner generation event
+											DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, spawnedType, DMGenerationSpawnerCause.NORMAL, random);
+											Bukkit.getServer().getPluginManager().callEvent(event);
+											
+											// Make sure the event isn't cancelled yet
+											if(event.isCancelled())
+												continue;
+											
+											// Change the block into a creature spawner
 											spawnerBlock.setTypeId(52);
 											
-											// Set the spawn monster of the spawner
-											try {
-												CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-												
-												int i = random.nextInt(25) + 1;
-												if(i >= 1 && i <= 10 && DungeonMazeAPI.allowMobSpawner("Zombie")) {
-													theSpawner.setSpawnedType(EntityType.ZOMBIE);
-													
-												} else if(i >= 11 && i <= 15 && DungeonMazeAPI.allowMobSpawner("Skeleton")) {
-													theSpawner.setSpawnedType(EntityType.SKELETON);
-													
-												} else if(i >= 16 && i <= 20 && DungeonMazeAPI.allowMobSpawner("Spider")) {
-													theSpawner.setSpawnedType(EntityType.SPIDER);
-													
-												} else if(i >= 21 && i <= 22 && DungeonMazeAPI.allowMobSpawner("PigZombie")) {
-													theSpawner.setSpawnedType(EntityType.PIG_ZOMBIE);
-													
-												} else if(i == 23 && DungeonMazeAPI.allowMobSpawner("Enderman")) {
-													theSpawner.setSpawnedType(EntityType.ENDERMAN);
-													
-												} else if(i == 24 && DungeonMazeAPI.allowMobSpawner("MagmaCube")) {
-													theSpawner.setSpawnedType(EntityType.MAGMA_CUBE);
-													
-												} else if(i == 25 && DungeonMazeAPI.allowMobSpawner("Silverfish")) {
-													theSpawner.setSpawnedType(EntityType.SILVERFISH);
-													
-												} else if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
-													theSpawner.setSpawnedType(EntityType.ZOMBIE);
-												} else {
-													// if no zombie is allow and the random return none value, remove the spawner
-													spawnerBlock.setTypeId(0);
-												}
-												
-												
-											}catch (Exception e) {
-											}
+											// Cast the created s pawner into a CreatureSpawner object
+											CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+											
+											// Set the spawned type of the spawner
+											theSpawner.setSpawnedType(event.getSpawnedType());
 										}
 									}
 								}
