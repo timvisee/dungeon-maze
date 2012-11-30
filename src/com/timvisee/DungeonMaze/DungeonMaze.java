@@ -26,6 +26,7 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 import com.timvisee.DungeonMaze.listener.DungeonMazeBlockListener;
 import com.timvisee.DungeonMaze.listener.DungeonMazePlayerListener;
+import com.timvisee.DungeonMaze.listener.DungeonMazeWorldListener;
 import com.timvisee.DungeonMaze.manager.DMWorldManager;
 import com.timvisee.DungeonMaze.manager.PermissionsManager;
 import com.timvisee.DungeonMaze.Metrics.Graph;
@@ -36,6 +37,7 @@ public class DungeonMaze extends JavaPlugin {
 
 	private final DungeonMazeBlockListener blockListener = new DungeonMazeBlockListener(this);
 	private final DungeonMazePlayerListener playerListener = new DungeonMazePlayerListener(this);
+	private final DungeonMazeWorldListener worldListener = new DungeonMazeWorldListener(this);
 	
 	public static FileConfiguration config;
 	
@@ -60,8 +62,8 @@ public class DungeonMaze extends JavaPlugin {
 	private PermissionsManager pm;
 	
 	/* Multiverse */
-	public boolean useMultiverse = false;
-	public MultiverseCore multiverseCore;
+	public static boolean useMultiverse = false;
+	public static MultiverseCore multiverseCore;
 	
 	private DMWorldManager dmWorldManager = new DMWorldManager(this);
 	
@@ -92,6 +94,7 @@ public class DungeonMaze extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.blockListener, this);
 		pm.registerEvents(this.playerListener, this);
+		pm.registerEvents(this.worldListener, this);
 
 		// Setup API
 		DungeonMazeAPI.setPlugin(this);
@@ -144,7 +147,6 @@ public class DungeonMaze extends JavaPlugin {
 
 	public void checkConfigFilesExist() {
 		if(!new File(getDataFolder()+File.separator+"config.yml").exists()){
-			getConfig().options().copyDefaults(true);
 			saveDefaultConfig();
 		}
 	}
@@ -541,8 +543,7 @@ public class DungeonMaze extends JavaPlugin {
 	@SuppressWarnings("unchecked")
 	public void loadConfig() {
 		config = getConfig();
-		getConfig();
-		saveConfig();
+		config.options().copyDefaults(true);
 		unloadWorldsOnPluginDisable = config.getBoolean("unloadWorldsOnPluginDisable", true);
 		allowSurface = config.getBoolean("allowSurface", true);
 		worldProtection = config.getBoolean("worldProtection", false);

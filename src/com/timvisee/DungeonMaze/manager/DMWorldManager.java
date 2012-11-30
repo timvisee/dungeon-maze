@@ -12,6 +12,7 @@ import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
+import com.onarandombox.MultiverseCore.exceptions.PropertyDoesNotExistException;
 import com.timvisee.DungeonMaze.DungeonMaze;
 
 public class DMWorldManager {
@@ -33,13 +34,17 @@ public class DMWorldManager {
 		List<String> w = plugin.getConfig().getStringList("worlds");
 		if(w != null)  {
 			// Get DM worlds from Dungeon Maze
-			if(plugin.useMultiverse) {
-				Collection<MultiverseWorld> mvworlds = plugin.multiverseCore.getMVWorldManager().getMVWorlds();
+			if(DungeonMaze.useMultiverse) {
+				Collection<MultiverseWorld> mvworlds = DungeonMaze.multiverseCore.getMVWorldManager().getMVWorlds();
 				if(mvworlds != null) {
 					for(MultiverseWorld mvw : mvworlds) {
-						if(mvw.getCBWorld().getGenerator().equals(plugin.getDMWorldGenerator()))
-							if(!w.contains(w.add(mvw.getCBWorld().getName())))
-								w.add(mvw.getCBWorld().getName());
+						try {
+							if(mvw.getPropertyValue("generator").equalsIgnoreCase("dungeonmaze"))
+								if(!w.contains(mvw.getCBWorld().getName()))
+									w.add(mvw.getCBWorld().getName());
+						} catch (PropertyDoesNotExistException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -55,7 +60,7 @@ public class DMWorldManager {
 		// Put all the DM worlds into the bukkit.yml file
 		System.out.println("Editing bukkit.yml file...");
 		FileConfiguration bukkitConfig = plugin.getConfigFromPath(new File("bukkit.yml"));
-		if(bukkitConfig != null && !plugin.useMultiverse) {
+		if(bukkitConfig != null && !DungeonMaze.useMultiverse) {
 			for(String entry : w) {
 				bukkitConfig.set("worlds." + w + ".generator", entry);
 			}
