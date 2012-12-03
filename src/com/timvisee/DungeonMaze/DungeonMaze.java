@@ -250,6 +250,7 @@ public class DungeonMaze extends JavaPlugin {
 		return useBypassPermissions;
 	}
 	
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if(commandLabel.equalsIgnoreCase("dungeonmaze") || commandLabel.equalsIgnoreCase("dm")) {
 			if(args.length == 0) {
