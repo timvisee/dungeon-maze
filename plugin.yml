@@ -15,16 +15,16 @@ permissions:
         description: Permission to the createworld command
         default: op
     dungeonmaze.command.teleport:
-        description: 	Permission to the teleport command
+        description: Permission to the teleport command
         default: op
     dungeonmaze.command.listworlds:
-        description: Logout
+        description: Permission to list worlds
         default: op
     dungeonmaze.command.reload:
-        description: 	Permission to the reload command
+        description: Permission to the reload command
         default: op       
     dungeonmaze.command.reloadperms:
-        description: 	Permission to the reloadperms command
+        description: Permission to the reloadperms command
         default: op
     dungeonmaze.command.checkupdates:
         description: Permission to the checkupdates command
@@ -33,5 +33,5 @@ permissions:
         description: Bypass the surface blocker
         default: op
     dungeonmaze.bypass.build:
-        description: 	Bypass permission of the world protection
+        description: Bypass permission of the world protection
         default: op
