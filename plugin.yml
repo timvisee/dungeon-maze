@@ -1,6 +1,6 @@
 name: DungeonMaze
 main: com.timvisee.DungeonMaze.DungeonMaze
-version: 0.1.5.2
+version: 0.1.5.3
 load: startup
 softdepend: [Multiverse-Core, PermissionsBukkit, Permissions, PermissionsEX, EssentialsGroupManager]
 commands:
@@ -10,3 +10,28 @@ commands:
   dungeonmaze:
     description: Dungeon Maze command
     usage: /dungeonmaze
+permissions:
+    dungeonmaze.command.createworld:
+        description: Permission to the createworld command
+        default: op
+    dungeonmaze.command.teleport:
+        description: 	Permission to the teleport command
+        default: op
+    dungeonmaze.command.listworlds:
+        description: Logout
+        default: op
+    dungeonmaze.command.reload:
+        description: 	Permission to the reload command
+        default: op       
+    dungeonmaze.command.reloadperms:
+        description: 	Permission to the reloadperms command
+        default: op
+    dungeonmaze.command.checkupdates:
+        description: Permission to the checkupdates command
+        default: op
+    dungeonmaze.bypass.surface:
+        description: Bypass the surface blocker
+        default: op
+    dungeonmaze.bypass.build:
+        description: 	Bypass permission of the world protection
+        default: op
