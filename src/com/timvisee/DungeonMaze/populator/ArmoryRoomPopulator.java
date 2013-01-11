@@ -106,73 +106,73 @@ public class ArmoryRoomPopulator extends BlockPopulator {
 	public void addItemsToChest(Random random, Chest chest) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(50, 16, (short) 0, (byte) 0));
+			items.add(new ItemStack(50, 16, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(50, 20, (short) 0, (byte) 0));
+			items.add(new ItemStack(50, 20, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(262, 24, (short) 0, (byte) 0));
+			items.add(new ItemStack(262, 24, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(262, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(262, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(264, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(264, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 50) {
-			items.add(new ItemStack(265, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(265, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 50) {
-			items.add(new ItemStack(266, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(266, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 50) {
-			items.add(new ItemStack(267, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(267, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(282, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(282, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(306, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(306, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(307, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(307, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(308, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(308, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(309, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(309, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(310, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(310, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(311, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(311, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(312, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(312, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(313, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(313, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(318, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(320, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(320, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(322, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(322, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(331, 7, (short) 0, (byte) 0));
+			items.add(new ItemStack(331, 7, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(354, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(354, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(357, 8, (short) 0, (byte) 0));
+			items.add(new ItemStack(357, 8, (short) 0));
 		}
 		
 		int itemCountInChest = 4;

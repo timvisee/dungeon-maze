@@ -43,6 +43,7 @@ public class RailPopulator extends BlockPopulator {
 									if (random.nextInt(100) < RAIL_CHANCE+(RAIL_CHANCE_ADDITION_PER_LEVEL*(y-30)/6)) { 
 										int startX = x + random.nextInt(6) + 1;
 										int startZ = z + random.nextInt(6) + 1;
+										@SuppressWarnings("unused")
 										int startY = y;
 										
 										// Get the floor location 
