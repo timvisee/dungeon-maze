@@ -12,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
-import com.timvisee.DungeonMaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.DungeonMaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.DungeonMaze.DungeonMaze;

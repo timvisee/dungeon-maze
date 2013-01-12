@@ -196,85 +196,85 @@ public class AbandonedDefenceCastleRoomPopulator extends BlockPopulator {
 	public void addItemsToFurnace(Random random, Furnace furnace) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(41, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(41, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(42, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(42, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(45, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(45, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(263, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(263, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(263, 1, (short) 1, (byte) 0));
+			items.add(new ItemStack(263, 1, (short) 1));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(265, 2, (short) 0, (byte) 0));
+			items.add(new ItemStack(265, 2, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(265, 4, (short) 0, (byte) 0));
+			items.add(new ItemStack(265, 4, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(266, 2, (short) 0, (byte) 0));
+			items.add(new ItemStack(266, 2, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(266, 4, (short) 0, (byte) 0));
+			items.add(new ItemStack(266, 4, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(297, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(297, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(325, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(325, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(366, 2, (short) 0, (byte) 0));
+			items.add(new ItemStack(366, 2, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(366, 4, (short) 0, (byte) 0));
+			items.add(new ItemStack(366, 4, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(318, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(318, 5, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 5, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(320, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(320, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(350, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(350, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(368, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(368, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(369, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(369, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(370, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(370, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 45) {
-			items.add(new ItemStack(371, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(371, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(372, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(372, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(375, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(375, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(377, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(377, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(378, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(378, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(381, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(381, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(382, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(382, 1, (short) 0));
 		}
 		
 		// Add the selected items into the furnace
@@ -287,139 +287,140 @@ public class AbandonedDefenceCastleRoomPopulator extends BlockPopulator {
 	public void addItemsToChest(Random random, Chest chest) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(50, 4, (short) 0, (byte) 0));
+			items.add(new ItemStack(50, 4, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(50, 8, (short) 0, (byte) 0));
+			items.add(new ItemStack(50, 8, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(50, 12, (short) 0, (byte) 0));
+			items.add(new ItemStack(50, 12, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(260, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(260, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(262, 16, (short) 0, (byte) 0));
+			items.add(new ItemStack(262, 16, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(262, 24, (short) 0, (byte) 0));
+			items.add(new ItemStack(262, 24, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(264, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(264, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 50) {
-			items.add(new ItemStack(265, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(265, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 60) {
-			items.add(new ItemStack(266, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(266, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(267, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(267, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(268, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(268, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(272, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(272, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(296, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(296, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(296, 2, (short) 0, (byte) 0));
+			items.add(new ItemStack(296, 2, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(296, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(296, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(297, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(297, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(298, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(298, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(299, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(299, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(300, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(300, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(301, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(301, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(302, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(302, 1, (short) 0));
 		} 
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(303, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(303, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(304, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(304, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(305, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(305, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(306, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(306, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(307, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(307, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(308, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(308, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(309, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(309, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(318, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(318, 5, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 5, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(318, 7, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 7, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(319, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(319, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(320, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(320, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 15) {
-			items.add(new ItemStack(331, 5, (short) 0, (byte) 0));
+			items.add(new ItemStack(331, 5, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(331, 8, (short) 0, (byte) 0));
+			items.add(new ItemStack(331, 8, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(331, 13, (short) 0, (byte) 0));
+			items.add(new ItemStack(331, 13, (short) 0));
 		}
 		if(random.nextInt(100) < 3) {
-			items.add(new ItemStack(331, 21, (short) 0, (byte) 0));
+			items.add(new ItemStack(331, 21, (short) 0));
 		}
 		if(random.nextInt(100) < 10) {
-			items.add(new ItemStack(345, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(345, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(349, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(349, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(350, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(350, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(350, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(350, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(351, 1, (short) 0, (byte) 3));
+			
+			items.add(new ItemStack(351, 1, (short) 3));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(354, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(354, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(357, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(357, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(357, 5, (short) 0, (byte) 0));
+			items.add(new ItemStack(357, 5, (short) 0));
 		}
 		
 		int itemCountInChest = 3;

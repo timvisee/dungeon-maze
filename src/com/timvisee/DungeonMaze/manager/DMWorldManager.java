@@ -3,7 +3,6 @@ package com.timvisee.DungeonMaze.manager;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -11,6 +10,7 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import com.timvisee.DungeonMaze.DungeonMaze;
 
@@ -18,7 +18,7 @@ public class DMWorldManager {
 	public static DungeonMaze plugin;
 
 	public DMWorldManager(DungeonMaze instance) {
-		plugin = instance;
+		DMWorldManager.plugin = instance;
 	}
 
 	// DM worlds
@@ -31,20 +31,22 @@ public class DMWorldManager {
 	public static void refresh() {
 		// Load the list from the config
 		List<String> w = plugin.getConfig().getStringList("worlds");
-		if(w != null)  {
-			// Get DM worlds from Dungeon Maze
-			if(plugin.useMultiverse) {
-				Collection<MultiverseWorld> mvworlds = plugin.multiverseCore.getMVWorldManager().getMVWorlds();
-				if(mvworlds != null) {
-					for(MultiverseWorld mvw : mvworlds) {
-						if(mvw.getCBWorld().getGenerator().equals(plugin.getDMWorldGenerator()))
-							if(!w.contains(w.add(mvw.getCBWorld().getName())))
-								w.add(mvw.getCBWorld().getName());
+		
+			if (getMultiverseCore() != null) {
+				for (World world : Bukkit.getWorlds()) {
+					MultiverseCore mv = getMultiverseCore();
+					MultiverseWorld mvWorld = mv.getMVWorldManager().getMVWorld(world);
+					if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName())) {
+						w.add(world.getName());
 					}
 				}
 			}
-			DMWorldManager.worlds = w;
-		}
+			else {
+				DungeonMaze.log.severe("[DungeonMaze] Ajouts des mondes impossibles");
+			}
+		
+		worlds = w;
+
 		
 		// Load the list from the config
 		List<String> pw = plugin.getConfig().getStringList("preloadWorlds");
@@ -53,18 +55,20 @@ public class DMWorldManager {
 		}
 		
 		// Put all the DM worlds into the bukkit.yml file
-		System.out.println("Editing bukkit.yml file...");
-		FileConfiguration bukkitConfig = plugin.getConfigFromPath(new File("bukkit.yml"));
-		if(bukkitConfig != null && !plugin.useMultiverse) {
-			for(String entry : w) {
-				bukkitConfig.set("worlds." + w + ".generator", entry);
+		if (getMultiverseCore() == null) {
+			FileConfiguration bukkitConfig = plugin.getConfigFromPath(new File("bukkit.yml"));
+			if(bukkitConfig != null) {
+				System.out.println("Editing bukkit.yml file...");
+				for(String entry : w) {
+					bukkitConfig.set("worlds." + w + ".generator", entry);
+				}
+				try {
+					bukkitConfig.save(new File("bukkit.yml"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.out.println("Editing finished!");
 			}
-			try {
-				bukkitConfig.save(new File("bukkit.yml"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Editing finished!");
 		}
 	}
 	
@@ -134,4 +138,11 @@ public class DMWorldManager {
 			}
 		}
 	}
+	
+	public static MultiverseCore getMultiverseCore() {
+        MultiverseCore mv = (MultiverseCore) plugin.getServer().getPluginManager().getPlugin("Multiverse-Core");
+ 
+        if (mv != null) return mv;
+        else return null;
+    }
 }

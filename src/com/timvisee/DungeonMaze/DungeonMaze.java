@@ -41,7 +41,7 @@ public class DungeonMaze extends JavaPlugin {
 	
 	public static boolean unloadWorldsOnPluginDisable;
 	public static boolean allowSurface;
-	public static boolean worldProtection;
+	public boolean worldProtection;
 	public static List<Object> blockWhiteList;
 	public static boolean enableUpdateCheckerOnStartup;
 	public static boolean usePermissions;
@@ -63,11 +63,12 @@ public class DungeonMaze extends JavaPlugin {
 	public boolean useMultiverse = false;
 	public MultiverseCore multiverseCore;
 	
-	private DMWorldManager dmWorldManager = new DMWorldManager(this);
+	private DMWorldManager dmWorldManager;
+	private DungeonMazeAPI dmAPI;
 	
 	
 	@Override
-	public void onEnable() {		
+	public void onEnable() {
 		// Check if all the config file exists
 		checkConfigFilesExist();
 	    
@@ -79,7 +80,6 @@ public class DungeonMaze extends JavaPlugin {
 		
 		// Setup the DM world manager and preload the worlds
 		setupDMWorldManager();
-		getDMWorldManager();
 		DMWorldManager.preloadWorlds();
 
 		// Setup permissions usage
@@ -94,7 +94,7 @@ public class DungeonMaze extends JavaPlugin {
 		pm.registerEvents(this.playerListener, this);
 
 		// Setup API
-		DungeonMazeAPI.setPlugin(this);
+		setDmAPI(new DungeonMazeAPI(this));
 
 		// Show a startup message
 		PluginDescriptionFile pdfFile = getDescription();
@@ -620,6 +620,14 @@ public class DungeonMaze extends JavaPlugin {
 			constantRooms.clear();
 		}
 		return constantRooms.contains(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
+	}
+
+	public void setDmAPI(DungeonMazeAPI dmAPI) {
+		this.dmAPI = dmAPI;
+	}
+
+	public DungeonMazeAPI getDmAPI() {
+		return dmAPI;
 	}
 
 }

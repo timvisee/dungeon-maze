@@ -117,86 +117,86 @@ public class GreatFurnaceRoomPopulator extends BlockPopulator {
 	public void addItemsToFurnace(Random random, Furnace furnace) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(41, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(41, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 5) {
-			items.add(new ItemStack(42, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(42, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(45, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(45, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(263, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(263, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(263, 1, (short) 1, (byte) 0));
+			items.add(new ItemStack(263, 1, (short) 1));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(265, 2, (short) 0, (byte) 0));
+			items.add(new ItemStack(265, 2, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(265, 4, (short) 0, (byte) 0));
+			items.add(new ItemStack(265, 4, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(266, 2, (short) 0, (byte) 0));
+			items.add(new ItemStack(266, 2, (short) 0));
 		}
 		if(random.nextInt(100) < 20) {
-			items.add(new ItemStack(266, 4, (short) 0, (byte) 0));
+			items.add(new ItemStack(266, 4, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(297, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(297, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(325, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(325, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(366, 2, (short) 0, (byte) 0));
+			items.add(new ItemStack(366, 2, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(366, 4, (short) 0, (byte) 0));
+			items.add(new ItemStack(366, 4, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(318, 3, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 3, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(318, 5, (short) 0, (byte) 0));
+			items.add(new ItemStack(318, 5, (short) 0));
 		}
 		if(random.nextInt(100) < 80) {
-			items.add(new ItemStack(320, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(320, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 40) {
-			items.add(new ItemStack(350, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(350, 1, (short) 0));
 		}
 		
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(368, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(368, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(369, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(369, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(370, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(370, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 45) {
-			items.add(new ItemStack(371, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(371, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(372, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(372, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(375, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(375, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(377, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(377, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(378, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(378, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(381, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(381, 1, (short) 0));
 		}
 		if(random.nextInt(100) < 30) {
-			items.add(new ItemStack(382, 1, (short) 0, (byte) 0));
+			items.add(new ItemStack(382, 1, (short) 0));
 		}
 		
 		// Add the selected items into the furnace
