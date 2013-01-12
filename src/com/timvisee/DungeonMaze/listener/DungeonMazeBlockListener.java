@@ -15,10 +15,10 @@ import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
 
 public class DungeonMazeBlockListener implements Listener {
 	public static Logger log = Logger.getLogger("Minecraft");
-	public static DungeonMaze plugin;
+	public DungeonMaze plugin;
 
 	public DungeonMazeBlockListener(DungeonMaze instance) {
-		plugin = instance;
+		this.plugin = instance;
 	}
 	
 	@EventHandler
@@ -30,7 +30,7 @@ public class DungeonMazeBlockListener implements Listener {
 		if(DungeonMazeAPI.isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(DungeonMaze.worldProtection) {
+			if(plugin.worldProtection) {
 				// The world protection is enable
 				
 				if((!plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
@@ -51,7 +51,7 @@ public class DungeonMazeBlockListener implements Listener {
 		if(DungeonMazeAPI.isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(DungeonMaze.worldProtection) {
+			if(plugin.worldProtection) {
 				// The world protection is enable
 				
 				if((!plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
