@@ -60,6 +60,7 @@ public class GravePopulator extends BlockPopulator {
 	}
 	
 	// Code to add text to a sign
+	@SuppressWarnings("null")
 	public void addGraveTextToSign(Sign sign, Random random) {
 		if (random.nextInt(100) < 5) {
 			changeSignLine(sign, 1, "-404-");

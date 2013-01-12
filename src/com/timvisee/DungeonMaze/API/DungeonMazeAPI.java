@@ -14,7 +14,11 @@ import com.timvisee.DungeonMaze.manager.DMWorldManager;
 
 public class DungeonMazeAPI {
 	
-	private static DungeonMaze plugin;
+	public static DungeonMaze plugin;
+	
+	public DungeonMazeAPI(DungeonMaze instance) {
+		DungeonMazeAPI.plugin = instance;
+	}
 	
 	/**
 	 * Hook into Dungeon Maze
@@ -119,7 +123,7 @@ public class DungeonMazeAPI {
 	public static boolean canBuildInDMWorld(String w, Player p) {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
-			if(DungeonMaze.worldProtection) {
+			if(plugin.worldProtection) {
 				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());	
 			}
 		return true;
@@ -137,22 +141,6 @@ public class DungeonMazeAPI {
 			if(!DungeonMaze.allowSurface)
 				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
-	}
-	
-	/**
-	 * Set the DM plugin
-	 * @param plugin the DM plugin
-	 */
-	public static void setPlugin(DungeonMaze plugin) {
-		DungeonMazeAPI.plugin = plugin;
-	}
-
-	/**
-	 * Get the DM plugin
-	 * @return the DM plugin
-	 */
-	public static DungeonMaze getPlugin() {
-		return plugin;
 	}
 	
 	/**
