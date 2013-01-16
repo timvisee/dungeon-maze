@@ -66,7 +66,6 @@ public class DungeonMaze extends JavaPlugin {
 	private DMWorldManager dmWorldManager;
 	private DungeonMazeAPI dmAPI;
 	
-	
 	@Override
 	public void onEnable() {
 		// Check if all the config file exists
@@ -105,9 +104,8 @@ public class DungeonMaze extends JavaPlugin {
 		setupMetrics();
 		
 		// Enable update checker on startup if it's enabled
-		if(config.getBoolean("enableUpdateCheckerOnStartup", true)) {
+		if(config.getBoolean("enableUpdateCheckerOnStartup", true))
 			checkUpdates();
-		}
 	}
 	
 	@Override
@@ -120,24 +118,20 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Unload the Dungeon Maze worlds
 				List<String> worlds = new ArrayList<String>();
-				for(World w : getServer().getWorlds()) {
-					if(config.getStringList("worlds").contains(w.getName())) {
+				for(World w : getServer().getWorlds())
+					if(config.getStringList("worlds").contains(w.getName()))
 						worlds.add(w.getName());
-					}
-				}
-				for(String w : worlds) {
+						
+				for(String w : worlds)
 					getServer().unloadWorld(w, true);
-				}
 				
 				log.info("[DungeonMaze] All Dungeon Maze worlds have been unloaded!");
-			} else {
+			} else
 				log.info("[DungeonMaze] No Dungeon Maze worlds to unload avaiable");
-			}
-		} else {
+				
+		} else
 			log.info("[DungeonMaze] Unloading worlds has been disabled!");
-		}
 		
-
 		// Show an disabled message
 		log.info("[DungeonMaze] Dungeon Maze Disabled");
 	}
@@ -206,6 +200,8 @@ public class DungeonMaze extends JavaPlugin {
 		}
 	}
 	
+	// TODO: Put the update checker into a seperated class to clean up the code
+	// TODO: Use new updater using XML and auto update build into dev versions of Safe Creeper linked to timvisee.com
 	public boolean checkUpdates() {
 		// Check for new updates
 		DungeonMazeUpdateChecker scuc = new DungeonMazeUpdateChecker(this);
@@ -256,7 +252,9 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].toString().equalsIgnoreCase("createworld") || args[0].toString().equalsIgnoreCase("cw") || args[0].toString().equalsIgnoreCase("create")) {
+			if(args[0].toString().equalsIgnoreCase("createworld") ||
+					args[0].toString().equalsIgnoreCase("cw") ||
+					args[0].toString().equalsIgnoreCase("create")) {
 				// Check permission
 				if(sender instanceof Player) {
 					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.createworld", sender.isOp())) {
@@ -279,7 +277,8 @@ public class DungeonMaze extends JavaPlugin {
 					return true;
 				}
 				
-				// Edit the server config file and the Dungeon Maze config file
+				// Edit the bukkit.yml file so bukkit knows what generator to use for the Dungeon Maze worlds,
+				// also update the Dungeon Maze files.
 				System.out.println("Editing bukkit.yml file...");
 				FileConfiguration serverConfig = getConfigFromPath(new File("bukkit.yml"));
 				serverConfig.set("worlds." + w + ".generator", "DungeonMaze");
@@ -291,14 +290,12 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				System.out.println("Editing Dungeon Maze config.yml file...");
 				List<String> worlds = config.getStringList("worlds");
-				if(!worlds.contains(w)) {
+				if(!worlds.contains(w))
 					worlds.add(w);
-				}
 				config.set("worlds", worlds);
 				List<String> preloadWorlds = config.getStringList("preloadWorlds");
-				if(!preloadWorlds.contains(w)) {
+				if(!preloadWorlds.contains(w))
 					preloadWorlds.add(w);
-				}
 				config.set("preloadWorlds", preloadWorlds);
 				saveConfig();
 				System.out.println("Editing finished!");
@@ -314,7 +311,11 @@ public class DungeonMaze extends JavaPlugin {
 					p.teleport(world.getSpawnLocation());
 					p.sendMessage(ChatColor.GREEN + "The world has been succesfully generated! You have been teleported.");
 				}
-			} else if(args[0].toString().equalsIgnoreCase("teleport") || args[0].toString().equalsIgnoreCase("tp") || args[0].toString().equalsIgnoreCase("warp")) {
+				
+			} else if(args[0].toString().equalsIgnoreCase("teleport") ||
+					args[0].toString().equalsIgnoreCase("tp") ||
+					args[0].toString().equalsIgnoreCase("warp")) {
+				
 				// Check permission
 				if(sender instanceof Player) {
 					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.teleport", sender.isOp())) {
@@ -323,39 +324,40 @@ public class DungeonMaze extends JavaPlugin {
 					}
 				}
 				
+				// Check for invalid command arguments
 				if(args.length != 2) {
 					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
 					return true;
 				}
 				
+				// The command must be ran by an in-game player
 				if(sender instanceof Player) { } else {
 					sender.sendMessage(ChatColor.DARK_RED + "You need to be in-game to use this command!");
 					return true;
 				}
 				
-				// Get the world name
+				// Get the player and the world name
+				Player p = (Player) sender;
 				String w = args[1].toString();
 				
+				// The world must exist
 				if(!worldExists(w)) {
 					sender.sendMessage(ChatColor.DARK_RED + w);
 					sender.sendMessage(ChatColor.DARK_RED + "This world doesn't exists!");
 					return true;
 				}
 				
+				// The world must be loaded, if not force the world to load
 				if(!worldIsLoaded(w))
 					worldLoad(w);
 				
-				// If the sender is a player, teleport him!
-				if(sender instanceof Player) {
-					Player p = (Player) sender;
-					p.teleport(getServer().getWorld(w).getSpawnLocation());
-					p.sendMessage(ChatColor.GREEN + "You have been teleported.");
-				} else
-					sender.sendMessage(ChatColor.DARK_RED + "This command could only be used in-game!");
-				
+				// Telepor the player, show a status message and return true
+				p.teleport(getServer().getWorld(w).getSpawnLocation());
+				p.sendMessage(ChatColor.GREEN + "You have been teleported.");
 				return true;
 				
-			} else if(args[0].equalsIgnoreCase("listworlds") || args[0].equalsIgnoreCase("lw") || args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("l")) {
+			} else if(args[0].equalsIgnoreCase("listworlds") || args[0].equalsIgnoreCase("lw") ||
+					args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("l")) {
 
 				// Check wrong command values
 				if(args.length != 1) {
@@ -377,11 +379,10 @@ public class DungeonMaze extends JavaPlugin {
 				if(worlds.size() > 0) {
 					for(String w : worlds) {
 						getDMWorldManager();
-						if(DMWorldManager.isLoadedDMWorld(w)) {
+						if(DMWorldManager.isLoadedDMWorld(w))
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
-						} else {
+						else
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");
-						}
 					}
 				} else
 					sender.sendMessage(ChatColor.DARK_RED + "You don't have any Dungeon Maze world yet!");
@@ -461,14 +462,14 @@ public class DungeonMaze extends JavaPlugin {
 				// Setup permissions
 				sender.sendMessage(ChatColor.YELLOW + "Checking for updates...");
 				
-				if(checkUpdates()) {
+				if(checkUpdates())
 					sender.sendMessage(ChatColor.GREEN + "New version found! (v" + newestVersion + ")");
-				} else {
+				else
 					sender.sendMessage(ChatColor.YELLOW + "No new version found!");
-				}
 				return true;
 				
-			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") || args[0].equalsIgnoreCase("?")) {
+			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") ||
+					args[0].equalsIgnoreCase("?")) {
 				
 				// Check wrong command values
 				if(args.length != 1) {
@@ -490,6 +491,7 @@ public class DungeonMaze extends JavaPlugin {
 				
 				return true;
 			} else {
+				// Handle unknown commands
 				sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
 				return true;
 			}
@@ -504,10 +506,9 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	public boolean worldIsLoaded(String w) {
-		for(World entry : getServer().getWorlds()) {
+		for(World entry : getServer().getWorlds())
 			if(entry.getName().equals(w))
 				return true;
-		}
 		return false;
 	}
 	
@@ -527,15 +528,12 @@ public class DungeonMaze extends JavaPlugin {
 	
 	// Function to get a costum configuration file
 	public FileConfiguration getConfigFromPath(File file) {
-		FileConfiguration c;
-		
-		if (file == null) {
+		// The file param may not be null
+		if (file == null)
 		    return null;
-		}
-
-	    c = YamlConfiguration.loadConfiguration(file);
 	    
-	    return c;
+		// Get and return the config from an external file
+	    return YamlConfiguration.loadConfiguration(file);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -552,8 +550,6 @@ public class DungeonMaze extends JavaPlugin {
 		blockWhiteList = (List<Object>) config.getList("blockWhiteList");
 		mobs = config.getStringList("mobs");
 	}
-
-	
 
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
@@ -572,10 +568,15 @@ public class DungeonMaze extends JavaPlugin {
 		return getServer().getOnlinePlayers();
 	}
 	
+	
+	
+	// TODO: Put all this codeb below in a manager class to handle all the hard stuff, and to clean up the code.
+	// TODO: Also save this data into the data folder of the world files so it can be read if needed
 	// Getters and setters for the two lists with constant chunks and constant rooms
 	public static void addConstantChunk(String world, Chunk chunk) {
 		addConstantChunk(world, chunk.getX(), chunk.getZ());
 	}
+	
 	public static void addConstantChunk(String world, int chunkX, int chunkZ) {
 		if (lastWorld != world) {
 			lastWorld = world;
@@ -587,9 +588,11 @@ public class DungeonMaze extends JavaPlugin {
 	public static void addConstantRooms(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
 		addConstantRooms(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
 	}
+	
 	public static void addConstantRooms(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
 		addConstantRooms(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
 	}
+	
 	public static void addConstantRooms(String world, int roomX, int roomY, int roomZ) {
 		if (lastWorld != world) {
 			lastWorld = world;
@@ -601,6 +604,7 @@ public class DungeonMaze extends JavaPlugin {
 	public static boolean isConstantChunk(String world, Chunk chunk) {
 		return isConstantChunk(world, chunk.getX(), chunk.getZ());
 	}
+	
 	public static boolean isConstantChunk(String world, int chunkX, int chunkZ) {
 		if (lastWorld != world) {
 			lastWorld = world;
@@ -608,12 +612,15 @@ public class DungeonMaze extends JavaPlugin {
 		}
 		return constantChunks.contains(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
 	}
+	
 	public static boolean isConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
 		return isConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
 	}
+	
 	public static boolean isConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
 		return isConstantRoom(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
 	}
+	
 	public static boolean isConstantRoom(String world, int roomX, int roomY, int roomZ) {
 		if (lastWorld != world) {
 			lastWorld = world;

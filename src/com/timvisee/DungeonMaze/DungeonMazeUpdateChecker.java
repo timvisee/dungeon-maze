@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.regex.Pattern;
@@ -43,8 +42,9 @@ public class DungeonMazeUpdateChecker extends Thread {
 				return str;
 		    }
 		    in.close();
-		} catch (MalformedURLException e) {
-		} catch (IOException e) {
+		} catch (IOException ex) {
+			System.out.println("[DungeonMaze] Error while requesting newest version number!");
+			ex.printStackTrace();
 		}
 		return plugin.getDescription().getVersion();
 	}
@@ -54,9 +54,8 @@ public class DungeonMazeUpdateChecker extends Thread {
         String s2 = normalisedVersion(lastCheck);
         int cmp = s1.compareTo(s2);
         //String cmpStr = cmp < 0 ? "<" : cmp > 0 ? ">" : "==";
-        if(cmp < 0) {
+        if(cmp < 0)
         	return true;
-        }
         return false;
     }
 
@@ -67,9 +66,8 @@ public class DungeonMazeUpdateChecker extends Thread {
 	private String normalisedVersion(String version, String sep, int maxWidth) {
         String[] split = Pattern.compile(sep, Pattern.LITERAL).split(version);
         StringBuilder sb = new StringBuilder();
-        for (String s : split) {
+        for (String s : split)
             sb.append(String.format("%" + maxWidth + 's', s));
-        }
         return sb.toString();
     }
 

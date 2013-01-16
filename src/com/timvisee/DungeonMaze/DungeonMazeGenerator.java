@@ -103,21 +103,16 @@ public class DungeonMazeGenerator extends ChunkGenerator {
 		// Create a byte variable to write the chunk inside and return this variable
 		byte[] result = new byte[32768];
 		
-		// This will set the whole floor to stone (the floor of each chunk) (+3 for secure!)
-		for (int y = 30 + 3; y > 0; y--) {
-			for (int x = 0; x < 16; x++) {
-				for (int z = 0; z < 16; z++) {
+		// This will set the whole floor to stone (the floor of each chunk)
+		for (int y = 30 + 3; y > 0; y--)
+			for (int x = 0; x < 16; x++)
+				for (int z = 0; z < 16; z++)
 					result[xyzToByte(x, y, z)] = (byte) Material.STONE.getId();
-				}
-			}
-		}
 		
 		// Set the lowest layer to bedrock
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
+		for (int x = 0; x < 16; x++)
+			for (int z = 0; z < 16; z++)
 				result[xyzToByte(x, 0, z)] = (byte) Material.BEDROCK.getId();
-			}
-		}
 
 		// The layers for each 5 rooms in the variable y
 		for (int y=30; y < 30+(7*6); y+=6) {
@@ -141,64 +136,57 @@ public class DungeonMazeGenerator extends ChunkGenerator {
 							for (int z2 = z; z2 < z+8; z2++) {
 								
 								// Make the bottom of the room
-								if(y2 == y + yfloor) {
-									for (int xb = x; xb < x + 8; xb++) {
-										for (int zb = z; zb < z + 8; zb++) {
+								if(y2 == y + yfloor)
+									for (int xb = x; xb < x + 8; xb++)
+										for (int zb = z; zb < z + 8; zb++)
 											result[xyzToByte(xb, y2, zb)] = (byte) Material.COBBLESTONE.getId();
-										}
-									}
-								}
 								
 								// Fill the walls of the place with cobblestone
-								if ((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7)) {
+								if ((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7))
 									result[xyzToByte(x2, y2, z2)] = (byte) 98;
-								} else if (xr == x2) {
+								else if (xr == x2)
 									result[xyzToByte(x2, y2, z2)] = (byte) 98;
-								} else if (zr == z2) {
+								else if (zr == z2)
 									result[xyzToByte(x2, y2, z2)] = (byte) 98;
-								} else {
+								else
 									result[xyzToByte(x2, y2, z2)] = (byte) Material.AIR.getId();
-								}
 							}
 						}
 					}
 				}
 			}
 		}
-		 //======================================================================================
+		
+		// Create the nose generator which generates wave formes to use for the surface.
 		Random random = new Random(world.getSeed());
 		SimplexOctaveGenerator octave = new SimplexOctaveGenerator(random, 8);
 		octave.setScale(1 / 48.0);
-		//=======================================================================================
 		
 		// Generate the ceiling and the grass land
-		// NoiseGenerator noise = new SimplexNoiseGenerator(world);
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 				/*int height = getHeight(world, chunkx + x * 0.0625, chunkz + z * 0.0625, 2) + 30+(7*6) + 7;*/
 				double height = octave.noise(x + chunkx * 16, z + chunkz * 16, 0.5, 0.5) * 4 + 9;
 				
 				result[xyzToByte(x, 30+(7*6), z)] = (byte) Material.COBBLESTONE.getId();
-				for(int y = 30+(7*6)+1; y < 30+(7*6)+4; y++) {
+				for(int y = 30+(7*6)+1; y < 30+(7*6)+4; y++)
 					result[xyzToByte(x, y, z)] = (byte) Material.STONE.getId();
-				}
+				
+				// Get the current biome
 				Biome biome = world.getBiome((chunkx*16) + x, (chunkz*16) + z);
 				
 				if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
-					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++) {
+					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
 						result[xyzToByte(x, y, z)] = (byte) Material.SAND.getId();
-					}
 					
 				} else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_ISLAND)){
-					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++) {
+					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
 						result[xyzToByte(x, y, z)] = (byte) Material.DIRT.getId();
-					}
 					result[xyzToByte(x, (int) (30+(7*6)+2+height), z)] = (byte) Material.MYCEL.getId();
 					
 				} else {
-					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++) {
+					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
 						result[xyzToByte(x, y, z)] = (byte) Material.DIRT.getId();
-					}
 					result[xyzToByte(x, (int) (30+(7*6)+2+height), z)] = (byte) Material.GRASS.getId();
 				}
 			}

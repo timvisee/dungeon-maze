@@ -45,7 +45,8 @@ public class AbandonedDefenceCastleRoomPopulator extends BlockPopulator {
 								}
 								
 								// Get ceiling location
-								int yceiling = y + 6; int yceilingRelative = 0;
+								int yceiling = y + 6;
+								int yceilingRelative = 0;
 								Block roomCeilingBlock = source.getBlock(x + 2, y + 6, z + 2);
 								int typeId2 = roomCeilingBlock.getTypeId();
 								if(!(typeId2==4 || typeId2==48 || typeId2==87 || typeId2==88)) {  // x and z +2 so that you aren't inside a wall!							

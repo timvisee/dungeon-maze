@@ -36,32 +36,27 @@ public class DMWorldManager {
 				for (World world : Bukkit.getWorlds()) {
 					MultiverseCore mv = getMultiverseCore();
 					MultiverseWorld mvWorld = mv.getMVWorldManager().getMVWorld(world);
-					if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName())) {
+					
+					if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
 						w.add(world.getName());
-					}
 				}
-			}
-			else {
+			} else
 				DungeonMaze.log.severe("[DungeonMaze] Ajouts des mondes impossibles");
-			}
 		
 		worlds = w;
 
-		
 		// Load the list from the config
 		List<String> pw = plugin.getConfig().getStringList("preloadWorlds");
-		if(pw != null) {
+		if(pw != null)
 			preloadWorlds = pw;
-		}
 		
 		// Put all the DM worlds into the bukkit.yml file
 		if (getMultiverseCore() == null) {
 			FileConfiguration bukkitConfig = plugin.getConfigFromPath(new File("bukkit.yml"));
 			if(bukkitConfig != null) {
 				System.out.println("Editing bukkit.yml file...");
-				for(String entry : w) {
+				for(String entry : w)
 					bukkitConfig.set("worlds." + w + ".generator", entry);
-				}
 				try {
 					bukkitConfig.save(new File("bukkit.yml"));
 				} catch (IOException e) {
@@ -130,9 +125,8 @@ public class DMWorldManager {
 			for(String w : preloadWorlds) {
 					WorldCreator newWorld = new WorldCreator(w);
 					newWorld.generator(plugin.getDMWorldGenerator());
-					if (Bukkit.getWorld(w) != null) {
+					if (Bukkit.getWorld(w) != null)
 						newWorld.createWorld();
-					}
 
 
 			}
