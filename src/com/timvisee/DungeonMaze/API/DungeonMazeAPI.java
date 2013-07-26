@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze.API;
+package com.timvisee.dungeonmaze.api;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import com.timvisee.DungeonMaze.DungeonMaze;
-import com.timvisee.DungeonMaze.event.EventHandler.DMEventHandler;
-import com.timvisee.DungeonMaze.manager.DMWorldManager;
+import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
+import com.timvisee.dungeonmaze.manager.DMWorldManager;
 
 public class DungeonMazeAPI {
 	
@@ -123,9 +123,8 @@ public class DungeonMazeAPI {
 	public static boolean canBuildInDMWorld(String w, Player p) {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
-			if(plugin.worldProtection) {
-				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());	
-			}
+			if(plugin.worldProtection)
+				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
 	}
 	
@@ -137,6 +136,7 @@ public class DungeonMazeAPI {
 	 */
 	public static boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
 		plugin.getDMWorldManager();
+		
 		if(DMWorldManager.isDMWorld(w))
 			if(!DungeonMaze.allowSurface)
 				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
@@ -150,10 +150,15 @@ public class DungeonMazeAPI {
 	 */
 	public static boolean isInWhiteList(Object target){
 		List<Object> list = DungeonMaze.blockWhiteList;
-		if(list == null) return(false);
-		for(int x = 0; x < list.size(); ++x) if(list.get(x).equals(target)) return(true);
-		return(false);
-		}
+		
+		if(list == null)
+			return(false);
+		
+		for(int x = 0; x < list.size(); ++x)
+			if(list.get(x).equals(target))
+				return true;
+		return false;
+	}
 	
 	/**
 	 * 
@@ -168,7 +173,7 @@ public class DungeonMazeAPI {
 	 * Setup and get the DM Event handler
 	 * @return DM Event handler
 	 */
-	public static DMEventHandler setupDMEventHandler() {
+	public static DMEventHandler setUpDMEventHandler() {
 		return (DMEventHandler) DMEventHandler.getServer();
 	}
 	

@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze.event.generation;
+package com.timvisee.dungeonmaze.event.generation;
 
 public enum DMGenerationSpawnerCause {
 	UNKNOWN(0),

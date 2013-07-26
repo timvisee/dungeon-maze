@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze.event.generation;
+package com.timvisee.dungeonmaze.event.generation;
 
 import java.util.List;
 import java.util.Random;
@@ -7,8 +7,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
-import com.timvisee.DungeonMaze.event.EventHandler.DMEventHandler;
+import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
+import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
 
 public class DMGenerationChestEvent extends DMEventHandler {
 	

@@ -26,7 +26,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package com.timvisee.DungeonMaze;
+package com.timvisee.dungeonmaze;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;

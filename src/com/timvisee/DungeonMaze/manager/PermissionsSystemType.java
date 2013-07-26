@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze.manager;
+package com.timvisee.dungeonmaze.manager;
 
 public enum PermissionsSystemType {
 	NONE("None"),
