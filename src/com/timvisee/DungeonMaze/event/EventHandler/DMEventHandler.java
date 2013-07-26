@@ -1,4 +1,4 @@
-package com.timvisee.DungeonMaze.event.EventHandler;
+package com.timvisee.dungeonmaze.event.eventhandler;
 
 import org.bukkit.Server;
 import org.bukkit.event.Event;

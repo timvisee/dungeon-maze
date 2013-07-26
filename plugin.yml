@@ -1,11 +1,8 @@
 name: DungeonMaze
-main: com.timvisee.DungeonMaze.DungeonMaze
-version: 0.1.5.4
-author: timvisee
-authors: [timvisee,Xephi]
+main: com.timvisee.dungeonmaze.DungeonMaze
+version: 0.1.6
 load: startup
-softdepend: [Multiverse-Core,PermissionsBukkit,Permissions,PermissionsEX,EssentialsGroupManager]
-dev-url: http://dev.bukkit.org/server-mods/safe-creeper/
+softdepend: [Multiverse-Core, PermissionsBukkit, Permissions, PermissionsEX, EssentialsGroupManager]
 commands:
   dm:
     description: Dungeon Maze command

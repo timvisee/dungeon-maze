@@ -1,7 +1,10 @@
-package com.timvisee.DungeonMaze;
+package com.timvisee.dungeonmaze;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,22 +26,31 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.timvisee.DungeonMaze.API.DungeonMazeAPI;
-import com.timvisee.DungeonMaze.listener.DungeonMazeBlockListener;
-import com.timvisee.DungeonMaze.listener.DungeonMazePlayerListener;
-import com.timvisee.DungeonMaze.manager.DMWorldManager;
-import com.timvisee.DungeonMaze.manager.PermissionsManager;
-import com.timvisee.DungeonMaze.Metrics.Graph;
+import com.timvisee.dungeonmaze.Metrics.Graph;
+import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
+import com.timvisee.dungeonmaze.listener.DMBlockListener;
+import com.timvisee.dungeonmaze.listener.DMPlayerListener;
+import com.timvisee.dungeonmaze.listener.DMPluginListener;
+import com.timvisee.dungeonmaze.listener.DMWorldListener;
+import com.timvisee.dungeonmaze.manager.DMWorldManager;
+import com.timvisee.dungeonmaze.manager.PermissionsManager;
 
 public class DungeonMaze extends JavaPlugin {	
+	
 	public static final Logger log = Logger.getLogger("Minecraft");
-	private final DungeonMazeGenerator dmGenerator = new DungeonMazeGenerator(this);
+	private final DMGenerator dmGenerator = new DMGenerator(this);
 
-	private final DungeonMazeBlockListener blockListener = new DungeonMazeBlockListener(this);
-	private final DungeonMazePlayerListener playerListener = new DungeonMazePlayerListener(this);
+	// Dungeon Maze static instance
+	public static DungeonMaze instance;
 	
+	// Listener
+	private final DMBlockListener blockListener = new DMBlockListener();
+	private final DMPlayerListener playerListener = new DMPlayerListener();
+	private final DMPluginListener pluginListener = new DMPluginListener();
+	private final DMWorldListener worldListener = new DMWorldListener();
+	
+	// Configuration
 	public static FileConfiguration config;
-	
 	public static boolean unloadWorldsOnPluginDisable;
 	public static boolean allowSurface;
 	public boolean worldProtection;
@@ -48,15 +60,15 @@ public class DungeonMaze extends JavaPlugin {
 	public static boolean useBypassPermissions;
 	public static List<String> mobs;
 	
-	public static String lastWorld = "";
-	public static List<String> constantRooms = new ArrayList<String>(); // x;y;z
-	public static List<String> constantChunks = new ArrayList<String>(); // x;z
+	// Worlds
+	public String lastWorld = "";
+	public List<String> constantRooms = new ArrayList<String>(); // x;y;z
+	public List<String> constantChunks = new ArrayList<String>(); // x;z
 	
 	// Update Checker
-	boolean isUpdateAvailable = false;
-	String newestVersion = "1.0";
+	private DMUpdateChecker uc;
 
-	// Permissions and Economy manager
+	// Permissions manager
 	private PermissionsManager pm;
 	
 	/* Multiverse */
@@ -66,7 +78,17 @@ public class DungeonMaze extends JavaPlugin {
 	private DMWorldManager dmWorldManager;
 	private DungeonMazeAPI dmAPI;
 	
-	@Override
+	/**
+	 * Constructor
+	 */
+	public DungeonMaze() {
+		// Define the DungeonMaze static instance variable
+		instance = this;
+	}
+	
+	/**
+	 * On enable method, called when plugin is being enabled
+	 */
 	public void onEnable() {
 		// Check if all the config file exists
 		checkConfigFilesExist();
@@ -74,26 +96,34 @@ public class DungeonMaze extends JavaPlugin {
 		// Load the config file
 		loadConfig();
 		
-		// Setup the DM Event Handler
-		DungeonMazeAPI.setupDMEventHandler();
+		// Set up the DM Event Handler
+		DungeonMazeAPI.setUpDMEventHandler();
 		
-		// Setup the DM world manager and preload the worlds
-		setupDMWorldManager();
+		// Set up the DM world manager and preload the worlds
+		setUpDMWorldManager();
 		DMWorldManager.preloadWorlds();
 
-		// Setup permissions usage
-		setupPermissionsManager();
+		// Set up the update checker
+		setUpUpdateChecker();
 		
-		// Setup multiverse usage
-		setupMultiverse();
+		// Remove all (old) update files
+		getUpdateChecker().removeUpdateFiles();
+		
+		// Set up permissions usage
+		setUpPermissionsManager();
+		
+		// Set up multiverse usage
+		setUpMultiverse();
 		
 		// Register all event listeners
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this.blockListener, this);
 		pm.registerEvents(this.playerListener, this);
+		pm.registerEvents(this.pluginListener, this);
+		pm.registerEvents(this.worldListener, this);
 
 		// Setup API
-		setDmAPI(new DungeonMazeAPI(this));
+		setAPI(new DungeonMazeAPI(this));
 
 		// Show a startup message
 		PluginDescriptionFile pdfFile = getDescription();
@@ -101,14 +131,12 @@ public class DungeonMaze extends JavaPlugin {
 		log.info("[DungeonMaze] Dungeon Maze made by Tim Visee - timvisee.com");
 
 		// Setup Metrics
-		setupMetrics();
-		
-		// Enable update checker on startup if it's enabled
-		if(config.getBoolean("enableUpdateCheckerOnStartup", true))
-			checkUpdates();
+		setUpMetrics();
 	}
-	
-	@Override
+
+	/**
+	 * On enable method, called when plugin is being disabled
+	 */
 	public void onDisable() {
 		// Unload all Dungeon Maze worlds if it's enabled
 		if(config.getBoolean("unloadWorldsOnPluginDisable", true)) {
@@ -132,23 +160,56 @@ public class DungeonMaze extends JavaPlugin {
 		} else
 			log.info("[DungeonMaze] Unloading worlds has been disabled!");
 		
+		// If any update was downloaded, install the update
+		if(getUpdateChecker().isUpdateDownloaded())
+			getUpdateChecker().installUpdate();
+		
+		// Remove all update files
+		getUpdateChecker().removeUpdateFiles();
+		
 		// Show an disabled message
 		log.info("[DungeonMaze] Dungeon Maze Disabled");
 	}
 
 	public void checkConfigFilesExist() {
-		if(!new File(getDataFolder()+File.separator+"config.yml").exists()){
-			getConfig().options().copyDefaults(true);
-			saveDefaultConfig();
+		if(!getDataFolder().exists()) {
+			log.info("Creating new Dungeon Maze directory");
+			getDataFolder().mkdirs();
 		}
+		File f = new File(getDataFolder(), "config.yml");
+		if(!f.exists()) {
+			log.info("Generating new config file");
+			copyFile(getResource("res/config.yml"), f);
+		}
+	}
+	
+	/**
+	 * Copy a file
+	 * @param in Input stream (file)
+	 * @param file File to copy the file to
+	 */
+	private void copyFile(InputStream in, File file) {
+	    try {
+	        OutputStream out = new FileOutputStream(file);
+	        byte[] buf = new byte[1024];
+	        int len;
+	        while((len=in.read(buf))>0){
+	            out.write(buf,0,len);
+	        }
+	        out.close();
+	        in.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	/**
 	 * Setup the permissions manager
 	 */
-	public void setupPermissionsManager() {
+	@SuppressWarnings("static-access")
+	public void setUpPermissionsManager() {
 		// Setup the permissions manager
-		this.pm = new PermissionsManager(this.getServer(), this);
+		this.pm = new PermissionsManager(this.getServer(), (Plugin) this, this.log);
 		this.pm.setup();
 	}
 	
@@ -172,7 +233,7 @@ public class DungeonMaze extends JavaPlugin {
 	 * Setup the metrics statics feature
 	 * @return false if an error occurred
 	 */
-	public boolean setupMetrics() {
+	public boolean setUpMetrics() {
 		try {
 		    Metrics metrics = new Metrics(this);
 		    // Construct a graph, which can be immediately used and considered as valid
@@ -200,23 +261,22 @@ public class DungeonMaze extends JavaPlugin {
 		}
 	}
 	
-	// TODO: Put the update checker into a seperated class to clean up the code
-	// TODO: Use new updater using XML and auto update build into dev versions of Safe Creeper linked to timvisee.com
-	public boolean checkUpdates() {
-		// Check for new updates
-		DungeonMazeUpdateChecker scuc = new DungeonMazeUpdateChecker(this);
-		isUpdateAvailable = scuc.checkUpdates();
-		newestVersion = scuc.getLastVersion();
-		
-		if(isUpdateAvailable) {
-			// A new update is available, print a message in the console
-			log.info("[DungeonMaze] New version available, version " + newestVersion + ".");
-		}
-		
-		return isUpdateAvailable;
+	/**
+	 * Set up the update checker
+	 */
+	public void setUpUpdateChecker() {
+		this.uc = new DMUpdateChecker();
 	}
 	
-	private void setupMultiverse() {
+	/**
+	 * Get the update checker instance
+	 * @return Update checker instance
+	 */
+	public DMUpdateChecker getUpdateChecker() {
+		return this.uc;
+	}
+	
+	private void setUpMultiverse() {
 		// Setup and hook into Multiverse
 		Plugin multiversePlugin = this.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		if (multiversePlugin == null) {
@@ -230,9 +290,9 @@ public class DungeonMaze extends JavaPlugin {
 		multiverseCore = new MultiverseCore();
 	}
 	
-	private void setupDMWorldManager() {
+	private void setUpDMWorldManager() {
 		// Setup the DM world manager
-		this.dmWorldManager = new DMWorldManager(this);
+		this.dmWorldManager = new DMWorldManager();
 		DMWorldManager.refresh();
 	}
 		
@@ -374,11 +434,9 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				
 				sender.sendMessage(ChatColor.YELLOW + "==========[ DUNGEON MAZE WORLDS ]==========");
-				getDMWorldManager();
 				List<String> worlds = DMWorldManager.getDMWorlds();
 				if(worlds.size() > 0) {
 					for(String w : worlds) {
-						getDMWorldManager();
 						if(DMWorldManager.isLoadedDMWorld(w))
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
 						else
@@ -408,7 +466,7 @@ public class DungeonMaze extends JavaPlugin {
 				sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze");
 				
 				// Setup permissions
-				setupPermissionsManager();
+				setUpPermissionsManager();
 				
 				// Reload configs and worlds
 				loadConfig();
@@ -437,7 +495,7 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				
 				// Setup permissions
-				setupPermissionsManager();
+				setUpPermissionsManager();
 				
 				// Show a succes message
 				sender.sendMessage(ChatColor.GREEN + "Permissions succesfully reloaded!");
@@ -453,21 +511,91 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Check permission
 				if(sender instanceof Player) {
-					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.checkupdates")) {
+					if(!DungeonMaze.instance.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.checkupdates")) {
 						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
 						return true;
 					}
 				}
 				
 				// Setup permissions
-				sender.sendMessage(ChatColor.YELLOW + "Checking for updates...");
+				sender.sendMessage(ChatColor.GREEN + "Checking for updates...");
 				
-				if(checkUpdates())
-					sender.sendMessage(ChatColor.GREEN + "New version found! (v" + newestVersion + ")");
-				else
-					sender.sendMessage(ChatColor.YELLOW + "No new version found!");
+				// Get the update checker and refresh the updates data
+				DMUpdateChecker uc = getUpdateChecker();
+				uc.refreshUpdatesData();
+				
+				if(!uc.isNewVersionAvailable()) {
+					sender.sendMessage(ChatColor.GREEN + "No new version found!");
+				} else {
+					
+					String newVer = uc.getNewestVersion();
+					
+					// Make sure the new version is compatible with the current bukkit version
+					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
+						sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
+						sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
+						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getRequiredBukkitVersion() + " or higher!");
+					} else {
+						if(uc.isUpdateDownloaded())
+							sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reload required!");
+						else {
+							sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
+							sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
+									ChatColor.GREEN + " to automaticly install the new version!");
+						}
+					}
+					return true;
+				}
+				
 				return true;
 				
+			} else if(args[0].equalsIgnoreCase("installupdate") || args[0].equalsIgnoreCase("installupdates")) {
+				// Check wrong command values
+				if(args.length != 1) {
+					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");
+					sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
+					return true;
+				}
+				
+				// Check permission
+				if(sender instanceof Player) {
+					if(!getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.installupdate")) {
+						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
+						return true;
+					}
+				}
+				
+				// Setup permissions
+				sender.sendMessage(ChatColor.GREEN + "Checking for updates...");
+				
+				// Get the update checker and refresh the updates data
+				DMUpdateChecker uc = getUpdateChecker();
+				uc.refreshUpdatesData();
+				
+				if(!uc.isNewVersionAvailable()) {
+					sender.sendMessage(ChatColor.GREEN + "No new version available!");
+				} else {
+					
+					String newVer = uc.getNewestVersion();
+					
+					// Make sure the new version is compatible with the current bukkit version
+					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
+						sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
+						sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
+						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getRequiredBukkitVersion() + " or higher!");
+					} else {
+						if(uc.isUpdateDownloaded())
+							sender.sendMessage(ChatColor.GREEN + "New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
+						else {
+							sender.sendMessage(ChatColor.GREEN + "Downloading new version (v" + String.valueOf(newVer) + ")");
+							uc.downloadUpdate();
+							sender.sendMessage(ChatColor.GREEN + "Update downloaded, server reload required!");
+						}
+					}
+					return true;
+				}
+				
+				return true;
 			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") ||
 					args[0].equalsIgnoreCase("?")) {
 				
@@ -487,6 +615,7 @@ public class DungeonMaze extends JavaPlugin {
 				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reload " + ChatColor.WHITE + ": Reload config files");
 				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reloadperms " + ChatColor.WHITE + ": Reload permissions system");
 				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <checkupdates/check> " + ChatColor.WHITE + ": Check for updates");
+				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " installupdate" + ChatColor.WHITE + ": Install new updates");
 				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <version/ver/v> " + ChatColor.WHITE + ": Check plugin version");
 				
 				return true;
@@ -573,11 +702,11 @@ public class DungeonMaze extends JavaPlugin {
 	// TODO: Put all this codeb below in a manager class to handle all the hard stuff, and to clean up the code.
 	// TODO: Also save this data into the data folder of the world files so it can be read if needed
 	// Getters and setters for the two lists with constant chunks and constant rooms
-	public static void addConstantChunk(String world, Chunk chunk) {
-		addConstantChunk(world, chunk.getX(), chunk.getZ());
+	public void registerConstantChunk(String world, Chunk chunk) {
+		registerConstantChunk(world, chunk.getX(), chunk.getZ());
 	}
 	
-	public static void addConstantChunk(String world, int chunkX, int chunkZ) {
+	public void registerConstantChunk(String world, int chunkX, int chunkZ) {
 		if (lastWorld != world) {
 			lastWorld = world;
 			constantChunks.clear();
@@ -585,51 +714,51 @@ public class DungeonMaze extends JavaPlugin {
 		constantChunks.add(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
 	}
 	
-	public static void addConstantRooms(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
-		addConstantRooms(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
+	public void registerConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
+		registerConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
 	}
 	
-	public static void addConstantRooms(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
-		addConstantRooms(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
+	public void registerConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
+		registerConstantRoom(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
 	}
 	
-	public static void addConstantRooms(String world, int roomX, int roomY, int roomZ) {
-		if (lastWorld != world) {
+	public void registerConstantRoom(String world, int roomX, int roomY, int roomZ) {
+		if(!lastWorld.equals(world)) {
 			lastWorld = world;
 			constantRooms.clear();
 		}
 		constantRooms.add(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
 	
-	public static boolean isConstantChunk(String world, Chunk chunk) {
+	public boolean isConstantChunk(String world, Chunk chunk) {
 		return isConstantChunk(world, chunk.getX(), chunk.getZ());
 	}
 	
-	public static boolean isConstantChunk(String world, int chunkX, int chunkZ) {
-		if (lastWorld != world) {
+	public boolean isConstantChunk(String world, int chunkX, int chunkZ) {
+		if(!lastWorld.equals(world)) {
 			lastWorld = world;
 			constantChunks.clear();
 		}
 		return constantChunks.contains(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
 	}
 	
-	public static boolean isConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
+	public boolean isConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
 		return isConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
 	}
 	
-	public static boolean isConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
+	public boolean isConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
 		return isConstantRoom(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
 	}
 	
-	public static boolean isConstantRoom(String world, int roomX, int roomY, int roomZ) {
-		if (lastWorld != world) {
+	public boolean isConstantRoom(String world, int roomX, int roomY, int roomZ) {
+		if(!lastWorld.equals(world)) {
 			lastWorld = world;
 			constantRooms.clear();
 		}
 		return constantRooms.contains(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
 
-	public void setDmAPI(DungeonMazeAPI dmAPI) {
+	public void setAPI(DungeonMazeAPI dmAPI) {
 		this.dmAPI = dmAPI;
 	}
 
@@ -637,4 +766,7 @@ public class DungeonMaze extends JavaPlugin {
 		return dmAPI;
 	}
 
+	public String getVersion() {
+		return getDescription().getVersion();
+	}
 }
