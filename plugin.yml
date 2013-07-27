@@ -1,6 +1,6 @@
 name: DungeonMaze
 main: com.timvisee.dungeonmaze.DungeonMaze
-version: 0.1.6
+version: 0.1.7
 load: startup
 softdepend: [Multiverse-Core, PermissionsBukkit, Permissions, PermissionsEX, EssentialsGroupManager]
 commands:
