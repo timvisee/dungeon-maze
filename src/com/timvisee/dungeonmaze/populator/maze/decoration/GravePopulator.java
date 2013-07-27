@@ -42,7 +42,7 @@ public class GravePopulator extends DMMazeBlockPopulator {
 			c.getBlock(graveX, graveY + 1, graveZ).setData((byte) 4);
 			
 			// Update the text on the sign
-			Block b = c.getBlock(graveX, graveY + 1, graveX);
+			Block b = c.getBlock(graveX, graveY + 1, graveZ);
 		    if (b != null) {
 		        BlockState bState = b.getState();
 		        if (bState instanceof Sign) {
@@ -100,7 +100,8 @@ public class GravePopulator extends DMMazeBlockPopulator {
 			
 			else {
 				Player[] onlinePlayers = Bukkit.getOnlinePlayers();
-				graveUsername = onlinePlayers[random.nextInt(onlinePlayers.length)].getName();
+				if(onlinePlayers.length > 1)
+					graveUsername = onlinePlayers[random.nextInt(onlinePlayers.length)].getName();
 			}
 			
 			changeSignLine(sign, 1, graveUsername);
