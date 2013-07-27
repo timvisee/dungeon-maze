@@ -97,11 +97,9 @@ public class GravePopulator extends DMMazeBlockPopulator {
 			
 			if(!DungeonMaze.instance.isAnyPlayerOnline())
 				graveUsername = graveUsernames[random.nextInt(graveUsernames.length)];
-			
 			else {
 				Player[] onlinePlayers = Bukkit.getOnlinePlayers();
-				if(onlinePlayers.length > 1)
-					graveUsername = onlinePlayers[random.nextInt(onlinePlayers.length)].getName();
+				graveUsername = onlinePlayers[random.nextInt(onlinePlayers.length)].getName();
 			}
 			
 			changeSignLine(sign, 1, graveUsername);
