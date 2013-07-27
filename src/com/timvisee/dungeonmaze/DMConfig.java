@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DMConfig extends DMCustomConfiguration {
+public class DMConfig extends DMCustomConfig {
 
 	private static DMConfig config;
 
