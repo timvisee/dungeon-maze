@@ -1,10 +1,7 @@
 package com.timvisee.dungeonmaze;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,8 +87,6 @@ public class DungeonMaze extends JavaPlugin {
 	 * On enable method, called when plugin is being enabled
 	 */
 	public void onEnable() {
-		// Check if all the config file exists
-		checkConfigFilesExist();
 	    
 		// Load the config file
 		loadConfig();
@@ -169,38 +164,6 @@ public class DungeonMaze extends JavaPlugin {
 		
 		// Show an disabled message
 		log.info("[DungeonMaze] Dungeon Maze Disabled");
-	}
-
-	public void checkConfigFilesExist() {
-		if(!getDataFolder().exists()) {
-			log.info("Creating new Dungeon Maze directory");
-			getDataFolder().mkdirs();
-		}
-		File f = new File(getDataFolder(), "config.yml");
-		if(!f.exists()) {
-			log.info("Generating new config file");
-			copyFile(getResource("res/config.yml"), f);
-		}
-	}
-	
-	/**
-	 * Copy a file
-	 * @param in Input stream (file)
-	 * @param file File to copy the file to
-	 */
-	private void copyFile(InputStream in, File file) {
-	    try {
-	        OutputStream out = new FileOutputStream(file);
-	        byte[] buf = new byte[1024];
-	        int len;
-	        while((len=in.read(buf))>0){
-	            out.write(buf,0,len);
-	        }
-	        out.close();
-	        in.close();
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
 	}
 	
 	/**
@@ -667,17 +630,20 @@ public class DungeonMaze extends JavaPlugin {
 	
 	@SuppressWarnings("unchecked")
 	public void loadConfig() {
-		config = getConfig();
-		getConfig();
-		saveConfig();
+		config = new DMConfig();
 		unloadWorldsOnPluginDisable = config.getBoolean("unloadWorldsOnPluginDisable", true);
 		allowSurface = config.getBoolean("allowSurface", true);
 		worldProtection = config.getBoolean("worldProtection", false);
-		enableUpdateCheckerOnStartup = config.getBoolean("enableUpdateCheckerOnStartup", true);
+		enableUpdateCheckerOnStartup = config.getBoolean("updateChecker.enabled", true);
 		usePermissions = config.getBoolean("usePermissions", true);
 		useBypassPermissions = config.getBoolean("useBypassPermissions", true);
 		blockWhiteList = (List<Object>) config.getList("blockWhiteList");
 		mobs = config.getStringList("mobs");
+	}
+	
+	@Override
+	public FileConfiguration getConfig() {
+		return config;
 	}
 
 	@Override
