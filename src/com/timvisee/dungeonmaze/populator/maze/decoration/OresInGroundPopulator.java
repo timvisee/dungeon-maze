@@ -34,7 +34,7 @@ public class OresInGroundPopulator extends BlockPopulator {
     						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(56);
     						break;
     					case 5:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(73);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(74);
     						break;
     					case 6:
     						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(82);

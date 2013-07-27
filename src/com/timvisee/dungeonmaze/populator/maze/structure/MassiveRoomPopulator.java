@@ -73,7 +73,7 @@ public class MassiveRoomPopulator extends DMMazeBlockPopulator {
 	    						c.getBlock(x2, y2, z2).setTypeId(56);
 	    						break;
 	    					case 5:
-	    						c.getBlock(x2, y2, z2).setTypeId(73);
+	    						c.getBlock(x2, y2, z2).setTypeId(74);
 	    						break;
 	    					case 6:
 	    						c.getBlock(x2, y2, z2).setTypeId(82);
