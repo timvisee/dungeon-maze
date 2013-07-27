@@ -656,7 +656,7 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	public boolean isAnyPlayerOnline() {
-		return (getServer().getOnlinePlayers().length == 0);
+		return (getServer().getOnlinePlayers().length > 0);
 	}
 	
 	public Player[] countOnlinePlayers() {
