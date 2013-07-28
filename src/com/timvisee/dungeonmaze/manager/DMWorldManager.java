@@ -30,17 +30,11 @@ public class DMWorldManager {
 			if (getMultiverseCore() != null) {
 				for (World world : Bukkit.getWorlds()) {
 					MultiverseCore mv = getMultiverseCore();
-					@SuppressWarnings("unused")
 					MultiverseWorld mvWorld = mv.getMVWorldManager().getMVWorld(world);
-					
-					/*
-					Not working anymore... (API Function removed!)
 					if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
 						w.add(world.getName());
-					*/
 				}
-			} else
-				DungeonMaze.log.severe("[DungeonMaze] Ajouts des mondes impossibles");
+			}
 		
 		worlds = w;
 
