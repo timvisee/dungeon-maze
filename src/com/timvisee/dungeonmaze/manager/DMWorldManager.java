@@ -130,7 +130,10 @@ public class DMWorldManager {
 	public static MultiverseCore getMultiverseCore() {
         MultiverseCore mv = (MultiverseCore) DungeonMaze.instance.getServer().getPluginManager().getPlugin("Multiverse-Core");
  
-        if (mv != null) return mv;
-        else return null;
+        if (mv != null) {
+        	if (mv.getDescription().getVersion().contains("2.5"))
+        			return mv;
+        }
+        return null;
     }
 }
