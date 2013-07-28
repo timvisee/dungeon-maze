@@ -30,17 +30,14 @@ public class DMWorldManager {
 			if (getMultiverseCore() != null) {
 				for (World world : Bukkit.getWorlds()) {
 					MultiverseCore mv = getMultiverseCore();
-					@SuppressWarnings("unused")
 					MultiverseWorld mvWorld = mv.getMVWorldManager().getMVWorld(world);
-					
-					/*
-					Not working anymore... (API Function removed!)
-					if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
-						w.add(world.getName());
-					*/
+					try {
+						if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
+							w.add(world.getName());
+					} catch (NoClassDefFoundError e) {
+					}
 				}
-			} else
-				DungeonMaze.log.severe("[DungeonMaze] Ajouts des mondes impossibles");
+			}
 		
 		worlds = w;
 
@@ -136,7 +133,10 @@ public class DMWorldManager {
 	public static MultiverseCore getMultiverseCore() {
         MultiverseCore mv = (MultiverseCore) DungeonMaze.instance.getServer().getPluginManager().getPlugin("Multiverse-Core");
  
-        if (mv != null) return mv;
-        else return null;
+        if (mv != null) {
+        	if (mv.getDescription().getVersion().contains("2.5"))
+        			return mv;
+        }
+        return null;
     }
 }
