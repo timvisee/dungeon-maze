@@ -31,8 +31,11 @@ public class DMWorldManager {
 				for (World world : Bukkit.getWorlds()) {
 					MultiverseCore mv = getMultiverseCore();
 					MultiverseWorld mvWorld = mv.getMVWorldManager().getMVWorld(world);
-					if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
-						w.add(world.getName());
+					try {
+						if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
+							w.add(world.getName());
+					} catch (NoClassDefFoundError e) {
+					}
 				}
 			}
 		
