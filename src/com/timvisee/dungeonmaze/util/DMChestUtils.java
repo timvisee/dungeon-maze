@@ -36,6 +36,15 @@ public class DMChestUtils {
 	}
 
 	/**
+	 * Check whether a block can be casted to a chest state instance or not
+	 * @param b The block to check
+	 * @return True if the block could be casted to a chest state instance
+	 */
+	public static boolean isChest(Block b) {
+		return (getChest(b) != null);
+	}
+	
+	/**
 	 * Empty a chest
 	 * @param b Chest to empty
 	 * @return False if failed
@@ -154,6 +163,7 @@ public class DMChestUtils {
 				if(curStack == null)
 					continue;
 				
+				// Set the item in the chest
 				c.getInventory().setItem(rand.nextInt(c.getInventory().getSize()), curStack);
 			}
 			
@@ -171,6 +181,7 @@ public class DMChestUtils {
 				if(i >= c.getInventory().getSize())
 					continue;
 				
+				// Set the item in the chest
 				c.getInventory().setItem(i, curStack);
 			}
 		}
