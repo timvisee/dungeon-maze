@@ -2,102 +2,96 @@ package com.timvisee.dungeonmaze.populator.surface.plants;
 
 import java.util.Random;
 
-
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.generator.BlockPopulator;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulator;
+import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulatorArgs;
 
-public class TreePopulator extends BlockPopulator {
+public class TreePopulator extends DMSurfaceBlockPopulator {
 	public static final int CHANCE_OF_TREE = 10;
 	public static final int ITERATIONS = 10;
-	public static DungeonMaze plugin;
-	
-	
+
 	@Override
-	public void populate(World world, Random random, Chunk source) {
+	public void populateSurface(DMSurfaceBlockPopulatorArgs args) {
+		World w = args.getWorld();
+		Chunk c = args.getSourceChunk();
+		Random rand = args.getRandom();
 		
-		if(!DungeonMaze.instance.isConstantChunk(world.getName(), source)) {
-			for(int i = 0; i < ITERATIONS; i++) {
-				if (random.nextInt(100) < CHANCE_OF_TREE) {
+		// Iterate
+		for(int i = 0; i < ITERATIONS; i++) {
+			// Apply chances
+			if (rand.nextInt(100) < CHANCE_OF_TREE) {
+				
+				int xTree = rand.nextInt(16);
+				int zTree = rand.nextInt(16);
+				
+				// Get the surface level
+				int ySurface = args.getSurfaceLevel(xTree, zTree);
+				
+				int yTree = ySurface + 1;
+				
+				Biome biome = c.getWorld().getBiome((c.getX() * 16) + xTree, (c.getZ() * 16) + zTree);
+				
+				if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
+					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 12)
+						c.getBlock(xTree, yTree, zTree).setType(Material.CACTUS);
 					
-					int treeX = random.nextInt(16);
-					int treeZ = random.nextInt(16);
+				} else if(biome.equals(Biome.FOREST)) {
+					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2)
+						c.getWorld().generateTree(new Location(c.getWorld(), (c.getX()*16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.BIRCH);
 					
-					int yground;
-					for(yground = 100; source.getBlock(treeX, yground, treeZ).getType() == Material.AIR; yground--);
-					
-					int treeY = yground + 1;
-					
-					Biome biome = source.getWorld().getBiome((source.getX()*16) + treeX, (source.getZ()*16) + treeZ);
-					
-					if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
-						if(source.getBlock(treeX, yground, treeZ).getTypeId() == 12) {
-							source.getBlock(treeX, treeY, treeZ).setType(Material.CACTUS);
-						}
-						
-					} else if(biome.equals(Biome.FOREST)) {
-						if(source.getBlock(treeX, yground, treeZ).getTypeId() == 2) {
-							source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.BIRCH);
-						}
-						
-					} else if(biome.equals(Biome.JUNGLE) || biome.equals(Biome.JUNGLE_HILLS)) {
-						if(source.getBlock(treeX, yground, treeZ).getTypeId() == 2) {
-							switch(random.nextInt(3)) {
-							case 0:
-								source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.JUNGLE);
-								break;
-							case 1:
-								source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.SMALL_JUNGLE);
-								break;
-							case 2: 
-								source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.JUNGLE_BUSH);
-								break;
-							}
-							
-						}
-						
-					} else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
-						if(source.getBlock(treeX, yground, treeZ).getTypeId() == 2) {
-							switch(random.nextInt(2)) {
-							case 0:
-								source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.RED_MUSHROOM);
-								break;
-							case 1:
-								source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.BROWN_MUSHROOM);
-								break;
-							}
-						}
-						
-					} else if(biome.equals(Biome.SWAMPLAND)) {
-						if(source.getBlock(treeX, yground, treeZ).getTypeId() == 2) {
-							source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.SWAMP);
-						}
-						
-					} else if(biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS)) {
-						if(source.getBlock(treeX, yground, treeZ).getTypeId() == 2) {
-							switch(random.nextInt(2)) {
-							case 0:
-								source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.REDWOOD);
-								break;
-							case 1:
-								source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.TALL_REDWOOD);
-								break;
-							}
-						}
-						
-					} else {
-						if(source.getBlock(treeX, yground, treeZ).getTypeId() == 2) {
-							source.getWorld().generateTree(new Location(source.getWorld(), (source.getX()*16) + treeX, treeY, (source.getZ()*16) + treeZ), TreeType.TREE);
+				} else if(biome.equals(Biome.JUNGLE) || biome.equals(Biome.JUNGLE_HILLS)) {
+					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2) {
+						switch(rand.nextInt(3)) {
+						case 0:
+							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.JUNGLE);
+							break;
+						case 1:
+							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.SMALL_JUNGLE);
+							break;
+						case 2: 
+							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.JUNGLE_BUSH);
+							break;
 						}
 					}
-				}
+					
+				} else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
+					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2) {
+						switch(rand.nextInt(2)) {
+						case 0:
+							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.RED_MUSHROOM);
+							break;
+						case 1:
+							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.BROWN_MUSHROOM);
+							break;
+						}
+					}
+					
+				} else if(biome.equals(Biome.SWAMPLAND))
+					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2)
+						c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.SWAMP);
+					
+				else if(biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS)) {
+					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2) {
+						switch(rand.nextInt(2)) {
+						case 0:
+							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.REDWOOD);
+							break;
+						case 1:
+							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.TALL_REDWOOD);
+							break;
+						}
+					}
+					
+				} else
+					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2)
+						c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.TREE);
 			}
-		}	
+		}
 	}
 }

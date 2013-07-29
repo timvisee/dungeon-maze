@@ -3,39 +3,36 @@ package com.timvisee.dungeonmaze.populator.surface.plants;
 import java.util.Random;
 
 import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.generator.BlockPopulator;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulator;
+import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulatorArgs;
 
-public class TallGrassPopulator extends BlockPopulator {
+public class TallGrassPopulator extends DMSurfaceBlockPopulator {
 	public static final int CHANCE_OF_GRASS = 35;
 	public static final int ITERATIONS = 100;
-	public static DungeonMaze plugin;
-	
-	
+
 	@Override
-	public void populate(World world, Random random, Chunk source) {
+	public void populateSurface(DMSurfaceBlockPopulatorArgs args) {
+		Chunk c = args.getSourceChunk();
+		Random rand = args.getRandom();
 		
-		if(!DungeonMaze.instance.isConstantChunk(world.getName(), source)) {
-			for(int i = 0; i < ITERATIONS; i++) {
-				if (random.nextInt(100) < CHANCE_OF_GRASS) {
+		// Iterate
+		for(int i = 0; i < ITERATIONS; i++) {
+			// Apply chances
+			if(rand.nextInt(100) < CHANCE_OF_GRASS) {
+				int xGrass = rand.nextInt(16);
+				int zGrass = rand.nextInt(16);
+				
+				// Get the surface level
+				int ySurface = args.getSurfaceLevel(xGrass, zGrass);
+				
+				if(c.getBlock(xGrass, ySurface, zGrass).getTypeId() == 2) {
+					int yGrass = ySurface + 1;
 					
-					int grassX = random.nextInt(16);
-					int grassZ = random.nextInt(16);
-					
-					int yground;
-					for(yground = 100; source.getBlock(grassX, yground, grassZ).getType() == Material.AIR; yground--);
-					
-					if(source.getBlock(grassX, yground, grassZ).getTypeId() == 2) {
-						int grassY = yground + 1;
-						
-						source.getBlock(grassX, grassY, grassZ).setTypeId(31);
-						source.getBlock(grassX, grassY, grassZ).setData((byte) 1);
-					}
+					c.getBlock(xGrass, yGrass, zGrass).setTypeId(31);
+					c.getBlock(xGrass, yGrass, zGrass).setData((byte) 1);
 				}
 			}
-		}	
+		}
 	}
 }
