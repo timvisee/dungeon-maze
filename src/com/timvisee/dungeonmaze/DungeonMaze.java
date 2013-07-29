@@ -93,12 +93,12 @@ public class DungeonMaze extends JavaPlugin {
 		// Load the config file
 		loadConfig();
 		
-		// Set up the DM Event Handler
-		DungeonMazeAPI.setUpDMEventHandler();
-		
 		// Set up the DM world manager and preload the worlds
 		setUpDMWorldManager();
 		DMWorldManager.preloadWorlds();
+		
+		// Set up the DM Event Handler
+		DungeonMazeAPI.setUpDMEventHandler();
 
 		// Set up the update checker
 		setUpUpdateChecker();
@@ -118,6 +118,9 @@ public class DungeonMaze extends JavaPlugin {
 		pm.registerEvents(this.playerListener, this);
 		pm.registerEvents(this.pluginListener, this);
 		pm.registerEvents(this.worldListener, this);
+		
+		// Set up the API Controller
+		setUpApiController();
 
 		// Setup API
 		//setAPI(new DungeonMazeAPI(this));
@@ -182,13 +185,13 @@ public class DungeonMaze extends JavaPlugin {
 		this.apiController = new DMApiController(false);
 		
 		// Show a status message
-		getLogger().info("[DungeonMaze] Dungeon Maze API started!");
+		getLogger().info("Dungeon Maze API started!");
 		
 		// Enable the API if it should be enabled
 		if(getConfig().getBoolean("api.enabled", true))
 			this.apiController.setEnabled(true);
 		else
-			getLogger().info("[DungeonMaze] Not enabling Dungeon Maze API, disabled in config file!");
+			getLogger().info("Not enabling Dungeon Maze API, disabled in config file!");
 	}
 	
 	/**

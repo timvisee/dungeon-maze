@@ -20,6 +20,14 @@ public class DMPluginListener implements Listener {
 	public void onPluginDisable(PluginDisableEvent e) {
 		Plugin p = e.getPlugin();
 		
+		// Make sure the plugin instance isn't null
+		if(p == null)
+			return;
+		
+		// Make sure it's not Dungeon Maze itself
+		if(p.equals(DungeonMaze.instance))
+			return;
+		
 		// Call the onPluginDisable method in the permissions manager
 		DungeonMaze.instance.getPermissionsManager().onPluginDisable(e);
 		

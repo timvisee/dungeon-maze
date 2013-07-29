@@ -39,7 +39,7 @@ public class DMApiController {
 		
 		// Show a 'hooked' message
 		if(api.getPlugin() != null)
-			DungeonMaze.instance.getLogger().info("[DungeonMaze] " + api.getPlugin().getName() + " hooked into Dungeon Maze!");
+			DungeonMaze.instance.getLogger().info(api.getPlugin().getName() + " hooked into Dungeon Maze!");
 	}
 	
 	/**
@@ -121,9 +121,13 @@ public class DMApiController {
 	 * @param p Plugin to unhook
 	 */
 	public void unhookPlugin(Plugin p) {
+		List<DungeonMazeApiNew> unregister = new ArrayList<DungeonMazeApiNew>();
 		for(DungeonMazeApiNew entry : this.apiSessions)
 			if(entry.getPlugin().equals(p))
-				unregisterApiSession(entry);
+				unregister.add(entry);
+		
+		for(DungeonMazeApiNew entry : unregister)
+			unregisterApiSession(entry);
 	}
 	
 	/**
@@ -138,9 +142,9 @@ public class DMApiController {
 			
 			// Show a status message
 			if(enabled)
-				DungeonMaze.instance.getLogger().info("[DungeonMaze] Dungeon Maze API enabled!");
+				DungeonMaze.instance.getLogger().info("Dungeon Maze API enabled!");
 			else
-				DungeonMaze.instance.getLogger().info("[DungeonMaze] Dungeon Maze API disabled!");
+				DungeonMaze.instance.getLogger().info("Dungeon Maze API disabled!");
 			
 			// Unregister all api sessions if the API was disabled
 			if(!enabled)
