@@ -10,9 +10,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
+import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
 
 public class ChestPopulator extends DMMazeBlockPopulator {
 	public static final int MIN_LAYER = 1;
@@ -44,17 +46,17 @@ public class ChestPopulator extends DMMazeBlockPopulator {
 					chestBlock.setTypeId(54);
 					
 					// Call the chest generation event
-					DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, rand, contents);
+					DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, rand, contents, DMMazeStructureType.UNSTRUCTURE);
 					Bukkit.getServer().getPluginManager().callEvent(event);
 					
 					// Do the event
 					if(!event.isCancelled()) {
 						// Make sure the chest is still there, a developer could change the chest through the event!
-						if(chestBlock.getTypeId() != 54)
+						if(event.getBlock().getTypeId() != 54)
 							return;
 						
 						// Add the contents to the chest
-						addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) chestBlock.getState(), event.getContents());
+						DungeonMazeAPI.addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) event.getBlock().getState(), event.getContents());
 					} else {
 						// The event is cancelled
 						// Put the chest back to it's orrigional state (air)
@@ -69,17 +71,17 @@ public class ChestPopulator extends DMMazeBlockPopulator {
 						List<ItemStack> contents = generateChestContents(rand);
 					
 						// Call the chest generation event
-						DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, rand, contents);
+						DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, rand, contents, DMMazeStructureType.UNSTRUCTURE);
 						Bukkit.getServer().getPluginManager().callEvent(event);
 						
 						// Do the event
 						if(!event.isCancelled()) {
 							// Make sure the chest is still there, a developer could change the chest through the event!
-							if(chestBlock.getTypeId() != 54)
+							if(event.getBlock().getTypeId() != 54)
 								return;
 							
 							// Add the contents to the chest
-							addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) chestBlock.getState(), event.getContents());
+							DungeonMazeAPI.addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) event.getBlock().getState(), event.getContents());
 						}
 					}
 				}
@@ -214,41 +216,6 @@ public class ChestPopulator extends DMMazeBlockPopulator {
 		for (int i = 0; i < itemCountInChest; i++)
 			newContents.add(items.get(random.nextInt(items.size())));
 		return newContents;
-	}
-
-	public void addItemsToChest(boolean addInOrder, Random random, Chest chest, List<ItemStack> newContents) {
-		// Clear the chest inventory first
-		chest.getInventory().clear();
-		
-		// Add all the items
-		if(addInOrder) {
-			// Add the contents in order
-			for(int i = 0; i < newContents.size(); i++) {
-				ItemStack curStack = newContents.get(i);
-				
-				// Make sure the current ItemStack isn't null
-				if(curStack == null)
-					continue;
-				
-				// Make sure the current item fits in the chest, to prevent errors
-				if(i >= chest.getInventory().getSize())
-					continue;
-				
-				chest.getInventory().setItem(i, curStack);
-			}
-		} else {
-			// Add the contents randomly
-			for(ItemStack curStack : newContents) {
-				// Make sure the current ItemStack isn't null
-				if(curStack == null)
-					continue;
-				
-				chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), curStack);
-			}
-		}
-		
-		// Make sure to 'update' the chest block to update it's inventory
-		chest.update();
 	}
 	
 	/**

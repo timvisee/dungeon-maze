@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
 
 public class DMGenerationChestEvent extends DMEventHandler {
 	
@@ -16,11 +17,14 @@ public class DMGenerationChestEvent extends DMEventHandler {
 	private Random rand;
 	private List<ItemStack> is;
 	private boolean addContentsInOrder = false;
+	private DMMazeStructureType structureType = DMMazeStructureType.UNSTRUCTURE;
+	private String structureName = "CUSTOM";
 	
-	public DMGenerationChestEvent(Block b, Random rand, List<ItemStack> is) {
+	public DMGenerationChestEvent(Block b, Random rand, List<ItemStack> is, DMMazeStructureType structureType) {
 		this.b = b;
 		this.is = is;
 		this.rand = rand;
+		this.structureType = structureType;
 	}
 	
 	/**
@@ -87,4 +91,38 @@ public class DMGenerationChestEvent extends DMEventHandler {
 	public void setAddContentsInOrder(boolean addInOrder) {
 		this.addContentsInOrder = addInOrder;
 	}
+	
+	/**
+	 * Get the structure where the chest spawned
+	 * @return UNSTRUCTURE type if no structure has been set, DMMazeStructureType enum else
+	 */
+	public DMMazeStructureType getStructureType() {
+		return this.structureType;
+	}
+
+
+	/**
+	 * Set the structure where the chest spawned
+	 * @param StructureType enum
+	*/
+	public void setStructureType(DMMazeStructureType structureType) {
+		this.structureType = structureType;
+	}
+
+	/**
+	 * Set the custom structure name
+	 * @param String
+	 */
+	public void setStructureName(String structureName) {
+		this.structureName = structureName;
+	}
+
+	/**
+	 * Get the current custom structure name
+	 * @return structureName
+	 */
+	public String getStructureName() {
+		return structureName;
+	}
+
 }
