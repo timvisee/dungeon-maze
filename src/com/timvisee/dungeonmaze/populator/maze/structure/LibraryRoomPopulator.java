@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
+import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
 
 public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 	public static final int MIN_LAYER = 3;
@@ -72,7 +76,7 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 			for (int z2=z + 3; z2 <= z + 4; z2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
 	                c.getBlock(x + 7, y2, z2).setTypeId(0);
-			
+
 			// Generate the bookshelfs, one on each side
 			for (int x2=x + 5; x2 <= x + 6; x2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
@@ -86,7 +90,7 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 			for (int z2=z + 5; z2 <= z + 6; z2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
 	                c.getBlock(x + 6, y2, z2).setTypeId(47);
-	                
+
 			// Make the two pilars
 			for (int y2 = yFloor + 1; y2 <= yFloor + 3; y2+=1) {
 				c.getBlock(x + 3, y2, z + 4).setTypeId(86);
@@ -94,9 +98,33 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
             }
 			// Add the two chests
 			c.getBlock(x + 3, yFloor + 1, z + 3).setTypeId(54);
-			addItemsToChest(rand, (Chest) c.getBlock(x + 3, yFloor + 1, z + 3).getState());
+
+			// Call the Chest generation event
+			DMGenerationChestEvent event = new DMGenerationChestEvent(c.getBlock(x + 3, yFloor + 1, z + 3), rand, genChestContent(rand), DMMazeStructureType.LIBRARY_ROOM);
+			Bukkit.getServer().getPluginManager().callEvent(event);
+
+			// Do the event
+			if(!event.isCancelled()) {
+				// Make sure the chest is still there, a developer could change the chest through the event!
+				if(event.getBlock().getTypeId() == 54)
+				// Add the contents to the chest
+					DungeonMazeAPI.addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) event.getBlock().getState(), event.getContents());
+			}
+
 			c.getBlock(x + 4, yFloor + 1, z + 4).setTypeId(54);
-			addItemsToChest(rand, (Chest) c.getBlock(x + 4, yFloor + 1, z + 4).getState());
+
+			// Call the Chest generation event
+			DMGenerationChestEvent event2 = new DMGenerationChestEvent(c.getBlock(x + 4, yFloor + 1, z + 4), rand, genChestContent(rand), DMMazeStructureType.LIBRARY_ROOM);
+			Bukkit.getServer().getPluginManager().callEvent(event2);
+
+			// Do the event
+			if(!event2.isCancelled()) {
+				// Make sure the chest is still there, a developer could change the chest through the event!
+				if(event2.getBlock().getTypeId() == 54)
+				// Add the contents to the chest
+					DungeonMazeAPI.addItemsToChest(event2.getAddContentsInOrder(), rand, (Chest) event2.getBlock().getState(), event2.getContents());
+			}
+
 			// Add 4 lanterns on each side of the room near the book shelfs
 			c.getBlock(x + 2, yFloor + 2, z + 1).setTypeId(50);
 			c.getBlock(x + 2, yFloor + 2, z + 1).setData((byte) 3);
@@ -109,7 +137,7 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 		}
 	}
 	
-	public void addItemsToChest(Random random, Chest chest) {
+	public List<ItemStack> genChestContent(Random random) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
 		
 		if(random.nextInt(100) < 80)
@@ -212,11 +240,12 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 			break;
 		}
 		
-		// Add the selected items to a random place inside the chest
+		List<ItemStack> result = new ArrayList<ItemStack>();
+		
+		// Add the selected items randomly
 		for (int i = 0; i < itemCountInChest; i++)
-			chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), items.get(random.nextInt(items.size())));
-			
-		chest.update();
+			result.add(items.get(random.nextInt(items.size())));
+		return result;
 	}
 	
 	/**

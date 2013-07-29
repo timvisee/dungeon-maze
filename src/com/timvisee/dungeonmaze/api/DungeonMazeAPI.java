@@ -1,11 +1,14 @@
 package com.timvisee.dungeonmaze.api;
 
 import java.util.List;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
@@ -200,5 +203,44 @@ public class DungeonMazeAPI {
 		
 		// The block was above the Dungeon Maze, return zero
 		return 0;
+	}
+	
+	/**
+	 * Add items to DungeonMaze chest
+	 * @param bool order, random, chest, list of itemstacks
+	 */
+	public static void addItemsToChest(boolean addInOrder, Random random, Chest chest, List<ItemStack> newContents) {
+		// Clear the chest inventory first
+		chest.getInventory().clear();
+		
+		// Add all the items
+		if(addInOrder) {
+			// Add the contents in order
+			for(int i = 0; i < newContents.size(); i++) {
+				ItemStack curStack = newContents.get(i);
+				
+				// Make sure the current ItemStack isn't null
+				if(curStack == null)
+					continue;
+				
+				// Make sure the current item fits in the chest, to prevent errors
+				if(i >= chest.getInventory().getSize())
+					continue;
+				
+				chest.getInventory().setItem(i, curStack);
+			}
+		} else {
+			// Add the contents randomly
+			for(ItemStack curStack : newContents) {
+				// Make sure the current ItemStack isn't null
+				if(curStack == null)
+					continue;
+				
+				chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), curStack);
+			}
+		}
+		
+		// Make sure to 'update' the chest block to update it's inventory
+		chest.update();
 	}
 }

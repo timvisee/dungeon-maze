@@ -54,7 +54,7 @@ public class DMConfig extends DMCustomConfig {
 			mobs.add("Zombie");
 			set("mobs", mobs);
 		}
-
+		
 		this.save();
 	}
 
