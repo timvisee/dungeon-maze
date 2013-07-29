@@ -3,6 +3,8 @@ package com.timvisee.dungeonmaze.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.plugin.Plugin;
+
 import com.timvisee.dungeonmaze.DungeonMaze;
 
 public class DMApiController {
@@ -47,6 +49,18 @@ public class DMApiController {
 	 */
 	public boolean isApiSession(DungeonMazeApiNew api) {
 		return this.apiSessions.contains(api);
+	}
+	
+	/**
+	 * Check whether a plugin is hooked into Dungeon Maze
+	 * @param p Plugin to check for
+	 * @return True if this plugin was hooked into Dungeon Maze
+	 */
+	public boolean isHooked(Plugin p) {
+		for(DungeonMazeApiNew entry : this.apiSessions)
+			if(entry.getPlugin().equals(p))
+				return true;
+		return false;
 	}
 	
 	/**
@@ -100,6 +114,16 @@ public class DMApiController {
 			
 			i--;
 		}
+	}
+	
+	/**
+	 * Unhook a plugin from Dungeon Maze and unhook all it's API sessions from Dungeon Maze
+	 * @param p Plugin to unhook
+	 */
+	public void unhookPlugin(Plugin p) {
+		for(DungeonMazeApiNew entry : this.apiSessions)
+			if(entry.getPlugin().equals(p))
+				unregisterApiSession(entry);
 	}
 	
 	/**
