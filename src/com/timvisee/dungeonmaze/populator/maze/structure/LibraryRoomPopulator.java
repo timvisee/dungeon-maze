@@ -7,15 +7,14 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
+import com.timvisee.dungeonmaze.util.DMChestUtils;
 
 public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 	public static final int MIN_LAYER = 3;
@@ -108,7 +107,7 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-					DungeonMazeAPI.addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) event.getBlock().getState(), event.getContents());
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 			}
 
 			c.getBlock(x + 4, yFloor + 1, z + 4).setTypeId(54);
@@ -122,7 +121,7 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event2.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-					DungeonMazeAPI.addItemsToChest(event2.getAddContentsInOrder(), rand, (Chest) event2.getBlock().getState(), event2.getContents());
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 			}
 
 			// Add 4 lanterns on each side of the room near the book shelfs

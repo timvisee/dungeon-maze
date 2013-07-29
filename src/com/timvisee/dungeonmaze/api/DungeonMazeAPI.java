@@ -14,6 +14,7 @@ import org.bukkit.plugin.Plugin;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
 import com.timvisee.dungeonmaze.manager.DMWorldManager;
+import com.timvisee.dungeonmaze.util.DMChestUtils;
 
 public class DungeonMazeAPI {
 	
@@ -206,41 +207,16 @@ public class DungeonMazeAPI {
 	}
 	
 	/**
+	 * DEPRICATED:
 	 * Add items to DungeonMaze chest
-	 * @param bool order, random, chest, list of itemstacks
+	 * @param inOrder False to add the items in random order
+	 * @param rand Random object to use as seed when items are added in random order
+	 * @param c Chest to add the items too
+	 * @param newContents List of new contents to add
+	 * @return False if failed
 	 */
-	public static void addItemsToChest(boolean addInOrder, Random random, Chest chest, List<ItemStack> newContents) {
-		// Clear the chest inventory first
-		chest.getInventory().clear();
-		
-		// Add all the items
-		if(addInOrder) {
-			// Add the contents in order
-			for(int i = 0; i < newContents.size(); i++) {
-				ItemStack curStack = newContents.get(i);
-				
-				// Make sure the current ItemStack isn't null
-				if(curStack == null)
-					continue;
-				
-				// Make sure the current item fits in the chest, to prevent errors
-				if(i >= chest.getInventory().getSize())
-					continue;
-				
-				chest.getInventory().setItem(i, curStack);
-			}
-		} else {
-			// Add the contents randomly
-			for(ItemStack curStack : newContents) {
-				// Make sure the current ItemStack isn't null
-				if(curStack == null)
-					continue;
-				
-				chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), curStack);
-			}
-		}
-		
-		// Make sure to 'update' the chest block to update it's inventory
-		chest.update();
+	@Deprecated
+	public static boolean addItemsToChest(boolean inOrder, Random rand, Chest c, List<ItemStack> newContents) {
+		return DMChestUtils.addItemsToChest(c, newContents, !inOrder, rand);
 	}
 }

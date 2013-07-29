@@ -8,17 +8,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
+import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
+import com.timvisee.dungeonmaze.util.DMChestUtils;
 
 public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 	public static final int MIN_LAYER = 1;
@@ -142,155 +144,136 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 			}
 		
 			// Generate hidden content/recourses underneath the platform
-			Block block1 = c.getBlock(x + 3, yFloor, z + 3);
-			block1.setTypeId(54);
-			Chest chestBlock1 = (Chest) block1.getState();
-			addItemsToChest(rand, chestBlock1);
+			// Generate a list of chest contents
+			List<ItemStack> contents = generateChestContents(rand);
+			Block chest1 = c.getBlock(x + 3, yFloor, z + 3);
 
-			Block block2 = c.getBlock(x + 4, yFloor, z + 4);
-			block2.setTypeId(54);
-			Chest chestBlock2 = (Chest) block2.getState();
-			addItemsToChest(rand, chestBlock2);
+			// Call the chest generation event
+			DMGenerationChestEvent event1 = new DMGenerationChestEvent(chest1, rand, contents, DMMazeStructureType.BLAZE_SPAWNER_ROOM);
+			Bukkit.getServer().getPluginManager().callEvent(event1);
+			
+			// Spawn the chest unless the even is cancelled
+			if(!event1.isCancelled()) {
+				// Make sure the chest is still there, a developer could change the chest through the event!
+				if(event1.getBlock().getTypeId() != 54)
+					return;
+				
+				// Add the contents to the chest
+				DMChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), event1.getAddContentsInOrder(), rand);
+			}
+
+			// Generate a list of chest contents
+			List<ItemStack> contents2 = generateChestContents(rand);
+			Block chest2 = c.getBlock(x + 4, yFloor, z + 4);
+
+			// Call the chest generation event
+			DMGenerationChestEvent event2 = new DMGenerationChestEvent(chest2, rand, contents2, DMMazeStructureType.BLAZE_SPAWNER_ROOM);
+			Bukkit.getServer().getPluginManager().callEvent(event2);
+			
+			// Spawn the chest unless the even is cancelled
+			if(!event2.isCancelled()) {
+				// Make sure the chest is still there, a developer could change the chest through the event!
+				if(event2.getBlock().getTypeId() != 54)
+					return;
+				
+				// Add the contents to the chest
+				DMChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), event2.getAddContentsInOrder(), rand);
+			}
 		}
 	}
 	
-	public void addItemsToChest(Random random, Chest chest) {
+	public List<ItemStack> generateChestContents(Random random) {
 		List<ItemStack> items = new ArrayList<ItemStack>();
-		if(random.nextInt(100) < 80) {
+		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(50, 4, (short) 0));
-		}
-		if(random.nextInt(100) < 40) {
+		if(random.nextInt(100) < 40)
 			items.add(new ItemStack(50, 8, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(50, 12, (short) 0));
-		}
-		if(random.nextInt(100) < 40) {
+		if(random.nextInt(100) < 40)
 			items.add(new ItemStack(260, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(262, 16, (short) 0));
-		}
-		if(random.nextInt(100) < 5) {
+		if(random.nextInt(100) < 5)
 			items.add(new ItemStack(262, 24, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(264, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 50) {
+		if(random.nextInt(100) < 50)
 			items.add(new ItemStack(265, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 60) {
+		if(random.nextInt(100) < 60)
 			items.add(new ItemStack(266, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(267, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 40) {
+		if(random.nextInt(100) < 40)
 			items.add(new ItemStack(268, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(272, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 80) {
+		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(296, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(296, 2, (short) 0));
-		}
-		if(random.nextInt(100) < 5) {
+		if(random.nextInt(100) < 5)
 			items.add(new ItemStack(296, 3, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(297, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(298, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(299, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(300, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(301, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 40) {
+		if(random.nextInt(100) < 40)
 			items.add(new ItemStack(302, 1, (short) 0));
-		} 
-		if(random.nextInt(100) < 40) {
+		if(random.nextInt(100) < 40)
 			items.add(new ItemStack(303, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 40) {
+		if(random.nextInt(100) < 40)
 			items.add(new ItemStack(304, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 40) {
+		if(random.nextInt(100) < 40)
 			items.add(new ItemStack(305, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(306, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(307, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(308, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(309, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 30) {
+		if(random.nextInt(100) < 30)
 			items.add(new ItemStack(318, 3, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(318, 5, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(318, 7, (short) 0));
-		}
-		if(random.nextInt(100) < 80) {
+		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(319, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(320, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 15) {
+		if(random.nextInt(100) < 15)
 			items.add(new ItemStack(331, 5, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(331, 8, (short) 0));
-		}
-		if(random.nextInt(100) < 5) {
+		if(random.nextInt(100) < 5)
 			items.add(new ItemStack(331, 13, (short) 0));
-		}
-		if(random.nextInt(100) < 3) {
+		if(random.nextInt(100) < 3)
 			items.add(new ItemStack(331, 21, (short) 0));
-		}
-		if(random.nextInt(100) < 10) {
+		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(345, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 80) {
+		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(349, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(350, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(350, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(351, 1, (short) 3));
-		}
-		if(random.nextInt(100) < 5) {
+		if(random.nextInt(100) < 5)
 			items.add(new ItemStack(354, 1, (short) 0));
-		}
-		if(random.nextInt(100) < 80) {
+		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(357, 3, (short) 0));
-		}
-		if(random.nextInt(100) < 20) {
+		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(357, 5, (short) 0));
-		}
 		
 		int itemCountInChest = 3;
 		switch (random.nextInt(8)) {
@@ -320,16 +303,23 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 			break;
 		default:
 			itemCountInChest = 3;
-			break;
 		}
 		
-		// Add the selected items to a random place inside the chest
-		for (int i = 0; i < itemCountInChest; i++) {
-			chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), items.get(random.nextInt(items.size())));
-		}
-		chest.update();
+		// Create a list of item contents with the right amount of items
+		List<ItemStack> newContents = new ArrayList<ItemStack>();
+		for (int i = 0; i < itemCountInChest; i++)
+			newContents.add(items.get(random.nextInt(items.size())));
+		return newContents;
 	}
 	
+	/**
+	 * Calculate the distance between two 2D points
+	 * @param x1 X coord of first point
+	 * @param y1 Y coord of first point
+	 * @param x2 X coord of second point
+	 * @param y2 Y coord of second point
+	 * @return Distance between the two points
+	 */
 	public double distance(int x1, int y1, int x2, int y2) {
 		double dx   = x1 - x2;         //horizontal difference 
 		double dy   = y1 - y2;         //vertical difference 

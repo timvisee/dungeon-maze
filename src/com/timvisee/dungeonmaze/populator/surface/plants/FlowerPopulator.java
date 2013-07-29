@@ -3,48 +3,46 @@ package com.timvisee.dungeonmaze.populator.surface.plants;
 import java.util.Random;
 
 import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.generator.BlockPopulator;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulator;
+import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulatorArgs;
 
-public class FlowerPopulator extends BlockPopulator {
+public class FlowerPopulator extends DMSurfaceBlockPopulator {
 	public static final int CHANCE_OF_FLOWER = 15;
 	public static final int ITERATIONS = 10;
-	public static DungeonMaze plugin;
-	
-	
+
 	@Override
-	public void populate(World world, Random random, Chunk source) {
+	public void populateSurface(DMSurfaceBlockPopulatorArgs args) {
+		Chunk c = args.getSourceChunk();
+		Random rand = args.getRandom();
 		
-		if(!DungeonMaze.instance.isConstantChunk(world.getName(), source)) {
-			for(int i = 0; i < ITERATIONS; i++) {
-				if (random.nextInt(100) < CHANCE_OF_FLOWER) {
+		// Iterate
+		for(int i = 0; i < ITERATIONS; i++) {
+			// Apply chances
+			if(rand.nextInt(100) < CHANCE_OF_FLOWER) {
+				int xFlower = rand.nextInt(16);
+				int zFlower = rand.nextInt(16);
+				
+				// Get the surface level at the location of the flower
+				int ySurface = args.getSurfaceLevel(xFlower, zFlower);
+				
+				// Make sure the surface block is grass
+				if(c.getBlock(xFlower, ySurface, zFlower).getTypeId() == 2) {
+					int flowerY = ySurface + 1;
 					
-					int flowerX = random.nextInt(16);
-					int flowerZ = random.nextInt(16);
-					
-					int yground;
-					for(yground = 100; source.getBlock(flowerX, yground, flowerZ).getType() == Material.AIR; yground--);
-					
-					if(source.getBlock(flowerX, yground, flowerZ).getTypeId() == 2) {
-						int flowerY = yground + 1;
-						
-						switch(random.nextInt(2)) {
-						case 0:
-							source.getBlock(flowerX, flowerY, flowerZ).setTypeId(37);
-							break;
-						case 1:
-							source.getBlock(flowerX, flowerY, flowerZ).setTypeId(38);
-							break;
-						default:
-							source.getBlock(flowerX, flowerY, flowerZ).setTypeId(37);	
-						}
-						
-					}
+					// Spawn the flower
+					c.getBlock(xFlower, flowerY, zFlower).setTypeId(getRandomFlowerType(rand));	
 				}
 			}
-		}	
+		}
+	}
+	
+	/**
+	 * Get a random flower type
+	 * @param rand Random instance
+	 * @return Random flower type ID
+	 */
+	public int getRandomFlowerType(Random rand) {
+		return (37 + (rand.nextInt(2)));
 	}
 }

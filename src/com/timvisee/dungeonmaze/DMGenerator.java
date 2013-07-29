@@ -24,6 +24,7 @@ import com.timvisee.dungeonmaze.populator.maze.decoration.LadderPopulator;
 import com.timvisee.dungeonmaze.populator.maze.decoration.LanternPopulator;
 import com.timvisee.dungeonmaze.populator.maze.decoration.LavaOutOfWallPopulator;
 import com.timvisee.dungeonmaze.populator.maze.decoration.MossPopulator;
+import com.timvisee.dungeonmaze.populator.maze.decoration.MushroomPopulator;
 import com.timvisee.dungeonmaze.populator.maze.decoration.NetherrackPopulator;
 import com.timvisee.dungeonmaze.populator.maze.decoration.OresInGroundPopulator;
 import com.timvisee.dungeonmaze.populator.maze.decoration.PoolPopulator;
@@ -60,7 +61,6 @@ import com.timvisee.dungeonmaze.populator.maze.structure.StrutPopulator;
 import com.timvisee.dungeonmaze.populator.maze.structure.TopTurveRoomPopulator;
 import com.timvisee.dungeonmaze.populator.maze.structure.WaterWellRoomPopulator;
 import com.timvisee.dungeonmaze.populator.surface.plants.FlowerPopulator;
-import com.timvisee.dungeonmaze.populator.surface.plants.MushroomPopulator;
 import com.timvisee.dungeonmaze.populator.surface.plants.TallGrassPopulator;
 import com.timvisee.dungeonmaze.populator.surface.plants.TreePopulator;
 
