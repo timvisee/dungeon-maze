@@ -35,6 +35,7 @@ public class DMWorldManager {
 						if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
 							w.add(world.getName());
 					} catch (NoClassDefFoundError e) {
+					} catch (NullPointerException e) {
 					}
 				}
 			}
