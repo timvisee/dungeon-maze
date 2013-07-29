@@ -7,15 +7,14 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
+import com.timvisee.dungeonmaze.util.DMChestUtils;
 
 public class SpawnChamberPopulator extends DMMazeBlockPopulator {
 	public static final int MIN_LAYER = 7;
@@ -130,7 +129,7 @@ public class SpawnChamberPopulator extends DMMazeBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-				DungeonMazeAPI.addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) event.getBlock().getState(), event.getContents());
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 1, y + 2, z + 6).setTypeId(54);
@@ -145,7 +144,7 @@ public class SpawnChamberPopulator extends DMMazeBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event2.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-				DungeonMazeAPI.addItemsToChest(event2.getAddContentsInOrder(), rand, (Chest) event2.getBlock().getState(), event2.getContents());
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 6, y + 2, z + 1).setTypeId(54);
@@ -160,7 +159,7 @@ public class SpawnChamberPopulator extends DMMazeBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event3.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-				DungeonMazeAPI.addItemsToChest(event3.getAddContentsInOrder(), rand, (Chest) event3.getBlock().getState(), event3.getContents());
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 6, y + 2, z + 6).setTypeId(54);
@@ -175,7 +174,7 @@ public class SpawnChamberPopulator extends DMMazeBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event4.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-				DungeonMazeAPI.addItemsToChest(event4.getAddContentsInOrder(), rand, (Chest) event4.getBlock().getState(), event4.getContents());
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 		}
 
 		// Create torches

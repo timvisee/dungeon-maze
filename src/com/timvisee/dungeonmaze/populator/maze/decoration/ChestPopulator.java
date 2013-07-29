@@ -10,11 +10,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
+import com.timvisee.dungeonmaze.util.DMChestUtils;
 
 public class ChestPopulator extends DMMazeBlockPopulator {
 	public static final int MIN_LAYER = 1;
@@ -56,7 +56,7 @@ public class ChestPopulator extends DMMazeBlockPopulator {
 							return;
 						
 						// Add the contents to the chest
-						DungeonMazeAPI.addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) event.getBlock().getState(), event.getContents());
+						DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 					} else {
 						// The event is cancelled
 						// Put the chest back to it's orrigional state (air)
@@ -81,7 +81,7 @@ public class ChestPopulator extends DMMazeBlockPopulator {
 								return;
 							
 							// Add the contents to the chest
-							DungeonMazeAPI.addItemsToChest(event.getAddContentsInOrder(), rand, (Chest) event.getBlock().getState(), event.getContents());
+							DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
 						}
 					}
 				}
@@ -211,7 +211,7 @@ public class ChestPopulator extends DMMazeBlockPopulator {
 			itemCountInChest = 3;
 		}
 		
-		// Add the selected items to a random place inside the chest
+		// Create a list of item contents with the right amount of items
 		List<ItemStack> newContents = new ArrayList<ItemStack>();
 		for (int i = 0; i < itemCountInChest; i++)
 			newContents.add(items.get(random.nextInt(items.size())));

@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -21,6 +20,7 @@ import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
+import com.timvisee.dungeonmaze.util.DMChestUtils;
 
 public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 	public static final int MIN_LAYER = 1;
@@ -159,7 +159,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DungeonMazeAPI.addItemsToChest(event1.getAddContentsInOrder(), rand, (Chest) event1.getBlock().getState(), event1.getContents());
+				DMChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), event1.getAddContentsInOrder(), rand);
 			}
 
 			// Generate a list of chest contents
@@ -177,7 +177,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DungeonMazeAPI.addItemsToChest(event2.getAddContentsInOrder(), rand, (Chest) event2.getBlock().getState(), event2.getContents());
+				DMChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), event2.getAddContentsInOrder(), rand);
 			}
 		}
 	}
