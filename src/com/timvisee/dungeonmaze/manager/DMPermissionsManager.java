@@ -30,7 +30,7 @@ import com.nijikokun.bukkit.Permissions.Permissions;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.util.CalculableType;
 
-public class PermissionsManager {
+public class DMPermissionsManager {
 	
 	private Server s;
 	private Plugin p;
@@ -60,7 +60,7 @@ public class PermissionsManager {
 	 * @param Plugin p Plugin instace
 	 * @param Logger log Logger
 	 */
-	public PermissionsManager(Server s, Plugin p, Logger log) {
+	public DMPermissionsManager(Server s, Plugin p, Logger log) {
 		this.s = s;
 		this.p = p;
 		this.log = log;
