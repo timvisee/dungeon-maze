@@ -4,6 +4,7 @@ public enum DMMazeStructureType {
 	UNSTRUCTURE("Unstructure", 0),
 	ABANDONED_DEFENCE_CASTLE_ROOM("Abandoned_Defence_Castle_Room", 2),
 	ARMORY_ROOM("Armory_Room", 3),
+	BLAZE_SPAWNER_ROOM("Blaze_Spawner_Room", 20),
 	ENTRANCE("Entrance", 4),
 	FLOODED_ROOM("Flooded_Room", 5),
 	GRAVEL_WALL("Gravel_Wall", 6),

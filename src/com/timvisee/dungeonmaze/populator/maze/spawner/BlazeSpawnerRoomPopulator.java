@@ -149,7 +149,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 			Block chest1 = c.getBlock(x + 3, yFloor, z + 3);
 
 			// Call the chest generation event
-			DMGenerationChestEvent event1 = new DMGenerationChestEvent(chest1, rand, contents, DMMazeStructureType.UNSTRUCTURE);
+			DMGenerationChestEvent event1 = new DMGenerationChestEvent(chest1, rand, contents, DMMazeStructureType.BLAZE_SPAWNER_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event1);
 			
 			// Spawn the chest unless the even is cancelled
@@ -167,7 +167,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 			Block chest2 = c.getBlock(x + 4, yFloor, z + 4);
 
 			// Call the chest generation event
-			DMGenerationChestEvent event2 = new DMGenerationChestEvent(chest2, rand, contents2, DMMazeStructureType.UNSTRUCTURE);
+			DMGenerationChestEvent event2 = new DMGenerationChestEvent(chest2, rand, contents2, DMMazeStructureType.BLAZE_SPAWNER_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event2);
 			
 			// Spawn the chest unless the even is cancelled
@@ -312,6 +312,14 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 		return newContents;
 	}
 	
+	/**
+	 * Calculate the distance between two 2D points
+	 * @param x1 X coord of first point
+	 * @param y1 Y coord of first point
+	 * @param x2 X coord of second point
+	 * @param y2 Y coord of second point
+	 * @return Distance between the two points
+	 */
 	public double distance(int x1, int y1, int x2, int y2) {
 		double dx   = x1 - x2;         //horizontal difference 
 		double dy   = y1 - y2;         //vertical difference 
