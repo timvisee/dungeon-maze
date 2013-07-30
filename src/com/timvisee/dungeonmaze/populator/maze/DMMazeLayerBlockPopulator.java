@@ -38,7 +38,7 @@ public abstract class DMMazeLayerBlockPopulator extends DMChunkBlockPopulator {
 	 * Population method
 	 * @param args Populator arguments
 	 */
-	public void populateLayer(DMMazeLayerBlockPopulatorArgs args) { }
+	public abstract void populateLayer(DMMazeLayerBlockPopulatorArgs args);
 	
 	/**
 	 * Get the minimum layer

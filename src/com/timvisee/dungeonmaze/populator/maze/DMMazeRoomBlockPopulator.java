@@ -15,7 +15,7 @@ public abstract class DMMazeRoomBlockPopulator extends DMMazeLayerBlockPopulator
 	 * @param args Populator arguments
 	 */
 	@Override
-	public void populateLayer(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateLayer(DMMazeLayerBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();

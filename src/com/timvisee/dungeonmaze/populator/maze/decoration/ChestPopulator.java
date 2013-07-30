@@ -31,7 +31,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Calculate chances
-		if (rand.nextInt(100) < CHANCE_OF_CHEST+(CHANCE_OF_CHEST_ADDITION_PER_LEVEL*(y-30)/6)) {
+		if (rand.nextInt(100) < CHANCE_OF_CHEST + (CHANCE_OF_CHEST_ADDITION_PER_LEVEL * (y - 30) / 6)) {
 			
 			int chestX = x + rand.nextInt(6) + 1;
 			int chestY = args.getFloorY() + 1;
