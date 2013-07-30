@@ -75,7 +75,7 @@ public class DungeonMaze extends JavaPlugin {
 	public boolean useMultiverse = false;
 	public MultiverseCore multiverseCore;
 	
-	//private DungeonMazeAPI dmAPI;
+	private DungeonMazeAPI dmOldApi;
 	
 	/**
 	 * Constructor
@@ -122,8 +122,8 @@ public class DungeonMaze extends JavaPlugin {
 		// Set up the API Controller
 		setUpApiController();
 
-		// Setup API
-		//setAPI(new DungeonMazeAPI(this));
+		// Set up the old API system
+		setAPI(new DungeonMazeAPI(this));
 
 		// Show a startup message
 		PluginDescriptionFile pdfFile = getDescription();
@@ -760,13 +760,13 @@ public class DungeonMaze extends JavaPlugin {
 		return constantRooms.contains(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
 
-	/*public void setAPI(DungeonMazeAPI dmAPI) {
-		this.dmAPI = dmAPI;
+	public void setAPI(DungeonMazeAPI dmAPI) {
+		this.dmOldApi = dmAPI;
 	}
 
 	public DungeonMazeAPI getDmAPI() {
-		return dmAPI;
-	}*/
+		return dmOldApi;
+	}
 
 	public String getVersion() {
 		return getDescription().getVersion();
