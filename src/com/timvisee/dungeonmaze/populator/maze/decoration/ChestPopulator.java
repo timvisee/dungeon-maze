@@ -11,19 +11,19 @@ import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
 
-public class ChestPopulator extends DMMazeBlockPopulator {
+public class ChestPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_CHEST = 3;
 	public static final double CHANCE_OF_CHEST_ADDITION_PER_LEVEL = -0.333; // to 1
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
@@ -31,7 +31,7 @@ public class ChestPopulator extends DMMazeBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Calculate chances
-		if (rand.nextInt(100) < CHANCE_OF_CHEST+(CHANCE_OF_CHEST_ADDITION_PER_LEVEL*(y-30)/6)) {
+		if (rand.nextInt(100) < CHANCE_OF_CHEST + (CHANCE_OF_CHEST_ADDITION_PER_LEVEL * (y - 30) / 6)) {
 			
 			int chestX = x + rand.nextInt(6) + 1;
 			int chestY = args.getFloorY() + 1;

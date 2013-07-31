@@ -16,6 +16,7 @@ import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
 import com.timvisee.dungeonmaze.manager.DMWorldManager;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
 
+@Deprecated
 public class DungeonMazeAPI {
 	
 	public static DungeonMaze plugin;
@@ -28,11 +29,11 @@ public class DungeonMazeAPI {
 	 * Hook into Dungeon Maze
 	 * @return instance DM instance
 	 */
+	@Deprecated
     public static DungeonMaze hookDungeonMaze() {
     	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("DungeonMaze");
-        if (plugin == null && !(plugin instanceof DungeonMaze)) {
+        if (plugin == null && !(plugin instanceof DungeonMaze))
         	return null;
-         }
     	return (DungeonMaze) plugin;
     }
 
@@ -40,6 +41,7 @@ public class DungeonMazeAPI {
 	 * Get the DM world manager
 	 * @return DM world manager
 	 */
+	@Deprecated
 	public static DMWorldManager getDMWorldManager() {
 		return plugin.getDMWorldManager();
 	}
@@ -48,6 +50,7 @@ public class DungeonMazeAPI {
 	 * Get all DM worlds
 	 * @return DM worlds
 	 */
+	@Deprecated
 	public static List<String> getDMWorlds() {
 		plugin.getDMWorldManager();
 		return DMWorldManager.getDMWorlds();
@@ -57,6 +60,7 @@ public class DungeonMazeAPI {
 	 * Get all loaded DM worlds
 	 * @return loaded DM worlds
 	 */
+	@Deprecated
 	public static List<String> getLoadedDMWorlds() {
 		plugin.getDMWorldManager();
 		return DMWorldManager.getLoadedDMWorlds();
@@ -67,6 +71,7 @@ public class DungeonMazeAPI {
 	 * @param w the world
 	 * @return true if the world is a DM world
 	 */
+	@Deprecated
 	public static boolean isDMWorld(World w) {
 		return isDMWorld(w.getName());
 	}
@@ -76,6 +81,7 @@ public class DungeonMazeAPI {
 	 * @param w the world name
 	 * @return true if the world is a DM world
 	 */
+	@Deprecated
 	public static boolean isDMWorld(String w) {
 		plugin.getDMWorldManager();
 		return DMWorldManager.isDMWorld(w);
@@ -86,6 +92,7 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return true if the player is in an DM world
 	 */
+	@Deprecated
 	public static boolean isInDMWorld(Player p) {
 		return isDMWorld(p.getWorld());
 	}
@@ -95,12 +102,12 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return the DM world a player is in, returns null when a player isn't in a DM world
 	 */
+	@Deprecated
 	public static World getDMWorld(Player p) {
 		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName())) {
-			return p.getWorld();			
-		}
+		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
+			return p.getWorld();
 		return null;
 	}
 	
@@ -109,12 +116,12 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return the DM world name a player is in, returns an empty string when the player isn't in a DM world
 	 */
+	@Deprecated
 	public static String getDMWorldName(Player p) {
 		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName())) {
-			return p.getWorld().getName();	
-		}
+		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
+			return p.getWorld().getName();
 		return "";
 	}
 	
@@ -124,6 +131,7 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return true if the player is allowed to build
 	 */
+	@Deprecated
 	public static boolean canBuildInDMWorld(String w, Player p) {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
@@ -138,6 +146,7 @@ public class DungeonMazeAPI {
 	 * @param p the player
 	 * @return true if the player is allowed to go on the surface
 	 */
+	@Deprecated
 	public static boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
 		plugin.getDMWorldManager();
 		
@@ -152,6 +161,7 @@ public class DungeonMazeAPI {
 	 * @param Object (int)
 	 * @return true if the object is in the list
 	 */
+	@Deprecated
 	public static boolean isInWhiteList(Object target){
 		List<Object> list = DungeonMaze.blockWhiteList;
 		
@@ -169,6 +179,7 @@ public class DungeonMazeAPI {
 	 * @param String mobName
 	 * @return true if the mobspawner is allow for this mob
 	 */
+	@Deprecated
 	public static boolean allowMobSpawner(String mob) {
 		return DungeonMaze.mobs.contains(mob);
 	}
@@ -177,6 +188,7 @@ public class DungeonMazeAPI {
 	 * Setup and get the DM Event handler
 	 * @return DM Event handler
 	 */
+	@Deprecated
 	public static DMEventHandler setUpDMEventHandler() {
 		return (DMEventHandler) DMEventHandler.getServer();
 	}
@@ -186,6 +198,7 @@ public class DungeonMazeAPI {
 	 * @param b the block
 	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
 	 */
+	@Deprecated
 	public static int getDMLevel(Block b) {
 		// Get the height of the spawner
 		int y = b.getY();

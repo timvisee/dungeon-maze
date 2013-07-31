@@ -13,10 +13,10 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 
-public class CreeperSpawnerRoomPopulator extends DMMazeBlockPopulator {
+public class CreeperSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 5;
 	public static final int CHANCE_OF_SPAWNER = 3; //Promile
@@ -24,7 +24,7 @@ public class CreeperSpawnerRoomPopulator extends DMMazeBlockPopulator {
 	public static final double MIN_SPAWN_DISTANCE = 5; // Chunks
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
