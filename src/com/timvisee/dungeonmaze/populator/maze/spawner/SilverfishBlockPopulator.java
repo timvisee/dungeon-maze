@@ -5,10 +5,10 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 
-public class SilverfishBlockPopulator extends DMMazeBlockPopulator {
+public class SilverfishBlockPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 3;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE = 75;
@@ -16,7 +16,7 @@ public class SilverfishBlockPopulator extends DMMazeBlockPopulator {
 	public static final double CHANCE_ADDITION_PER_LEVEL = -4.167; /* to 75 */
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

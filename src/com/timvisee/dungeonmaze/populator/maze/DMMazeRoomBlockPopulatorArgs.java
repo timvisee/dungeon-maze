@@ -5,20 +5,16 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
-public class DMMazeBlockPopulatorArgs {
+public class DMMazeRoomBlockPopulatorArgs extends DMMazeLayerBlockPopulatorArgs {
 
-	World w;
-	Random rand;
-	Chunk chunkSrc;
-	int layer = 1;
-	int x, y, z,
+	int x, z,
 	floorOffset, ceilingOffset = 0;
 	
 	/**
 	 * Constructor
 	 * @param w World
 	 * @param rand Random instance
-	 * @param chunkSrc Source chunk
+	 * @param c Source chunk
 	 * @param layer Layer
 	 * @param x X coord
 	 * @param y Y coord
@@ -26,80 +22,12 @@ public class DMMazeBlockPopulatorArgs {
 	 * @param floorOffset Floor offset
 	 * @param ceilingOffset Ceiling offset
 	 */
-	public DMMazeBlockPopulatorArgs(World w, Random rand, Chunk chunkSrc, int layer, int x, int y, int z, int floorOffset, int ceilingOffset) {
-		this.w = w;
-		this.rand = rand;
-		this.chunkSrc = chunkSrc;
-		this.layer = layer;
+	public DMMazeRoomBlockPopulatorArgs(World w, Random rand, Chunk c, int layer, int x, int y, int z, int floorOffset, int ceilingOffset) {
+		super(w, rand, c, layer, y);
 		this.x = x;
-		this.y = y;
 		this.z = z;
 		this.floorOffset = floorOffset;
 		this.ceilingOffset = ceilingOffset;
-	}
-	
-	/**
-	 * Get the world
-	 * @return World
-	 */
-	public World getWorld() {
-		return this.w;
-	}
-	
-	/**
-	 * Set the world
-	 * @param w World
-	 */
-	public void setWorld(World w) {
-		this.w = w;
-	}
-	
-	/**
-	 * Get the Random instance
-	 * @return Random instance
-	 */
-	public Random getRandom() {
-		return this.rand;
-	}
-	
-	/**
-	 * Set the Random instance
-	 * @param rand Random instance
-	 */
-	public void setRandom(Random rand) {
-		this.rand = rand;
-	}
-	
-	/**
-	 * Get the source chunk
-	 * @return Source chunk
-	 */
-	public Chunk getSourceChunk() {
-		return this.chunkSrc;
-	}
-	
-	/**
-	 * Set the source chunk
-	 * @param chunkSrc Source chunk
-	 */
-	public void setSourceChunk(Chunk chunkSrc) {
-		this.chunkSrc = chunkSrc;
-	}
-	
-	/**
-	 * Get the current layer that should be generated
-	 * @return Current layer
-	 */
-	public int getLayer() {
-		return this.layer;
-	}
-	
-	/**
-	 * Set the current layer that should be generated
-	 * @param layer 
-	 */
-	public void setLayer(int layer) {
-		this.layer = layer;
 	}
 	
 	/**
@@ -124,30 +52,6 @@ public class DMMazeBlockPopulatorArgs {
 	 */
 	public void setX(int x) {
 		this.x = x;
-	}
-	
-	/**
-	 * Get the Y coord
-	 * @return Y coord
-	 */
-	public int getY() {
-		return this.y;
-	}
-	
-	/**
-	 * Get the Y coord in the current chunk
-	 * @return Y coord in the current chunk
-	 */
-	public int getChunkY() {
-		return this.getY();
-	}
-	
-	/**
-	 * Set the Y coord
-	 * @param y Y coord
-	 */
-	public void setY(int y) {
-		this.y = y;
 	}
 	
 	/**

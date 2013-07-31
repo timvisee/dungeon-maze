@@ -10,16 +10,16 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 
-public class GravePopulator extends DMMazeBlockPopulator {
+public class GravePopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 2;
 	public static final int MAX_LAYER = 6;
 	public static final int CHANCE_OF_GRAVE = 5; // Promile
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

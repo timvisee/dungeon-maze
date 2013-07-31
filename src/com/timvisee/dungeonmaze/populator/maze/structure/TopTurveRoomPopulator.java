@@ -10,17 +10,17 @@ import org.bukkit.entity.EntityType;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 
-public class TopTurveRoomPopulator extends DMMazeBlockPopulator {
+public class TopTurveRoomPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 5;
 	public static final int CHANCE_OF_TOPTURVE = 2; //Promile
 	public static final double CHANCE_OF_TOPTURVE_ADDITION_PER_LEVEL = -0.167; /* to 2 */
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();

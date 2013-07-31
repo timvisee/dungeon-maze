@@ -5,17 +5,17 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 
-public class MushroomPopulator extends DMMazeBlockPopulator {
+public class MushroomPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 6;
 	public static final int CHANCE_OF_BROWN_MUSHROOM = 1;
 	public static final int CHANCE_OF_RED_MUSHROOM = 1;
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

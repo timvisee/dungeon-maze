@@ -24,13 +24,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.dungeonmaze.Metrics.Graph;
+import com.timvisee.dungeonmaze.api.DMApiController;
 import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.listener.DMBlockListener;
 import com.timvisee.dungeonmaze.listener.DMPlayerListener;
 import com.timvisee.dungeonmaze.listener.DMPluginListener;
 import com.timvisee.dungeonmaze.listener.DMWorldListener;
 import com.timvisee.dungeonmaze.manager.DMWorldManager;
-import com.timvisee.dungeonmaze.manager.PermissionsManager;
+import com.timvisee.dungeonmaze.manager.DMPermissionsManager;
 
 public class DungeonMaze extends JavaPlugin {	
 	
@@ -65,15 +66,16 @@ public class DungeonMaze extends JavaPlugin {
 	// Update Checker
 	private DMUpdateChecker uc;
 
-	// Permissions manager
-	private PermissionsManager pm;
+	// Managers, Handlers and Controllers
+	private DMApiController apiController;
+	private DMPermissionsManager permsMan;
+	private DMWorldManager worldMan;
 	
 	/* Multiverse */
 	public boolean useMultiverse = false;
 	public MultiverseCore multiverseCore;
 	
-	private DMWorldManager dmWorldManager;
-	private DungeonMazeAPI dmAPI;
+	private DungeonMazeAPI dmOldApi;
 	
 	/**
 	 * Constructor
@@ -91,12 +93,12 @@ public class DungeonMaze extends JavaPlugin {
 		// Load the config file
 		loadConfig();
 		
-		// Set up the DM Event Handler
-		DungeonMazeAPI.setUpDMEventHandler();
-		
 		// Set up the DM world manager and preload the worlds
 		setUpDMWorldManager();
 		DMWorldManager.preloadWorlds();
+		
+		// Set up the DM Event Handler
+		DungeonMazeAPI.setUpDMEventHandler();
 
 		// Set up the update checker
 		setUpUpdateChecker();
@@ -116,8 +118,11 @@ public class DungeonMaze extends JavaPlugin {
 		pm.registerEvents(this.playerListener, this);
 		pm.registerEvents(this.pluginListener, this);
 		pm.registerEvents(this.worldListener, this);
+		
+		// Set up the API Controller
+		setUpApiController();
 
-		// Setup API
+		// Set up the old API system
 		setAPI(new DungeonMazeAPI(this));
 
 		// Show a startup message
@@ -155,6 +160,12 @@ public class DungeonMaze extends JavaPlugin {
 		} else
 			log.info("[DungeonMaze] Unloading worlds has been disabled!");
 		
+		// Unhook all plugins hooked into Dungeon Maze and remove/unregister their sessions
+		if(getApiController().getApiSessionsCount() > 0) {
+			getLogger().info("[DungeonMaze] Unhooking all hooked plugins...");
+			getApiController().unregisterAllApiSessions();
+		}
+		
 		// If any update was downloaded, install the update
 		if(getUpdateChecker().isUpdateDownloaded())
 			getUpdateChecker().installUpdate();
@@ -167,21 +178,46 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	/**
+	 * Set up the API Manager
+	 */
+	public void setUpApiController() {
+		// Construct the API Controller
+		this.apiController = new DMApiController(false);
+		
+		// Show a status message
+		getLogger().info("Dungeon Maze API started!");
+		
+		// Enable the API if it should be enabled
+		if(getConfig().getBoolean("api.enabled", true))
+			this.apiController.setEnabled(true);
+		else
+			getLogger().info("Not enabling Dungeon Maze API, disabled in config file!");
+	}
+	
+	/**
+	 * Get the API Controller instance
+	 * @return API Controller instance
+	 */
+	public DMApiController getApiController() {
+		return this.apiController;
+	}
+	
+	/**
 	 * Setup the permissions manager
 	 */
 	@SuppressWarnings("static-access")
 	public void setUpPermissionsManager() {
 		// Setup the permissions manager
-		this.pm = new PermissionsManager(this.getServer(), (Plugin) this, this.log);
-		this.pm.setup();
+		this.permsMan = new DMPermissionsManager(this.getServer(), (Plugin) this, this.log);
+		this.permsMan.setup();
 	}
 	
 	/**
 	 * Get the permissions manager
 	 * @return permissions manager
 	 */
-	public PermissionsManager getPermissionsManager() {
-		return this.pm;
+	public DMPermissionsManager getPermissionsManager() {
+		return this.permsMan;
 	}
 	
 	/**
@@ -189,7 +225,7 @@ public class DungeonMaze extends JavaPlugin {
 	 * @return
 	 */
 	public DMWorldManager getDMWorldManager() {
-		return dmWorldManager;
+		return worldMan;
 	}
 	
 	/**
@@ -255,7 +291,7 @@ public class DungeonMaze extends JavaPlugin {
 	
 	private void setUpDMWorldManager() {
 		// Setup the DM world manager
-		this.dmWorldManager = new DMWorldManager();
+		this.worldMan = new DMWorldManager();
 		DMWorldManager.refresh();
 	}
 		
@@ -725,11 +761,11 @@ public class DungeonMaze extends JavaPlugin {
 	}
 
 	public void setAPI(DungeonMazeAPI dmAPI) {
-		this.dmAPI = dmAPI;
+		this.dmOldApi = dmAPI;
 	}
 
 	public DungeonMazeAPI getDmAPI() {
-		return dmAPI;
+		return dmOldApi;
 	}
 
 	public String getVersion() {

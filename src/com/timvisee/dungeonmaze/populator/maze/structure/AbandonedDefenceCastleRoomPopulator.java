@@ -13,12 +13,12 @@ import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
 
-public class AbandonedDefenceCastleRoomPopulator extends DMMazeBlockPopulator {
+public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 2;
 	public static final int MAX_LAYER = 6;
 	public static final int CHANCE_OF_CASTLE = 1; // Promile
@@ -28,7 +28,7 @@ public class AbandonedDefenceCastleRoomPopulator extends DMMazeBlockPopulator {
 	public static final int CRACKED_CHANCE = 70;
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		World W = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
