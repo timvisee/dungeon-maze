@@ -48,7 +48,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static DMWorldManager getDMWorldManager() {
-		return plugin.getDMWorldManager();
+		return plugin.getWorldManager();
 	}
 
 	/**
@@ -57,8 +57,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static List<String> getDMWorlds() {
-		plugin.getDMWorldManager();
-		return DMWorldManager.getDMWorlds();
+		return plugin.getWorldManager().getDMWorlds();
 	}
 
 	/**
@@ -67,8 +66,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static List<String> getLoadedDMWorlds() {
-		plugin.getDMWorldManager();
-		return DMWorldManager.getLoadedDMWorlds();
+		return plugin.getWorldManager().getLoadedDMWorlds();
 	}
 
 	/**
@@ -88,8 +86,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static boolean isDMWorld(String w) {
-		plugin.getDMWorldManager();
-		return DMWorldManager.isDMWorld(w);
+		return plugin.getWorldManager().isDMWorld(w);
 	}
 
 	/**
@@ -109,9 +106,8 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static World getDMWorld(Player p) {
-		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
+		if(plugin.getWorldManager().isDMWorld(p.getWorld().getName()))
 			return p.getWorld();
 		return null;
 	}
@@ -123,9 +119,8 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static String getDMWorldName(Player p) {
-		plugin.getDMWorldManager();
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
+		if(plugin.getWorldManager().isDMWorld(p.getWorld().getName()))
 			return p.getWorld().getName();
 		return "";
 	}
@@ -138,8 +133,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static boolean canBuildInDMWorld(String w, Player p) {
-		plugin.getDMWorldManager();
-		if(DMWorldManager.isDMWorld(w))
+		if(plugin.getWorldManager().isDMWorld(w))
 			if(DungeonMaze.instance.getConfigHandler().worldProtection)
 				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
@@ -153,9 +147,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
-		plugin.getDMWorldManager();
-		
-		if(DMWorldManager.isDMWorld(w))
+		if(plugin.getWorldManager().isDMWorld(w))
 			if(!DungeonMaze.instance.getConfigHandler().allowSurface)
 				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;

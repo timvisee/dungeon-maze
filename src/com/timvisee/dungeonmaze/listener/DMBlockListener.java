@@ -9,7 +9,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.manager.DMWorldManager;
 
 public class DMBlockListener implements Listener {
 	
@@ -19,7 +18,7 @@ public class DMBlockListener implements Listener {
 		Block b = e.getBlockPlaced();
 		String w = b.getWorld().getName();
 		
-		if(DMWorldManager.isDMWorld(w)) {
+		if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(DungeonMaze.instance.getConfigHandler().worldProtection) {
@@ -40,7 +39,7 @@ public class DMBlockListener implements Listener {
 		Block b = e.getBlock();
 		String w = b.getWorld().getName();
 		
-		if(DMWorldManager.isDMWorld(w)) {
+		if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(DungeonMaze.instance.getConfigHandler().worldProtection) {

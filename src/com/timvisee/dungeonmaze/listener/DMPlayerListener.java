@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.timvisee.dungeonmaze.DMUpdateChecker;
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.manager.DMWorldManager;
 
 public class DMPlayerListener implements Listener {
 	
@@ -24,8 +23,8 @@ public class DMPlayerListener implements Listener {
 		if(y >= 75) {
 			// The player is above the surface
 			
-			DungeonMaze.instance.getDMWorldManager();
-			if(DMWorldManager.isDMWorld(w)) {
+			DungeonMaze.instance.getWorldManager();
+			if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
 				if(DungeonMaze.instance.getConfigHandler().allowSurface == false) {
 					// The player is not allowed on the surface
 					

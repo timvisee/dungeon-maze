@@ -49,8 +49,6 @@ public class DungeonMaze extends JavaPlugin {
 	private final DMPluginListener pluginListener = new DMPluginListener();
 	private final DMWorldListener worldListener = new DMWorldListener();
 	
-	
-	
 	// Worlds
 	public String lastWorld = "";
 	public List<String> constantRooms = new ArrayList<String>(); // x;y;z
@@ -86,9 +84,8 @@ public class DungeonMaze extends JavaPlugin {
 		// Set up the config handler (and load the config file)
 		setUpConfigHandler();
 		
-		// Set up the DM world manager and preload the worlds
-		setUpDMWorldManager();
-		DMWorldManager.preloadWorlds();
+		// Set up the world manager
+		setUpWorldManager();
 		
 		// Set up the DM Event Handler
 		DungeonMazeAPI.setUpDMEventHandler();
@@ -233,11 +230,20 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	/**
-	 * Get the DM world manager
-	 * @return
+	 * Set up the world manager
 	 */
-	public DMWorldManager getDMWorldManager() {
-		return worldMan;
+	public void setUpWorldManager() {
+		this.worldMan = new DMWorldManager();
+		this.worldMan.refresh();
+		this.worldMan.preloadWorlds();
+	}
+	
+	/**
+	 * Get the world manager instance
+	 * @return World manager instance
+	 */
+	public DMWorldManager getWorldManager() {
+		return this.worldMan;
 	}
 	
 	/**
@@ -256,8 +262,8 @@ public class DungeonMaze extends JavaPlugin {
 	            	List<Player> players = Arrays.asList(getServer().getOnlinePlayers());
 	            	int count = 0;
 	            	for(Player p : players) {
-	            		getDMWorldManager();
-						if(DMWorldManager.isDMWorld(p.getWorld().getName()))
+	            		getWorldManager();
+						if(getWorldManager().isDMWorld(p.getWorld().getName()))
 	            			count++;
 	            	}
 	            	return count;
@@ -299,12 +305,6 @@ public class DungeonMaze extends JavaPlugin {
 		log.info("[DungeonMaze] Hooked into Multiverse");
 		useMultiverse = true;
 		multiverseCore = new MultiverseCore();
-	}
-	
-	private void setUpDMWorldManager() {
-		// Setup the DM world manager
-		this.worldMan = new DMWorldManager();
-		DMWorldManager.refresh();
 	}
 		
 	public boolean usePermissions() {
@@ -445,10 +445,10 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				
 				sender.sendMessage(ChatColor.YELLOW + "==========[ DUNGEON MAZE WORLDS ]==========");
-				List<String> worlds = DMWorldManager.getDMWorlds();
+				List<String> worlds = getWorldManager().getDMWorlds();
 				if(worlds.size() > 0) {
 					for(String w : worlds) {
-						if(DMWorldManager.isLoadedDMWorld(w))
+						if(getWorldManager().isLoadedDMWorld(w))
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
 						else
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");
@@ -481,8 +481,8 @@ public class DungeonMaze extends JavaPlugin {
 				
 				// Reload configs and worlds
 				getConfigHandler().load();
-				getDMWorldManager();
-				DMWorldManager.preloadWorlds();
+				getWorldManager();
+				getWorldManager().preloadWorlds();
 				
 				// Show a succes message
 				log.info("[DungeonMaze] Dungeon Maze has been reloaded!");

@@ -13,6 +13,7 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
 import com.timvisee.dungeonmaze.manager.DMPermissionsManager;
 import com.timvisee.dungeonmaze.manager.DMWorldManager;
+import com.timvisee.dungeonmaze.util.DMMazeUtils;
 
 public class DungeonMazeApiNew {
 	
@@ -179,7 +180,7 @@ public class DungeonMazeApiNew {
 			return null;
 		
 		// Return the world manager instance
-		return getDM().getDMWorldManager();
+		return getDM().getWorldManager();
 	}
 
 	/**
@@ -192,7 +193,7 @@ public class DungeonMazeApiNew {
 			return null;
 		
 		// Return the list of Dungeon Maze worlds
-		return DMWorldManager.getDMWorlds();
+		return getDM().getWorldManager().getDMWorlds();
 	}
 
 	/**
@@ -205,7 +206,7 @@ public class DungeonMazeApiNew {
 			return null;
 		
 		// Get and return the list of loaded Dungeon Maze worlds
-		return DMWorldManager.getLoadedDMWorlds();
+		return getDM().getWorldManager().getLoadedDMWorlds();
 	}
 
 	/**
@@ -227,7 +228,7 @@ public class DungeonMazeApiNew {
 		if(!isHooked())
 			return false;
 		
-		return DMWorldManager.isDMWorld(w);
+		return getDM().getWorldManager().isDMWorld(w);
 	}
 
 	/**
@@ -254,7 +255,7 @@ public class DungeonMazeApiNew {
 			return null;
 		
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
+		if(getDM().getWorldManager().isDMWorld(p.getWorld().getName()))
 			return p.getWorld();
 		return null;
 	}
@@ -270,7 +271,7 @@ public class DungeonMazeApiNew {
 			return "";
 		
 		// Check if the player is in a DM world
-		if(DMWorldManager.isDMWorld(p.getWorld().getName()))
+		if(getDM().getWorldManager().isDMWorld(p.getWorld().getName()))
 			return p.getWorld().getName();
 		return "";
 	}
@@ -286,7 +287,7 @@ public class DungeonMazeApiNew {
 		if(!isHooked())
 			return false;
 		
-		if(DMWorldManager.isDMWorld(w))
+		if(getDM().getWorldManager().isDMWorld(w))
 			if(getDM().getConfigHandler().worldProtection)
 				return getDM().getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
@@ -303,8 +304,8 @@ public class DungeonMazeApiNew {
 		if(!isHooked())
 			return true;
 		
-		if(DMWorldManager.isDMWorld(w))
-			if(!DungeonMaze.instance.getConfigHandler().allowSurface)
+		if(getDM().getWorldManager().isDMWorld(w))
+			if(!getDM().getConfigHandler().allowSurface)
 				return getDM().getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
@@ -332,7 +333,7 @@ public class DungeonMazeApiNew {
 	 * @return true if the mobspawner is allow for this mob
 	 */
 	public boolean allowMobSpawner(String mob) {
-		return DungeonMaze.instance.getConfigHandler().mobs.contains(mob);
+		return getDM().getConfigHandler().mobs.contains(mob);
 	}
 	
 	/**
@@ -349,22 +350,6 @@ public class DungeonMazeApiNew {
 	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
 	 */
 	public int getDMLevel(Block b) {
-		// Get the height of the spawner
-		int y = b.getY();
-		
-		// Is the block bellow the Dungeon Maze?
-		if(y < 30)
-			return 0;
-		
-		// Check if the block is inside the Dungeon Maze, if so return it's level
-		int curLevel = 1;
-		for (int dml=30; dml < 30 + (7 * 6); dml += 6) {
-			if(dml >= y && dml + 6 < y)
-				return curLevel;
-			curLevel++;
-		}
-		
-		// The block was above the Dungeon Maze, return zero
-		return 0;
+		return DMMazeUtils.getDMLevel(b);
 	}
 }
