@@ -11,387 +11,403 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
-import org.bukkit.generator.BlockPopulator;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeLayerBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeLayerBlockPopulatorArgs;
 
-public class BossRoomInsanePopulator extends BlockPopulator {
+public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
+	public static final int MIN_LAYER = 1;
+	public static final int MAX_LAYER = 3;
 	public static final int CHANCE_OF_BOSSROOM = 1; //Promile
 	public static final double MIN_SPAWN_DISTANCE = 10; // Chunks
 
 	@Override
-	public void populate(World world, Random random, Chunk source) {
-		// Hold the y on 30 because that's only the lowest layer
+	public void populateLayer(DMMazeLayerBlockPopulatorArgs args) {
+		World w = args.getWorld();
+		Random rand = args.getRandom();
+		Chunk c = args.getSourceChunk();
+		int x = 0;
+		int y = args.getY();
+		int z = 0;
 			
-		// The 4 rooms on each layer saved in the variables x and z
-		if(!DungeonMaze.instance.isConstantChunk(world.getName(), source)) {
+		// Make sure the distance between the spawn chunk and the current chunk is allowed
+		if(distance(0, 0, c.getX(), c.getZ()) < MIN_SPAWN_DISTANCE)
+			return;
+		
+		// Apply chances
+		if (rand.nextInt(1000) < CHANCE_OF_BOSSROOM) {
+			DungeonMaze.instance.registerConstantChunk(w.getName(), c.getX(), c.getZ());					
 			
-			int x = 0;
-			int z = 0;
-			
-			// The layers for each 4 rooms in the variable y
-			for (int y=30; y < 30+(3*6); y+=6) { /*go up to 3 layers because the room is 3 heigh*/
-				if(distance(0, 0, source.getX(), source.getZ()) >= MIN_SPAWN_DISTANCE) {
-					if (random.nextInt(1000) < CHANCE_OF_BOSSROOM) {
-						DungeonMaze.instance.registerConstantChunk(world.getName(), source.getX(), source.getZ());					
-						
-						// Clear the room!
-					     for (int x2=x; x2 < x + 15; x2+=1) {
-					      for (int y2=y + 1; y2 <= y + (6*3) - 1; y2+=1) {
-					       for (int z2=z; z2 <z + 15; z2+=1) {
-					        source.getBlock(x2, y2, z2).setTypeId(0);
-					       }
-					      }
-					     }
-					     //floor
-					     for (int x2=x; x2 < x + 15; x2+=1) {
-					         for (int y2=y; y2 < y + 1; y2+=1) {
-					            for (int z2=z; z2 < z + 15; z2+=1) {
-					             source.getBlock(x2, y2, z2).setTypeId(49);
-					            }
-					         }
-					     }
-					     //treasures
-					     source.getBlock(x + 7, y + 1, z + 7).setTypeId(41);
-					     source.getBlock(x + 8, y + 1, z + 8).setTypeId(42);
-					     //chest1
-					     source.getBlock(x + 7, y + 1, z + 8).setTypeId(54);
-					     addItemsToChest(random, (Chest) source.getBlock(x + 7, y + 1, z + 8).getState());
-					     //chest2
-					     source.getBlock(x + 8, y + 1, z + 7).setTypeId(54);
-					     addItemsToChest(random, (Chest) source.getBlock(x + 8, y + 1, z + 7).getState());
-					     //glass shields
-					     source.getBlock(x + 2, y + 1, z + 3).setTypeId(20);
-					     source.getBlock(x + 2, y + 1, z + 12).setTypeId(20);
-					     source.getBlock(x + 3, y + 1, z + 2).setTypeId(20);
-					     source.getBlock(x + 3, y + 1, z + 4).setTypeId(20);
-					     source.getBlock(x + 3, y + 1, z + 11).setTypeId(20);
-					     source.getBlock(x + 3, y + 1, z + 13).setTypeId(20);
-					     source.getBlock(x + 4, y + 1, z + 3).setTypeId(20);
-					     source.getBlock(x + 4, y + 1, z + 12).setTypeId(20);
-					     source.getBlock(x + 11, y + 1, z + 3).setTypeId(20);
-					     source.getBlock(x + 11, y + 1, z + 12).setTypeId(20);
-					     source.getBlock(x + 12, y + 1, z + 2).setTypeId(20);
-					     source.getBlock(x + 12, y + 1, z + 4).setTypeId(20);
-					     source.getBlock(x + 12, y + 1, z + 11).setTypeId(20);
-					     source.getBlock(x + 12, y + 1, z + 13).setTypeId(20);
-					     source.getBlock(x + 13, y + 1, z + 3).setTypeId(20);
-					     source.getBlock(x + 13, y + 1, z + 12).setTypeId(20);
-					     source.getBlock(x + 3, y + 2, z + 3).setTypeId(20);
-					     source.getBlock(x + 3, y + 2, z + 12).setTypeId(20);
-					     source.getBlock(x + 12, y + 2, z + 3).setTypeId(20);
-					     source.getBlock(x + 12, y + 2, z + 12).setTypeId(20);
-					     //hull
-					     source.getBlock(x + 5, y + 1, z + 7).setTypeId(112);
-					     source.getBlock(x + 5, y + 1, z + 8).setTypeId(112);
-					     source.getBlock(x + 6, y + 1, z + 6).setTypeId(112);
-					     source.getBlock(x + 6, y + 1, z + 7).setTypeId(88);
-					     source.getBlock(x + 6, y + 1, z + 8).setTypeId(88);
-					     source.getBlock(x + 6, y + 1, z + 9).setTypeId(112);
-					     source.getBlock(x + 7, y + 1, z + 5).setTypeId(112);
-					     source.getBlock(x + 7, y + 1, z + 6).setTypeId(88);
-					     source.getBlock(x + 7, y + 1, z + 9).setTypeId(88);
-					     source.getBlock(x + 7, y + 1, z + 10).setTypeId(112);
-					     source.getBlock(x + 8, y + 1, z + 5).setTypeId(112);
-					     source.getBlock(x + 8, y + 1, z + 6).setTypeId(88);
-					     source.getBlock(x + 8, y + 1, z + 9).setTypeId(88);
-					     source.getBlock(x + 8, y + 1, z + 10).setTypeId(112);
-					     source.getBlock(x + 9, y + 1, z + 6).setTypeId(112);
-					     source.getBlock(x + 9, y + 1, z + 7).setTypeId(88);
-					     source.getBlock(x + 9, y + 1, z + 8).setTypeId(88);
-					     source.getBlock(x + 9, y + 1, z + 9).setTypeId(112);
-					     source.getBlock(x + 10, y + 1, z + 7).setTypeId(112);
-					     source.getBlock(x + 10, y + 1, z + 8).setTypeId(112);
-					     source.getBlock(x + 5, y + 2, z + 7).setTypeId(112);
-					     source.getBlock(x + 5, y + 2, z + 8).setTypeId(112);
-					     source.getBlock(x + 6, y + 2, z + 6).setTypeId(112);
-					     source.getBlock(x + 6, y + 2, z + 7).setTypeId(88);
-					     source.getBlock(x + 6, y + 2, z + 8).setTypeId(88);
-					     source.getBlock(x + 6, y + 2, z + 9).setTypeId(112);
-					     source.getBlock(x + 7, y + 2, z + 5).setTypeId(112);
-					     source.getBlock(x + 7, y + 2, z + 6).setTypeId(88);
-					     source.getBlock(x + 7, y + 2, z + 9).setTypeId(88);
-					     source.getBlock(x + 7, y + 2, z + 10).setTypeId(112);
-					     source.getBlock(x + 8, y + 2, z + 5).setTypeId(112);
-					     source.getBlock(x + 8, y + 2, z + 6).setTypeId(88);
-					     source.getBlock(x + 8, y + 2, z + 9).setTypeId(88);
-					     source.getBlock(x + 8, y + 2, z + 10).setTypeId(112);
-					     source.getBlock(x + 9, y + 2, z + 6).setTypeId(112);
-					     source.getBlock(x + 9, y + 2, z + 7).setTypeId(88);
-					     source.getBlock(x + 9, y + 2, z + 8).setTypeId(88);
-					     source.getBlock(x + 9, y + 2, z + 9).setTypeId(112);
-					     source.getBlock(x + 10, y + 2, z + 7).setTypeId(112);
-					     source.getBlock(x + 10, y + 2, z + 8).setTypeId(112);
-					     source.getBlock(x + 6, y + 3, z + 7).setTypeId(112);
-					     source.getBlock(x + 6, y + 3, z + 8).setTypeId(112);
-					     source.getBlock(x + 7, y + 3, z + 6).setTypeId(112);
-					     source.getBlock(x + 7, y + 3, z + 7).setTypeId(88);
-					     source.getBlock(x + 7, y + 3, z + 8).setTypeId(88);
-					     source.getBlock(x + 7, y + 3, z + 9).setTypeId(112);
-					     source.getBlock(x + 8, y + 3, z + 6).setTypeId(112);
-					     source.getBlock(x + 8, y + 3, z + 7).setTypeId(88);
-					     source.getBlock(x + 8, y + 3, z + 8).setTypeId(88);
-					     source.getBlock(x + 8, y + 3, z + 9).setTypeId(112);
-					     source.getBlock(x + 9, y + 3, z + 7).setTypeId(112);
-					     source.getBlock(x + 9, y + 3, z + 8).setTypeId(112);
-					     source.getBlock(x + 7, y + 4, z + 7).setTypeId(112);
-					     source.getBlock(x + 7, y + 4, z + 8).setTypeId(112);
-					     source.getBlock(x + 8, y + 4, z + 7).setTypeId(112);
-					     source.getBlock(x + 8, y + 4, z + 8).setTypeId(112);
-					     
-					     //core spawners
-					     if (DungeonMazeAPI.allowMobSpawner("Ghast")) {
-					    	Block spawnerBlock = source.getBlock(x + 7, y + 2, z + 7);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.GHAST, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
-					    	Block spawnerBlock = source.getBlock(x + 7, y + 2, z + 8);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
-					    	Block spawnerBlock = source.getBlock(x + 8, y + 2, z + 7);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
-					    	Block spawnerBlock = source.getBlock(x + 8, y + 2, z + 8);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("Skeleton")) {
-					    	Block spawnerBlock = source.getBlock(x + 7, y + 3, z + 7);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
-					    	Block spawnerBlock = source.getBlock(x + 7, y + 3, z + 8);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
-					    	Block spawnerBlock = source.getBlock(x + 8, y + 3, z + 7);
-							
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
-					    	Block spawnerBlock = source.getBlock(x + 8, y + 3, z + 8);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     //loose spawners
-					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
-					    	Block spawnerBlock = source.getBlock(x + 3, y + 1, z + 3);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("Skeleton")) {
-					    	Block spawnerBlock = source.getBlock(x + 3, y + 1, z + 12);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
-					    	Block spawnerBlock =  source.getBlock(x + 12, y + 1, z + 3);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					     
-					     if (DungeonMazeAPI.allowMobSpawner("Spider")) {
-					    	Block spawnerBlock = source.getBlock(x + 12, y + 1, z + 12);
-								
-							// Call the spawner generation event
-							DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, DMGenerationSpawnerCause.BOSSROOM_INSANE, random);
-							Bukkit.getServer().getPluginManager().callEvent(event);
-							
-							// Make sure the event isn't cancelled yet
-							if(!event.isCancelled()) {
-								// Change the block into a creature spawner
-								spawnerBlock.setTypeId(52);
-								
-								// Cast the created s pawner into a CreatureSpawner object
-								CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
-								
-								// Set the spawned type of the spawner
-								theSpawner.setSpawnedType(event.getSpawnedType());
-							}
-					     }
-					}
+			// Clear the room!
+		     for (int x2=x; x2 < x + 15; x2+=1)
+		    	 for (int y2=y + 1; y2 <= y + (6*3) - 1; y2+=1)
+		    	  for (int z2=z; z2 <z + 15; z2+=1)
+		    	   		c.getBlock(x2, y2, z2).setTypeId(0);
+		     // Floor
+		     for (int x2=x; x2 < x + 15; x2+=1)
+		         for (int y2=y; y2 < y + 1; y2+=1)
+		            for (int z2=z; z2 < z + 15; z2+=1)
+		             c.getBlock(x2, y2, z2).setTypeId(49);
+		     
+		     // Treasures
+		     c.getBlock(x + 7, y + 1, z + 7).setTypeId(41);
+		     c.getBlock(x + 8, y + 1, z + 8).setTypeId(42);
+		     
+		     // Chest1
+		     c.getBlock(x + 7, y + 1, z + 8).setTypeId(54);
+		     addItemsToChest(rand, (Chest) c.getBlock(x + 7, y + 1, z + 8).getState());
+		     
+		     // Chest2
+		     c.getBlock(x + 8, y + 1, z + 7).setTypeId(54);
+		     addItemsToChest(rand, (Chest) c.getBlock(x + 8, y + 1, z + 7).getState());
+		     
+		     // Glass shields
+		     c.getBlock(x + 2, y + 1, z + 3).setTypeId(20);
+		     c.getBlock(x + 2, y + 1, z + 12).setTypeId(20);
+		     c.getBlock(x + 3, y + 1, z + 2).setTypeId(20);
+		     c.getBlock(x + 3, y + 1, z + 4).setTypeId(20);
+		     c.getBlock(x + 3, y + 1, z + 11).setTypeId(20);
+		     c.getBlock(x + 3, y + 1, z + 13).setTypeId(20);
+		     c.getBlock(x + 4, y + 1, z + 3).setTypeId(20);
+		     c.getBlock(x + 4, y + 1, z + 12).setTypeId(20);
+		     c.getBlock(x + 11, y + 1, z + 3).setTypeId(20);
+		     c.getBlock(x + 11, y + 1, z + 12).setTypeId(20);
+		     c.getBlock(x + 12, y + 1, z + 2).setTypeId(20);
+		     c.getBlock(x + 12, y + 1, z + 4).setTypeId(20);
+		     c.getBlock(x + 12, y + 1, z + 11).setTypeId(20);
+		     c.getBlock(x + 12, y + 1, z + 13).setTypeId(20);
+		     c.getBlock(x + 13, y + 1, z + 3).setTypeId(20);
+		     c.getBlock(x + 13, y + 1, z + 12).setTypeId(20);
+		     c.getBlock(x + 3, y + 2, z + 3).setTypeId(20);
+		     c.getBlock(x + 3, y + 2, z + 12).setTypeId(20);
+		     c.getBlock(x + 12, y + 2, z + 3).setTypeId(20);
+		     c.getBlock(x + 12, y + 2, z + 12).setTypeId(20);
+		     
+		     // Hull
+		     c.getBlock(x + 5, y + 1, z + 7).setTypeId(112);
+		     c.getBlock(x + 5, y + 1, z + 8).setTypeId(112);
+		     c.getBlock(x + 6, y + 1, z + 6).setTypeId(112);
+		     c.getBlock(x + 6, y + 1, z + 7).setTypeId(88);
+		     c.getBlock(x + 6, y + 1, z + 8).setTypeId(88);
+		     c.getBlock(x + 6, y + 1, z + 9).setTypeId(112);
+		     c.getBlock(x + 7, y + 1, z + 5).setTypeId(112);
+		     c.getBlock(x + 7, y + 1, z + 6).setTypeId(88);
+		     c.getBlock(x + 7, y + 1, z + 9).setTypeId(88);
+		     c.getBlock(x + 7, y + 1, z + 10).setTypeId(112);
+		     c.getBlock(x + 8, y + 1, z + 5).setTypeId(112);
+		     c.getBlock(x + 8, y + 1, z + 6).setTypeId(88);
+		     c.getBlock(x + 8, y + 1, z + 9).setTypeId(88);
+		     c.getBlock(x + 8, y + 1, z + 10).setTypeId(112);
+		     c.getBlock(x + 9, y + 1, z + 6).setTypeId(112);
+		     c.getBlock(x + 9, y + 1, z + 7).setTypeId(88);
+		     c.getBlock(x + 9, y + 1, z + 8).setTypeId(88);
+		     c.getBlock(x + 9, y + 1, z + 9).setTypeId(112);
+		     c.getBlock(x + 10, y + 1, z + 7).setTypeId(112);
+		     c.getBlock(x + 10, y + 1, z + 8).setTypeId(112);
+		     c.getBlock(x + 5, y + 2, z + 7).setTypeId(112);
+		     c.getBlock(x + 5, y + 2, z + 8).setTypeId(112);
+		     c.getBlock(x + 6, y + 2, z + 6).setTypeId(112);
+		     c.getBlock(x + 6, y + 2, z + 7).setTypeId(88);
+		     c.getBlock(x + 6, y + 2, z + 8).setTypeId(88);
+		     c.getBlock(x + 6, y + 2, z + 9).setTypeId(112);
+		     c.getBlock(x + 7, y + 2, z + 5).setTypeId(112);
+		     c.getBlock(x + 7, y + 2, z + 6).setTypeId(88);
+		     c.getBlock(x + 7, y + 2, z + 9).setTypeId(88);
+		     c.getBlock(x + 7, y + 2, z + 10).setTypeId(112);
+		     c.getBlock(x + 8, y + 2, z + 5).setTypeId(112);
+		     c.getBlock(x + 8, y + 2, z + 6).setTypeId(88);
+		     c.getBlock(x + 8, y + 2, z + 9).setTypeId(88);
+		     c.getBlock(x + 8, y + 2, z + 10).setTypeId(112);
+		     c.getBlock(x + 9, y + 2, z + 6).setTypeId(112);
+		     c.getBlock(x + 9, y + 2, z + 7).setTypeId(88);
+		     c.getBlock(x + 9, y + 2, z + 8).setTypeId(88);
+		     c.getBlock(x + 9, y + 2, z + 9).setTypeId(112);
+		     c.getBlock(x + 10, y + 2, z + 7).setTypeId(112);
+		     c.getBlock(x + 10, y + 2, z + 8).setTypeId(112);
+		     c.getBlock(x + 6, y + 3, z + 7).setTypeId(112);
+		     c.getBlock(x + 6, y + 3, z + 8).setTypeId(112);
+		     c.getBlock(x + 7, y + 3, z + 6).setTypeId(112);
+		     c.getBlock(x + 7, y + 3, z + 7).setTypeId(88);
+		     c.getBlock(x + 7, y + 3, z + 8).setTypeId(88);
+		     c.getBlock(x + 7, y + 3, z + 9).setTypeId(112);
+		     c.getBlock(x + 8, y + 3, z + 6).setTypeId(112);
+		     c.getBlock(x + 8, y + 3, z + 7).setTypeId(88);
+		     c.getBlock(x + 8, y + 3, z + 8).setTypeId(88);
+		     c.getBlock(x + 8, y + 3, z + 9).setTypeId(112);
+		     c.getBlock(x + 9, y + 3, z + 7).setTypeId(112);
+		     c.getBlock(x + 9, y + 3, z + 8).setTypeId(112);
+		     c.getBlock(x + 7, y + 4, z + 7).setTypeId(112);
+		     c.getBlock(x + 7, y + 4, z + 8).setTypeId(112);
+		     c.getBlock(x + 8, y + 4, z + 7).setTypeId(112);
+		     c.getBlock(x + 8, y + 4, z + 8).setTypeId(112);
+		     
+		     // Core spawners
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Ghast")) {
+		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 7);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.GHAST, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
 				}
-			}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
+		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 8);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
+		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 7);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
+		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 8);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
+		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 7);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
+		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 8);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
+		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 7);
+				
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
+		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 8);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     //loose spawners
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
+		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 3);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
+		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 12);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
+		    	Block spawnerBlock =  c.getBlock(x + 12, y + 1, z + 3);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
+		     
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Spider")) {
+		    	Block spawnerBlock = c.getBlock(x + 12, y + 1, z + 12);
+					
+				// Call the spawner generation event
+				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				Bukkit.getServer().getPluginManager().callEvent(event);
+				
+				// Make sure the event isn't cancelled yet
+				if(!event.isCancelled()) {
+					// Change the block into a creature spawner
+					spawnerBlock.setTypeId(52);
+					
+					// Cast the created s pawner into a CreatureSpawner object
+					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+					
+					// Set the spawned type of the spawner
+					theSpawner.setSpawnedType(event.getSpawnedType());
+				}
+		     }
 		}
 	}
 	
-	public double distance(int x1, int y1, int x2, int y2)
-	{
+	/**
+	 * Get the minimum layer
+	 * @return Minimum layer
+	 */
+	@Override
+	public int getMinimumLayer() {
+		return MIN_LAYER;
+	}
+	
+	/**
+	 * Get the maximum layer
+	 * @return Maximum layer
+	 */
+	@Override
+	public int getMaximumLayer() {
+		return MAX_LAYER;
+	}
+	
+	public double distance(int x1, int y1, int x2, int y2) {
 		double dx   = x1 - x2;         //horizontal difference 
 		double dy   = y1 - y2;         //vertical difference 
 		double dist = Math.sqrt( dx*dx + dy*dy ); //distance using Pythagoras theorem

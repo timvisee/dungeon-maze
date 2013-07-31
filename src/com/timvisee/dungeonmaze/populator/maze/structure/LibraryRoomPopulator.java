@@ -11,19 +11,19 @@ import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
 
-public class LibraryRoomPopulator extends DMMazeBlockPopulator {
+public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 3;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_LIBRARY = 2; //Promile
 	public static final double CHANCE_OF_LIBRARY_ADDITION_PER_LEVEL = -0.167; /* to 1 */
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
@@ -107,7 +107,7 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			c.getBlock(x + 4, yFloor + 1, z + 4).setTypeId(54);
@@ -121,7 +121,7 @@ public class LibraryRoomPopulator extends DMMazeBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event2.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			// Add 4 lanterns on each side of the room near the book shelfs

@@ -5,10 +5,10 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 
-public class NetherrackPopulator extends DMMazeBlockPopulator {
+public class NetherrackPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 2;
 	public static final int ITERATIONS = 15;
@@ -16,7 +16,7 @@ public class NetherrackPopulator extends DMMazeBlockPopulator {
 	public static final int BURNING_NETHERRACK = 20;
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

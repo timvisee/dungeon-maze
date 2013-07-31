@@ -5,17 +5,17 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.block.Block;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 
-public class TorchPopulator extends DMMazeBlockPopulator {
+public class TorchPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 2;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_TORCH = 10;
 	public static final double CHANCE_OF_TORCH_ADDITION_PER_LEVEL = 3.333; /* to 30 */
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

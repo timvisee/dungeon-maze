@@ -7,9 +7,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
+import com.timvisee.dungeonmaze.util.DMMazeUtils;
 
 public class DMGenerationChestEvent extends DMEventHandler {
 	
@@ -40,7 +40,7 @@ public class DMGenerationChestEvent extends DMEventHandler {
 	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
 	 */
 	public int getDMLevel() {
-		return DungeonMazeAPI.getDMLevel(this.b);
+		return DMMazeUtils.getDMLevel(this.b);
 	}
 	
 	/**

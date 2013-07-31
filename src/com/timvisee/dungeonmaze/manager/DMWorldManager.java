@@ -17,13 +17,13 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 public class DMWorldManager {
 
 	// DM worlds
-	private static List<String> worlds = new ArrayList<String>();
-	private static List<String> preloadWorlds = new ArrayList<String>();
+	private List<String> worlds = new ArrayList<String>();
+	private List<String> preloadWorlds = new ArrayList<String>();
 	
 	/**
 	 * Refresh the list with Dungeon Maze worlds
 	 */
-	public static void refresh() {
+	public void refresh() {
 		// Load the list from the config
 		List<String> w = DungeonMaze.instance.getConfig().getStringList("worlds");
 		
@@ -69,18 +69,18 @@ public class DMWorldManager {
 	 * Get all DM worlds
 	 * @return all DM worlds
 	 */
-	public static List<String> getDMWorlds() {
-		return DMWorldManager.worlds;
+	public List<String> getDMWorlds() {
+		return this.worlds;
 	}
 	
 	/**
 	 * Get all loaded DM worlds
 	 * @return
 	 */
-	public static List<String> getLoadedDMWorlds() {
+	public List<String> getLoadedDMWorlds() {
 		List<String> loadedWorlds = new ArrayList<String>();
 		refresh();
-		for(String entry : DMWorldManager.worlds) {
+		for(String entry : this.worlds) {
 			World w = DungeonMaze.instance.getServer().getWorld(entry);
 			if(w != null)
 				loadedWorlds.add(entry);
@@ -93,7 +93,7 @@ public class DMWorldManager {
 	 * Get all preload worlds of DM
 	 * @return all preload worlds
 	 */
-	public static List<String> getPreloadWorlds() {
+	public List<String> getPreloadWorlds() {
 		return preloadWorlds;
 	}
 	
@@ -102,7 +102,7 @@ public class DMWorldManager {
 	 * @param w the world name
 	 * @return true if the world is a DM world
 	 */
-	public static boolean isDMWorld(String w) {
+	public boolean isDMWorld(String w) {
 		return getDMWorlds().contains(w);
 	}
 	
@@ -111,33 +111,30 @@ public class DMWorldManager {
 	 * @param w the world name
 	 * @return true if the world is a loaded DM world
 	 */
-	public static boolean isLoadedDMWorld(String w) {
+	public boolean isDMWorldLoaded(String w) {
 		return getLoadedDMWorlds().contains(w);
 	}
 	
 	/**
 	 * Preload all 'preload' DM worlds
 	 */
-	public static void preloadWorlds() {
+	public void preloadWorlds() {
 		if (preloadWorlds != null) {
 			for(String w : preloadWorlds) {
 					WorldCreator newWorld = new WorldCreator(w);
 					newWorld.generator(DungeonMaze.instance.getDMWorldGenerator());
 					if (Bukkit.getWorld(w) != null)
 						newWorld.createWorld();
-
-
 			}
 		}
 	}
 	
-	public static MultiverseCore getMultiverseCore() {
+	public MultiverseCore getMultiverseCore() {
         MultiverseCore mv = (MultiverseCore) DungeonMaze.instance.getServer().getPluginManager().getPlugin("Multiverse-Core");
  
-        if (mv != null) {
+        if (mv != null)
         	if (mv.getDescription().getVersion().contains("2.5"))
         			return mv;
-        }
         return null;
     }
 }

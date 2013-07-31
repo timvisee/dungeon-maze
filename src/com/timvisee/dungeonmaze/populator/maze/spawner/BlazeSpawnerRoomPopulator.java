@@ -13,16 +13,15 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
 
-public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
+public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 4;
 	public static final int CHANCE_OF_SPANWER_ROOM = 2; //Promile
@@ -30,7 +29,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 	public static final double MIN_SPAWN_DISTANCE = 5; // Chunks
 
 	@Override
-	public void populateMaze(DMMazeBlockPopulatorArgs args) {
+	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
@@ -119,7 +118,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 			c.getBlock(x + 5, yFloor + 2, z + 5).setTypeId(113);
 			
 			// Generate the spawner
-			if (DungeonMazeAPI.allowMobSpawner("Blaze")) {
+			if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Blaze")) {
 				int spawnerX = x + 3 + rand.nextInt(2);
 				int spawnerY = yFloor + 2;
 				int spawnerZ = z + 3 + rand.nextInt(2);
@@ -159,7 +158,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), event1.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), !event1.getAddContentsInOrder(), rand);
 			}
 
 			// Generate a list of chest contents
@@ -177,7 +176,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), event2.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), !event2.getAddContentsInOrder(), rand);
 			}
 		}
 	}

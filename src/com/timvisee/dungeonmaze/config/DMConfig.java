@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze;
+package com.timvisee.dungeonmaze.config;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -8,6 +8,9 @@ public class DMConfig extends DMCustomConfig {
 
 	private static DMConfig config;
 
+	/**
+	 * Constructor
+	 */
 	public DMConfig() {
 		super(new File("./plugins/DungeonMaze/config.yml"));
 		config = this;
@@ -59,9 +62,9 @@ public class DMConfig extends DMCustomConfig {
 	}
 
 	public static DMConfig getInstance() {
-        if (config == null) {
+        if (config == null)
             config = new DMConfig();
-        }        
+            
         return config;
     }
 }

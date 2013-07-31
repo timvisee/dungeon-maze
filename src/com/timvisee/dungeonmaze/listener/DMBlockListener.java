@@ -9,7 +9,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 
 public class DMBlockListener implements Listener {
 	
@@ -19,13 +18,13 @@ public class DMBlockListener implements Listener {
 		Block b = e.getBlockPlaced();
 		String w = b.getWorld().getName();
 		
-		if(DungeonMazeAPI.isDMWorld(w)) {
+		if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(DungeonMaze.instance.worldProtection) {
+			if(DungeonMaze.instance.getConfigHandler().worldProtection) {
 				// The world protection is enable
 				
-				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
+				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
@@ -40,13 +39,13 @@ public class DMBlockListener implements Listener {
 		Block b = e.getBlock();
 		String w = b.getWorld().getName();
 		
-		if(DungeonMazeAPI.isDMWorld(w)) {
+		if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(DungeonMaze.instance.worldProtection) {
+			if(DungeonMaze.instance.getConfigHandler().worldProtection) {
 				// The world protection is enable
 				
-				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMazeAPI.isInWhiteList(b.getTypeId()))) {
+				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getTypeId()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");

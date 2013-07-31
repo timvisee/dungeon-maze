@@ -1,6 +1,5 @@
 package com.timvisee.dungeonmaze.event.eventhandler;
 
-import org.bukkit.Server;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -8,14 +7,12 @@ public class DMEventHandler extends Event {
 	
 	private boolean isCancelled;
 	private static final HandlerList handlers = new HandlerList();
-	private static Server s;
 
-	
 	public HandlerList getHandlers() {
 		return handlers;
 	}
 	
-    public static HandlerList getHandlerList() {
+    public HandlerList getHandlerList() {
         return handlers;
     }
 	
@@ -25,10 +22,5 @@ public class DMEventHandler extends Event {
 	
 	public void setCancelled(boolean cancelled) {
 		this.isCancelled = cancelled;
-	}
-
-	
-	public static Server getServer() {
-		return s;
 	}
 }
