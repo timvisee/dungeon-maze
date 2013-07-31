@@ -11,7 +11,7 @@ public class DMApiController {
 
 	boolean apiEnabled = false;
 	
-	List<DungeonMazeApiNew> apiSessions = new ArrayList<DungeonMazeApiNew>();
+	List<DungeonMazeApi> apiSessions = new ArrayList<DungeonMazeApi>();
 	
 	/**
 	 * Constructor
@@ -30,7 +30,7 @@ public class DMApiController {
 	 * Register an API session
 	 * @param api
 	 */
-	public void registerApiSession(DungeonMazeApiNew api) {
+	public void registerApiSession(DungeonMazeApi api) {
 		if(isApiSession(api))
 			return;
 		
@@ -47,7 +47,7 @@ public class DMApiController {
 	 * @param api Dungeon Maze API (layer) instance
 	 * @return
 	 */
-	public boolean isApiSession(DungeonMazeApiNew api) {
+	public boolean isApiSession(DungeonMazeApi api) {
 		return this.apiSessions.contains(api);
 	}
 	
@@ -57,7 +57,7 @@ public class DMApiController {
 	 * @return True if this plugin was hooked into Dungeon Maze
 	 */
 	public boolean isHooked(Plugin p) {
-		for(DungeonMazeApiNew entry : this.apiSessions)
+		for(DungeonMazeApi entry : this.apiSessions)
 			if(entry.getPlugin().equals(p))
 				return true;
 		return false;
@@ -75,7 +75,7 @@ public class DMApiController {
 	 * Unregister the an API session, automaticly forces the plugin of the API session to unhook Dungeon Maze
 	 * @param api Dungeon Maze API (layer) instance
 	 */
-	public void unregisterApiSession(DungeonMazeApiNew api) {
+	public void unregisterApiSession(DungeonMazeApi api) {
 		unregisterApiSession(api, true);
 	}
 	
@@ -84,7 +84,7 @@ public class DMApiController {
 	 * @param api Dungeon Maze API (layer) instance
 	 * @param forceUnhook True to force the plugin to unhook Dungeon Maze
 	 */
-	public void unregisterApiSession(DungeonMazeApiNew api, boolean forceUnhook) {
+	public void unregisterApiSession(DungeonMazeApi api, boolean forceUnhook) {
 		// Should the plugin unhook Dungeon Maze
 		if(forceUnhook)
 			api.unhook();
@@ -103,7 +103,7 @@ public class DMApiController {
 	public void unregisterAllApiSessions() {
 		for(int i = 0; i < this.apiSessions.size(); i++) {
 			// Get the current entry
-			DungeonMazeApiNew api = this.apiSessions.get(i);
+			DungeonMazeApi api = this.apiSessions.get(i);
 			
 			// Make sure the entry is not null
 			if(api == null)
@@ -121,12 +121,12 @@ public class DMApiController {
 	 * @param p Plugin to unhook
 	 */
 	public void unhookPlugin(Plugin p) {
-		List<DungeonMazeApiNew> unregister = new ArrayList<DungeonMazeApiNew>();
-		for(DungeonMazeApiNew entry : this.apiSessions)
+		List<DungeonMazeApi> unregister = new ArrayList<DungeonMazeApi>();
+		for(DungeonMazeApi entry : this.apiSessions)
 			if(entry.getPlugin().equals(p))
 				unregister.add(entry);
 		
-		for(DungeonMazeApiNew entry : unregister)
+		for(DungeonMazeApi entry : unregister)
 			unregisterApiSession(entry);
 	}
 	

@@ -25,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.dungeonmaze.Metrics.Graph;
 import com.timvisee.dungeonmaze.api.DMApiController;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
+import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
 import com.timvisee.dungeonmaze.config.DMConfigHandler;
 import com.timvisee.dungeonmaze.listener.DMBlockListener;
 import com.timvisee.dungeonmaze.listener.DMPlayerListener;
@@ -67,7 +67,7 @@ public class DungeonMaze extends JavaPlugin {
 	public boolean useMultiverse = false;
 	public MultiverseCore multiverseCore;
 	
-	private DungeonMazeAPI dmOldApi;
+	private DungeonMazeApiOld dmOldApi;
 	
 	/**
 	 * Constructor
@@ -88,7 +88,7 @@ public class DungeonMaze extends JavaPlugin {
 		setUpWorldManager();
 		
 		// Set up the DM Event Handler
-		DungeonMazeAPI.setUpDMEventHandler();
+		DungeonMazeApiOld.setUpDMEventHandler();
 
 		// Set up the update checker
 		setUpUpdateChecker();
@@ -113,7 +113,7 @@ public class DungeonMaze extends JavaPlugin {
 		setUpApiController();
 
 		// Set up the old API system
-		setAPI(new DungeonMazeAPI(this));
+		setAPI(new DungeonMazeApiOld(this));
 
 		// Show a startup message
 		PluginDescriptionFile pdfFile = getDescription();
@@ -760,12 +760,12 @@ public class DungeonMaze extends JavaPlugin {
 	}
 
 	@Deprecated
-	public void setAPI(DungeonMazeAPI dmAPI) {
+	public void setAPI(DungeonMazeApiOld dmAPI) {
 		this.dmOldApi = dmAPI;
 	}
 
 	@Deprecated
-	public DungeonMazeAPI getDmAPI() {
+	public DungeonMazeApiOld getDmAPI() {
 		return dmOldApi;
 	}
 
