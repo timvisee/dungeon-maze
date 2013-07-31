@@ -12,7 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
 import com.timvisee.dungeonmaze.manager.DMWorldManager;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
 import com.timvisee.dungeonmaze.util.DMMazeUtils;
@@ -179,15 +178,6 @@ public class DungeonMazeApiOld {
 	@Deprecated
 	public static boolean allowMobSpawner(String mob) {
 		return DungeonMaze.instance.getConfigHandler().mobs.contains(mob);
-	}
-	
-	/**
-	 * Setup and get the DM Event handler
-	 * @return DM Event handler
-	 */
-	@Deprecated
-	public static DMEventHandler setUpDMEventHandler() {
-		return (DMEventHandler) DMEventHandler.getServer();
 	}
 	
 	/**

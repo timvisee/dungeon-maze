@@ -86,9 +86,6 @@ public class DungeonMaze extends JavaPlugin {
 		
 		// Set up the world manager
 		setUpWorldManager();
-		
-		// Set up the DM Event Handler
-		DungeonMazeApiOld.setUpDMEventHandler();
 
 		// Set up the update checker
 		setUpUpdateChecker();
@@ -448,7 +445,7 @@ public class DungeonMaze extends JavaPlugin {
 				List<String> worlds = getWorldManager().getDMWorlds();
 				if(worlds.size() > 0) {
 					for(String w : worlds) {
-						if(getWorldManager().isLoadedDMWorld(w))
+						if(getWorldManager().isDMWorldLoaded(w))
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
 						else
 							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");

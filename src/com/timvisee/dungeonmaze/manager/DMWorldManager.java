@@ -111,7 +111,7 @@ public class DMWorldManager {
 	 * @param w the world name
 	 * @return true if the world is a loaded DM world
 	 */
-	public boolean isLoadedDMWorld(String w) {
+	public boolean isDMWorldLoaded(String w) {
 		return getLoadedDMWorlds().contains(w);
 	}
 	

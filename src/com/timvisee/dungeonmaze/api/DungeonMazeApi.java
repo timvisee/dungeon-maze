@@ -4,16 +4,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
-import com.timvisee.dungeonmaze.manager.DMPermissionsManager;
-import com.timvisee.dungeonmaze.manager.DMWorldManager;
-import com.timvisee.dungeonmaze.util.DMMazeUtils;
+import com.timvisee.dungeonmaze.api.manager.DMAPermissionsManager;
+import com.timvisee.dungeonmaze.api.manager.DMAWorldManager;
 
 public class DungeonMazeApi {
 	
@@ -162,137 +158,20 @@ public class DungeonMazeApi {
 		return this.dm.getVersion();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
-	 * Get the Dungeon Maze permissions manager
-	 * @return Dungeon Maze permissions manager instance
+	 * Get the world manager instance (API Layer)
+	 * @return World manager instance
 	 */
-	public DMPermissionsManager getPermissionsManager() {
-		return this.dm.getPermissionsManager();
+	public DMAWorldManager getWorldManager() {
+		return new DMAWorldManager(this.dm);
 	}
 	
 	/**
-	 * Get the DM world manager
-	 * @return DM world manager
+	 * Get the permissions manager instance (API Layer)
+	 * @return Permissions manager instance
 	 */
-	public DMWorldManager getDMWorldManager() {
-		// Make sure the plugin is hooked into Dungeon Maze
-		if(!isHooked())
-			return null;
-		
-		// Return the world manager instance
-		return getDM().getWorldManager();
-	}
-
-	/**
-	 * Get all DM worlds
-	 * @return DM worlds
-	 */
-	public List<String> getDMWorlds() {
-		// Make sure the plugin is hooked into Dungeon Maze
-		if(!isHooked())
-			return null;
-		
-		// Return the list of Dungeon Maze worlds
-		return getDM().getWorldManager().getDMWorlds();
-	}
-
-	/**
-	 * Get all loaded DM worlds
-	 * @return loaded DM worlds
-	 */
-	public List<String> getLoadedDMWorlds() {
-		// Make sure the plugin is hooked into Dungeon Maze
-		if(!isHooked())
-			return null;
-		
-		// Get and return the list of loaded Dungeon Maze worlds
-		return getDM().getWorldManager().getLoadedDMWorlds();
-	}
-
-	/**
-	 * Check if a world is a DM world
-	 * @param w The world
-	 * @return True if the world is a DM world
-	 */
-	public boolean isDMWorld(World w) {
-		return isDMWorld(w.getName());
-	}
-
-	/**
-	 * Check if a world is a DM world
-	 * @param w the world name
-	 * @return true if the world is a DM world
-	 */
-	public boolean isDMWorld(String w) {
-		// Make sure the plugin is hooked into Dungeon Maze
-		if(!isHooked())
-			return false;
-		
-		return getDM().getWorldManager().isDMWorld(w);
-	}
-
-	/**
-	 * Check if a player is in a DM world
-	 * @param p the player
-	 * @return true if the player is in an DM world
-	 */
-	public boolean isInDMWorld(Player p) {
-		// Make sure the plugin is hooked into Dungeon Maze
-		if(!isHooked())
-			return false;
-		
-		return isDMWorld(p.getWorld());
-	}
-	
-	/**
-	 * Get the DM world a player is in
-	 * @param p the player
-	 * @return the DM world a player is in, returns null when a player isn't in a DM world
-	 */
-	public World getDMWorld(Player p) {
-		// Make sure the plugin is hooked into Dungeon Maze
-		if(!isHooked())
-			return null;
-		
-		// Check if the player is in a DM world
-		if(getDM().getWorldManager().isDMWorld(p.getWorld().getName()))
-			return p.getWorld();
-		return null;
-	}
-	
-	/**
-	 * Get the DM world name a player is in
-	 * @param p the player
-	 * @return the DM world name a player is in, returns an empty string when the player isn't in a DM world
-	 */
-	public String getDMWorldName(Player p) {
-		// Make sure the plugin is hooked into Dungeon Maze
-		if(!isHooked())
-			return "";
-		
-		// Check if the player is in a DM world
-		if(getDM().getWorldManager().isDMWorld(p.getWorld().getName()))
-			return p.getWorld().getName();
-		return "";
+	public DMAPermissionsManager getPermissionsManager() {
+		return new DMAPermissionsManager(this.dm);
 	}
 	
 	/**
@@ -347,28 +226,11 @@ public class DungeonMazeApi {
 	}
 	
 	/**
-	 * 
+	 * Check whether a mob spawner type is allowed to spawn
 	 * @param String mobName
 	 * @return true if the mobspawner is allow for this mob
 	 */
-	public boolean allowMobSpawner(String mob) {
+	public boolean isMobSpawnerAllowed(String mob) {
 		return getDM().getConfigHandler().mobs.contains(mob);
-	}
-	
-	/**
-	 * Setup and get the DM Event handler
-	 * @return DM Event handler
-	 */
-	public DMEventHandler setUpDMEventHandler() {
-		return (DMEventHandler) DMEventHandler.getServer();
-	}
-	
-	/**
-	 * Get the level a block is on in Dungeon Maze
-	 * @param b the block
-	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
-	 */
-	public int getDMLevel(Block b) {
-		return DMMazeUtils.getDMLevel(b);
 	}
 }
