@@ -287,7 +287,7 @@ public class DungeonMazeApiNew {
 			return false;
 		
 		if(DMWorldManager.isDMWorld(w))
-			if(getDM().worldProtection)
+			if(getDM().getConfigHandler().worldProtection)
 				return getDM().getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
 	}
@@ -304,7 +304,7 @@ public class DungeonMazeApiNew {
 			return true;
 		
 		if(DMWorldManager.isDMWorld(w))
-			if(!DungeonMaze.allowSurface)
+			if(!DungeonMaze.instance.getConfigHandler().allowSurface)
 				return getDM().getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
@@ -315,7 +315,7 @@ public class DungeonMazeApiNew {
 	 * @return true if the object is in the list
 	 */
 	public boolean isInWhiteList(Object target){
-		List<Object> list = DungeonMaze.blockWhiteList;
+		List<Object> list = DungeonMaze.instance.getConfigHandler().blockWhiteList;
 		
 		if(list == null)
 			return(false);
@@ -332,7 +332,7 @@ public class DungeonMazeApiNew {
 	 * @return true if the mobspawner is allow for this mob
 	 */
 	public boolean allowMobSpawner(String mob) {
-		return DungeonMaze.mobs.contains(mob);
+		return DungeonMaze.instance.getConfigHandler().mobs.contains(mob);
 	}
 	
 	/**

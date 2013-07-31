@@ -13,7 +13,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
@@ -119,7 +118,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			c.getBlock(x + 5, yFloor + 2, z + 5).setTypeId(113);
 			
 			// Generate the spawner
-			if (DungeonMazeAPI.allowMobSpawner("Blaze")) {
+			if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Blaze")) {
 				int spawnerX = x + 3 + rand.nextInt(2);
 				int spawnerY = yFloor + 2;
 				int spawnerZ = z + 3 + rand.nextInt(2);

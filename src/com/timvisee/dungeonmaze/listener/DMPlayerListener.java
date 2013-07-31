@@ -26,7 +26,7 @@ public class DMPlayerListener implements Listener {
 			
 			DungeonMaze.instance.getDMWorldManager();
 			if(DMWorldManager.isDMWorld(w)) {
-				if(DungeonMaze.allowSurface == false) {
+				if(DungeonMaze.instance.getConfigHandler().allowSurface == false) {
 					// The player is not allowed on the surface
 					
 					if(DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp()) == false) {

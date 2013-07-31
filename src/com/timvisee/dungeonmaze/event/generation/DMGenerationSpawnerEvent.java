@@ -6,8 +6,8 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
+import com.timvisee.dungeonmaze.util.DMMazeUtils;
 
 public class DMGenerationSpawnerEvent extends DMEventHandler {
 	
@@ -36,7 +36,7 @@ public class DMGenerationSpawnerEvent extends DMEventHandler {
 	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
 	 */
 	public int getDMLevel() {
-		return DungeonMazeAPI.getDMLevel(this.b);
+		return DMMazeUtils.getDMLevel(b);
 	}
 	
 	/**

@@ -14,7 +14,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeLayerBlockPopulator;
@@ -147,7 +146,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		     c.getBlock(x + 8, y + 4, z + 8).setTypeId(112);
 		     
 		     // Core spawners
-		     if (DungeonMazeAPI.allowMobSpawner("Ghast")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Ghast")) {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 7);
 					
 				// Call the spawner generation event
@@ -167,7 +166,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 8);
 					
 				// Call the spawner generation event
@@ -187,7 +186,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 7);
 					
 				// Call the spawner generation event
@@ -207,7 +206,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 8);
 					
 				// Call the spawner generation event
@@ -227,7 +226,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("Skeleton")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 7);
 					
 				// Call the spawner generation event
@@ -247,7 +246,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 8);
 					
 				// Call the spawner generation event
@@ -267,7 +266,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 7);
 				
 				// Call the spawner generation event
@@ -287,7 +286,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 8);
 					
 				// Call the spawner generation event
@@ -308,7 +307,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		     }
 		     
 		     //loose spawners
-		     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
 		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 3);
 					
 				// Call the spawner generation event
@@ -328,7 +327,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("Skeleton")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
 		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 12);
 					
 				// Call the spawner generation event
@@ -348,7 +347,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("Zombie")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
 		    	Block spawnerBlock =  c.getBlock(x + 12, y + 1, z + 3);
 					
 				// Call the spawner generation event
@@ -368,7 +367,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				}
 		     }
 		     
-		     if (DungeonMazeAPI.allowMobSpawner("Spider")) {
+		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Spider")) {
 		    	Block spawnerBlock = c.getBlock(x + 12, y + 1, z + 12);
 					
 				// Call the spawner generation event

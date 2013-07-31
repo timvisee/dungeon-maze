@@ -15,12 +15,17 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.event.eventhandler.DMEventHandler;
 import com.timvisee.dungeonmaze.manager.DMWorldManager;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
+import com.timvisee.dungeonmaze.util.DMMazeUtils;
 
 @Deprecated
 public class DungeonMazeAPI {
 	
 	public static DungeonMaze plugin;
 	
+	/**
+	 * Constructor
+	 * @param instance
+	 */
 	public DungeonMazeAPI(DungeonMaze instance) {
 		DungeonMazeAPI.plugin = instance;
 	}
@@ -135,7 +140,7 @@ public class DungeonMazeAPI {
 	public static boolean canBuildInDMWorld(String w, Player p) {
 		plugin.getDMWorldManager();
 		if(DMWorldManager.isDMWorld(w))
-			if(plugin.worldProtection)
+			if(DungeonMaze.instance.getConfigHandler().worldProtection)
 				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
 	}
@@ -151,7 +156,7 @@ public class DungeonMazeAPI {
 		plugin.getDMWorldManager();
 		
 		if(DMWorldManager.isDMWorld(w))
-			if(!DungeonMaze.allowSurface)
+			if(!DungeonMaze.instance.getConfigHandler().allowSurface)
 				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
@@ -163,7 +168,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static boolean isInWhiteList(Object target){
-		List<Object> list = DungeonMaze.blockWhiteList;
+		List<Object> list = DungeonMaze.instance.getConfigHandler().blockWhiteList;
 		
 		if(list == null)
 			return(false);
@@ -181,7 +186,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static boolean allowMobSpawner(String mob) {
-		return DungeonMaze.mobs.contains(mob);
+		return DungeonMaze.instance.getConfigHandler().mobs.contains(mob);
 	}
 	
 	/**
@@ -200,23 +205,7 @@ public class DungeonMazeAPI {
 	 */
 	@Deprecated
 	public static int getDMLevel(Block b) {
-		// Get the height of the spawner
-		int y = b.getY();
-		
-		// Is the block bellow the Dungeon Maze?
-		if(y < 30)
-			return 0;
-		
-		// Check if the block is inside the Dungeon Maze, if so return it's level
-		int curLevel = 1;
-		for (int dml=30; dml < 30+(7*6); dml+=6) {
-			if(dml >= y && dml + 6 < y)
-				return curLevel;
-			curLevel++;
-		}
-		
-		// The block was above the Dungeon Maze, return zero
-		return 0;
+		return DMMazeUtils.getDMLevel(b);
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze;
+package com.timvisee.dungeonmaze.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,39 +12,39 @@ public class DMCustomConfig extends YamlConfiguration{
 
 	private File configFile;
 
-	public DMCustomConfig(File file)
-	{
+	public DMCustomConfig(File file) {
 		this.configFile = file;
 
 		load();
 	}
 
-	public void load()
-	{
+	public void load() {
 		try {
 			super.load(configFile);
+			
 		} catch (FileNotFoundException e) {
 			reload();
+			
 		} catch (IOException e) {
-		} catch (InvalidConfigurationException e) {
-		}
+		} catch (InvalidConfigurationException e) { }
 	}
 
 	public boolean reload() {
 		boolean out = true;
 		if (!configFile.exists())
-		{
 			out = loadRessource(configFile);
-		}
-		if (out) load();
+			
+		if (out)
+			load();
+		
 		return out;
 	}
 
 	public void save() {
 	    try {
 	        super.save(configFile);
-	    } catch (IOException ex) {
-	    }
+	        
+	    } catch (IOException ex) { }
 	}
 
 	public boolean loadRessource(File file) {
@@ -56,21 +56,21 @@ public class DMCustomConfig extends YamlConfiguration{
 				fos = new FileOutputStream(file);
 				byte[] buf = new byte[1024];
 				int i = 0;
-				while ((i = fis.read(buf)) != -1) {
+				while ((i = fis.read(buf)) != -1)
 					fos.write(buf, 0, i);
-				}
+				
 			} catch (Exception e) {
 				out = false;
+				
 			} finally {
 				try {
-					if (fis != null) {
+					if (fis != null)
 						fis.close();
-					}
-					if (fos != null) {
+						
+					if (fos != null)
 						fos.close();
-					}
-				} catch (Exception e) {                         
-				}
+						
+				} catch (Exception e) { }
 			}
 		}
 		return out;

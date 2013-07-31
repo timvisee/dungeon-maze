@@ -11,7 +11,6 @@ import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.DungeonMazeAPI;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
 import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -48,7 +47,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 			        c.getBlock(x2, yFloor, z2).setTypeId(48);
 			        
 			// Create the spawners
-			if(DungeonMazeAPI.allowMobSpawner("Zombie")) {
+			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
 				Block spawnerBlock = c.getBlock(x + 1, yFloor + 1, z + 1);
 				
 				// Call the spawner generation event
@@ -67,7 +66,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 					s.setSpawnedType(event.getSpawnedType());
 				}
 			}
-			if(DungeonMazeAPI.allowMobSpawner("PigZombie")) {
+			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
 				Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
 				
 				// Call the spawner generation event
@@ -86,7 +85,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 					s.setSpawnedType(event.getSpawnedType());
 				}
 			}
-			if(DungeonMazeAPI.allowMobSpawner("Spider")) {
+			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Spider")) {
 				Block spawnerBlock = c.getBlock(x + 5, yFloor + 1, z + 5);
 				
 				// Call the spawner generation event
