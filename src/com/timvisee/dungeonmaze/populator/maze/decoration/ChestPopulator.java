@@ -56,7 +56,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 							return;
 						
 						// Add the contents to the chest
-						DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+						DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 					} else {
 						// The event is cancelled
 						// Put the chest back to it's orrigional state (air)
@@ -81,7 +81,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 								return;
 							
 							// Add the contents to the chest
-							DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+							DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 						}
 					}
 				}

@@ -129,7 +129,7 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 1, y + 2, z + 6).setTypeId(54);
@@ -144,7 +144,7 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event2.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 6, y + 2, z + 1).setTypeId(54);
@@ -159,7 +159,7 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event3.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 6, y + 2, z + 6).setTypeId(54);
@@ -174,7 +174,7 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event4.getBlock().getTypeId() == 54)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		// Create torches

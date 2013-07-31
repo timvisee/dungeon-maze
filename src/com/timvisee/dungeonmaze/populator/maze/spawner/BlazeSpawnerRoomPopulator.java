@@ -158,7 +158,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), event1.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), !event1.getAddContentsInOrder(), rand);
 			}
 
 			// Generate a list of chest contents
@@ -176,7 +176,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), event2.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), !event2.getAddContentsInOrder(), rand);
 			}
 		}
 	}

@@ -128,7 +128,7 @@ public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulato
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			c.getBlock(x + 5, yFloor + 1, z + 3).setTypeId(54);
@@ -143,7 +143,7 @@ public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulato
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event2.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 			
 			c.getBlock(x + 5, yFloor + 1, z + 4).setTypeId(61);

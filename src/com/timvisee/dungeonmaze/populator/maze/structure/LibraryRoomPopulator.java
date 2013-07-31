@@ -107,7 +107,7 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			c.getBlock(x + 4, yFloor + 1, z + 4).setTypeId(54);
@@ -121,7 +121,7 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event2.getBlock().getTypeId() == 54)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), event.getAddContentsInOrder(), rand);
+				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			// Add 4 lanterns on each side of the room near the book shelfs
