@@ -33,6 +33,7 @@ import com.timvisee.dungeonmaze.listener.DMPluginListener;
 import com.timvisee.dungeonmaze.listener.DMWorldListener;
 import com.timvisee.dungeonmaze.manager.DMWorldManager;
 import com.timvisee.dungeonmaze.manager.DMPermissionsManager;
+import com.timvisee.dungeonmaze.structure.DMCustomStructureManager;
 
 @SuppressWarnings("deprecation")
 public class DungeonMaze extends JavaPlugin {	
@@ -62,6 +63,7 @@ public class DungeonMaze extends JavaPlugin {
 	private DMPermissionsManager permsMan;
 	private DMConfigHandler cfgHand;
 	private DMWorldManager worldMan;
+	private DMCustomStructureManager structMan;
 	
 	/* Multiverse */
 	public boolean useMultiverse = false;
@@ -98,6 +100,9 @@ public class DungeonMaze extends JavaPlugin {
 		
 		// Set up multiverse usage
 		setUpMultiverse();
+		
+		// Set up the custom structure manager
+		setUpCustomStructureManager();
 		
 		// Register all event listeners
 		PluginManager pm = getServer().getPluginManager();
@@ -290,7 +295,7 @@ public class DungeonMaze extends JavaPlugin {
 		return this.uc;
 	}
 	
-	private void setUpMultiverse() {
+	public void setUpMultiverse() {
 		// Setup and hook into Multiverse
 		Plugin multiversePlugin = this.getServer().getPluginManager().getPlugin("Multiverse-Core");
 		if (multiversePlugin == null) {
@@ -302,6 +307,23 @@ public class DungeonMaze extends JavaPlugin {
 		log.info("[DungeonMaze] Hooked into Multiverse");
 		useMultiverse = true;
 		multiverseCore = new MultiverseCore();
+	}
+	
+	/**
+	 * Set up the custom structure manager
+	 */
+	public void setUpCustomStructureManager() {
+		this.structMan = new DMCustomStructureManager();
+		
+		// TODO: Load custom structures
+	}
+	
+	/**
+	 * Get the custom structure manager instance
+	 * @return Custom structure manager instance
+	 */
+	public DMCustomStructureManager getCustomStructureManager() {
+		return this.structMan;
 	}
 		
 	public boolean usePermissions() {
