@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.surface.plants;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 
 import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulator;
 import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulatorArgs;
@@ -27,11 +28,16 @@ public class FlowerPopulator extends DMSurfaceBlockPopulator {
 				int ySurface = args.getSurfaceLevel(xFlower, zFlower);
 				
 				// Make sure the surface block is grass
-				if(c.getBlock(xFlower, ySurface, zFlower).getTypeId() == 2) {
+				if(c.getBlock(xFlower, ySurface, zFlower).getType() == Material.GRASS) {
 					int flowerY = ySurface + 1;
 					
 					// Spawn the flower
-					c.getBlock(xFlower, flowerY, zFlower).setTypeId(getRandomFlowerType(rand));	
+					if (rand.nextInt(2) == 0) {
+						c.getBlock(xFlower, flowerY, zFlower).setType(Material.YELLOW_FLOWER);
+					} else {
+						c.getBlock(xFlower, flowerY, zFlower).setType(Material.RED_ROSE);
+						c.getBlock(xFlower, flowerY, zFlower).setData(getRandomFlowerType(rand));
+					}
 				}
 			}
 		}
@@ -42,7 +48,7 @@ public class FlowerPopulator extends DMSurfaceBlockPopulator {
 	 * @param rand Random instance
 	 * @return Random flower type ID
 	 */
-	public int getRandomFlowerType(Random rand) {
-		return (37 + (rand.nextInt(2)));
+	public byte getRandomFlowerType(Random rand) {
+		return (byte) (rand.nextInt(9));
 	}
 }
