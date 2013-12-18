@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.surface;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -93,7 +94,7 @@ public class DMSurfaceBlockPopulatorArgs {
 			Block b = this.chunkSrc.getBlock(x, y, z);
 			
 			// Return the level of the current block if the block material isn't air
-			if(b.getTypeId() != 0)
+			if(b.getType() != Material.AIR)
 				return y;
 		}
 		

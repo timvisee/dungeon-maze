@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.surface.plants;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 
 import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulator;
 import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulatorArgs;
@@ -26,10 +27,10 @@ public class TallGrassPopulator extends DMSurfaceBlockPopulator {
 				// Get the surface level
 				int ySurface = args.getSurfaceLevel(xGrass, zGrass);
 				
-				if(c.getBlock(xGrass, ySurface, zGrass).getTypeId() == 2) {
+				if(c.getBlock(xGrass, ySurface, zGrass).getType() == Material.GRASS) {
 					int yGrass = ySurface + 1;
 					
-					c.getBlock(xGrass, yGrass, zGrass).setTypeId(31);
+					c.getBlock(xGrass, yGrass, zGrass).setType(Material.LONG_GRASS);
 					c.getBlock(xGrass, yGrass, zGrass).setData((byte) 1);
 				}
 			}

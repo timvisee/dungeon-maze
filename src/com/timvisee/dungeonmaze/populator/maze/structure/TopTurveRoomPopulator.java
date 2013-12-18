@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -35,69 +36,69 @@ public class TopTurveRoomPopulator extends DMMazeRoomBlockPopulator {
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
 			
 			// Hull
-			c.getBlock(x + 3, y + 4 + ceilingOffset, z + 3).setTypeId(48);
-			c.getBlock(x + 3, y + 4 + ceilingOffset, z + 4).setTypeId(48);
-			c.getBlock(x + 4, y + 4 + ceilingOffset, z + 3).setTypeId(48);
-			c.getBlock(x + 4, y + 4 + ceilingOffset, z + 4).setTypeId(48);
-			c.getBlock(x + 2, y + 5 + ceilingOffset, z + 3).setTypeId(87);
-			c.getBlock(x + 2, y + 5 + ceilingOffset, z + 4).setTypeId(20);
-			c.getBlock(x + 3, y + 5 + ceilingOffset, z + 2).setTypeId(20);
+			c.getBlock(x + 3, y + 4 + ceilingOffset, z + 3).setType(Material.MOSSY_COBBLESTONE);
+			c.getBlock(x + 3, y + 4 + ceilingOffset, z + 4).setType(Material.MOSSY_COBBLESTONE);
+			c.getBlock(x + 4, y + 4 + ceilingOffset, z + 3).setType(Material.MOSSY_COBBLESTONE);
+			c.getBlock(x + 4, y + 4 + ceilingOffset, z + 4).setType(Material.MOSSY_COBBLESTONE);
+			c.getBlock(x + 2, y + 5 + ceilingOffset, z + 3).setType(Material.NETHERRACK);
+			c.getBlock(x + 2, y + 5 + ceilingOffset, z + 4).setType(Material.GLASS);
+			c.getBlock(x + 3, y + 5 + ceilingOffset, z + 2).setType(Material.GLASS);
 			Block ore1 = c.getBlock(x + 3, y + 5 + ceilingOffset, z + 3);
 			switch(rand.nextInt(5)) {
 			case 0:
-				ore1.setTypeId(14);
+				ore1.setType(Material.GOLD_ORE);
 				break;
 			case 1:
-				ore1.setTypeId(15);
+				ore1.setType(Material.IRON_ORE);
 				break;
 			case 2:
-				ore1.setTypeId(16);
+				ore1.setType(Material.COAL_ORE);
 				break;
 			case 3:
-				ore1.setTypeId(21);
+				ore1.setType(Material.LAPIS_ORE);
 				break;
 			case 4:
-				ore1.setTypeId(16); // orriginally diamond, changed to coal because ore1 could be diamond too
+				ore1.setType(Material.COAL_ORE); // orriginally diamond, changed to coal because ore2 could be diamond too
 				break;
 			default:
-				ore1.setTypeId(16);
+				ore1.setType(Material.COAL_ORE);
 			}
 			
-			c.getBlock(x + 3, y + 5 + ceilingOffset, z + 5).setTypeId(87);
-			c.getBlock(x + 4, y + 5 + ceilingOffset, z + 2).setTypeId(87);
+			c.getBlock(x + 3, y + 5 + ceilingOffset, z + 5).setType(Material.NETHERRACK);
+			c.getBlock(x + 4, y + 5 + ceilingOffset, z + 2).setType(Material.NETHERRACK);
 			Block ore2 = c.getBlock(x + 4, y + 5 + ceilingOffset, z + 4);
 			switch(rand.nextInt(5)) {
 			case 0:
-				ore2.setTypeId(14);
+				ore2.setType(Material.GOLD_ORE);
 				break;
 			case 1:
-				ore2.setTypeId(15);
+				ore2.setType(Material.IRON_ORE);
 				break;
 			case 2:
-				ore2.setTypeId(16);
+				ore2.setType(Material.COAL_ORE);
 				break;
 			case 3:
-				ore2.setTypeId(21);
+				ore2.setType(Material.LAPIS_ORE);
 				break;
 			case 4:
-				ore2.setTypeId(56);
+				ore2.setType(Material.DIAMOND_ORE);
 				break;
 			default:
-				ore2.setTypeId(16);
+				ore2.setType(Material.COAL_ORE);
 			}
-			c.getBlock(x + 4, y + 5 + ceilingOffset, z + 5).setTypeId(20);
-			c.getBlock(x + 5, y + 5 + ceilingOffset, z + 3).setTypeId(20);
-			c.getBlock(x + 5, y + 5 + ceilingOffset, z + 4).setTypeId(87);
+			c.getBlock(x + 4, y + 5 + ceilingOffset, z + 5).setType(Material.GLASS);
+			c.getBlock(x + 5, y + 5 + ceilingOffset, z + 3).setType(Material.GLASS);
+			c.getBlock(x + 5, y + 5 + ceilingOffset, z + 4).setType(Material.NETHERRACK);
 			
 			// Spawners
 			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Pig")) {
-				c.getBlock(x + 3, y + 5 + ceilingOffset, z + 4).setTypeId(52);
+				c.getBlock(x + 3, y + 5 + ceilingOffset, z + 4).setType(Material.MOB_SPAWNER);
 				CreatureSpawner PigSpawner = (CreatureSpawner) c.getBlock(x + 3, y + 5 + ceilingOffset, z + 4).getState();
 				PigSpawner.setSpawnedType(EntityType.PIG);
 			}
 			
 			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
-				c.getBlock(x + 4, y + 5 + ceilingOffset, z + 3).setTypeId(52);
+				c.getBlock(x + 4, y + 5 + ceilingOffset, z + 3).setType(Material.MOB_SPAWNER);
 				CreatureSpawner PigSpawner2 = (CreatureSpawner) c.getBlock(x + 4, y + 5 + ceilingOffset, z + 3).getState();
 				PigSpawner2.setSpawnedType(EntityType.SKELETON);
 			}

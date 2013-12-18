@@ -4,6 +4,7 @@ import java.util.Random;
 
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -41,8 +42,8 @@ public class GravelPopulator extends DMMazeRoomBlockPopulator {
 			int z2 = startZ;
 			while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 				for (int y2 = startY; y2 < startY + height; y2++)
-					if(c.getBlock(x2, y2, z2).getTypeId() == 0)
-						c.getBlock(x2, y2, z2).setTypeId(13);
+					if(c.getBlock(x2, y2, z2).getType() == Material.AIR)
+						c.getBlock(x2, y2, z2).setType(Material.GRAVEL);
 
 				height -= rand.nextInt(1);
 
@@ -56,8 +57,8 @@ public class GravelPopulator extends DMMazeRoomBlockPopulator {
 				z2 = startZ;
 				while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 					for (int y2 = startY; y2 < startY + height; y2++)
-						if(c.getBlock(x2, y2, z2).getTypeId() == 0)
-							c.getBlock(x2, y2, z2).setTypeId(13);
+						if(c.getBlock(x2, y2, z2).getType() == Material.AIR)
+							c.getBlock(x2, y2, z2).setType(Material.GRAVEL);
 
 					height -= rand.nextInt(1);
 

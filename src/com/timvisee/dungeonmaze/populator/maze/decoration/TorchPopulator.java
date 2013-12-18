@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -29,11 +30,11 @@ public class TorchPopulator extends DMMazeRoomBlockPopulator {
 			int torchY = args.getFloorY() + 1;
 			int torchZ = z + rand.nextInt(6) + 1;
 								
-			if(c.getBlock(torchX, torchY - 1, torchZ).getTypeId() != 0) {
+			if(c.getBlock(torchX, torchY - 1, torchZ).getType() != Material.AIR) {
 				Block torchBlock = c.getBlock(torchX, torchY, torchZ);
-				if(torchBlock.getTypeId() == 0) {
+				if(torchBlock.getType() == Material.AIR) {
 					torchBlock = c.getBlock(torchX, torchY, torchZ);
-					torchBlock.setTypeId(50);
+					torchBlock.setType(Material.TORCH);
 				}
 			}
 		}

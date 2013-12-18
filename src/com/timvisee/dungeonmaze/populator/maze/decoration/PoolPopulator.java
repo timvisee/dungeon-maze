@@ -41,7 +41,7 @@ public class PoolPopulator extends DMMazeRoomBlockPopulator {
 			for (int i = Math.max(poolX - poolW / 2, 1); i < Math.min(poolX - poolW / 2 + poolW, 6); i++) {
 				for (int j = Math.max(poolZ - poolL / 2, 1); j < Math.min(poolZ - poolL / 2 + poolL, 6); j++) {
 					c.getBlock(i, poolY, j).setType(liquidType.getMaterial());
-					c.getBlock(i, poolY - 1, j).setTypeId(48);
+					c.getBlock(i, poolY - 1, j).setType(Material.MOSSY_COBBLESTONE);
 				}
 			}
 		}

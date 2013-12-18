@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.listener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,11 +36,11 @@ public class DMPlayerListener implements Listener {
 						
 						// Check if there's a new available player location
 						for(int newY = 74; newY > 1; newY--) {
-							if(loc.getWorld().getBlockAt((int) x, (int) newY, (int) z).getTypeId() != 0) {
+							if(loc.getWorld().getBlockAt((int) x, (int) newY, (int) z).getType() != Material.AIR) {
 								// This block is a non-air block
 								// Check if the two above blocks are air, so the player could be teleported to this place
-								if(loc.getWorld().getBlockAt((int) x, (int) newY + 1, (int) z).getTypeId() == 0 &&
-										loc.getWorld().getBlockAt((int) x, (int) newY + 2, (int) z).getTypeId() == 0) {
+								if(loc.getWorld().getBlockAt((int) x, (int) newY + 1, (int) z).getType() == Material.AIR &&
+										loc.getWorld().getBlockAt((int) x, (int) newY + 2, (int) z).getType() == Material.AIR) {
 									p.sendMessage(ChatColor.DARK_RED + "You're not allowed on the surface!");
 									Location newPLoc = new Location(loc.getWorld(), x, newY + 1, z);
 									p.teleport(newPLoc);

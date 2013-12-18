@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -29,10 +30,10 @@ public class WaterOutOfWallPopulator extends DMMazeRoomBlockPopulator {
 			int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
 			int lanternZ = z + rand.nextInt(8);
 			
-			Block lanternBlock = c.getBlock(lanternX, lanternY, lanternZ);
+			Block b = c.getBlock(lanternX, lanternY, lanternZ);
 			
-			if(lanternBlock.getTypeId() == 4 || lanternBlock.getTypeId() == 48 || lanternBlock.getTypeId() == 98)
-				lanternBlock.setTypeId(10);
+			if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
+				b.setType(Material.WATER);
 		}
 	}
 	

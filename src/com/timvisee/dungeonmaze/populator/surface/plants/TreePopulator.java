@@ -38,15 +38,15 @@ public class TreePopulator extends DMSurfaceBlockPopulator {
 				Biome biome = c.getWorld().getBiome((c.getX() * 16) + xTree, (c.getZ() * 16) + zTree);
 				
 				if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
-					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 12)
+					if(c.getBlock(xTree, ySurface, zTree).getType() == Material.SAND)
 						c.getBlock(xTree, yTree, zTree).setType(Material.CACTUS);
 					
 				} else if(biome.equals(Biome.FOREST)) {
-					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2)
+					if(c.getBlock(xTree, ySurface, zTree).getType() == Material.GRASS)
 						c.getWorld().generateTree(new Location(c.getWorld(), (c.getX()*16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.BIRCH);
 					
 				} else if(biome.equals(Biome.JUNGLE) || biome.equals(Biome.JUNGLE_HILLS)) {
-					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2) {
+					if(c.getBlock(xTree, ySurface, zTree).getType() == Material.GRASS) {
 						switch(rand.nextInt(3)) {
 						case 0:
 							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.JUNGLE);
@@ -61,7 +61,7 @@ public class TreePopulator extends DMSurfaceBlockPopulator {
 					}
 					
 				} else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
-					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2) {
+					if(c.getBlock(xTree, ySurface, zTree).getType() == Material.GRASS) {
 						switch(rand.nextInt(2)) {
 						case 0:
 							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.RED_MUSHROOM);
@@ -73,11 +73,11 @@ public class TreePopulator extends DMSurfaceBlockPopulator {
 					}
 					
 				} else if(biome.equals(Biome.SWAMPLAND))
-					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2)
+					if(c.getBlock(xTree, ySurface, zTree).getType() == Material.GRASS)
 						c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.SWAMP);
 					
 				else if(biome.equals(Biome.TAIGA) || biome.equals(Biome.TAIGA_HILLS)) {
-					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2) {
+					if(c.getBlock(xTree, ySurface, zTree).getType() == Material.GRASS) {
 						switch(rand.nextInt(2)) {
 						case 0:
 							c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.REDWOOD);
@@ -89,7 +89,7 @@ public class TreePopulator extends DMSurfaceBlockPopulator {
 					}
 					
 				} else
-					if(c.getBlock(xTree, ySurface, zTree).getTypeId() == 2)
+					if(c.getBlock(xTree, ySurface, zTree).getType() == Material.GRASS)
 						c.getWorld().generateTree(new Location(w, (c.getX() * 16) + xTree, yTree, (c.getZ() * 16) + zTree), TreeType.TREE);
 			}
 		}

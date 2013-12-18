@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
@@ -63,11 +64,11 @@ public abstract class DMMazeRoomBlockPopulator extends DMMazeLayerBlockPopulator
 	 */
 	private int getFloorOffset(int x, int y, int z, Chunk c) {
 		Block testBlock = c.getBlock(x + 3, y, z + 3);
-		int typeId = testBlock.getTypeId();
+		Material typeId = testBlock.getType();
 		
 		// x and z +2 so that you aren't inside a wall!
-		if(!(typeId == 4 || typeId == 48 ||
-				typeId == 87 || typeId == 88))
+		if(!(typeId == Material.COBBLESTONE || typeId == Material.MOSSY_COBBLESTONE ||
+				typeId == Material.NETHERRACK || typeId == Material.SOUL_SAND))
 			return 1;
 		
 		return 0;
@@ -83,11 +84,11 @@ public abstract class DMMazeRoomBlockPopulator extends DMMazeLayerBlockPopulator
 	 */
 	private int getCeilingOffset(int x, int y, int z, Chunk c) {
 		Block testBlock = c.getBlock(x + 3, y + 6, z + 3);
-		int typeId = testBlock.getTypeId();
+		Material typeId = testBlock.getType();
 		
 		// x and z +2 so that you aren't inside a wall!
-		if(!(typeId == 4 || typeId == 48 ||
-				typeId == 87 || typeId == 88))
+		if(!(typeId == Material.COBBLESTONE || typeId == Material.MOSSY_COBBLESTONE ||
+				typeId == Material.NETHERRACK || typeId == Material.SOUL_SAND))
 			return 1;
 		
 		return 0;

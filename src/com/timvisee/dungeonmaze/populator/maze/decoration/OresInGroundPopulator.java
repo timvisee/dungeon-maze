@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 
@@ -17,33 +18,36 @@ public class OresInGroundPopulator extends BlockPopulator {
 				for (int z=0; z < 16; z+=1) {
 					
 					if (random.nextInt(1000) < CHANCE_OF_ORE) {
-						switch (random.nextInt(8)) {
+						switch (random.nextInt(9)) {
     					case 0:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(14);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.GOLD_ORE);
     						break;
     					case 1:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(15);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.IRON_ORE);
     						break;
     					case 2:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(16);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.COAL_ORE);
     						break;
     					case 3:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(21);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.LAPIS_ORE);
     						break;
     					case 4:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(56);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.DIAMOND_ORE);
     						break;
     					case 5:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(73);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.REDSTONE_ORE);
     						break;
     					case 6:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(82);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.EMERALD_ORE);
     						break;
     					case 7:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(16);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.CLAY);
+    						break;
+    					case 8:
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.COAL_ORE);
     						break;
     					default:
-    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setTypeId(16);
+    						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.COAL_ORE);
 						}
 					}
 				}

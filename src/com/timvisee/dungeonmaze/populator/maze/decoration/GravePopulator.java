@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
@@ -33,12 +34,12 @@ public class GravePopulator extends DMMazeRoomBlockPopulator {
 			int graveZ = z + rand.nextInt(6) + 1;
 			
 			// The grave
-			c.getBlock(graveX, graveY, graveZ).setTypeId(43);
-			c.getBlock(graveX - 1, graveY, graveZ).setTypeId(44);
-			c.getBlock(graveX - 2, graveY, graveZ).setTypeId(44);
+			c.getBlock(graveX, graveY, graveZ).setType(Material.DOUBLE_STEP);
+			c.getBlock(graveX - 1, graveY, graveZ).setType(Material.STEP);
+			c.getBlock(graveX - 2, graveY, graveZ).setType(Material.STEP);
 			
 			// Put a sign on a grave and write some text on it
-			c.getBlock(graveX, graveY + 1, graveZ).setTypeId(63);
+			c.getBlock(graveX, graveY + 1, graveZ).setType(Material.SIGN_POST);
 			c.getBlock(graveX, graveY + 1, graveZ).setData((byte) 4);
 			
 			// Update the text on the sign

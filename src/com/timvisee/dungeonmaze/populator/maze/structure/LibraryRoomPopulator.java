@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
@@ -41,62 +42,62 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 			//stone floor in the bottom of the room
 			for (int x2=x + 1; x2 <= x + 6; x2+=1)
 	            for (int z2=z + 1; z2 <= z + 6; z2+=1)
-	                c.getBlock(x2, yFloor, z2).setTypeId(1);
+	                c.getBlock(x2, yFloor, z2).setType(Material.STONE);
 			
 			// Cobblestone layer underneeth the stone floor
 			for (int x2=x + 1; x2 <= x + 6; x2+=1)
 	            for (int z2=z + 1; z2 <= z + 6; z2+=1)
-	                c.getBlock(x2, yFloor - 1, z2).setTypeId(4);
+	                c.getBlock(x2, yFloor - 1, z2).setType(Material.COBBLESTONE);
 			
 			// Make stone walls on each side of the room
 			for (int x2=x + 1; x2 <= x + 6; x2+=1)
 	            for (int y2=yFloor; y2 <= yCeiling + 5; y2+=1)
-	                c.getBlock(x2, y2, z).setTypeId(98);
+	                c.getBlock(x2, y2, z).setType(Material.SMOOTH_BRICK);
 			for (int x2=x + 1; x2 <= x + 6; x2+=1)
 	            for (int y2=yFloor; y2 <= yCeiling + 5; y2+=1)
-	                c.getBlock(x2, y2, z + 7).setTypeId(98);
+	                c.getBlock(x2, y2, z + 7).setType(Material.SMOOTH_BRICK);
 			for (int z2=z + 1; z2 <= z + 6; z2+=1)
 	            for (int y2=yFloor; y2 <= yCeiling + 5; y2+=1) 
-	                c.getBlock(x, y2, z2).setTypeId(98);
+	                c.getBlock(x, y2, z2).setType(Material.SMOOTH_BRICK);
 			for (int z2=z + 1; z2 <= z + 6; z2+=1)
 	            for (int y2=yFloor; y2 <= yCeiling + 5; y2+=1)
-	                c.getBlock(x + 7, y2, z2).setTypeId(98);
+	                c.getBlock(x + 7, y2, z2).setType(Material.SMOOTH_BRICK);
 			
 			// Generate some holes in the wall to make some kind of doors
 			for (int x2=x + 3; x2 <= x + 4; x2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x2, y2, z).setTypeId(0);
+	                c.getBlock(x2, y2, z).setType(Material.AIR);
 			for (int x2=x + 3; x2 <= x + 4; x2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x2, y2, z+7).setTypeId(0);
+	                c.getBlock(x2, y2, z+7).setType(Material.AIR);
 			for (int z2=z + 3; z2 <= z + 4; z2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x, y2, z2).setTypeId(0);
+	                c.getBlock(x, y2, z2).setType(Material.AIR);
 			for (int z2=z + 3; z2 <= z + 4; z2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x + 7, y2, z2).setTypeId(0);
+	                c.getBlock(x + 7, y2, z2).setType(Material.AIR);
 
 			// Generate the bookshelfs, one on each side
 			for (int x2=x + 5; x2 <= x + 6; x2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x2, y2, z + 1).setTypeId(47);
+	                c.getBlock(x2, y2, z + 1).setType(Material.BOOKSHELF);
 			for (int x2=x + 1; x2 <= x + 2; x2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x2, y2, z + 6).setTypeId(47);
+	                c.getBlock(x2, y2, z + 6).setType(Material.BOOKSHELF);
 			for (int z2=z + 1; z2 <= z + 2; z2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x + 1, y2, z2).setTypeId(47);
+	                c.getBlock(x + 1, y2, z2).setType(Material.BOOKSHELF);
 			for (int z2=z + 5; z2 <= z + 6; z2+=1)
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
-	                c.getBlock(x + 6, y2, z2).setTypeId(47);
+	                c.getBlock(x + 6, y2, z2).setType(Material.BOOKSHELF);
 
 			// Make the two pilars
 			for (int y2 = yFloor + 1; y2 <= yFloor + 3; y2+=1) {
-				c.getBlock(x + 3, y2, z + 4).setTypeId(86);
-				c.getBlock(x + 4, y2, z + 3).setTypeId(86);
+				c.getBlock(x + 3, y2, z + 4).setType(Material.PUMPKIN);
+				c.getBlock(x + 4, y2, z + 3).setType(Material.PUMPKIN);
             }
 			// Add the two chests
-			c.getBlock(x + 3, yFloor + 1, z + 3).setTypeId(54);
+			c.getBlock(x + 3, yFloor + 1, z + 3).setType(Material.CHEST);
 
 			// Call the Chest generation event
 			DMGenerationChestEvent event = new DMGenerationChestEvent(c.getBlock(x + 3, yFloor + 1, z + 3), rand, genChestContent(rand), DMMazeStructureType.LIBRARY_ROOM);
@@ -105,12 +106,12 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 			// Do the event
 			if(!event.isCancelled()) {
 				// Make sure the chest is still there, a developer could change the chest through the event!
-				if(event.getBlock().getTypeId() == 54)
+				if(event.getBlock().getType() == Material.CHEST)
 				// Add the contents to the chest
 				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
-			c.getBlock(x + 4, yFloor + 1, z + 4).setTypeId(54);
+			c.getBlock(x + 4, yFloor + 1, z + 4).setType(Material.CHEST);
 
 			// Call the Chest generation event
 			DMGenerationChestEvent event2 = new DMGenerationChestEvent(c.getBlock(x + 4, yFloor + 1, z + 4), rand, genChestContent(rand), DMMazeStructureType.LIBRARY_ROOM);
@@ -119,19 +120,19 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 			// Do the event
 			if(!event2.isCancelled()) {
 				// Make sure the chest is still there, a developer could change the chest through the event!
-				if(event2.getBlock().getTypeId() == 54)
+				if(event2.getBlock().getType() == Material.CHEST)
 				// Add the contents to the chest
 				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			// Add 4 lanterns on each side of the room near the book shelfs
-			c.getBlock(x + 2, yFloor + 2, z + 1).setTypeId(50);
+			c.getBlock(x + 2, yFloor + 2, z + 1).setType(Material.TORCH);
 			c.getBlock(x + 2, yFloor + 2, z + 1).setData((byte) 3);
-			c.getBlock(x + 6, yFloor + 2, z + 2).setTypeId(50);
+			c.getBlock(x + 6, yFloor + 2, z + 2).setType(Material.TORCH);
 			c.getBlock(x + 6, yFloor + 2, z + 2).setData((byte) 2);
-			c.getBlock(x + 1, yFloor + 2, z + 5).setTypeId(50);
+			c.getBlock(x + 1, yFloor + 2, z + 5).setType(Material.TORCH);
 			c.getBlock(x + 1, yFloor + 2, z + 5).setData((byte) 1);
-			c.getBlock(x + 5, yFloor + 2, z + 6).setTypeId(50);
+			c.getBlock(x + 5, yFloor + 2, z + 6).setType(Material.TORCH);
 			c.getBlock(x + 5, yFloor + 2, z + 6).setData((byte) 4);
 		}
 	}

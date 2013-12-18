@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.spawner;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -32,17 +33,17 @@ public class SilverfishBlockPopulator extends DMMazeRoomBlockPopulator {
 				int blockZ = z + rand.nextInt(8);
 				
 				Block lanternBlock = c.getBlock(blockX, blockY, blockZ);
-				if(lanternBlock.getTypeId() == 1) {
-					lanternBlock.setTypeId(97);
+				if(lanternBlock.getType() == Material.STONE) {
+					lanternBlock.setType(Material.MONSTER_EGGS);
 					lanternBlock.setData((byte) 0);
-				} else if(lanternBlock.getTypeId() == 4) {
-					lanternBlock.setTypeId(97);
+				} else if(lanternBlock.getType() == Material.COBBLESTONE) {
+					lanternBlock.setType(Material.MONSTER_EGGS);
 					lanternBlock.setData((byte) 1);
-				} else if(lanternBlock.getTypeId() == 48) {
-					lanternBlock.setTypeId(97);
+				} else if(lanternBlock.getType() == Material.MOSSY_COBBLESTONE) {
+					lanternBlock.setType(Material.MONSTER_EGGS);
 					lanternBlock.setData((byte) 1);
-				} else if(lanternBlock.getTypeId() == 98) {
-					lanternBlock.setTypeId(97);
+				} else if(lanternBlock.getType() == Material.SMOOTH_BRICK) {
+					lanternBlock.setType(Material.MONSTER_EGGS);
 					lanternBlock.setData((byte) 2);
 				}
 			}

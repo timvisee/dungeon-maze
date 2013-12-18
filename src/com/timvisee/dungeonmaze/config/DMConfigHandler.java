@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.config;
 
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
@@ -40,7 +41,30 @@ public class DMConfigHandler {
 	 * @param int Block type ID
 	 * @return true if the object is in the list
 	 */
+	@Deprecated // Deprecate this for use Material enum
 	public boolean isInWhiteList(int target) {
+		List<Object> list = DungeonMaze.instance.getConfigHandler().blockWhiteList;
+		
+		if(list == null)
+			return(false);
+		
+		for(Object entry : list)
+			if(entry instanceof Integer)
+				return (((Integer) entry).intValue() == target);
+		return false;
+	}
+	
+	/**
+	 * Check whether a block is in the block whitelist or not
+	 * @param Material Block type
+	 * @return true if the object is in the list
+	 */
+	/*
+	 *  TODO: Actually use the getId() magic value,
+	 *  need to update when Minecraft/Bukkit will remove them
+	 */
+	public boolean isInWhiteList(Material material) {
+		int target = material.getId();
 		List<Object> list = DungeonMaze.instance.getConfigHandler().blockWhiteList;
 		
 		if(list == null)

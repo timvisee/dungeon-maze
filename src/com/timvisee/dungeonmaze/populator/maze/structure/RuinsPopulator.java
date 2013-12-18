@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -35,16 +36,16 @@ public class RuinsPopulator extends DMMazeRoomBlockPopulator {
 			int startY = yFloor + 1;
 			int startZ = z + rand.nextInt(6) + 1;
 			
-			int blockTypeId;
+			Material blockTypeId;
 			switch(rand.nextInt(2)) {
 			case 0:
-				blockTypeId = 4;
+				blockTypeId = Material.COBBLESTONE;
 				break;
 			case 1:
-				blockTypeId = 98;
+				blockTypeId = Material.SMOOTH_BRICK;
 				break;
 			default:
-				blockTypeId = 4;
+				blockTypeId = Material.COBBLESTONE;
 			}
 			
 			int startHeight = rand.nextInt(3) + 1;
@@ -57,8 +58,8 @@ public class RuinsPopulator extends DMMazeRoomBlockPopulator {
 			int z2 = startZ;
 			while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 				for (int y2 = startY; y2 < startY + height; y2++) {
-					if(c.getBlock(x2, y2, z2).getTypeId() == 0) {
-						c.getBlock(x2, y2, z2).setTypeId(blockTypeId);
+					if(c.getBlock(x2, y2, z2).getType() == Material.AIR) {
+						c.getBlock(x2, y2, z2).setType(blockTypeId);
 					}
 				}
 
@@ -74,8 +75,8 @@ public class RuinsPopulator extends DMMazeRoomBlockPopulator {
 				z2 = startZ;
 				while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 					for (int y2 = startY; y2 < startY + height; y2++) {
-						if(c.getBlock(x2, y2, z2).getTypeId() == 0) {
-							c.getBlock(x2, y2, z2).setTypeId(blockTypeId);
+						if(c.getBlock(x2, y2, z2).getType() == Material.AIR) {
+							c.getBlock(x2, y2, z2).setType(blockTypeId);
 						}
 					}
 

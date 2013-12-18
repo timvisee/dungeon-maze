@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -42,11 +43,11 @@ public class CreeperSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
 			
 			// Create the core
-			c.getBlock(x + 3, yFloor + 1, z + 4).setTypeId(112);
-			c.getBlock(x + 4, yFloor + 1, z + 3).setTypeId(112);
-			c.getBlock(x + 3, yFloor + 1, z + 2).setTypeId(112);
-			c.getBlock(x + 2, yFloor + 1, z + 3).setTypeId(112);
-			c.getBlock(x + 3, yFloor + 2, z + 3).setTypeId(112);
+			c.getBlock(x + 3, yFloor + 1, z + 4).setType(Material.NETHER_BRICK);
+			c.getBlock(x + 4, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
+			c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK);
+			c.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
+			c.getBlock(x + 3, yFloor + 2, z + 3).setType(Material.NETHER_BRICK);
 			
 			// Create the spawner
 			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Creeper")) {
@@ -59,7 +60,7 @@ public class CreeperSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();

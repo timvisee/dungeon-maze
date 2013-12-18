@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
@@ -29,14 +30,14 @@ public class OasisChunkPopulator extends BlockPopulator {
 					// Generate a dirt layer
 					for (int x = 0; x < 16; x++) {
 						for (int z = 0; z < 16; z++) {
-							source.getBlock(x, 29, z).setTypeId(3);
+							source.getBlock(x, 29, z).setType(Material.DIRT);
 						}
 					}
 					// Generate some clay inside the dirt layer
 					for (int x = 0; x < 16; x++) {
 						for (int z = 0; z < 16; z++) {
 							if (random.nextInt(100) < CHANCE_OF_CLAYINDIRT) {
-								source.getBlock(x, 29, z).setTypeId(82);
+								source.getBlock(x, 29, z).setType(Material.CLAY);
 							}
 						}
 					}
@@ -44,7 +45,7 @@ public class OasisChunkPopulator extends BlockPopulator {
 					// Generate the grass layer
 					for (int x = 0; x < 16; x++) {
 						for (int z = 0; z < 16; z++) {
-							source.getBlock(x, 30, z).setTypeId(2);
+							source.getBlock(x, 30, z).setType(Material.GRASS);
 						}
 					}
 					
@@ -52,7 +53,7 @@ public class OasisChunkPopulator extends BlockPopulator {
 					for (int y = 31; y <= 100; y++) {
 						for (int x = 0; x < 16; x++) {
 							for (int z = 0; z < 16; z++) {
-								source.getBlock(x, y, z).setTypeId(0);
+								source.getBlock(x, y, z).setType(Material.AIR);
 							}
 						}
 					}
@@ -61,7 +62,7 @@ public class OasisChunkPopulator extends BlockPopulator {
 					for (int x = 0; x < 16; x++) {
 						for (int z = 0; z < 16; z++) {
 							if (random.nextInt(100) < CHANCE_OF_CLAYINDIRT) {
-								source.getBlock(x, 31, z).setTypeId(31);
+								source.getBlock(x, 31, z).setType(Material.LONG_GRASS);
 								source.getBlock(x, 31, z).setData((byte) 1);
 							}
 						}
@@ -73,23 +74,23 @@ public class OasisChunkPopulator extends BlockPopulator {
 					
 					// Generate the water around the tree
 					for (int x = 5; x <= 11; x++) {
-						source.getBlock(x + treeOffsetX, 30, 5 + treeOffsetZ).setTypeId(8);
+						source.getBlock(x + treeOffsetX, 30, 5 + treeOffsetZ).setType(Material.WATER);
 					}
 					for (int z = 5; z <= 11; z++) {
-						source.getBlock(5 + treeOffsetX, 30, z + treeOffsetZ).setTypeId(8);
+						source.getBlock(5 + treeOffsetX, 30, z + treeOffsetZ).setType(Material.WATER);
 					}
 					for (int x = 5; x <= 11; x++) {
-						source.getBlock(x + treeOffsetX, 30, 11 + treeOffsetZ).setTypeId(8);
+						source.getBlock(x + treeOffsetX, 30, 11 + treeOffsetZ).setType(Material.WATER);
 					}
 					for (int z = 5; z <= 11; z++) {
-						source.getBlock(11 + treeOffsetX, 30, z + treeOffsetZ).setTypeId(8);
+						source.getBlock(11 + treeOffsetX, 30, z + treeOffsetZ).setType(Material.WATER);
 					}
 					
 					// Generate some sugar canes
-					source.getBlock(6 + treeOffsetX, 31, 6 + treeOffsetZ).setTypeId(83);
-					source.getBlock(6 + treeOffsetX, 31, 10 + treeOffsetZ).setTypeId(83);
-					source.getBlock(10 + treeOffsetX, 31, 6 + treeOffsetZ).setTypeId(83);
-					source.getBlock(10 + treeOffsetX, 31, 10 + treeOffsetZ).setTypeId(83);
+					source.getBlock(6 + treeOffsetX, 31, 6 + treeOffsetZ).setType(Material.SUGAR_CANE_BLOCK);
+					source.getBlock(6 + treeOffsetX, 31, 10 + treeOffsetZ).setType(Material.SUGAR_CANE_BLOCK);
+					source.getBlock(10 + treeOffsetX, 31, 6 + treeOffsetZ).setType(Material.SUGAR_CANE_BLOCK);
+					source.getBlock(10 + treeOffsetX, 31, 10 + treeOffsetZ).setType(Material.SUGAR_CANE_BLOCK);
 					
 					// Random tree type and generate the tree
 					TreeType treeType = TreeType.TREE;

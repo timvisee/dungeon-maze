@@ -4,6 +4,7 @@ import java.util.Random;
 
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -27,8 +28,8 @@ public class CoalorePopulator extends DMMazeRoomBlockPopulator {
 		for (int i = 0; i < ITERATIONS; i++) {
 			if (rand.nextInt(100) < CHANCE) {
 				Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
-				if (block.getTypeId() == 4) {
-					block.setTypeId(16);
+				if (block.getType() == Material.COBBLESTONE) {
+					block.setType(Material.COAL_ORE);
 				}
 			}
 		}

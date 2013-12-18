@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Minecart;
@@ -52,7 +53,7 @@ public class RailPopulator extends DMMazeRoomBlockPopulator {
 					int z2 = startZ;
 					while(0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 						if(rand.nextInt(100) > BROKEN_RAIL_CHANCE) {
-							c.getBlock(x2, yFloor + 1, z2).setTypeId(66);
+							c.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
 							if(rand.nextInt(100) < MINECART_ON_RAIL_CHANCE)
 								spawnMinecart(w, (c.getX() * 16) + x + x2, yFloor + 1, (c.getZ() * 16) + z + z2);
 						}
@@ -66,7 +67,7 @@ public class RailPopulator extends DMMazeRoomBlockPopulator {
 						z2 = startZ;
 						while (0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 							if(rand.nextInt(100) > BROKEN_RAIL_CHANCE) {
-								c.getBlock(x2, yFloor + 1, z2).setTypeId(66);
+								c.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
 								if(rand.nextInt(100) < MINECART_ON_RAIL_CHANCE)
 									spawnMinecart(w, (c.getX() * 16) + x + x2, yFloor + 1, (c.getZ() * 16) + z + z2);
 							}

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
@@ -40,35 +41,35 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		for (int xx = 0; xx < 8; xx++)
 			for (int yy = y + 2; yy < 30+(7*6); yy++)
 				for(int zz = 0; zz < 8; zz++)
-					c.getBlock(x + xx, yy, z + zz).setTypeId(0);
+					c.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
 		
 		// Generate corners
 		for (int yy = y + 2; yy < 30+(7*6); yy++) {
-			c.getBlock(x + 0, yy, z + 0).setTypeId(98);
-			c.getBlock(x + 7, yy, z + 0).setTypeId(98);
-			c.getBlock(x + 0, yy, z + 7).setTypeId(98);
-			c.getBlock(x + 7, yy, z + 7).setTypeId(98);
+			c.getBlock(x + 0, yy, z + 0).setType(Material.SMOOTH_BRICK);
+			c.getBlock(x + 7, yy, z + 0).setType(Material.SMOOTH_BRICK);
+			c.getBlock(x + 0, yy, z + 7).setType(Material.SMOOTH_BRICK);
+			c.getBlock(x + 7, yy, z + 7).setType(Material.SMOOTH_BRICK);
 		}
 		
 		//floor
 		for (int xx=x; xx <= x + 7; xx++)
 		    for (int zz=z; zz <= z + 7; zz++)
-		        c.getBlock(xx, y + 1, zz).setTypeId(98);
+		        c.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
 		        
 		// Change the layer underneeth the stone floor to cobblestone
 		for (int xx=x; xx <= x + 8; xx++)
 		    for (int zz=z; zz <= z + 0; zz++)
-		        c.getBlock(xx, y + 1, zz).setTypeId(4);
+		        c.getBlock(xx, y + 1, zz).setType(Material.COBBLESTONE);
 		        
 		//Ceiling
 		for (int xx=x; xx <= x + 8; xx++)
 		    for (int zz=z; zz <= z + 8; zz++)
-		        c.getBlock(xx, y + 6, zz).setTypeId(98);
+		        c.getBlock(xx, y + 6, zz).setType(Material.SMOOTH_BRICK);
 		
 		// Generate 4 circulair blocks in the middle of the floor
 		for (int xx=x + 3; xx <= x + 4; xx++) {
 		    for (int zz=z + 3; zz <= z + 4; zz++) {
-		        c.getBlock(xx, y + 1, zz).setTypeId(98);
+		        c.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
 		        c.getBlock(xx, y + 1, zz).setData((byte) 3);
 		    }
 		}
@@ -76,40 +77,40 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		// Create walls
 		for (int xx=x + 1; xx <= x + 6; xx++) {
             for (int yy=y + 2; yy <= y + 5; yy++) {
-                c.getBlock(xx, yy, z).setTypeId(101);
-                c.getBlock(xx, yy, z + 7).setTypeId(101);
+                c.getBlock(xx, yy, z).setType(Material.IRON_FENCE);
+                c.getBlock(xx, yy, z + 7).setType(Material.IRON_FENCE);
             }
         }
 		for (int zz=z + 1; zz <= z + 6; zz++) {
             for (int yy=y + 2; yy <= y + 5; yy++) {
-                c.getBlock(x, yy, zz).setTypeId(101);
-                c.getBlock(x + 7, yy, zz).setTypeId(101);
+                c.getBlock(x, yy, zz).setType(Material.IRON_FENCE);
+                c.getBlock(x + 7, yy, zz).setType(Material.IRON_FENCE);
             }
         }
 		
 		// Create gates
 		for (int xx=x + 2; xx <= x + 5; xx++) {
             for (int yy=y + 2; yy <= y + 4; yy++) {
-                c.getBlock(xx, yy, z).setTypeId(98);
-                c.getBlock(xx, yy, z + 7).setTypeId(98);
+                c.getBlock(xx, yy, z).setType(Material.SMOOTH_BRICK);
+                c.getBlock(xx, yy, z + 7).setType(Material.SMOOTH_BRICK);
             }
         }
 		for (int zz=z + 2; zz <= z + 5; zz++) {
             for (int yy=y + 2; yy <= y + 4; yy++) {
-                c.getBlock(x, yy, zz).setTypeId(98);
-                c.getBlock(x + 7, yy, zz).setTypeId(98);
+                c.getBlock(x, yy, zz).setType(Material.SMOOTH_BRICK);
+                c.getBlock(x + 7, yy, zz).setType(Material.SMOOTH_BRICK);
             }
         }
 		for (int xx=x + 3; xx <= x + 4; xx++) {
             for (int yy=y + 2; yy <= y + 3; yy++) {
-                c.getBlock(xx, yy, z).setTypeId(0);
-                c.getBlock(xx, yy, z + 7).setTypeId(0);
+                c.getBlock(xx, yy, z).setType(Material.AIR);
+                c.getBlock(xx, yy, z + 7).setType(Material.AIR);
             }
         }
 		for (int zz=z + 3; zz <= z + 4; zz++) {
             for (int yy=y + 2; yy <= y + 3; yy++) {
-                c.getBlock(x, yy, zz).setTypeId(0);
-                c.getBlock(x + 7, yy, zz).setTypeId(0);
+                c.getBlock(x, yy, zz).setType(Material.AIR);
+                c.getBlock(x + 7, yy, zz).setType(Material.AIR);
             }
         }
 
@@ -117,7 +118,7 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		List<ItemStack> emptyList = new ArrayList<ItemStack>();
 
 		// Create chests
-		c.getBlock(x + 1, y + 2, z + 1).setTypeId(54);
+		c.getBlock(x + 1, y + 2, z + 1).setType(Material.CHEST);
 		c.getBlock(x + 1, y + 2, z + 1).setData((byte) 3);
 		
 		// Call the Chest generation event
@@ -127,12 +128,12 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		// Do the event
 		if(!event.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
-			if(event.getBlock().getTypeId() == 54)
+			if(event.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
 			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
-		c.getBlock(x + 1, y + 2, z + 6).setTypeId(54);
+		c.getBlock(x + 1, y + 2, z + 6).setType(Material.CHEST);
 		c.getBlock(x + 1, y + 2, z + 6).setData((byte) 2);
 
 		// Call the Chest generation event
@@ -142,12 +143,12 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		// Do the event
 		if(!event2.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
-			if(event2.getBlock().getTypeId() == 54)
+			if(event2.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
 			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
-		c.getBlock(x + 6, y + 2, z + 1).setTypeId(54);
+		c.getBlock(x + 6, y + 2, z + 1).setType(Material.CHEST);
 		c.getBlock(x + 6, y + 2, z + 1).setData((byte) 3);
 
 		// Call the Chest generation event
@@ -157,12 +158,12 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		// Do the event
 		if(!event3.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
-			if(event3.getBlock().getTypeId() == 54)
+			if(event3.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
 			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
-		c.getBlock(x + 6, y + 2, z + 6).setTypeId(54);
+		c.getBlock(x + 6, y + 2, z + 6).setType(Material.CHEST);
 		c.getBlock(x + 6, y + 2, z + 6).setData((byte) 2);
 
 		// Call the Chest generation event
@@ -172,20 +173,20 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		// Do the event
 		if(!event4.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
-			if(event4.getBlock().getTypeId() == 54)
+			if(event4.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
 			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		// Create torches
-		c.getBlock(x + 1, y + 3, z + 2).setTypeId(50);
-		c.getBlock(x + 1, y + 3, z + 5).setTypeId(50);
-		c.getBlock(x + 6, y + 3, z + 2).setTypeId(50);
-		c.getBlock(x + 6, y + 3, z + 5).setTypeId(50);
-		c.getBlock(x + 2, y + 3, z + 1).setTypeId(50);
-		c.getBlock(x + 2, y + 3, z + 6).setTypeId(50);
-		c.getBlock(x + 5, y + 3, z + 1).setTypeId(50);
-		c.getBlock(x + 5, y + 3, z + 6).setTypeId(50);
+		c.getBlock(x + 1, y + 3, z + 2).setType(Material.TORCH);
+		c.getBlock(x + 1, y + 3, z + 5).setType(Material.TORCH);
+		c.getBlock(x + 6, y + 3, z + 2).setType(Material.TORCH);
+		c.getBlock(x + 6, y + 3, z + 5).setType(Material.TORCH);
+		c.getBlock(x + 2, y + 3, z + 1).setType(Material.TORCH);
+		c.getBlock(x + 2, y + 3, z + 6).setType(Material.TORCH);
+		c.getBlock(x + 5, y + 3, z + 1).setType(Material.TORCH);
+		c.getBlock(x + 5, y + 3, z + 6).setType(Material.TORCH);
 	}
 	
 	/* We actually do not use that for spawn (empty chests)

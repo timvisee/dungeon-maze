@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
@@ -32,14 +33,14 @@ public class HighRoomPopulator extends DMMazeRoomBlockPopulator {
 			for (int x2=x; x2 <= x + 7; x2+=1) {
 			    for (int y2=y + 5; y2 <= y + 8; y2+=1) {
 			        for (int z2=z + 1; z2 <= z + 6; z2+=1) {
-			            c.getBlock(x2, y2, z2).setTypeId(0);
+			            c.getBlock(x2, y2, z2).setType(Material.AIR);
 			        }
 			    }
 			}
 			for (int x2=x + 1; x2 <= x + 6; x2+=1) {
 			    for (int y2=y + 5; y2 <= y + 8; y2+=1) {
 			        for (int z2=z; z2 <= z + 7; z2+=1) {
-			            c.getBlock(x2, y2, z2).setTypeId(0);
+			            c.getBlock(x2, y2, z2).setType(Material.AIR);
 			        }
 			    }
 			}

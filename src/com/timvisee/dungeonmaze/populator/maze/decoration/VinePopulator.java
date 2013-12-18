@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
@@ -38,8 +39,8 @@ public class VinePopulator extends DMMazeRoomBlockPopulator {
 					vineY = rand.nextInt(4) + 2;
 					vineZ = rand.nextInt(6) + 1;
 					
-					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getTypeId() == 98) {
-						c.getBlock(x + vineX + 1, y + vineY, z + vineZ).setTypeId(106);
+					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
+						c.getBlock(x + vineX + 1, y + vineY, z + vineZ).setType(Material.VINE);
 						c.getBlock(x + vineX + 1, y + vineY, z + vineZ).setData((byte) 2);
 					}
 					
@@ -49,8 +50,8 @@ public class VinePopulator extends DMMazeRoomBlockPopulator {
 					vineY = rand.nextInt(3) + 3;
 					vineZ = rand.nextInt(6) + 1;
 					
-					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getTypeId() == 98) {
-						c.getBlock(x + vineX - 1, y + vineY, z + vineZ).setTypeId(106);
+					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
+						c.getBlock(x + vineX - 1, y + vineY, z + vineZ).setType(Material.VINE);
 						c.getBlock(x + vineX - 1, y + vineY, z + vineZ).setData((byte) 8);
 					}
 					
@@ -60,8 +61,8 @@ public class VinePopulator extends DMMazeRoomBlockPopulator {
 					vineY = rand.nextInt(3) + 3;
 					vineZ = 0;
 					
-					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getTypeId() == 98) {
-						c.getBlock(x + vineX, y + vineY, z + vineZ + 1).setTypeId(106);
+					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
+						c.getBlock(x + vineX, y + vineY, z + vineZ + 1).setType(Material.VINE);
 						c.getBlock(x + vineX, y + vineY, z + vineZ + 1).setData((byte) 4);
 					}
 					
@@ -71,8 +72,8 @@ public class VinePopulator extends DMMazeRoomBlockPopulator {
 					vineY = rand.nextInt(3) + 3;
 					vineZ = 7;
 					
-					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getTypeId() == 98) {
-						c.getBlock(x + vineX, y + vineY, z + vineZ - 1).setTypeId(106);
+					if(c.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
+						c.getBlock(x + vineX, y + vineY, z + vineZ - 1).setType(Material.VINE);
 						c.getBlock(x + vineX, y + vineY, z + vineZ - 1).setData((byte) 1);
 					}
 					
@@ -90,7 +91,7 @@ public class VinePopulator extends DMMazeRoomBlockPopulator {
 				int vineY = args.getCeilingY() - 1;
 				int vineZ = rand.nextInt(6) + 1;
 				
-				c.getBlock(x + vineX, vineY, z + vineZ).setTypeId(106);
+				c.getBlock(x + vineX, vineY, z + vineZ).setType(Material.VINE);
 				c.getBlock(x + vineX, vineY, z + vineZ).setData((byte) 0);
 			}
 		}

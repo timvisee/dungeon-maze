@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
@@ -40,59 +41,59 @@ public class ArmoryRoomPopulator extends DMMazeRoomBlockPopulator {
 			for (int x2=x; x2 <= x + 7; x2+=1) {
 			    for (int y2=y; y2 <= y + 5; y2++)
 			        for (int z2=z; z2 <= z + 7; z2+=1) {
-			        c.getBlock(x2, y2 + floorOffset, z2).setTypeId(4);
+			        c.getBlock(x2, y2 + floorOffset, z2).setType(Material.COBBLESTONE);
 			    }
 			}
 			// Adminium
 			for (int x2=x + 1; x2 <= x + 6; x2+=1) {
 			    for (int y2=y; y2 <= y + 4; y2++)
 			        for (int z2=z + 1; z2 <= z + 6; z2+=1) {
-			        c.getBlock(x2, y2 + floorOffset, z2).setTypeId(7);
+			        c.getBlock(x2, y2 + floorOffset, z2).setType(Material.BEDROCK);
 			    }
 			}
 			// Air
 			for (int x2=x + 2; x2 <= x + 5; x2+=1) {
 			    for (int y2=y + 1; y2 <= y + 3; y2++)
 			        for (int z2=z + 2; z2 <= z + 5; z2+=1) {
-			        c.getBlock(x2, y2 + floorOffset, z2).setTypeId(0);
+			        c.getBlock(x2, y2 + floorOffset, z2).setType(Material.AIR);
 			    }
 			}
 			for (int x2=x + 1; x2 <= x + 6; x2+=1) {
 			    for (int y2=y + 1; y2 <= y + 5; y2++) {
-			        c.getBlock(x2, y2 + floorOffset, z + 0).setTypeId(0);
+			        c.getBlock(x2, y2 + floorOffset, z + 0).setType(Material.AIR);
 			    }
 			}
 			
 			// Pumpkins
-			c.getBlock(x + 2, yFloor + 1, z + 2).setTypeId(91);
-			c.getBlock(x + 2, yFloor + 1, z + 5).setTypeId(91);
-			c.getBlock(x + 5, yFloor + 1, z + 2).setTypeId(91);
-			c.getBlock(x + 5, yFloor + 1, z + 5).setTypeId(91);
-			c.getBlock(x + 2, yFloor + 2, z + 2).setTypeId(91);
-			c.getBlock(x + 2, yFloor + 2, z + 5).setTypeId(91);
-			c.getBlock(x + 5, yFloor + 2, z + 2).setTypeId(91);
-			c.getBlock(x + 5, yFloor + 2, z + 5).setTypeId(91);
-			c.getBlock(x + 2, yFloor + 3, z + 2).setTypeId(91);
-			c.getBlock(x + 2, yFloor + 3, z + 5).setTypeId(91);
-			c.getBlock(x + 5, yFloor + 3, z + 2).setTypeId(91);
-			c.getBlock(x + 5, yFloor + 3, z + 5).setTypeId(91);
+			c.getBlock(x + 2, yFloor + 1, z + 2).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 2, yFloor + 1, z + 5).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 5, yFloor + 1, z + 2).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 5, yFloor + 1, z + 5).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 2, yFloor + 2, z + 5).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 5, yFloor + 2, z + 2).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 2, yFloor + 3, z + 2).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 2, yFloor + 3, z + 5).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 5, yFloor + 3, z + 2).setType(Material.JACK_O_LANTERN);
+			c.getBlock(x + 5, yFloor + 3, z + 5).setType(Material.JACK_O_LANTERN);
 			
 			// Chests
-			c.getBlock(x + 2, yFloor + 1, z + 3).setTypeId(54);
-			c.getBlock(x + 2, yFloor + 1, z + 4).setTypeId(54);
-			c.getBlock(x + 3, yFloor + 1, z + 5).setTypeId(54);
-			c.getBlock(x + 4, yFloor + 1, z + 5).setTypeId(54);
-			c.getBlock(x + 5, yFloor + 1, z + 3).setTypeId(54);
-			c.getBlock(x + 5, yFloor + 1, z + 4).setTypeId(54);
+			c.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.CHEST);
+			c.getBlock(x + 2, yFloor + 1, z + 4).setType(Material.CHEST);
+			c.getBlock(x + 3, yFloor + 1, z + 5).setType(Material.CHEST);
+			c.getBlock(x + 4, yFloor + 1, z + 5).setType(Material.CHEST);
+			c.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.CHEST);
+			c.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.CHEST);
 			
 			// Iron doors
-			c.getBlock(x + 3, yFloor + 1, z + 1).setTypeId(71);
+			c.getBlock(x + 3, yFloor + 1, z + 1).setType(Material.IRON_DOOR_BLOCK);
 			c.getBlock(x + 3, yFloor + 1, z + 1).setData((byte) 0);
-			c.getBlock(x + 4, yFloor + 1, z + 1).setTypeId(71);
+			c.getBlock(x + 4, yFloor + 1, z + 1).setType(Material.IRON_DOOR_BLOCK);
 			c.getBlock(x + 4, yFloor + 1, z + 1).setData((byte) 3);
-			c.getBlock(x + 3, yFloor + 2, z + 1).setTypeId(71);
+			c.getBlock(x + 3, yFloor + 2, z + 1).setType(Material.IRON_DOOR_BLOCK);
 			c.getBlock(x + 3, yFloor + 2, z + 1).setData((byte) 8);
-			c.getBlock(x + 4, yFloor + 2, z + 1).setTypeId(71);
+			c.getBlock(x + 4, yFloor + 2, z + 1).setType(Material.IRON_DOOR_BLOCK);
 			c.getBlock(x + 4, yFloor + 2, z + 1).setData((byte) 11);
 		}
 	}

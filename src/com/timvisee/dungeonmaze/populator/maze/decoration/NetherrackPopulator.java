@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -27,14 +28,14 @@ public class NetherrackPopulator extends DMMazeRoomBlockPopulator {
 		for (int i = 0; i < ITERATIONS; i++) {
 			if (rand.nextInt(100) < CHANCE) {
 				Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt(2)+ y, z + rand.nextInt(8));
-				if (b.getTypeId() == 4) {
-					b.setTypeId(87);
+				if (b.getType() == Material.COBBLESTONE) {
+					b.setType(Material.NETHERRACK);
 					
 					// Decide if the netherrack should be burning
 					if(rand.nextInt(100) < BURNING_NETHERRACK) {
 						Block burnBlock = c.getBlock(b.getX(), b.getY() + 1, b.getZ());
-						if (burnBlock.getTypeId() == 0)
-							burnBlock.setTypeId(51);
+						if (burnBlock.getType() == Material.AIR)
+							burnBlock.setType(Material.FIRE);
 					}
 				}
 			}

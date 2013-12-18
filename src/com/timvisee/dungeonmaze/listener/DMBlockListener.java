@@ -24,7 +24,7 @@ public class DMBlockListener implements Listener {
 			if(DungeonMaze.instance.getConfigHandler().worldProtection) {
 				// The world protection is enable
 				
-				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getTypeId()))) {
+				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getType()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
@@ -45,7 +45,7 @@ public class DMBlockListener implements Listener {
 			if(DungeonMaze.instance.getConfigHandler().worldProtection) {
 				// The world protection is enable
 				
-				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getTypeId()))) {
+				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getType()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");

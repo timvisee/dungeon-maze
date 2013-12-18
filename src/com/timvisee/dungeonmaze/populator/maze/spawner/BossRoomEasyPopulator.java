@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -44,7 +45,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 			// Create the floor
 			for(int x2 = x; x2 < x + 7; x2 += 1)
 			    for(int z2 = z; z2 < z + 7; z2 += 1)
-			        c.getBlock(x2, yFloor, z2).setTypeId(48);
+			        c.getBlock(x2, yFloor, z2).setType(Material.MOSSY_COBBLESTONE);
 			        
 			// Create the spawners
 			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
@@ -57,7 +58,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
@@ -76,7 +77,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
@@ -95,7 +96,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					BlockState bs = spawnerBlock.getState();
@@ -107,8 +108,8 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 			}
 			
 			// Coal ores
-			c.getBlock(x + 1, yFloor + 1, z + 5).setTypeId(16);
-			c.getBlock(x + 5, yFloor + 1, z + 1).setTypeId(16);
+			c.getBlock(x + 1, yFloor + 1, z + 5).setType(Material.COAL_ORE);
+			c.getBlock(x + 5, yFloor + 1, z + 1).setType(Material.COAL_ORE);
 		}
 	}
 	

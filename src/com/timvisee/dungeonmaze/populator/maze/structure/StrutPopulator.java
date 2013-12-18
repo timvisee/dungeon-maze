@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
@@ -29,30 +30,30 @@ public class StrutPopulator extends DMMazeRoomBlockPopulator {
 			if (rand.nextInt(100) < CHANCE_OF_STRUT_NEAR_SPAWN) {
 				int yStrutbar = yCeiling - 1;
 				
-				if(c.getBlock(x + 2, yStrutbar, z).getTypeId() == 0) {
+				if(c.getBlock(x + 2, yStrutbar, z).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int xx = 1; xx < 7; xx++)
-						c.getBlock(x + xx, yStrutbar, z + 0).setTypeId(5);
+						c.getBlock(x + xx, yStrutbar, z + 0).setType(Material.WOOD);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutbar; yy++) {
-						c.getBlock(x + 1, yy, z + 0).setTypeId(85);
-						c.getBlock(x + 6, yy, z + 0).setTypeId(85);
+						c.getBlock(x + 1, yy, z + 0).setType(Material.FENCE);
+						c.getBlock(x + 6, yy, z + 0).setType(Material.FENCE);
 					}
 				}	
 			}
 			if (rand.nextInt(100) < CHANCE_OF_STRUT_NEAR_SPAWN) {
 				int yStrutbar = yCeiling - 1;
 
-				if(c.getBlock(x, yStrutbar, z + 2).getTypeId() == 0) {
+				if(c.getBlock(x, yStrutbar, z + 2).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int zz = 1; zz < 7; zz++) {
-						c.getBlock(x + 0, yStrutbar, z + zz).setTypeId(5);
+						c.getBlock(x + 0, yStrutbar, z + zz).setType(Material.WOOD);
 					}
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutbar; yy++) {
-						c.getBlock(x+0, yy, z+1).setTypeId(85);
-						c.getBlock(x+0, yy, z+6).setTypeId(85);
+						c.getBlock(x+0, yy, z+1).setType(Material.FENCE);
+						c.getBlock(x+0, yy, z+6).setType(Material.FENCE);
 					}
 				}
 				
@@ -63,15 +64,15 @@ public class StrutPopulator extends DMMazeRoomBlockPopulator {
 
 				int yStrutbar = yCeiling - 1;
 				
-				if(c.getBlock(x + 2, yStrutbar, z).getTypeId() == 0) {
+				if(c.getBlock(x + 2, yStrutbar, z).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int xx = 1; xx < 7; xx++)
-						c.getBlock(x + xx, yStrutbar, z+0).setTypeId(5);
+						c.getBlock(x + xx, yStrutbar, z+0).setType(Material.WOOD);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutbar; yy++) {
-						c.getBlock(x+1, yy, z+0).setTypeId(85);
-						c.getBlock(x+6, yy, z+0).setTypeId(85);
+						c.getBlock(x+1, yy, z+0).setType(Material.FENCE);
+						c.getBlock(x+6, yy, z+0).setType(Material.FENCE);
 					}
 				}
 					
@@ -79,15 +80,15 @@ public class StrutPopulator extends DMMazeRoomBlockPopulator {
 			if (rand.nextInt(100) < CHANCE_OF_STRUT) {
 				int yStrutbar = yCeiling - 1;
 
-				if(c.getBlock(x, yStrutbar, z + 2).getTypeId() == 0) {
+				if(c.getBlock(x, yStrutbar, z + 2).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int zz = 1; zz < 7; zz++)
-						c.getBlock(x + 0, yStrutbar, z + zz).setTypeId(5);
+						c.getBlock(x + 0, yStrutbar, z + zz).setType(Material.WOOD);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutbar; yy++) {
-						c.getBlock(x+0, yy, z+1).setTypeId(85);
-						c.getBlock(x+0, yy, z+6).setTypeId(85);
+						c.getBlock(x+0, yy, z+1).setType(Material.FENCE);
+						c.getBlock(x+0, yy, z+6).setType(Material.FENCE);
 					}
 				}
 					

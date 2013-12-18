@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -46,104 +47,104 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		     for (int x2=x; x2 < x + 15; x2+=1)
 		    	 for (int y2=y + 1; y2 <= y + (6*3) - 1; y2+=1)
 		    	  for (int z2=z; z2 <z + 15; z2+=1)
-		    	   		c.getBlock(x2, y2, z2).setTypeId(0);
+		    	   		c.getBlock(x2, y2, z2).setType(Material.AIR);
 		     // Floor
 		     for (int x2=x; x2 < x + 15; x2+=1)
 		         for (int y2=y; y2 < y + 1; y2+=1)
 		            for (int z2=z; z2 < z + 15; z2+=1)
-		             c.getBlock(x2, y2, z2).setTypeId(49);
+		             c.getBlock(x2, y2, z2).setType(Material.OBSIDIAN);
 		     
 		     // Treasures
-		     c.getBlock(x + 7, y + 1, z + 7).setTypeId(41);
-		     c.getBlock(x + 8, y + 1, z + 8).setTypeId(42);
+		     c.getBlock(x + 7, y + 1, z + 7).setType(Material.GOLD_BLOCK);
+		     c.getBlock(x + 8, y + 1, z + 8).setType(Material.IRON_BLOCK);
 		     
 		     // Chest1
-		     c.getBlock(x + 7, y + 1, z + 8).setTypeId(54);
+		     c.getBlock(x + 7, y + 1, z + 8).setType(Material.CHEST);
 		     addItemsToChest(rand, (Chest) c.getBlock(x + 7, y + 1, z + 8).getState());
 		     
 		     // Chest2
-		     c.getBlock(x + 8, y + 1, z + 7).setTypeId(54);
+		     c.getBlock(x + 8, y + 1, z + 7).setType(Material.CHEST);
 		     addItemsToChest(rand, (Chest) c.getBlock(x + 8, y + 1, z + 7).getState());
 		     
 		     // Glass shields
-		     c.getBlock(x + 2, y + 1, z + 3).setTypeId(20);
-		     c.getBlock(x + 2, y + 1, z + 12).setTypeId(20);
-		     c.getBlock(x + 3, y + 1, z + 2).setTypeId(20);
-		     c.getBlock(x + 3, y + 1, z + 4).setTypeId(20);
-		     c.getBlock(x + 3, y + 1, z + 11).setTypeId(20);
-		     c.getBlock(x + 3, y + 1, z + 13).setTypeId(20);
-		     c.getBlock(x + 4, y + 1, z + 3).setTypeId(20);
-		     c.getBlock(x + 4, y + 1, z + 12).setTypeId(20);
-		     c.getBlock(x + 11, y + 1, z + 3).setTypeId(20);
-		     c.getBlock(x + 11, y + 1, z + 12).setTypeId(20);
-		     c.getBlock(x + 12, y + 1, z + 2).setTypeId(20);
-		     c.getBlock(x + 12, y + 1, z + 4).setTypeId(20);
-		     c.getBlock(x + 12, y + 1, z + 11).setTypeId(20);
-		     c.getBlock(x + 12, y + 1, z + 13).setTypeId(20);
-		     c.getBlock(x + 13, y + 1, z + 3).setTypeId(20);
-		     c.getBlock(x + 13, y + 1, z + 12).setTypeId(20);
-		     c.getBlock(x + 3, y + 2, z + 3).setTypeId(20);
-		     c.getBlock(x + 3, y + 2, z + 12).setTypeId(20);
-		     c.getBlock(x + 12, y + 2, z + 3).setTypeId(20);
-		     c.getBlock(x + 12, y + 2, z + 12).setTypeId(20);
+		     c.getBlock(x + 2, y + 1, z + 3).setType(Material.GLASS);
+		     c.getBlock(x + 2, y + 1, z + 12).setType(Material.GLASS);
+		     c.getBlock(x + 3, y + 1, z + 2).setType(Material.GLASS);
+		     c.getBlock(x + 3, y + 1, z + 4).setType(Material.GLASS);
+		     c.getBlock(x + 3, y + 1, z + 11).setType(Material.GLASS);
+		     c.getBlock(x + 3, y + 1, z + 13).setType(Material.GLASS);
+		     c.getBlock(x + 4, y + 1, z + 3).setType(Material.GLASS);
+		     c.getBlock(x + 4, y + 1, z + 12).setType(Material.GLASS);
+		     c.getBlock(x + 11, y + 1, z + 3).setType(Material.GLASS);
+		     c.getBlock(x + 11, y + 1, z + 12).setType(Material.GLASS);
+		     c.getBlock(x + 12, y + 1, z + 2).setType(Material.GLASS);
+		     c.getBlock(x + 12, y + 1, z + 4).setType(Material.GLASS);
+		     c.getBlock(x + 12, y + 1, z + 11).setType(Material.GLASS);
+		     c.getBlock(x + 12, y + 1, z + 13).setType(Material.GLASS);
+		     c.getBlock(x + 13, y + 1, z + 3).setType(Material.GLASS);
+		     c.getBlock(x + 13, y + 1, z + 12).setType(Material.GLASS);
+		     c.getBlock(x + 3, y + 2, z + 3).setType(Material.GLASS);
+		     c.getBlock(x + 3, y + 2, z + 12).setType(Material.GLASS);
+		     c.getBlock(x + 12, y + 2, z + 3).setType(Material.GLASS);
+		     c.getBlock(x + 12, y + 2, z + 12).setType(Material.GLASS);
 		     
 		     // Hull
-		     c.getBlock(x + 5, y + 1, z + 7).setTypeId(112);
-		     c.getBlock(x + 5, y + 1, z + 8).setTypeId(112);
-		     c.getBlock(x + 6, y + 1, z + 6).setTypeId(112);
-		     c.getBlock(x + 6, y + 1, z + 7).setTypeId(88);
-		     c.getBlock(x + 6, y + 1, z + 8).setTypeId(88);
-		     c.getBlock(x + 6, y + 1, z + 9).setTypeId(112);
-		     c.getBlock(x + 7, y + 1, z + 5).setTypeId(112);
-		     c.getBlock(x + 7, y + 1, z + 6).setTypeId(88);
-		     c.getBlock(x + 7, y + 1, z + 9).setTypeId(88);
-		     c.getBlock(x + 7, y + 1, z + 10).setTypeId(112);
-		     c.getBlock(x + 8, y + 1, z + 5).setTypeId(112);
-		     c.getBlock(x + 8, y + 1, z + 6).setTypeId(88);
-		     c.getBlock(x + 8, y + 1, z + 9).setTypeId(88);
-		     c.getBlock(x + 8, y + 1, z + 10).setTypeId(112);
-		     c.getBlock(x + 9, y + 1, z + 6).setTypeId(112);
-		     c.getBlock(x + 9, y + 1, z + 7).setTypeId(88);
-		     c.getBlock(x + 9, y + 1, z + 8).setTypeId(88);
-		     c.getBlock(x + 9, y + 1, z + 9).setTypeId(112);
-		     c.getBlock(x + 10, y + 1, z + 7).setTypeId(112);
-		     c.getBlock(x + 10, y + 1, z + 8).setTypeId(112);
-		     c.getBlock(x + 5, y + 2, z + 7).setTypeId(112);
-		     c.getBlock(x + 5, y + 2, z + 8).setTypeId(112);
-		     c.getBlock(x + 6, y + 2, z + 6).setTypeId(112);
-		     c.getBlock(x + 6, y + 2, z + 7).setTypeId(88);
-		     c.getBlock(x + 6, y + 2, z + 8).setTypeId(88);
-		     c.getBlock(x + 6, y + 2, z + 9).setTypeId(112);
-		     c.getBlock(x + 7, y + 2, z + 5).setTypeId(112);
-		     c.getBlock(x + 7, y + 2, z + 6).setTypeId(88);
-		     c.getBlock(x + 7, y + 2, z + 9).setTypeId(88);
-		     c.getBlock(x + 7, y + 2, z + 10).setTypeId(112);
-		     c.getBlock(x + 8, y + 2, z + 5).setTypeId(112);
-		     c.getBlock(x + 8, y + 2, z + 6).setTypeId(88);
-		     c.getBlock(x + 8, y + 2, z + 9).setTypeId(88);
-		     c.getBlock(x + 8, y + 2, z + 10).setTypeId(112);
-		     c.getBlock(x + 9, y + 2, z + 6).setTypeId(112);
-		     c.getBlock(x + 9, y + 2, z + 7).setTypeId(88);
-		     c.getBlock(x + 9, y + 2, z + 8).setTypeId(88);
-		     c.getBlock(x + 9, y + 2, z + 9).setTypeId(112);
-		     c.getBlock(x + 10, y + 2, z + 7).setTypeId(112);
-		     c.getBlock(x + 10, y + 2, z + 8).setTypeId(112);
-		     c.getBlock(x + 6, y + 3, z + 7).setTypeId(112);
-		     c.getBlock(x + 6, y + 3, z + 8).setTypeId(112);
-		     c.getBlock(x + 7, y + 3, z + 6).setTypeId(112);
-		     c.getBlock(x + 7, y + 3, z + 7).setTypeId(88);
-		     c.getBlock(x + 7, y + 3, z + 8).setTypeId(88);
-		     c.getBlock(x + 7, y + 3, z + 9).setTypeId(112);
-		     c.getBlock(x + 8, y + 3, z + 6).setTypeId(112);
-		     c.getBlock(x + 8, y + 3, z + 7).setTypeId(88);
-		     c.getBlock(x + 8, y + 3, z + 8).setTypeId(88);
-		     c.getBlock(x + 8, y + 3, z + 9).setTypeId(112);
-		     c.getBlock(x + 9, y + 3, z + 7).setTypeId(112);
-		     c.getBlock(x + 9, y + 3, z + 8).setTypeId(112);
-		     c.getBlock(x + 7, y + 4, z + 7).setTypeId(112);
-		     c.getBlock(x + 7, y + 4, z + 8).setTypeId(112);
-		     c.getBlock(x + 8, y + 4, z + 7).setTypeId(112);
-		     c.getBlock(x + 8, y + 4, z + 8).setTypeId(112);
+		     c.getBlock(x + 5, y + 1, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 5, y + 1, z + 8).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 6, y + 1, z + 6).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 6, y + 1, z + 7).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 6, y + 1, z + 8).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 6, y + 1, z + 9).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 1, z + 5).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 1, z + 6).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 7, y + 1, z + 9).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 7, y + 1, z + 10).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 1, z + 5).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 1, z + 6).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 8, y + 1, z + 9).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 8, y + 1, z + 10).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 9, y + 1, z + 6).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 9, y + 1, z + 7).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 9, y + 1, z + 8).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 9, y + 1, z + 9).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 10, y + 1, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 10, y + 1, z + 8).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 5, y + 2, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 5, y + 2, z + 8).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 6, y + 2, z + 6).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 6, y + 2, z + 7).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 6, y + 2, z + 8).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 6, y + 2, z + 9).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 2, z + 5).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 2, z + 6).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 7, y + 2, z + 9).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 7, y + 2, z + 10).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 2, z + 5).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 2, z + 6).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 8, y + 2, z + 9).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 8, y + 2, z + 10).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 9, y + 2, z + 6).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 9, y + 2, z + 7).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 9, y + 2, z + 8).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 9, y + 2, z + 9).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 10, y + 2, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 10, y + 2, z + 8).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 6, y + 3, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 6, y + 3, z + 8).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 3, z + 6).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 3, z + 7).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 7, y + 3, z + 8).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 7, y + 3, z + 9).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 3, z + 6).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 3, z + 7).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 8, y + 3, z + 8).setType(Material.SOUL_SAND);
+		     c.getBlock(x + 8, y + 3, z + 9).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 9, y + 3, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 9, y + 3, z + 8).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 4, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 7, y + 4, z + 8).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 4, z + 7).setType(Material.NETHER_BRICK);
+		     c.getBlock(x + 8, y + 4, z + 8).setType(Material.NETHER_BRICK);
 		     
 		     // Core spawners
 		     if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Ghast")) {
@@ -156,7 +157,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -176,7 +177,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -196,7 +197,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -216,7 +217,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -236,7 +237,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -256,7 +257,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -276,7 +277,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -296,7 +297,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -317,7 +318,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -337,7 +338,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -357,7 +358,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -377,7 +378,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();

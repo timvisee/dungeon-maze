@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
@@ -42,8 +43,8 @@ public class BrokenWallsPopulator extends DMMazeRoomBlockPopulator {
 				posZ = z + 1 + rand.nextInt(6);	
 			}
 			
-			c.getBlock(posX, posY + 1, posZ).setTypeId(0);
-			c.getBlock(posX, posY + 2, posZ).setTypeId(0);
+			c.getBlock(posX, posY + 1, posZ).setType(Material.AIR);
+			c.getBlock(posX, posY + 2, posZ).setType(Material.AIR);
 			
 			// TODO: Make a more exciting broken wall
 		}

@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -28,11 +29,11 @@ public class MushroomPopulator extends DMMazeRoomBlockPopulator {
 			int spawnerY = yFloor + 1;
 			int spawnerZ = z + rand.nextInt(6) + 1;
 			
-			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getTypeId() != 0) {
+			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
 				Block b = c.getBlock(spawnerX, spawnerY, spawnerZ);
 				b = c.getBlock(spawnerX, spawnerY, spawnerZ);
-				if(b.getTypeId() == 0)
-					b.setTypeId(39);
+				if(b.getType() == Material.AIR)
+					b.setType(Material.BROWN_MUSHROOM);
 			}
 		}
 
@@ -42,11 +43,11 @@ public class MushroomPopulator extends DMMazeRoomBlockPopulator {
 			int spawnerY = yFloor + 1;
 			int spawnerZ = z + rand.nextInt(6) + 1;
 			
-			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getTypeId() != 0) {
+			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
 				Block b = c.getBlock(spawnerX, spawnerY, spawnerZ);
 				b = c.getBlock(spawnerX, spawnerY, spawnerZ);
-				if(b.getTypeId() == 0)
-					b.setTypeId(40);
+				if(b.getType() == Material.AIR)
+					b.setType(Material.RED_MUSHROOM);
 			}
 		}
 	}

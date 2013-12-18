@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
@@ -58,11 +59,19 @@ public class SkullPopulator extends DMMazeRoomBlockPopulator {
 				
 				s.setSkullType(getRandomSkullType(rand));
 				s.setRotation(getRandomSkullRotation(rand));
+				s.setOwner(getRandomOwner(rand));
 				s.update(true, false);
 			}
 		}
 	}
 	
+	private String getRandomOwner(Random rand) {
+		String name = "";
+		if (Bukkit.getOnlinePlayers().length > 0)
+			name = Bukkit.getOnlinePlayers()[rand.nextInt(Bukkit.getOnlinePlayers().length)].getName();
+		return name;
+	}
+
 	private SkullType getRandomSkullType(Random rand) {
 		SkullType[] types = SkullType.values();
 		return types[rand.nextInt(types.length)];

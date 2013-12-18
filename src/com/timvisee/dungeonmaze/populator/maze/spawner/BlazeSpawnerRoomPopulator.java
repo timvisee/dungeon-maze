@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -52,70 +53,70 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			// Netherbrick floor in the bottom of the room
 			for(int xx = x; xx <= x + 7; xx += 1)
 	            for(int zz = z; zz <= z + 7; zz += 1)
-	                c.getBlock(xx, yFloor, zz).setTypeId(112);
+	                c.getBlock(xx, yFloor, zz).setType(Material.NETHER_BRICK);
 			
 			// Cobblestone layer underneeth the stone floor
 			for(int xx = x + 0; xx <= x + 7; xx += 1)
 	            for(int zz = z + 1; zz <= z + 6; zz += 1)
-	                c.getBlock(xx, yFloor - 1, zz).setTypeId(4);
+	                c.getBlock(xx, yFloor - 1, zz).setType(Material.COBBLESTONE);
 			
 			// Break out the walls and things inside the room
 			for (int xx = 0; xx < 8; xx++)
 				for (int yy = yFloor + 1; yy < yCeiling; yy++)
 					for(int zz = 0; zz < 8; zz++)
-						c.getBlock(x + xx, yy, z + zz).setTypeId(0);
+						c.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
 			
 			// Generate corners
 			for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-				c.getBlock(x + 0, yy, z + 0).setTypeId(112);
-				c.getBlock(x + 7, yy, z + 0).setTypeId(112);
-				c.getBlock(x + 0, yy, z + 7).setTypeId(112);
-				c.getBlock(x + 7, yy, z + 7).setTypeId(112);
+				c.getBlock(x + 0, yy, z + 0).setType(Material.NETHER_BRICK);
+				c.getBlock(x + 7, yy, z + 0).setType(Material.NETHER_BRICK);
+				c.getBlock(x + 0, yy, z + 7).setType(Material.NETHER_BRICK);
+				c.getBlock(x + 7, yy, z + 7).setType(Material.NETHER_BRICK);
 			}
 			
 			// Generate fences in the corners
 			for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-				c.getBlock(x + 1, yy, z + 0).setTypeId(113);
-				c.getBlock(x + 0, yy, z + 1).setTypeId(113);
-				c.getBlock(x + 6, yy, z + 0).setTypeId(113);
-				c.getBlock(x + 7, yy, z + 1).setTypeId(113);
-				c.getBlock(x + 1, yy, z + 7).setTypeId(113);
-				c.getBlock(x + 0, yy, z + 6).setTypeId(113);
-				c.getBlock(x + 6, yy, z + 7).setTypeId(113);
-				c.getBlock(x + 7, yy, z + 6).setTypeId(113);
+				c.getBlock(x + 1, yy, z + 0).setType(Material.NETHER_FENCE);
+				c.getBlock(x + 0, yy, z + 1).setType(Material.NETHER_FENCE);
+				c.getBlock(x + 6, yy, z + 0).setType(Material.NETHER_FENCE);
+				c.getBlock(x + 7, yy, z + 1).setType(Material.NETHER_FENCE);
+				c.getBlock(x + 1, yy, z + 7).setType(Material.NETHER_FENCE);
+				c.getBlock(x + 0, yy, z + 6).setType(Material.NETHER_FENCE);
+				c.getBlock(x + 6, yy, z + 7).setType(Material.NETHER_FENCE);
+				c.getBlock(x + 7, yy, z + 6).setType(Material.NETHER_FENCE);
 			}
 			
 			// Generate platform in the middle
 			for (int xx=x + 2; xx <= x + 5; xx+=1)
 	            for (int zz=z + 2; zz <= z + 5; zz+=1)
-	                c.getBlock(xx, yFloor + 1, zz).setTypeId(112);
+	                c.getBlock(xx, yFloor + 1, zz).setType(Material.NETHER_BRICK);
 			
 			// Generate stairs off the platform
-			c.getBlock(x + 3, yFloor + 1, z + 2).setTypeId(114);
+			c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 3, yFloor + 1, z + 2).setData((byte) 2);
-			c.getBlock(x + 4, yFloor + 1, z + 2).setTypeId(114);
+			c.getBlock(x + 4, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 4, yFloor + 1, z + 2).setData((byte) 2);
 			
-			c.getBlock(x + 3, yFloor + 1, z + 5).setTypeId(114);
+			c.getBlock(x + 3, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 3, yFloor + 1, z + 5).setData((byte) 3);
-			c.getBlock(x + 4, yFloor + 1, z + 5).setTypeId(114);
+			c.getBlock(x + 4, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 4, yFloor + 1, z + 5).setData((byte) 3);
 			
-			c.getBlock(x + 2, yFloor + 1, z + 3).setTypeId(114);
+			c.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 2, yFloor + 1, z + 3).setData((byte) 0);
-			c.getBlock(x + 2, yFloor + 1, z + 4).setTypeId(114);
+			c.getBlock(x + 2, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 2, yFloor + 1, z + 4).setData((byte) 0);
 			
-			c.getBlock(x + 5, yFloor + 1, z + 3).setTypeId(114);
+			c.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 5, yFloor + 1, z + 3).setData((byte) 1);
-			c.getBlock(x + 5, yFloor + 1, z + 4).setTypeId(114);
+			c.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
 			c.getBlock(x + 5, yFloor + 1, z + 4).setData((byte) 1);
 
 			// Generate poles on the platform
-			c.getBlock(x + 2, yFloor + 2, z + 2).setTypeId(113);
-			c.getBlock(x + 5, yFloor + 2, z + 2).setTypeId(113);
-			c.getBlock(x + 2, yFloor + 2, z + 5).setTypeId(113);
-			c.getBlock(x + 5, yFloor + 2, z + 5).setTypeId(113);
+			c.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
+			c.getBlock(x + 5, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
+			c.getBlock(x + 2, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
+			c.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
 			
 			// Generate the spawner
 			if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Blaze")) {
@@ -132,7 +133,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the event isn't cancelled yet
 				if(!event.isCancelled()) {
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
@@ -154,7 +155,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			// Spawn the chest unless the even is cancelled
 			if(!event1.isCancelled()) {
 				// Make sure the chest is still there, a developer could change the chest through the event!
-				if(event1.getBlock().getTypeId() != 54)
+				if(event1.getBlock().getType() != Material.CHEST)
 					return;
 				
 				// Add the contents to the chest
@@ -172,7 +173,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			// Spawn the chest unless the even is cancelled
 			if(!event2.isCancelled()) {
 				// Make sure the chest is still there, a developer could change the chest through the event!
-				if(event2.getBlock().getTypeId() != 54)
+				if(event2.getBlock().getType() != Material.CHEST)
 					return;
 				
 				// Add the contents to the chest

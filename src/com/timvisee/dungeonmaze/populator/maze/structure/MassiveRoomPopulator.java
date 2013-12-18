@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
@@ -33,14 +34,14 @@ public class MassiveRoomPopulator extends DMMazeRoomBlockPopulator {
 			// Walls
 			for (int x2=x; x2 <= x + 7; x2+=1) {
 			    for (int y2=yFloor; y2 <= y + 6; y2+=1) {
-			    	c.getBlock(x2, y2, z).setTypeId(98);
-			    	c.getBlock(x2, y2, z + 7).setTypeId(98);
+			    	c.getBlock(x2, y2, z).setType(Material.SMOOTH_BRICK);
+			    	c.getBlock(x2, y2, z + 7).setType(Material.SMOOTH_BRICK);
 			    }
 			}
 			for (int z2=z; z2 <= z + 7; z2+=1) {
 			    for (int y2=yFloor; y2 <= y + 6; y2+=1) {
-			    	c.getBlock(x, y2, z2).setTypeId(98);
-			    	c.getBlock(x + 7, y2, z2).setTypeId(98);
+			    	c.getBlock(x, y2, z2).setType(Material.SMOOTH_BRICK);
+			    	c.getBlock(x + 7, y2, z2).setType(Material.SMOOTH_BRICK);
 			    }
 			}
 			
@@ -48,7 +49,7 @@ public class MassiveRoomPopulator extends DMMazeRoomBlockPopulator {
 			for (int x2=x + 1; x2 <= x + 6; x2+=1)
 			    for (int y2=yFloor + 1; y2 <= y + 5 + ceilingOffset; y2+=1)
 	    			for (int z2=z + 1; z2 <= z + 6; z2+=1)
-    					c.getBlock(x2, y2, z2).setTypeId(1);
+    					c.getBlock(x2, y2, z2).setType(Material.STONE);
 			
 			// Fill the massive room with some ores!
 			for (int x2=x + 1; x2 <= x + 6; x2+=1) {
@@ -58,31 +59,34 @@ public class MassiveRoomPopulator extends DMMazeRoomBlockPopulator {
 	    					switch (rand.nextInt(8))
 	    					{
 	    					case 0:
-	    						c.getBlock(x2, y2, z2).setTypeId(14);
+	    						c.getBlock(x2, y2, z2).setType(Material.GOLD_ORE);
 	    						break;
 	    					case 1:
-	    						c.getBlock(x2, y2, z2).setTypeId(15);
+	    						c.getBlock(x2, y2, z2).setType(Material.IRON_ORE);
 	    						break;
 	    					case 2:
-	    						c.getBlock(x2, y2, z2).setTypeId(16);
+	    						c.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
 	    						break;
 	    					case 3:
-	    						c.getBlock(x2, y2, z2).setTypeId(21);
+	    						c.getBlock(x2, y2, z2).setType(Material.LAPIS_ORE);
 	    						break;
 	    					case 4:
-	    						c.getBlock(x2, y2, z2).setTypeId(56);
+	    						c.getBlock(x2, y2, z2).setType(Material.DIAMOND_ORE);
 	    						break;
 	    					case 5:
-	    						c.getBlock(x2, y2, z2).setTypeId(73);
+	    						c.getBlock(x2, y2, z2).setType(Material.REDSTONE_ORE);
 	    						break;
 	    					case 6:
-	    						c.getBlock(x2, y2, z2).setTypeId(82);
+	    						c.getBlock(x2, y2, z2).setType(Material.EMERALD_ORE);
 	    						break;
 	    					case 7:
-	    						c.getBlock(x2, y2, z2).setTypeId(16);
+	    						c.getBlock(x2, y2, z2).setType(Material.CLAY);
+	    						break;
+	    					case 8:
+	    						c.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
 	    						break;
 	    					default:
-	    						c.getBlock(x2, y2, z2).setTypeId(16);
+	    						c.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
 	    					}
 	    				}
 	    			}

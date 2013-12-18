@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
@@ -40,35 +41,35 @@ public class SpawnerPopulator extends DMMazeRoomBlockPopulator {
 			int spawnerY = args.getFloorY() + 1;
 			int spawnerZ = z + rand.nextInt(6) + 1;
 			
-			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getTypeId() != 0) {
+			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
 				Block spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
 				spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
 				
-				if(spawnerBlock.getTypeId() == 0) {
+				if(spawnerBlock.getType() == Material.AIR) {
 					// Generate a random spawnedType for the spawner
 					EntityType spawnedType = null;
 					int i = rand.nextInt(25) + 1;
 					if(i >= 1 && i <= 10 && DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie"))
 						spawnedType = EntityType.ZOMBIE;
-						
+					
 					else if(i >= 11 && i <= 15 && DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Skeleton"))
 						spawnedType = EntityType.SKELETON;
 						
 					else if(i >= 16 && i <= 20 && DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Spider"))
 						spawnedType = EntityType.SPIDER;
-						
+					
 					else if(i >= 21 && i <= 22 && DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie"))
 						spawnedType = EntityType.PIG_ZOMBIE;
-						
+					
 					else if(i == 23 && DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Enderman"))
 						spawnedType = EntityType.ENDERMAN;
 					
 					else if(i == 24 && DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("MagmaCube"))
 						spawnedType = EntityType.MAGMA_CUBE;
-						
+					
 					else if(i == 25 && DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Silverfish"))
 						spawnedType = EntityType.SILVERFISH;
-						
+					
 					else if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie"))
 						spawnedType = EntityType.ZOMBIE;
 					
@@ -84,7 +85,7 @@ public class SpawnerPopulator extends DMMazeRoomBlockPopulator {
 						return;
 					
 					// Change the block into a creature spawner
-					spawnerBlock.setTypeId(52);
+					spawnerBlock.setType(Material.MOB_SPAWNER);
 					
 					// Cast the created s pawner into a CreatureSpawner object
 					CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();

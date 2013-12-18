@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
@@ -53,9 +54,9 @@ public class LadderPopulator extends DMMazeRoomBlockPopulator {
 			}
 			
 			// Make sure there's no wall or anything else
-			if(c.getBlock(startX, startY, startZ).getTypeId() == 0) {
+			if(c.getBlock(startX, startY, startZ).getType() == Material.AIR) {
 				for (int ladderY=startY; ladderY <= startY + 8; ladderY++) {
-					c.getBlock(startX, ladderY, startZ).setTypeId(65);
+					c.getBlock(startX, ladderY, startZ).setType(Material.LADDER);
 					c.getBlock(startX, ladderY, startZ).setData(ladderData);
 				}
 			}

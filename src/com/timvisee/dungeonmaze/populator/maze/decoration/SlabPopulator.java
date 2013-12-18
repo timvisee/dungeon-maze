@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -27,10 +28,10 @@ public class SlabPopulator extends DMMazeRoomBlockPopulator {
 				int slabY = args.getFloorY() + 1;
 				int slabZ = z + rand.nextInt(6) + 1;
 				
-				if(c.getBlock(slabX, slabY - 1, slabZ).getTypeId() != 0) {
+				if(c.getBlock(slabX, slabY - 1, slabZ).getType() != Material.AIR) {
 					Block slabBlock = c.getBlock(slabX, slabY, slabZ);
-					if(slabBlock.getTypeId() == 0) {
-						slabBlock.setTypeId(44);
+					if(slabBlock.getType() == Material.AIR) {
+						slabBlock.setType(Material.STEP);
 						slabBlock.setData((byte) 3);
 					}
 				}

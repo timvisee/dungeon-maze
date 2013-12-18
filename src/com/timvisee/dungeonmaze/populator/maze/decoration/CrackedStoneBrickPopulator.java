@@ -4,6 +4,7 @@ import java.util.Random;
 
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -28,7 +29,7 @@ public class CrackedStoneBrickPopulator extends DMMazeRoomBlockPopulator {
 			if (rand.nextInt(100) < CHANCE) {
 				
 				Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
-				if (b.getTypeId() == 98)
+				if (b.getType() == Material.SMOOTH_BRICK)
 					b.setData((byte) 2);
 			}
 		}

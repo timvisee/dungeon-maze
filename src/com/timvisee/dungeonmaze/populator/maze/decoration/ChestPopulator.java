@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
@@ -37,13 +38,13 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 			int chestY = args.getFloorY() + 1;
 			int chestZ = z + rand.nextInt(6) + 1;
 
-			if(!(c.getBlock(chestX, chestY - 1, chestZ).getTypeId() == 0)) {
+			if(!(c.getBlock(chestX, chestY - 1, chestZ).getType() == Material.AIR)) {
 				Block chestBlock = c.getBlock(chestX, chestY, chestZ);
-				if(chestBlock.getTypeId() == 0) {
+				if(chestBlock.getType() == Material.AIR) {
 					
 					// Generate new inventory contents
 					List<ItemStack> contents = generateChestContents(rand);
-					chestBlock.setTypeId(54);
+					chestBlock.setType(Material.CHEST);
 					
 					// Call the chest generation event
 					DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, rand, contents, DMMazeStructureType.UNSTRUCTURE);
@@ -52,7 +53,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 					// Do the event
 					if(!event.isCancelled()) {
 						// Make sure the chest is still there, a developer could change the chest through the event!
-						if(event.getBlock().getTypeId() != 54)
+						if(event.getBlock().getType() != Material.CHEST)
 							return;
 						
 						// Add the contents to the chest
@@ -60,10 +61,10 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 					} else {
 						// The event is cancelled
 						// Put the chest back to it's orrigional state (air)
-						chestBlock.setTypeId(0);
+						chestBlock.setType(Material.AIR);
 					}
 					
-				} else if (chestBlock.getTypeId() == 54 ) {
+				} else if (chestBlock.getType() == Material.CHEST) {
 					// The follow is for rare case when the chest is generate before the plugin does the event
 					Chest chest = (Chest) chestBlock.getState();
 					if (chest.getInventory() != null) {
@@ -77,7 +78,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 						// Do the event
 						if(!event.isCancelled()) {
 							// Make sure the chest is still there, a developer could change the chest through the event!
-							if(event.getBlock().getTypeId() != 54)
+							if(event.getBlock().getType() != Material.CHEST)
 								return;
 							
 							// Add the contents to the chest

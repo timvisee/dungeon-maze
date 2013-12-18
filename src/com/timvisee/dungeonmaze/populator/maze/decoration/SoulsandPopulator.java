@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 import java.util.Random;
 
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
@@ -28,8 +29,8 @@ public class SoulsandPopulator extends DMMazeRoomBlockPopulator {
 			if(rand.nextInt(100) < CHANCE + (CHANCE_ADDITION_PER_LEVEL * (y - 30) / 6)) {
 				Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt(2) + y, z + rand.nextInt(8));
 				
-				if (b.getTypeId() == 4)
-					b.setTypeId(88);
+				if (b.getType() == Material.COBBLESTONE)
+					b.setType(Material.SOUL_SAND);
 			}
 		}	
 	}
