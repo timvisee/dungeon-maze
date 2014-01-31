@@ -91,11 +91,18 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 	            for (int y2=yFloor + 1; y2 <= yFloor + 3; y2+=1)
 	                c.getBlock(x + 6, y2, z2).setType(Material.BOOKSHELF);
 
-			// Make the two pilars
+			/* // Make the two pilars - Change to enchant table
 			for (int y2 = yFloor + 1; y2 <= yFloor + 3; y2+=1) {
 				c.getBlock(x + 3, y2, z + 4).setType(Material.PUMPKIN);
 				c.getBlock(x + 4, y2, z + 3).setType(Material.PUMPKIN);
-            }
+            } */
+			
+			// Add enchant tables supports
+			c.getBlock(x + 3, yFloor +1, z + 4).setType(Material.BOOKSHELF);
+			c.getBlock(x + 4, yFloor +1, z + 3).setType(Material.BOOKSHELF);
+			// Add the two enchant tables
+			c.getBlock(x + 3, yFloor +2, z + 4).setType(Material.ENCHANTMENT_TABLE);
+			c.getBlock(x + 4, yFloor +2, z + 3).setType(Material.ENCHANTMENT_TABLE);
 			// Add the two chests
 			c.getBlock(x + 3, yFloor + 1, z + 3).setType(Material.CHEST);
 

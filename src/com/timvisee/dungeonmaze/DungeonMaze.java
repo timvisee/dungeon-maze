@@ -24,6 +24,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.dungeonmaze.Metrics.Graph;
+import com.timvisee.dungeonmaze.Updater.UpdateResult;
+import com.timvisee.dungeonmaze.Updater.UpdateType;
 import com.timvisee.dungeonmaze.api.DMApiController;
 import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
 import com.timvisee.dungeonmaze.config.DMConfigHandler;
@@ -56,7 +58,7 @@ public class DungeonMaze extends JavaPlugin {
 	public List<String> constantChunks = new ArrayList<String>(); // x;z
 	
 	// Update Checker
-	private DMUpdateChecker uc;
+	private Updater uc;
 
 	// Managers, Handlers and Controllers
 	private DMApiController apiController;
@@ -91,9 +93,6 @@ public class DungeonMaze extends JavaPlugin {
 
 		// Set up the update checker
 		setUpUpdateChecker();
-		
-		// Remove all (old) update files
-		getUpdateChecker().removeUpdateFiles();
 		
 		// Set up permissions usage
 		setUpPermissionsManager();
@@ -160,13 +159,6 @@ public class DungeonMaze extends JavaPlugin {
 			getLogger().info("[DungeonMaze] Unhooking all hooked plugins...");
 			getApiController().unregisterAllApiSessions();
 		}
-		
-		// If any update was downloaded, install the update
-		if(getUpdateChecker().isUpdateDownloaded())
-			getUpdateChecker().installUpdate();
-		
-		// Remove all update files
-		getUpdateChecker().removeUpdateFiles();
 		
 		// Show an disabled message
 		log.info("[DungeonMaze] Dungeon Maze Disabled");
@@ -284,15 +276,23 @@ public class DungeonMaze extends JavaPlugin {
 	 * Set up the update checker
 	 */
 	public void setUpUpdateChecker() {
-		this.uc = new DMUpdateChecker();
+		if (this.cfgHand.enableUpdateCheckerOnStartup)
+			this.uc = new Updater(this, 45175, this.getFile(), UpdateType.DEFAULT, true);
+		else
+			this.uc = null;
 	}
 	
 	/**
 	 * Get the update checker instance
+	 * @param force 
 	 * @return Update checker instance
 	 */
-	public DMUpdateChecker getUpdateChecker() {
-		return this.uc;
+	public Updater getUpdateChecker(boolean force) {
+		if (uc != null)
+			return this.uc;
+		if (force)
+			return new Updater(this, 45175, this.getFile(), UpdateType.DEFAULT, true);
+		return null;
 	}
 	
 	public void setUpMultiverse() {
@@ -303,10 +303,10 @@ public class DungeonMaze extends JavaPlugin {
 		    useMultiverse = false;
 		    return;
 		}
-		
+
 		log.info("[DungeonMaze] Hooked into Multiverse");
 		useMultiverse = true;
-		multiverseCore = new MultiverseCore();
+		multiverseCore = (MultiverseCore) this.getServer().getPluginManager().getPlugin("Multiverse-Core");
 	}
 	
 	/**
@@ -551,30 +551,28 @@ public class DungeonMaze extends JavaPlugin {
 				sender.sendMessage(ChatColor.GREEN + "Checking for updates...");
 				
 				// Get the update checker and refresh the updates data
-				DMUpdateChecker uc = getUpdateChecker();
-				uc.refreshUpdatesData();
+				Updater uc = getUpdateChecker(true);
 				
-				if(!uc.isNewVersionAvailable()) {
+				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
 					sender.sendMessage(ChatColor.GREEN + "No new version found!");
 				} else {
 					
-					String newVer = uc.getNewestVersion();
+					String newVer = uc.getLatestName();
 					
 					// Make sure the new version is compatible with the current bukkit version
-					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
+					if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
 						sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
 						sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getRequiredBukkitVersion() + " or higher!");
+						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
 					} else {
-						if(uc.isUpdateDownloaded())
-							sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reload required!");
+						if(uc.getResult() == UpdateResult.SUCCESS)
+							sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
 						else {
 							sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
 							sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
 									ChatColor.GREEN + " to automaticly install the new version!");
 						}
 					}
-					return true;
 				}
 				
 				return true;
@@ -599,32 +597,27 @@ public class DungeonMaze extends JavaPlugin {
 				sender.sendMessage(ChatColor.GREEN + "Checking for updates...");
 				
 				// Get the update checker and refresh the updates data
-				DMUpdateChecker uc = getUpdateChecker();
-				uc.refreshUpdatesData();
+				Updater uc = getUpdateChecker(true);
 				
-				if(!uc.isNewVersionAvailable()) {
-					sender.sendMessage(ChatColor.GREEN + "No new version available!");
+				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
+					sender.sendMessage(ChatColor.GREEN + "No new version found!");
 				} else {
 					
-					String newVer = uc.getNewestVersion();
+					String newVer = uc.getLatestName();
 					
 					// Make sure the new version is compatible with the current bukkit version
-					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
+					if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
 						sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
 						sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getRequiredBukkitVersion() + " or higher!");
+						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
 					} else {
-						if(uc.isUpdateDownloaded())
-							sender.sendMessage(ChatColor.GREEN + "New version already downloaded (v" + String.valueOf(newVer) + "). Server reload required!");
+						if(uc.getResult() == UpdateResult.SUCCESS)
+							sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
 						else {
-							sender.sendMessage(ChatColor.GREEN + "Downloading new version (v" + String.valueOf(newVer) + ")");
-							uc.downloadUpdate();
-							sender.sendMessage(ChatColor.GREEN + "Update downloaded, server reload required!");
+							sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer) + ", but auto-install failed, please update by yourself!");
 						}
 					}
-					return true;
 				}
-				
 				return true;
 			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") ||
 					args[0].equalsIgnoreCase("?")) {

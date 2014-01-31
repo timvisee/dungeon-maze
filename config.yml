@@ -13,8 +13,7 @@ blockWhiteList: []
 # Update checker
 updateChecker:
     enabled: true
-    notifyForUpdatesInGame: true
-    autoInstallUpdates: true
+    notifyInGame: true
 
 # Permission Support
 usePermissions : true

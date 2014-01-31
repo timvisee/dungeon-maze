@@ -34,10 +34,8 @@ public class DMConfig extends DMCustomConfig {
 			set("blockWhiteList", new ArrayList<String>());
 		if(!contains("updateChecker.enabled"))
 			set("updateChecker.enabled", true);
-		if(!contains("updateChecker.notifyForUpdatesInGame"))
-			set("updateChecker.notifyForUpdatesInGame", true);
-		if(!contains("updateChecker.autoInstallUpdates"))
-			set("updateChecker.autoInstallUpdates", true);
+		if(!contains("updateChecker.notifyInGame"))
+			set("updateChecker.notifyInGame", true);
 		if(!contains("usePermissions"))
 			set("usePermissions", true);
 		if(!contains("useBypassPermissions"))

@@ -9,8 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.timvisee.dungeonmaze.DMUpdateChecker;
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.Updater;
+import com.timvisee.dungeonmaze.Updater.UpdateResult;
 
 public class DMPlayerListener implements Listener {
 	
@@ -61,37 +62,31 @@ public class DMPlayerListener implements Listener {
 		// Make sure the player has permission to see update notifications
 		if(DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.notification.update", p.isOp()) &&
 				DungeonMaze.instance.getConfig().getBoolean("updateChecker.enabled", true) &&
-				DungeonMaze.instance.getConfig().getBoolean("updateChecker.notifyForUpdatesInGame", true)) {
+				DungeonMaze.instance.getConfig().getBoolean("updateChecker.notifyInGame", true)) {
 			
-			DMUpdateChecker uc = DungeonMaze.instance.getUpdateChecker();
+			// Get the update checker and refresh the updates data
+			Updater uc = DungeonMaze.instance.getUpdateChecker(false);
 			
-			// Check if any update exists
-			if(uc.isNewVersionAvailable()) {
-				final String newVer = uc.getNewestVersion();
+			if (uc == null) return;
+			
+			if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
+				p.sendMessage(ChatColor.GREEN + "No new DungeonMaze version found!");
+			} else {
 				
-				// Is the update important
-				if(uc.isImportantUpdateAvailable()) {
-					if(!uc.isNewVersionCompatibleWithCurrentBukkit()) {
-						p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] New important Dungeon Maze update available! (v" + newVer + ")");
-						p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] Version not compatible, please update to Bukkit " + uc.getRequiredBukkitVersion() + " or higher!");
-					} else {
-						if(uc.isUpdateDownloaded()) {
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] New important Dungeon Maze update installed! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] Server reload required!");
-						} else {
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] New important Dungeon Maze update available! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] Use " + ChatColor.GOLD + "/dm installupdate" + ChatColor.YELLOW + " to install the update!");
-						}
-					}
+				String newVer = uc.getLatestName();
+				
+				// Make sure the new version is compatible with the current bukkit version
+				if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
+					p.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
+					p.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
+					p.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
 				} else {
-					if(uc.isNewVersionCompatibleWithCurrentBukkit()) {
-						if(uc.isUpdateDownloaded()) {
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] New Dungeon Maze update installed! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] Server reload required!");
-						} else {
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] New important Dungeon Maze update available! (v" + newVer + ")");
-							p.sendMessage(ChatColor.YELLOW + "[DungeonMaze] Use " + ChatColor.GOLD + "/dm installupdate" + ChatColor.YELLOW + " to install the update!");
-						}
+					if(uc.getResult() == UpdateResult.SUCCESS)
+						p.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
+					else {
+						p.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVer));
+						p.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
+								ChatColor.GREEN + " to automaticly install the new version!");
 					}
 				}
 			}
