@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze.spawner;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -50,7 +51,7 @@ public class CreeperSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			c.getBlock(x + 3, yFloor + 2, z + 3).setType(Material.NETHER_BRICK);
 			
 			// Create the spawner
-			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Creeper")) {
+			if(Core.getConfigHandler().isMobSpawnerAllowed("Creeper")) {
 				Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
 				
 				// Call the spawner generation event

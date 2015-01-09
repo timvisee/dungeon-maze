@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.listener;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -13,7 +14,7 @@ public class DMPluginListener implements Listener {
 	@EventHandler
 	public void onPluginEnable(PluginEnableEvent e) {
 		// Call the onPluginEnable method in the permissions manager
-		DungeonMaze.instance.getPermissionsManager().onPluginEnable(e);
+		Core.getPermissionsManager().onPluginEnable(e);
 	}
 	
 	@EventHandler
@@ -29,12 +30,12 @@ public class DMPluginListener implements Listener {
 			return;
 		
 		// Call the onPluginDisable method in the permissions manager
-		DungeonMaze.instance.getPermissionsManager().onPluginDisable(e);
+		Core.getPermissionsManager().onPluginDisable(e);
 		
 		// Check if this plugin is hooked in to Dungeon Maze
-		if(DungeonMaze.instance.getApiController().isHooked(p)) {
+		if(Core.getApiController().isHooked(p)) {
 			// Unhook the plugin from Dungeon Maze and unregister it's API sessions
-			DungeonMaze.instance.getApiController().unhookPlugin(p);
+			Core.getApiController().unhookPlugin(p);
 		}
 	}
 }

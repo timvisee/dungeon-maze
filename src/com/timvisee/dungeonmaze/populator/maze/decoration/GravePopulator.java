@@ -1,5 +1,7 @@
 package com.timvisee.dungeonmaze.populator.maze.decoration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -99,8 +101,8 @@ public class GravePopulator extends DMMazeRoomBlockPopulator {
 			if(!DungeonMaze.instance.isAnyPlayerOnline())
 				graveUsername = graveUsernames[random.nextInt(graveUsernames.length)];
 			else {
-				Player[] onlinePlayers = Bukkit.getOnlinePlayers();
-				graveUsername = onlinePlayers[random.nextInt(onlinePlayers.length)].getName();
+				List<Player> onlinePlayers = new ArrayList<Player>(Bukkit.getOnlinePlayers());
+				graveUsername = onlinePlayers.get(random.nextInt(onlinePlayers.size())).getName();
 			}
 			
 			changeSignLine(sign, 1, graveUsername);

@@ -1,5 +1,7 @@
 package com.timvisee.dungeonmaze.populator.maze.decoration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -13,6 +15,7 @@ import org.bukkit.block.Skull;
 
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import org.bukkit.entity.Player;
 
 public class SkullPopulator extends DMMazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
@@ -67,8 +70,10 @@ public class SkullPopulator extends DMMazeRoomBlockPopulator {
 	
 	private String getRandomOwner(Random rand) {
 		String name = "";
-		if (Bukkit.getOnlinePlayers().length > 0)
-			name = Bukkit.getOnlinePlayers()[rand.nextInt(Bukkit.getOnlinePlayers().length)].getName();
+		if(Bukkit.getOnlinePlayers().size() > 0) {
+			List<Player> onlinePlayers = new ArrayList<Player>(Bukkit.getOnlinePlayers());
+			name = onlinePlayers.get(rand.nextInt(onlinePlayers.size())).getName();
+		}
 		return name;
 	}
 

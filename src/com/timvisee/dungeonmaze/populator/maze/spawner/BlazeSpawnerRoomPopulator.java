@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -119,7 +120,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			c.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
 			
 			// Generate the spawner
-			if (DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Blaze")) {
+			if(Core.getConfigHandler().isMobSpawnerAllowed("Blaze")) {
 				int spawnerX = x + 3 + rand.nextInt(2);
 				int spawnerY = yFloor + 2;
 				int spawnerZ = z + 3 + rand.nextInt(2);

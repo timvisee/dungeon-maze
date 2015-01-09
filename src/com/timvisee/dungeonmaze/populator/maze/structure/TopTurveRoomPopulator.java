@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -91,13 +92,13 @@ public class TopTurveRoomPopulator extends DMMazeRoomBlockPopulator {
 			c.getBlock(x + 5, y + 5 + ceilingOffset, z + 4).setType(Material.NETHERRACK);
 			
 			// Spawners
-			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Pig")) {
+			if(Core.getConfigHandler().isMobSpawnerAllowed("Pig")) {
 				c.getBlock(x + 3, y + 5 + ceilingOffset, z + 4).setType(Material.MOB_SPAWNER);
 				CreatureSpawner PigSpawner = (CreatureSpawner) c.getBlock(x + 3, y + 5 + ceilingOffset, z + 4).getState();
 				PigSpawner.setSpawnedType(EntityType.PIG);
 			}
 			
-			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
+			if(Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
 				c.getBlock(x + 4, y + 5 + ceilingOffset, z + 3).setType(Material.MOB_SPAWNER);
 				CreatureSpawner PigSpawner2 = (CreatureSpawner) c.getBlock(x + 4, y + 5 + ceilingOffset, z + 3).getState();
 				PigSpawner2.setSpawnedType(EntityType.SKELETON);

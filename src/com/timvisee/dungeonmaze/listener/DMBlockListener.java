@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.listener;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -18,13 +19,13 @@ public class DMBlockListener implements Listener {
 		Block b = e.getBlockPlaced();
 		String w = b.getWorld().getName();
 		
-		if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
+		if(Core.getWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(DungeonMaze.instance.getConfigHandler().worldProtection) {
+			if(Core.getConfigHandler().worldProtection) {
 				// The world protection is enable
 				
-				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getType()))) {
+				if((!Core.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(Core.getConfigHandler().isInWhiteList(b.getType()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
@@ -39,13 +40,13 @@ public class DMBlockListener implements Listener {
 		Block b = e.getBlock();
 		String w = b.getWorld().getName();
 		
-		if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
+		if(Core.getWorldManager().isDMWorld(w)) {
 			// The world is a Dungeon Maze world
 			
-			if(DungeonMaze.instance.getConfigHandler().worldProtection) {
+			if(Core.getConfigHandler().worldProtection) {
 				// The world protection is enable
 				
-				if((!DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(DungeonMaze.instance.getConfigHandler().isInWhiteList(b.getType()))) {
+				if((!Core.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(Core.getConfigHandler().isInWhiteList(b.getType()))) {
 					// The player doesn't have the bypass permission
 					e.setCancelled(true);
 					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");

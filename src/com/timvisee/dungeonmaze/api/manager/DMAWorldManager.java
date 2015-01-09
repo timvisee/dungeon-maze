@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.manager.DMWorldManager;
+import com.timvisee.dungeonmaze.manager.WorldManager;
 
 /**
  * API layer for the DMWorldManager class
@@ -41,8 +41,8 @@ public class DMAWorldManager {
 	 * Get the DMWorldManager instance
 	 * @return DMWorldManager instance
 	 */
-	private DMWorldManager getDMWorldManager() {
-		return this.dm.getWorldManager();
+	private WorldManager getDMWorldManager() {
+		return this.dm.getCore()._getWorldManager();
 	}
 	
 	/**

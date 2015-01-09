@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze.spawner;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -48,7 +49,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 			        c.getBlock(x2, yFloor, z2).setType(Material.MOSSY_COBBLESTONE);
 			        
 			// Create the spawners
-			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
+			if(Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
 				Block spawnerBlock = c.getBlock(x + 1, yFloor + 1, z + 1);
 				
 				// Call the spawner generation event
@@ -67,7 +68,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 					s.setSpawnedType(event.getSpawnedType());
 				}
 			}
-			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
+			if(Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
 				Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
 				
 				// Call the spawner generation event
@@ -86,7 +87,7 @@ public class BossRoomEasyPopulator extends DMMazeRoomBlockPopulator {
 					s.setSpawnedType(event.getSpawnedType());
 				}
 			}
-			if(DungeonMaze.instance.getConfigHandler().isMobSpawnerAllowed("Spider")) {
+			if(Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
 				Block spawnerBlock = c.getBlock(x + 5, yFloor + 1, z + 5);
 				
 				// Call the spawner generation event

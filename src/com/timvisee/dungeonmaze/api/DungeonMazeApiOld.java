@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.manager.DMWorldManager;
+import com.timvisee.dungeonmaze.manager.WorldManager;
 import com.timvisee.dungeonmaze.util.DMChestUtils;
 import com.timvisee.dungeonmaze.util.DMMazeUtils;
 
@@ -46,8 +46,8 @@ public class DungeonMazeApiOld {
 	 * @return DM world manager
 	 */
 	@Deprecated
-	public static DMWorldManager getDMWorldManager() {
-		return plugin.getWorldManager();
+	public static WorldManager getDMWorldManager() {
+		return plugin.getCore()._getWorldManager();
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static List<String> getDMWorlds() {
-		return plugin.getWorldManager().getDMWorlds();
+		return plugin.getCore()._getWorldManager().getDMWorlds();
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static List<String> getLoadedDMWorlds() {
-		return plugin.getWorldManager().getLoadedDMWorlds();
+		return plugin.getCore()._getWorldManager().getLoadedDMWorlds();
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static boolean isDMWorld(String w) {
-		return plugin.getWorldManager().isDMWorld(w);
+		return plugin.getCore()._getWorldManager().isDMWorld(w);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class DungeonMazeApiOld {
 	@Deprecated
 	public static World getDMWorld(Player p) {
 		// Check if the player is in a DM world
-		if(plugin.getWorldManager().isDMWorld(p.getWorld().getName()))
+		if(plugin.getCore()._getWorldManager().isDMWorld(p.getWorld().getName()))
 			return p.getWorld();
 		return null;
 	}
@@ -119,7 +119,7 @@ public class DungeonMazeApiOld {
 	@Deprecated
 	public static String getDMWorldName(Player p) {
 		// Check if the player is in a DM world
-		if(plugin.getWorldManager().isDMWorld(p.getWorld().getName()))
+		if(plugin.getCore()._getWorldManager().isDMWorld(p.getWorld().getName()))
 			return p.getWorld().getName();
 		return "";
 	}
@@ -132,9 +132,9 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static boolean canBuildInDMWorld(String w, Player p) {
-		if(plugin.getWorldManager().isDMWorld(w))
-			if(DungeonMaze.instance.getConfigHandler().worldProtection)
-				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
+		if(plugin.getCore()._getWorldManager().isDMWorld(w))
+			if(DungeonMaze.instance.getCore()._getConfigHandler().worldProtection)
+				return plugin.getCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
 	}
 	
@@ -146,20 +146,20 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
-		if(plugin.getWorldManager().isDMWorld(w))
-			if(!DungeonMaze.instance.getConfigHandler().allowSurface)
-				return plugin.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
+		if(plugin.getCore()._getWorldManager().isDMWorld(w))
+			if(!DungeonMaze.instance.getCore()._getConfigHandler().allowSurface)
+				return plugin.getCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
 	
 	/**
 	 * 
-	 * @param Object (int)
+	 * @param target
 	 * @return true if the object is in the list
 	 */
 	@Deprecated
 	public static boolean isInWhiteList(Object target){
-		List<Object> list = DungeonMaze.instance.getConfigHandler().blockWhiteList;
+		List<Object> list = DungeonMaze.instance.getCore()._getConfigHandler().blockWhiteList;
 		
 		if(list == null)
 			return(false);
@@ -171,13 +171,12 @@ public class DungeonMazeApiOld {
 	}
 	
 	/**
-	 * 
-	 * @param String mobName
+	 * @param mob Mob name
 	 * @return true if the mobspawner is allow for this mob
 	 */
 	@Deprecated
 	public static boolean allowMobSpawner(String mob) {
-		return DungeonMaze.instance.getConfigHandler().mobs.contains(mob);
+		return DungeonMaze.instance.getCore()._getConfigHandler().mobs.contains(mob);
 	}
 	
 	/**

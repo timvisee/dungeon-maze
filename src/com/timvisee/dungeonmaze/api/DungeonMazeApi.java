@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.api;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -105,7 +106,7 @@ public class DungeonMazeApi {
 		if(this.p != null)
 			log.info("[" + this.p.getName() + "] Unhooked Dungeon Maze!");
 	}
-	
+
 	/**
 	 * Get the Dungeon Maze plugin instance
 	 * @return Dungeon Maze plugin instance, null if not hooked into Dungeon Maze
@@ -113,13 +114,29 @@ public class DungeonMazeApi {
 	public DungeonMaze getDM() {
 		return getDungeonMaze();
 	}
-	
+
+	/**
+	 * Get the Dungeon Maze core instance
+	 * @return Dungeon Maze core instance, null if not hooked into Dungeon Maze
+	 */
+	public Core getDMCore() {
+		return getDungeonMazeCore();
+	}
+
 	/**
 	 * Get the Dungeon Maze plugin instance
 	 * @return Dungeon Maze plugin instance, null if not hooked into Dungeon Maze
 	 */
 	public DungeonMaze getDungeonMaze() {
 		return this.dm;
+	}
+
+	/**
+	 * Get the Dungeon Maze core instance
+	 * @return Dungeon Maze core instance, null if not hooked into Dungeon Maze
+	 */
+	public Core getDungeonMazeCore() {
+		return this.dm.getCore();
 	}
 	
 	/**
@@ -185,9 +202,9 @@ public class DungeonMazeApi {
 		if(!isHooked())
 			return false;
 		
-		if(getDM().getWorldManager().isDMWorld(w))
-			if(getDM().getConfigHandler().worldProtection)
-				return getDM().getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
+		if(getDMCore()._getWorldManager().isDMWorld(w))
+			if(getDMCore()._getConfigHandler().worldProtection)
+				return getDMCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
 	}
 	
@@ -202,9 +219,9 @@ public class DungeonMazeApi {
 		if(!isHooked())
 			return true;
 		
-		if(getDM().getWorldManager().isDMWorld(w))
-			if(!getDM().getConfigHandler().allowSurface)
-				return getDM().getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
+		if(getDMCore()._getWorldManager().isDMWorld(w))
+			if(!getDMCore()._getConfigHandler().allowSurface)
+				return getDMCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;
 	}
 	
@@ -214,7 +231,7 @@ public class DungeonMazeApi {
 	 * @return true if the object is in the list
 	 */
 	public boolean isInWhiteList(Object target){
-		List<Object> list = DungeonMaze.instance.getConfigHandler().blockWhiteList;
+		List<Object> list = Core.getConfigHandler().blockWhiteList;
 		
 		if(list == null)
 			return(false);
@@ -231,6 +248,6 @@ public class DungeonMazeApi {
 	 * @return true if the mobspawner is allow for this mob
 	 */
 	public boolean isMobSpawnerAllowed(String mob) {
-		return getDM().getConfigHandler().mobs.contains(mob);
+		return getDMCore()._getConfigHandler().mobs.contains(mob);
 	}
 }

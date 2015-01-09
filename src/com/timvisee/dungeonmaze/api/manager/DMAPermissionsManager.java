@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 import org.bukkit.entity.Player;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.manager.DMPermissionsManager;
-import com.timvisee.dungeonmaze.manager.DMPermissionsManager.PermissionsSystemType;
+import com.timvisee.dungeonmaze.manager.PermissionsManager;
+import com.timvisee.dungeonmaze.manager.PermissionsManager.PermissionsSystemType;
 
 public class DMAPermissionsManager {
 	
@@ -41,8 +41,8 @@ public class DMAPermissionsManager {
 	 * Get the DMPermissionsManager instance
 	 * @return DMPermissionsManager instance
 	 */
-	private DMPermissionsManager getDMPermissionsManager() {
-		return this.dm.getPermissionsManager();
+	private PermissionsManager getDMPermissionsManager() {
+		return this.dm.getCore()._getPermissionsManager();
 	}
 	
 	/**

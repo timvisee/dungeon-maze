@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.listener;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,12 +26,12 @@ public class DMPlayerListener implements Listener {
 		if(y >= 75) {
 			// The player is above the surface
 			
-			DungeonMaze.instance.getWorldManager();
-			if(DungeonMaze.instance.getWorldManager().isDMWorld(w)) {
-				if(DungeonMaze.instance.getConfigHandler().allowSurface == false) {
+			Core.getWorldManager();
+			if(Core.getWorldManager().isDMWorld(w)) {
+				if(Core.getConfigHandler().allowSurface == false) {
 					// The player is not allowed on the surface
 					
-					if(DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp()) == false) {
+					if(Core.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp()) == false) {
 						// The player doesn't have the bypass permission
 						double x = loc.getX();
 						double z = loc.getZ();
@@ -60,12 +61,12 @@ public class DMPlayerListener implements Listener {
 		Player p = event.getPlayer();
 		
 		// Make sure the player has permission to see update notifications
-		if(DungeonMaze.instance.getPermissionsManager().hasPermission(p, "dungeonmaze.notification.update", p.isOp()) &&
+		if(Core.getPermissionsManager().hasPermission(p, "dungeonmaze.notification.update", p.isOp()) &&
 				DungeonMaze.instance.getConfig().getBoolean("updateChecker.enabled", true) &&
 				DungeonMaze.instance.getConfig().getBoolean("updateChecker.notifyInGame", true)) {
 			
 			// Get the update checker and refresh the updates data
-			Updater uc = DungeonMaze.instance.getUpdateChecker(false);
+			Updater uc = Core.getUpdateChecker();
 			
 			if (uc == null) return;
 			
