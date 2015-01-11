@@ -15,15 +15,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
-import com.timvisee.dungeonmaze.util.DMChestUtils;
+import com.timvisee.dungeonmaze.event.generation.GenerationChestEvent;
+import com.timvisee.dungeonmaze.event.generation.GenerationSpawnerEvent;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
+import com.timvisee.dungeonmaze.util.ChestUtils;
 
-public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
+public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 4;
 	public static final int CHANCE_OF_SPANWER_ROOM = 2; //Promile
@@ -31,7 +30,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 	public static final double MIN_SPAWN_DISTANCE = 5; // Chunks
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
@@ -128,7 +127,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 				spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
 				
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.BLAZE, DMGenerationSpawnerCause.BLAZE_SPAWNER_ROOM, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.BLAZE, GenerationSpawnerEvent.GenerationSpawnerCause.BLAZE_SPAWNER_ROOM, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -150,7 +149,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			Block chest1 = c.getBlock(x + 3, yFloor, z + 3);
 
 			// Call the chest generation event
-			DMGenerationChestEvent event1 = new DMGenerationChestEvent(chest1, rand, contents, DMMazeStructureType.BLAZE_SPAWNER_ROOM);
+			GenerationChestEvent event1 = new GenerationChestEvent(chest1, rand, contents, MazeStructureType.BLAZE_SPAWNER_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event1);
 			
 			// Spawn the chest unless the even is cancelled
@@ -160,7 +159,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), !event1.getAddContentsInOrder(), rand);
+				ChestUtils.addItemsToChest(event1.getBlock(), event1.getContents(), !event1.getAddContentsInOrder(), rand);
 			}
 
 			// Generate a list of chest contents
@@ -168,7 +167,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 			Block chest2 = c.getBlock(x + 4, yFloor, z + 4);
 
 			// Call the chest generation event
-			DMGenerationChestEvent event2 = new DMGenerationChestEvent(chest2, rand, contents2, DMMazeStructureType.BLAZE_SPAWNER_ROOM);
+			GenerationChestEvent event2 = new GenerationChestEvent(chest2, rand, contents2, MazeStructureType.BLAZE_SPAWNER_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event2);
 			
 			// Spawn the chest unless the even is cancelled
@@ -178,7 +177,7 @@ public class BlazeSpawnerRoomPopulator extends DMMazeRoomBlockPopulator {
 					return;
 				
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), !event2.getAddContentsInOrder(), rand);
+				ChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), !event2.getAddContentsInOrder(), rand);
 			}
 		}
 	}

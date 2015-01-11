@@ -2,16 +2,28 @@ package com.timvisee.dungeonmaze;
 
 import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
-import com.timvisee.dungeonmaze.manager.PermissionsManager;
-import com.timvisee.dungeonmaze.manager.WorldManager;
+import com.timvisee.dungeonmaze.listener.EventListenerManager;
+import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.module.*;
+import com.timvisee.dungeonmaze.api.ApiControllerModule;
+import com.timvisee.dungeonmaze.config.ConfigHandlerModule;
+import com.timvisee.dungeonmaze.structure.CustomStructureManagerModule;
+import com.timvisee.dungeonmaze.listener.EventListenerManagerModule;
+import com.timvisee.dungeonmaze.logger.LoggerModule;
+import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandler;
+import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandlerModule;
+import com.timvisee.dungeonmaze.permission.PermissionsManagerModule;
+import com.timvisee.dungeonmaze.update.UpdateCheckerModule;
+import com.timvisee.dungeonmaze.world.WorldManagerModule;
 import com.timvisee.dungeonmaze.structure.CustomStructureManager;
+import com.timvisee.dungeonmaze.update.Updater;
+import com.timvisee.dungeonmaze.world.WorldManager;
 
 import java.util.logging.Logger;
 
 public class Core {
 
-    // TODO: Do we need to keep a local version of each method available?
+    // TODO: Do we need to keep a non-static version of each method available?
 
     /** Static Core instance. */
     public static Core instance;

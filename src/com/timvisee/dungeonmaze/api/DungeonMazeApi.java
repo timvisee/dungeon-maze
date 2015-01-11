@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.api.permission.ApiPermissionsManager;
+import com.timvisee.dungeonmaze.api.world.ApiWorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.manager.DMAPermissionsManager;
-import com.timvisee.dungeonmaze.api.manager.DMAWorldManager;
 
 public class DungeonMazeApi {
 	
@@ -179,16 +179,16 @@ public class DungeonMazeApi {
 	 * Get the world manager instance (API Layer)
 	 * @return World manager instance
 	 */
-	public DMAWorldManager getWorldManager() {
-		return new DMAWorldManager(this.dm);
+	public ApiWorldManager getWorldManager() {
+		return new ApiWorldManager(this.dm);
 	}
 	
 	/**
 	 * Get the permissions manager instance (API Layer)
 	 * @return Permissions manager instance
 	 */
-	public DMAPermissionsManager getPermissionsManager() {
-		return new DMAPermissionsManager(this.dm);
+	public ApiPermissionsManager getPermissionsManager() {
+		return new ApiPermissionsManager(this.dm);
 	}
 	
 	/**

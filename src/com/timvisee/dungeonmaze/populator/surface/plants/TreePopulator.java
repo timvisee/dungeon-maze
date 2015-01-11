@@ -9,15 +9,15 @@ import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
 
-import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulator;
-import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulator;
+import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 
-public class TreePopulator extends DMSurfaceBlockPopulator {
+public class TreePopulator extends SurfaceBlockPopulator {
 	public static final int CHANCE_OF_TREE = 10;
 	public static final int ITERATIONS = 10;
 
 	@Override
-	public void populateSurface(DMSurfaceBlockPopulatorArgs args) {
+	public void populateSurface(SurfaceBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();

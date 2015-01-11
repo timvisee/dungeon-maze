@@ -11,20 +11,20 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
-import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
-import com.timvisee.dungeonmaze.util.DMChestUtils;
+import com.timvisee.dungeonmaze.event.generation.GenerationChestEvent;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
+import com.timvisee.dungeonmaze.util.ChestUtils;
 
-public class ChestPopulator extends DMMazeRoomBlockPopulator {
+public class ChestPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_CHEST = 3;
 	public static final double CHANCE_OF_CHEST_ADDITION_PER_LEVEL = -0.333; // to 1
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
@@ -47,7 +47,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 					chestBlock.setType(Material.CHEST);
 					
 					// Call the chest generation event
-					DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, rand, contents, DMMazeStructureType.UNSTRUCTURE);
+					GenerationChestEvent event = new GenerationChestEvent(chestBlock, rand, contents, MazeStructureType.UNSTRUCTURE);
 					Bukkit.getServer().getPluginManager().callEvent(event);
 					
 					// Do the event
@@ -57,7 +57,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 							return;
 						
 						// Add the contents to the chest
-						DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+						ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 					} else {
 						// The event is cancelled
 						// Put the chest back to it's orrigional state (air)
@@ -72,7 +72,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 						List<ItemStack> contents = generateChestContents(rand);
 					
 						// Call the chest generation event
-						DMGenerationChestEvent event = new DMGenerationChestEvent(chestBlock, rand, contents, DMMazeStructureType.UNSTRUCTURE);
+						GenerationChestEvent event = new GenerationChestEvent(chestBlock, rand, contents, MazeStructureType.UNSTRUCTURE);
 						Bukkit.getServer().getPluginManager().callEvent(event);
 						
 						// Do the event
@@ -82,7 +82,7 @@ public class ChestPopulator extends DMMazeRoomBlockPopulator {
 								return;
 							
 							// Add the contents to the chest
-							DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+							ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 						}
 					}
 				}

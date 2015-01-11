@@ -11,20 +11,20 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
-import com.timvisee.dungeonmaze.util.DMChestUtils;
+import com.timvisee.dungeonmaze.event.generation.GenerationChestEvent;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
+import com.timvisee.dungeonmaze.util.ChestUtils;
 
-public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
+public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 3;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_LIBRARY = 2; //Promile
 	public static final double CHANCE_OF_LIBRARY_ADDITION_PER_LEVEL = -0.167; /* to 1 */
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
@@ -107,7 +107,7 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 			c.getBlock(x + 3, yFloor + 1, z + 3).setType(Material.CHEST);
 
 			// Call the Chest generation event
-			DMGenerationChestEvent event = new DMGenerationChestEvent(c.getBlock(x + 3, yFloor + 1, z + 3), rand, genChestContent(rand), DMMazeStructureType.LIBRARY_ROOM);
+			GenerationChestEvent event = new GenerationChestEvent(c.getBlock(x + 3, yFloor + 1, z + 3), rand, genChestContent(rand), MazeStructureType.LIBRARY_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event);
 
 			// Do the event
@@ -115,13 +115,13 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event.getBlock().getType() == Material.CHEST)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+				ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			c.getBlock(x + 4, yFloor + 1, z + 4).setType(Material.CHEST);
 
 			// Call the Chest generation event
-			DMGenerationChestEvent event2 = new DMGenerationChestEvent(c.getBlock(x + 4, yFloor + 1, z + 4), rand, genChestContent(rand), DMMazeStructureType.LIBRARY_ROOM);
+			GenerationChestEvent event2 = new GenerationChestEvent(c.getBlock(x + 4, yFloor + 1, z + 4), rand, genChestContent(rand), MazeStructureType.LIBRARY_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event2);
 
 			// Do the event
@@ -129,7 +129,7 @@ public class LibraryRoomPopulator extends DMMazeRoomBlockPopulator {
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event2.getBlock().getType() == Material.CHEST)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+				ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			// Add 4 lanterns on each side of the room near the book shelfs

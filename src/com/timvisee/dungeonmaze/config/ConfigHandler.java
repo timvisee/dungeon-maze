@@ -22,7 +22,7 @@ public class ConfigHandler {
 	@SuppressWarnings("unchecked")
 	public void load() {
 		// Get the config instance
-		config = new DMConfig();
+		config = new Config();
 		
 		// Load (and cache) the properties
 		unloadWorldsOnPluginDisable = config.getBoolean("unloadWorldsOnPluginDisable", true);

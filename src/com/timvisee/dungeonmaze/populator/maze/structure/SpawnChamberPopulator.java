@@ -11,18 +11,18 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
-import com.timvisee.dungeonmaze.util.DMChestUtils;
+import com.timvisee.dungeonmaze.event.generation.GenerationChestEvent;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
+import com.timvisee.dungeonmaze.util.ChestUtils;
 
-public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
+public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 7;
 	public static final int MAX_LAYER = 7;
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
@@ -122,7 +122,7 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 		c.getBlock(x + 1, y + 2, z + 1).setData((byte) 3);
 		
 		// Call the Chest generation event
-		DMGenerationChestEvent event = new DMGenerationChestEvent(c.getBlock(x + 1, y + 2, z + 1), rand, emptyList, DMMazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event = new GenerationChestEvent(c.getBlock(x + 1, y + 2, z + 1), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 
 		// Do the event
@@ -130,14 +130,14 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 1, y + 2, z + 6).setType(Material.CHEST);
 		c.getBlock(x + 1, y + 2, z + 6).setData((byte) 2);
 
 		// Call the Chest generation event
-		DMGenerationChestEvent event2 = new DMGenerationChestEvent(c.getBlock(x + 1, y + 2, z + 6), rand, emptyList, DMMazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event2 = new GenerationChestEvent(c.getBlock(x + 1, y + 2, z + 6), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event2);
 
 		// Do the event
@@ -145,14 +145,14 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event2.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 6, y + 2, z + 1).setType(Material.CHEST);
 		c.getBlock(x + 6, y + 2, z + 1).setData((byte) 3);
 
 		// Call the Chest generation event
-		DMGenerationChestEvent event3 = new DMGenerationChestEvent(c.getBlock(x + 6, y + 2, z + 1), rand, emptyList, DMMazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event3 = new GenerationChestEvent(c.getBlock(x + 6, y + 2, z + 1), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event3);
 
 		// Do the event
@@ -160,14 +160,14 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event3.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		c.getBlock(x + 6, y + 2, z + 6).setType(Material.CHEST);
 		c.getBlock(x + 6, y + 2, z + 6).setData((byte) 2);
 
 		// Call the Chest generation event
-		DMGenerationChestEvent event4 = new DMGenerationChestEvent(c.getBlock(x + 6, y + 2, z + 6), rand, emptyList, DMMazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event4 = new GenerationChestEvent(c.getBlock(x + 6, y + 2, z + 6), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event4);
 
 		// Do the event
@@ -175,7 +175,7 @@ public class SpawnChamberPopulator extends DMMazeRoomBlockPopulator {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event4.getBlock().getType() == Material.CHEST)
 			// Add the contents to the chest
-			DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		// Create torches

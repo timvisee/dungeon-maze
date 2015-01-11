@@ -13,13 +13,13 @@ import org.bukkit.block.Furnace;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationChestEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeStructureType;
-import com.timvisee.dungeonmaze.util.DMChestUtils;
+import com.timvisee.dungeonmaze.event.generation.GenerationChestEvent;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
+import com.timvisee.dungeonmaze.util.ChestUtils;
 
-public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulator {
+public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 2;
 	public static final int MAX_LAYER = 6;
 	public static final int CHANCE_OF_CASTLE = 1; // Promile
@@ -29,7 +29,7 @@ public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulato
 	public static final int CRACKED_CHANCE = 70;
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World W = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
@@ -121,7 +121,7 @@ public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulato
 			c.getBlock(x + 5, yFloor + 1, z + 2).setData((byte) 2);
 			
 			//Call the Chest generation event
-			DMGenerationChestEvent event = new DMGenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 2), rand, genChestContent(rand), DMMazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
+			GenerationChestEvent event = new GenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 2), rand, genChestContent(rand), MazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event);
 			
 			// Do the event
@@ -129,14 +129,14 @@ public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulato
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event.getBlock().getType() == Material.CHEST)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+				ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 
 			c.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.CHEST);
 			c.getBlock(x + 5, yFloor + 1, z + 3).setData((byte) 2);
 			
 			//Call the Chest generation event
-			DMGenerationChestEvent event2 = new DMGenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 3), rand, genChestContent(rand), DMMazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
+			GenerationChestEvent event2 = new GenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 3), rand, genChestContent(rand), MazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
 			Bukkit.getServer().getPluginManager().callEvent(event2);
 			
 			// Do the event
@@ -144,7 +144,7 @@ public class AbandonedDefenceCastleRoomPopulator extends DMMazeRoomBlockPopulato
 				// Make sure the chest is still there, a developer could change the chest through the event!
 				if(event2.getBlock().getType() == Material.CHEST)
 				// Add the contents to the chest
-				DMChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+				ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 			}
 			
 			c.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.FURNACE);

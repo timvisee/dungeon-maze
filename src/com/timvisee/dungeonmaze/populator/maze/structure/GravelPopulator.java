@@ -7,10 +7,10 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class GravelPopulator extends DMMazeRoomBlockPopulator {
+public class GravelPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 2;
 	public static final int MAX_LAYER = 7;
 	public static final int MAX_RUINS = 2;
@@ -19,7 +19,7 @@ public class GravelPopulator extends DMMazeRoomBlockPopulator {
 			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

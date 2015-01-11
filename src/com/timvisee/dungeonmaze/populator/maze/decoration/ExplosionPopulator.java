@@ -7,17 +7,17 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.TNTPrimed;
 
-import com.timvisee.dungeonmaze.populator.DMChunkBlockPopulator;
-import com.timvisee.dungeonmaze.populator.DMChunkBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.ChunkBlockPopulator;
+import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 
-public class ExplosionPopulator extends DMChunkBlockPopulator {
+public class ExplosionPopulator extends ChunkBlockPopulator {
 	
 	public static final int EXPLOSION_CHANCE = 80;
 	public static final int BIG_EXPLOSION_CHANCE = 50;
 	public static final int HUGE_EXPLOSION_CHANCE = 10;
 
 	@Override
-	public void populateChunk(DMChunkBlockPopulatorArgs args) {
+	public void populateChunk(ChunkBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Random rand = args.getRandom();
 		Chunk c = args.getSourceChunk();

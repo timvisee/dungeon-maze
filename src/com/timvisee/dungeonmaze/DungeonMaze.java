@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.timvisee.dungeonmaze.api.ApiController;
+import com.timvisee.dungeonmaze.generator.Generator;
+import com.timvisee.dungeonmaze.update.Updater;
+import com.timvisee.dungeonmaze.plugin.metrics.Metrics;
+import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -16,11 +20,10 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.timvisee.dungeonmaze.Metrics.Graph;
-import com.timvisee.dungeonmaze.Updater.UpdateResult;
+import com.timvisee.dungeonmaze.plugin.metrics.Metrics.Graph;
+import com.timvisee.dungeonmaze.update.Updater.UpdateResult;
 import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
 
 public class DungeonMaze extends JavaPlugin {
@@ -188,7 +191,7 @@ public class DungeonMaze extends JavaPlugin {
 
 
 
-	private final DMGenerator dmGenerator = new DMGenerator(this);
+	private final Generator generator = new Generator(this);
 	
 	// Worlds
 	public String lastWorld = "";
@@ -294,7 +297,7 @@ public class DungeonMaze extends JavaPlugin {
 
 				// Create the world
 				WorldCreator newWorld = new WorldCreator(w);
-				newWorld.generator(this.dmGenerator);
+				newWorld.generator(this.generator);
 				World world = newWorld.createWorld();
 				
 				// If the sender is a player, teleport him!
@@ -584,7 +587,7 @@ public class DungeonMaze extends JavaPlugin {
 				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] Loading world, there's probably some lag for a little while");
 				
 				WorldCreator newWorld = new WorldCreator(w);
-				newWorld.generator(dmGenerator);
+				newWorld.generator(generator);
 				newWorld.createWorld();
 				
 				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] World succesfully loaded!");
@@ -609,11 +612,11 @@ public class DungeonMaze extends JavaPlugin {
 
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-		return this.dmGenerator;
+		return this.generator;
 	}
 	
 	public ChunkGenerator getDMWorldGenerator() {
-		return this.dmGenerator;
+		return this.generator;
 	}
 	
 	public boolean isAnyPlayerOnline() {

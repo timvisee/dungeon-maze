@@ -5,10 +5,10 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class PoolPopulator extends DMMazeRoomBlockPopulator {
+public class PoolPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 1;
 	public static final int NO_LAVA_NEAR_SPAWN_RADIUS = 2; // In chunks
@@ -16,7 +16,7 @@ public class PoolPopulator extends DMMazeRoomBlockPopulator {
 	public static final int LAVA_CHANCE = 35; // Rest is water
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

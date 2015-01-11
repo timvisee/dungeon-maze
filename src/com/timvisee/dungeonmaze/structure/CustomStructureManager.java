@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CustomStructureManager {
 	
-	private List<DMCustomStructure> structures = new ArrayList<DMCustomStructure>();
+	private List<CustomStructure> structures = new ArrayList<CustomStructure>();
 	
 	/**
 	 * Constructor

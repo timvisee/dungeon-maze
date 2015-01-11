@@ -5,15 +5,15 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 
-import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulator;
-import com.timvisee.dungeonmaze.populator.surface.DMSurfaceBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulator;
+import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 
-public class FlowerPopulator extends DMSurfaceBlockPopulator {
+public class FlowerPopulator extends SurfaceBlockPopulator {
 	public static final int CHANCE_OF_FLOWER = 15;
 	public static final int ITERATIONS = 10;
 
 	@Override
-	public void populateSurface(DMSurfaceBlockPopulatorArgs args) {
+	public void populateSurface(SurfaceBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		

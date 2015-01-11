@@ -9,10 +9,10 @@ import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Minecart;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class RailPopulator extends DMMazeRoomBlockPopulator {
+public class RailPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 3;
 	public static final int MAX_LAYER = 7;
 	public static final int RAIL_CHANCE = 8;
@@ -25,7 +25,7 @@ public class RailPopulator extends DMMazeRoomBlockPopulator {
 			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();

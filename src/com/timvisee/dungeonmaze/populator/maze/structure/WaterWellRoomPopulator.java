@@ -7,16 +7,16 @@ import org.bukkit.Material;
 import org.bukkit.World;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class WaterWellRoomPopulator extends DMMazeRoomBlockPopulator {
+public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 3;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_WATERWELL = 2; //Promile
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();

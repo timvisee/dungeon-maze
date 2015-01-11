@@ -11,16 +11,16 @@ import org.bukkit.block.Furnace;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class GreatFurnaceRoomPopulator extends DMMazeRoomBlockPopulator {
+public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 5;
 	public static final int CHANCE_OF_FURNACE = 1; //Promile
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();

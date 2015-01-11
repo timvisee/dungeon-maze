@@ -11,10 +11,10 @@ import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class ArmoryRoomPopulator extends DMMazeRoomBlockPopulator {
+public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_ARMORYROOM = 900; // Promile
@@ -22,7 +22,7 @@ public class ArmoryRoomPopulator extends DMMazeRoomBlockPopulator {
 	// TODO: Armory room still not used, finish it and put it into Dungeon Maze
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();

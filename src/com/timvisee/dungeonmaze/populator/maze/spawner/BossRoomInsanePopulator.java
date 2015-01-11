@@ -16,19 +16,18 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeLayerBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeLayerBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.event.generation.GenerationSpawnerEvent;
+import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulatorArgs;
 
-public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
+public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 3;
 	public static final int CHANCE_OF_BOSSROOM = 1; //Promile
 	public static final double MIN_SPAWN_DISTANCE = 10; // Chunks
 
 	@Override
-	public void populateLayer(DMMazeLayerBlockPopulatorArgs args) {
+	public void populateLayer(MazeLayerBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Random rand = args.getRandom();
 		Chunk c = args.getSourceChunk();
@@ -152,7 +151,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 7);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.GHAST, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.GHAST, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -172,7 +171,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 8);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -192,7 +191,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 7);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -212,7 +211,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 8);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -232,7 +231,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 7);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -252,7 +251,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 8);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -272,7 +271,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 7);
 				
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -292,7 +291,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 8);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -313,7 +312,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 3);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -333,7 +332,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 12);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -353,7 +352,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock =  c.getBlock(x + 12, y + 1, z + 3);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet
@@ -373,7 +372,7 @@ public class BossRoomInsanePopulator extends DMMazeLayerBlockPopulator {
 		    	Block spawnerBlock = c.getBlock(x + 12, y + 1, z + 12);
 					
 				// Call the spawner generation event
-				DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, DMGenerationSpawnerCause.BOSSROOM_INSANE, rand);
+				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
 				Bukkit.getServer().getPluginManager().callEvent(event);
 				
 				// Make sure the event isn't cancelled yet

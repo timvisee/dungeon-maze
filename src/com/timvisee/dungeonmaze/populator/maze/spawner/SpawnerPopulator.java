@@ -11,13 +11,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerCause;
-import com.timvisee.dungeonmaze.event.generation.DMGenerationSpawnerEvent;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.event.generation.GenerationSpawnerEvent;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class SpawnerPopulator extends DMMazeRoomBlockPopulator {
+public class SpawnerPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE_OF_SPAWNER = 6;
@@ -25,7 +23,7 @@ public class SpawnerPopulator extends DMMazeRoomBlockPopulator {
 	public static final double MIN_SPAWN_DISTANCE = 2; // Chunks
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
@@ -78,7 +76,7 @@ public class SpawnerPopulator extends DMMazeRoomBlockPopulator {
 						return;
 					
 					// Call the spawner generation event
-					DMGenerationSpawnerEvent event = new DMGenerationSpawnerEvent(spawnerBlock, spawnedType, DMGenerationSpawnerCause.NORMAL, rand);
+					GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, spawnedType, GenerationSpawnerEvent.GenerationSpawnerCause.NORMAL, rand);
 					Bukkit.getServer().getPluginManager().callEvent(event);
 					
 					// Make sure the event isn't cancelled yet

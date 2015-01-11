@@ -6,10 +6,10 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class RuinsPopulator extends DMMazeRoomBlockPopulator {
+public class RuinsPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 4;
 	public static final int RUINS_CHANCE = 20;
@@ -19,7 +19,7 @@ public class RuinsPopulator extends DMMazeRoomBlockPopulator {
 			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();

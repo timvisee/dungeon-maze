@@ -12,9 +12,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.manager.WorldManager;
-import com.timvisee.dungeonmaze.util.DMChestUtils;
-import com.timvisee.dungeonmaze.util.DMMazeUtils;
+import com.timvisee.dungeonmaze.world.WorldManager;
+import com.timvisee.dungeonmaze.util.ChestUtils;
+import com.timvisee.dungeonmaze.util.MazeUtils;
 
 @Deprecated
 public class DungeonMazeApiOld {
@@ -186,7 +186,7 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static int getDMLevel(Block b) {
-		return DMMazeUtils.getDMLevel(b);
+		return MazeUtils.getDMLevel(b);
 	}
 	
 	/**
@@ -200,6 +200,6 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static boolean addItemsToChest(boolean inOrder, Random rand, Chest c, List<ItemStack> newContents) {
-		return DMChestUtils.addItemsToChest(c, newContents, !inOrder, rand);
+		return ChestUtils.addItemsToChest(c, newContents, !inOrder, rand);
 	}
 }

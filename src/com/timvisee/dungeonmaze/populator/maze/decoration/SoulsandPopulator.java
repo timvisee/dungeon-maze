@@ -6,10 +6,10 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.DMMazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class SoulsandPopulator extends DMMazeRoomBlockPopulator {
+public class SoulsandPopulator extends MazeRoomBlockPopulator {
 	public static final int MIN_LAYER = 3;
 	public static final int MAX_LAYER = 7;
 	public static final int CHANCE = 20;
@@ -17,7 +17,7 @@ public class SoulsandPopulator extends DMMazeRoomBlockPopulator {
 	public static final int ITERATIONS = 15;
 
 	@Override
-	public void populateRoom(DMMazeRoomBlockPopulatorArgs args) {
+	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
