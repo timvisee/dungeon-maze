@@ -18,10 +18,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
 import com.timvisee.dungeonmaze.util.ChestUtils;
 
 public class ChestPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_CHEST = 3;
-	public static final double CHANCE_OF_CHEST_ADDITION_PER_LEVEL = -0.333; // to 1
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_CHEST = 3;
+	public static final double CHANCE_CHEST_ADDITION_EACH_LEVEL = -0.333; // to 1
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -32,7 +33,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Calculate chances
-		if (rand.nextInt(100) < CHANCE_OF_CHEST + (CHANCE_OF_CHEST_ADDITION_PER_LEVEL * (y - 30) / 6)) {
+		if (rand.nextInt(100) < CHANCE_CHEST + (CHANCE_CHEST_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
 			
 			int chestX = x + rand.nextInt(6) + 1;
 			int chestY = args.getFloorY() + 1;
@@ -225,7 +226,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -234,6 +235,6 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

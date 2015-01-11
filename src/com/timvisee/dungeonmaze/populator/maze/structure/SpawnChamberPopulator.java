@@ -18,8 +18,9 @@ import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
 import com.timvisee.dungeonmaze.util.ChestUtils;
 
 public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 7;
-	public static final int MAX_LAYER = 7;
+
+	public static final int LAYER_MIN = 7;
+	public static final int LAYER_MAX = 7;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -372,7 +373,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -381,6 +382,6 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

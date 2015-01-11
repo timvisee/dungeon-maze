@@ -9,9 +9,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_BROKENWALL = 50;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_BROKEN_WALL = 50;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -21,7 +22,7 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Calculate chances
-		if (rand.nextInt(100) < CHANCE_OF_BROKENWALL) {
+		if (rand.nextInt(100) < CHANCE_BROKEN_WALL) {
 			
 			// Define the positions var
 			int posX, posY, posZ;
@@ -56,7 +57,7 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -65,6 +66,6 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -21,10 +21,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulatorArgs;
 
 public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 3;
-	public static final int CHANCE_OF_BOSSROOM = 1; //Promile
-	public static final double MIN_SPAWN_DISTANCE = 10; // Chunks
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 3;
+	public static final int CHANCE_BOSSROOM = 1; //Promile
+	public static final double SPAWN_DISTANCE_MIN = 10; // Chunks
 
 	@Override
 	public void populateLayer(MazeLayerBlockPopulatorArgs args) {
@@ -36,11 +37,11 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		int z = 0;
 			
 		// Make sure the distance between the spawn chunk and the current chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < MIN_SPAWN_DISTANCE)
+		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 		
 		// Apply chances
-		if (rand.nextInt(1000) < CHANCE_OF_BOSSROOM) {
+		if (rand.nextInt(1000) < CHANCE_BOSSROOM) {
 			DungeonMaze.instance.registerConstantChunk(w.getName(), c.getX(), c.getZ());					
 			
 			// Clear the room!
@@ -396,7 +397,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -405,7 +406,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 	
 	public double distance(int x1, int y1, int x2, int y2) {

@@ -27,6 +27,8 @@ import org.mcstats.Metrics;
 
 public class DungeonMaze extends JavaPlugin {
 
+	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
+
 	/** Dungeon Maze instance. */
 	public static DungeonMaze instance;
 

@@ -10,10 +10,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 5;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_WATER = 4;
-	public static final double CHANCE_OF_WATER_ADDITION_PER_LEVEL = -0.833; /* to 0 */
+
+	public static final int LAYER_MIN = 5;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_WATER = 4;
+	public static final double CHANCE_WATER_ADDITION_EACH_LEVEL = -0.833; /* to 0 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -25,7 +26,7 @@ public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
 		int floorOffset = args.getFloorOffset();
 		
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_OF_WATER + (CHANCE_OF_WATER_ADDITION_PER_LEVEL * (y - 30) / 6)) {
+		if(rand.nextInt(100) < CHANCE_WATER + (CHANCE_WATER_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
 			int lanternX = x + rand.nextInt(8);
 			int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
 			int lanternZ = z + rand.nextInt(8);
@@ -43,7 +44,7 @@ public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -52,6 +53,6 @@ public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -9,7 +9,8 @@ import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulator;
 import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 
 public class FlowerPopulator extends SurfaceBlockPopulator {
-	public static final int CHANCE_OF_FLOWER = 15;
+
+	public static final int CHANCE_FLOWER = 15;
 	public static final int ITERATIONS = 10;
 
 	@Override
@@ -20,7 +21,7 @@ public class FlowerPopulator extends SurfaceBlockPopulator {
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
 			// Apply chances
-			if(rand.nextInt(100) < CHANCE_OF_FLOWER) {
+			if(rand.nextInt(100) < CHANCE_FLOWER) {
 				int xFlower = rand.nextInt(16);
 				int zFlower = rand.nextInt(16);
 				

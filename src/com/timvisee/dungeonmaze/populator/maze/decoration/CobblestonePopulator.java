@@ -10,10 +10,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class CobblestonePopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_COBBLE = 20;
-	public static final int CORNER_CHANCE = 75;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_COBBLE = 20;
+	public static final int CHANCE_CORNER = 75;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -23,14 +24,14 @@ public class CobblestonePopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Check chances
-		if (rand.nextInt(100) < CHANCE_OF_COBBLE) {
+		if (rand.nextInt(100) < CHANCE_COBBLE) {
 			
 			int webX = x + rand.nextInt(6) + 1;
 			int webY = args.getFloorY();
 			int webCeilingY = args.getCeilingY();
 			int webZ = z + rand.nextInt(6) + 1;
 			
-			if (rand.nextInt(100) < CORNER_CHANCE)
+			if (rand.nextInt(100) < CHANCE_CORNER)
 				if(c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).getType() == Material.AIR)
 					c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).setType(Material.WEB);
 			
@@ -47,7 +48,7 @@ public class CobblestonePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -56,6 +57,6 @@ public class CobblestonePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

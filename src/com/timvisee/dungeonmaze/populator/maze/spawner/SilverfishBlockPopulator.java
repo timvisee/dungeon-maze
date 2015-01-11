@@ -10,11 +10,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 3;
-	public static final int MAX_LAYER = 7;
+
+	public static final int LAYER_MIN = 3;
+	public static final int LAYER_MAX = 7;
 	public static final int CHANCE = 75;
 	public static final int ITERATIONS = 8;
-	public static final double CHANCE_ADDITION_PER_LEVEL = -4.167; /* to 75 */
+	public static final double CHANCE_ADDITION_EACH_LEVEL = -4.167; /* to 75 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -27,7 +28,7 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
 		
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
-			if(rand.nextInt(100) < CHANCE + (CHANCE_ADDITION_PER_LEVEL * (y - 30) / 6)) {
+			if(rand.nextInt(100) < CHANCE + (CHANCE_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
 				int blockX = x + rand.nextInt(8);
 				int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
 				int blockZ = z + rand.nextInt(8);
@@ -56,7 +57,7 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -65,6 +66,6 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

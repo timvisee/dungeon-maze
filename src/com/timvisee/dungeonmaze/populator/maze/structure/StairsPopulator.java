@@ -9,9 +9,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class StairsPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 6;
-	public static final int CHANCE_OF_STAIRS = 2;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 6;
+	public static final int CHANCE_STAIRS = 2;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -23,7 +24,7 @@ public class StairsPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_OF_STAIRS) {
+		if(rand.nextInt(100) < CHANCE_STAIRS) {
 			
 			if(c.getBlock(x, y - 1, z).getType() != Material.AIR) {
 				c.getBlock(x + 5, yFloor + 1, z + 2).setType(Material.COBBLESTONE_STAIRS);
@@ -102,7 +103,7 @@ public class StairsPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -111,6 +112,6 @@ public class StairsPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

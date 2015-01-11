@@ -10,10 +10,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class MushroomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 6;
-	public static final int CHANCE_OF_BROWN_MUSHROOM = 1;
-	public static final int CHANCE_OF_RED_MUSHROOM = 1;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 6;
+	public static final int CHANCE_MUSHROOM_BROWN = 1;
+	public static final int CHANCE_MUSHROOM_RED = 1;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -24,7 +25,7 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_OF_BROWN_MUSHROOM) {
+		if(rand.nextInt(100) < CHANCE_MUSHROOM_BROWN) {
 			int spawnerX = x + rand.nextInt(6) + 1;
 			int spawnerY = yFloor + 1;
 			int spawnerZ = z + rand.nextInt(6) + 1;
@@ -38,7 +39,7 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
 		}
 
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_OF_RED_MUSHROOM) {
+		if(rand.nextInt(100) < CHANCE_MUSHROOM_RED) {
 			int spawnerX = x + rand.nextInt(6) + 1;
 			int spawnerY = yFloor + 1;
 			int spawnerZ = z + rand.nextInt(6) + 1;
@@ -58,7 +59,7 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -67,6 +68,6 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

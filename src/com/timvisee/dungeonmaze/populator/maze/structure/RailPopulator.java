@@ -13,12 +13,13 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class RailPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 3;
-	public static final int MAX_LAYER = 7;
+
+	public static final int LAYER_MIN = 3;
+	public static final int LAYER_MAX = 7;
 	public static final int RAIL_CHANCE = 8;
-	public static final double RAIL_CHANCE_ADDITION_PER_LEVEL = -0.333; /* to 6 */
+	public static final double RAIL_CHANCE_ADDITION_EACH_LEVEL = -0.333; /* to 6 */
 	public static final int ITERATIONS = 2;
-	public static final int MAX_RAIL = 2;
+	public static final int RAIL_MAX = 2;
 	public static final int BROKEN_RAIL_CHANCE = 20;
 	public static final int MINECART_ON_RAIL_CHANCE = 1;
 	public static final BlockFace[] dirs = new BlockFace[] {
@@ -40,9 +41,9 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
 			
-			if(rails <= MAX_RAIL) {
+			if(rails <= RAIL_MAX) {
 				
-				if (rand.nextInt(100) < RAIL_CHANCE+(RAIL_CHANCE_ADDITION_PER_LEVEL*(y-30)/6)) { 
+				if (rand.nextInt(100) < RAIL_CHANCE+(RAIL_CHANCE_ADDITION_EACH_LEVEL *(y-30)/6)) {
 					int startX = x + rand.nextInt(6) + 1;
 					int startZ = z + rand.nextInt(6) + 1;
 
@@ -101,7 +102,7 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -110,6 +111,6 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

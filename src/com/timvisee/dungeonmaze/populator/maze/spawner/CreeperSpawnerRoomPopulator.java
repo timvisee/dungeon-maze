@@ -17,11 +17,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 5;
-	public static final int CHANCE_OF_SPAWNER = 3; //Promile
-	public static final double CHANCE_OF_SPAWNER_ADDITION_PER_LEVEL = -0.333; /* to 1 */
-	public static final double MIN_SPAWN_DISTANCE = 5; // Chunks
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 5;
+	public static final int CHANCE_SPAWNER = 3; //Promile
+	public static final double CHANCE_SPAWNER_ADDITION_EACH_LEVEL = -0.333; /* to 1 */
+	public static final double SPAWN_DISTANCE_MIN = 5; // Chunks
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -34,11 +35,11 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < MIN_SPAWN_DISTANCE)
+		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 		
 		// Apply chances
-		if(rand.nextInt(1000) < CHANCE_OF_SPAWNER + (CHANCE_OF_SPAWNER_ADDITION_PER_LEVEL * (y - 30) / 6)) {
+		if(rand.nextInt(1000) < CHANCE_SPAWNER + (CHANCE_SPAWNER_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
 			// Register the current room as constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
 			
@@ -85,7 +86,7 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -94,6 +95,6 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -13,7 +13,8 @@ import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulator;
 import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 
 public class TreePopulator extends SurfaceBlockPopulator {
-	public static final int CHANCE_OF_TREE = 10;
+
+	public static final int CHANCE_TREE = 10;
 	public static final int ITERATIONS = 10;
 
 	@Override
@@ -25,7 +26,7 @@ public class TreePopulator extends SurfaceBlockPopulator {
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
 			// Apply chances
-			if (rand.nextInt(100) < CHANCE_OF_TREE) {
+			if (rand.nextInt(100) < CHANCE_TREE) {
 				
 				int xTree = rand.nextInt(16);
 				int zTree = rand.nextInt(16);

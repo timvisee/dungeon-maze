@@ -9,11 +9,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class StrutPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 2;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_STRUT = 2;
-	public static final int CHANCE_OF_STRUT_NEAR_SPAWN = 50;
-	public static final int MAX_STRUT_DISTANCE_NEAR_SPAWN = 4; // Distance in chunks
+
+	public static final int LAYER_MIN = 2;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_STRUT = 2;
+	public static final int CHANCE_STRUT_NEAR_SPAWN = 50;
+	public static final int STRUT_DISTANCE_NEAR_SPAWN_MAX = 4; // Distance in chunks
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -25,9 +26,9 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distance(c.getX(), c.getZ(), 0, 0) < MAX_STRUT_DISTANCE_NEAR_SPAWN) {
+		if(distance(c.getX(), c.getZ(), 0, 0) < STRUT_DISTANCE_NEAR_SPAWN_MAX) {
 			// Strut near spawn
-			if (rand.nextInt(100) < CHANCE_OF_STRUT_NEAR_SPAWN) {
+			if (rand.nextInt(100) < CHANCE_STRUT_NEAR_SPAWN) {
 				int yStrutbar = yCeiling - 1;
 				
 				if(c.getBlock(x + 2, yStrutbar, z).getType() == Material.AIR) {
@@ -42,7 +43,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 					}
 				}	
 			}
-			if (rand.nextInt(100) < CHANCE_OF_STRUT_NEAR_SPAWN) {
+			if (rand.nextInt(100) < CHANCE_STRUT_NEAR_SPAWN) {
 				int yStrutbar = yCeiling - 1;
 
 				if(c.getBlock(x, yStrutbar, z + 2).getType() == Material.AIR) {
@@ -60,7 +61,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 			}
 		} else {
 			// Normal strut
-			if(rand.nextInt(100) < CHANCE_OF_STRUT) {
+			if(rand.nextInt(100) < CHANCE_STRUT) {
 
 				int yStrutbar = yCeiling - 1;
 				
@@ -77,7 +78,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 				}
 					
 			}
-			if (rand.nextInt(100) < CHANCE_OF_STRUT) {
+			if (rand.nextInt(100) < CHANCE_STRUT) {
 				int yStrutbar = yCeiling - 1;
 
 				if(c.getBlock(x, yStrutbar, z + 2).getType() == Material.AIR) {
@@ -109,7 +110,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -118,6 +119,6 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

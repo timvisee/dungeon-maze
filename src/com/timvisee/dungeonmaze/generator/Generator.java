@@ -66,7 +66,9 @@ import com.timvisee.dungeonmaze.populator.surface.plants.TallGrassPopulator;
 import com.timvisee.dungeonmaze.populator.surface.plants.TreePopulator;
 
 public class Generator extends ChunkGenerator {
-	
+
+	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
+
 	public static DungeonMaze plugin;
 	
 	public Generator(DungeonMaze instance) {
@@ -159,7 +161,7 @@ public class Generator extends ChunkGenerator {
 			for (int x = 0; x < 16; x++)
 				for (int z = 0; z < 16; z++)
 					result[xyzToByte(x, y, z)] = (byte) Material.STONE.getId();
-		
+
 		// Set the lowest layer to bedrock
 		for (int x = 0; x < 16; x++)
 			for (int z = 0; z < 16; z++)

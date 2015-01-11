@@ -10,9 +10,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SandPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 3;
-	public static final int MAX_LAYER = 7;
-	public static final int MAX_RUINS = 2;
+
+	public static final int LAYER_MIN = 3;
+	public static final int LAYER_MAX = 7;
+	public static final int RUINS_MAX = 2;
 	public static final int RUINS_CHANCE = 5;
 	public static final BlockFace[] dirs = new BlockFace[] {
 			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
@@ -28,7 +29,7 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 		int ruins = 0;
 		
 		// Apply chances
-		while (rand.nextInt(100) < RUINS_CHANCE && ruins < MAX_RUINS) { 
+		while (rand.nextInt(100) < RUINS_CHANCE && ruins < RUINS_MAX) {
 			int startX = x + rand.nextInt(6) + 1;
 			int startY = args.getFloorY() + 1;
 			int startZ = z + rand.nextInt(6) + 1;
@@ -79,7 +80,7 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -88,6 +89,6 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

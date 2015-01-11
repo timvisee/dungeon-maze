@@ -15,9 +15,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 5;
-	public static final int CHANCE_OF_FURNACE = 1; //Promile
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 5;
+	public static final int CHANCE_FURNACE = 1; //Promile
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -28,7 +29,7 @@ public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
 		int y = args.getChunkY();
 		int z = args.getChunkZ();
 		
-		if (rand.nextInt(1000) < CHANCE_OF_FURNACE) {
+		if (rand.nextInt(1000) < CHANCE_FURNACE) {
 			// Register the room as constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c, x, y, z);
 			
@@ -166,7 +167,7 @@ public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -175,6 +176,6 @@ public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

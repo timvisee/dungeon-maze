@@ -10,9 +10,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SlabPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_SLAB = 50;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_SLAB = 50;
 	public static final int ITERATIONS = 7;
 
 	@Override
@@ -23,7 +24,7 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		for(int i = 0; i < ITERATIONS; i++) {
-			if(rand.nextInt(100) < CHANCE_OF_SLAB) {
+			if(rand.nextInt(100) < CHANCE_SLAB) {
 				int slabX = x + rand.nextInt(6) + 1;
 				int slabY = args.getFloorY() + 1;
 				int slabZ = z + rand.nextInt(6) + 1;
@@ -45,7 +46,7 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -54,6 +55,6 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -11,8 +11,9 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class CoalorePopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 6;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 6;
 	public static final int ITERATIONS = 5;
 	public static final int CHANCE = 2;
 
@@ -41,7 +42,7 @@ public class CoalorePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -50,6 +51,6 @@ public class CoalorePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

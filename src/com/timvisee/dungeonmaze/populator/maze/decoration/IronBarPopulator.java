@@ -10,10 +10,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class IronBarPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
 	public static final int CHANCE = 25;
-	public static final int CHANCE_2_HEIGHT = 66;
+	public static final int CHANCE_DOUBLE_HEIGHT = 66;
 	public static final int ITERATIONS = 2;
 
 	@Override
@@ -35,7 +36,7 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
 				Block b = c.getBlock(blockX, blockY, blockZ);
 				if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
 					b.setType(Material.IRON_FENCE);
-					if(rand.nextInt(100) < CHANCE_2_HEIGHT) {
+					if(rand.nextInt(100) < CHANCE_DOUBLE_HEIGHT) {
 						Block block2 = c.getBlock(blockX, blockY + 1, blockZ);
 						block2.setType(Material.IRON_FENCE);
 					}
@@ -50,7 +51,7 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -59,6 +60,6 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigHandler {
+
+	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
 	
 	// Configuration cache
 	public FileConfiguration config;

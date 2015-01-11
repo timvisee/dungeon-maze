@@ -13,17 +13,18 @@ import org.bukkit.generator.BlockPopulator;
 import com.timvisee.dungeonmaze.DungeonMaze;
 
 public class OasisChunkPopulator extends BlockPopulator {
-	public static final int CHANCE_OF_OASIS = 3; //Promile
-	public static final int CHANCE_OF_CLAYINDIRT = 10;
-	public static final double MIN_SPAWN_DISTANCE = 7; // Chunks
+
+	public static final int CHANCE_OASIS = 3; //Promile
+	public static final int CHANCE_CLAYINDIRT = 10;
+	public static final double SPAWN_DISTANCE_MIN = 7; // Chunks
 
 	@Override
 	public void populate(World world, Random random, Chunk source) {			
 		// The 4 rooms on each layer saved in the variables x and z
 		if(!DungeonMaze.instance.isConstantChunk(world.getName(), source)) {
 			
-			if(distance(0, 0, source.getX(), source.getZ()) >= MIN_SPAWN_DISTANCE) {
-				if (random.nextInt(1000) < CHANCE_OF_OASIS) {
+			if(distance(0, 0, source.getX(), source.getZ()) >= SPAWN_DISTANCE_MIN) {
+				if (random.nextInt(1000) < CHANCE_OASIS) {
 					// Flag this chunk as a constant chunk
 					DungeonMaze.instance.registerConstantChunk(world.getName(), source.getX(), source.getZ());
 					
@@ -36,7 +37,7 @@ public class OasisChunkPopulator extends BlockPopulator {
 					// Generate some clay inside the dirt layer
 					for (int x = 0; x < 16; x++) {
 						for (int z = 0; z < 16; z++) {
-							if (random.nextInt(100) < CHANCE_OF_CLAYINDIRT) {
+							if (random.nextInt(100) < CHANCE_CLAYINDIRT) {
 								source.getBlock(x, 29, z).setType(Material.CLAY);
 							}
 						}
@@ -61,7 +62,7 @@ public class OasisChunkPopulator extends BlockPopulator {
 					// Generate some tall gras on the oasis
 					for (int x = 0; x < 16; x++) {
 						for (int z = 0; z < 16; z++) {
-							if (random.nextInt(100) < CHANCE_OF_CLAYINDIRT) {
+							if (random.nextInt(100) < CHANCE_CLAYINDIRT) {
 								source.getBlock(x, 31, z).setType(Material.LONG_GRASS);
 								source.getBlock(x, 31, z).setData((byte) 1);
 							}

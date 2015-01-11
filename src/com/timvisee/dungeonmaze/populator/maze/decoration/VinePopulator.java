@@ -9,12 +9,13 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class VinePopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_VINE = 30;
-	public static final double CHANCE_OF_TOPTURVE_ADDITION_PER_LEVEL = -2.5; /* to 15 */
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_VINE = 30;
+	public static final double CHANCE_TOP_TURVE_ADDITION_EACH_LEVEL = -2.5; /* to 15 */
 	public static final int ITERATIONS = 5;
-	public static final int CHANCE_OF_CEILING_VINE = 5;
+	public static final int CHANCE_CEILING_VINE = 5;
 	public static final int ITERATIONS_CEILING_VINE = 5;
 
 	@Override
@@ -27,7 +28,7 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 		
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
-			if (rand.nextInt(100) < CHANCE_OF_VINE+(CHANCE_OF_TOPTURVE_ADDITION_PER_LEVEL*(y-30)/6)) {
+			if (rand.nextInt(100) < CHANCE_VINE +(CHANCE_TOP_TURVE_ADDITION_EACH_LEVEL *(y-30)/6)) {
 				
 				int vineX;
 				int vineY;
@@ -85,7 +86,7 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 		
 		// Iterate
 		for(int i = 0; i < ITERATIONS_CEILING_VINE; i++) {
-			if (rand.nextInt(100) < CHANCE_OF_CEILING_VINE) {
+			if (rand.nextInt(100) < CHANCE_CEILING_VINE) {
 				
 				int vineX = rand.nextInt(6) + 1;
 				int vineY = args.getCeilingY() - 1;
@@ -103,7 +104,7 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -112,6 +113,6 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

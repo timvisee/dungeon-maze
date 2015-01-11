@@ -18,10 +18,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
 import com.timvisee.dungeonmaze.util.ChestUtils;
 
 public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 3;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_LIBRARY = 2; //Promile
-	public static final double CHANCE_OF_LIBRARY_ADDITION_PER_LEVEL = -0.167; /* to 1 */
+
+	public static final int LAYER_MIN = 3;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_LIBRARY = 2; //Promile
+	public static final double CHANCE_LIBRARY_ADDITION_EACH_LEVEL = -0.167; /* to 1 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -35,7 +36,7 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Apply chances
-		if(rand.nextInt(1000) < CHANCE_OF_LIBRARY + (CHANCE_OF_LIBRARY_ADDITION_PER_LEVEL * (y - 30) / 6)) {
+		if(rand.nextInt(1000) < CHANCE_LIBRARY + (CHANCE_LIBRARY_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
 			// Register the current room als constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c, x, y, z);
 			
@@ -261,7 +262,7 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -270,6 +271,6 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

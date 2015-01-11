@@ -10,11 +10,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class NetherrackPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 2;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 2;
 	public static final int ITERATIONS = 15;
 	public static final int CHANCE = 5;
-	public static final int BURNING_NETHERRACK = 20;
+	public static final int CHANCE_BURNING = 20;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -32,7 +33,7 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
 					b.setType(Material.NETHERRACK);
 					
 					// Decide if the netherrack should be burning
-					if(rand.nextInt(100) < BURNING_NETHERRACK) {
+					if(rand.nextInt(100) < CHANCE_BURNING) {
 						Block burnBlock = c.getBlock(b.getX(), b.getY() + 1, b.getZ());
 						if (burnBlock.getType() == Material.AIR)
 							burnBlock.setType(Material.FIRE);
@@ -48,7 +49,7 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -57,6 +58,6 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -18,9 +18,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 import org.bukkit.entity.Player;
 
 public class SkullPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 4;
-	public static final int CHANCE_OF_SKULL = 1; // Promile
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 4;
+	public static final int CHANCE_SKULL = 1; // Promile
 	public static final int ITERATIONS = 5;
 	public static final int CHANCE_WITH_POLE = 80;
 
@@ -35,7 +36,7 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 		for (int i = 0; i < ITERATIONS; i++) {
 			
 			// Apply chances
-			if(rand.nextInt(1000) < CHANCE_OF_SKULL) {
+			if(rand.nextInt(1000) < CHANCE_SKULL) {
 				
 				boolean withPole = false;
 				if(rand.nextInt(100) < CHANCE_WITH_POLE)
@@ -110,7 +111,7 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -119,6 +120,6 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

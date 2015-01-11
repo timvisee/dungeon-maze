@@ -10,9 +10,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class EntrancePopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 7;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_ENTRANCE = 5; // Promile
+
+	public static final int LAYER_MIN = 7;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_ENTRANCE = 5; // Promile
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -23,7 +24,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Apply chances
-		if (rand.nextInt(1000) < CHANCE_OF_ENTRANCE) {
+		if (rand.nextInt(1000) < CHANCE_ENTRANCE) {
 							
 			int yground;
 			
@@ -426,7 +427,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -435,6 +436,6 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

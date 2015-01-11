@@ -20,13 +20,16 @@ import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
 import com.timvisee.dungeonmaze.util.ChestUtils;
 
 public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 2;
-	public static final int MAX_LAYER = 6;
-	public static final int CHANCE_OF_CASTLE = 1; // Promile
-	public static final int MOSS_ITERATIONS = 80;
-	public static final int MOSS_CHANCE = 70;
-	public static final int CRACKED_ITERATIONS = 80;
-	public static final int CRACKED_CHANCE = 70;
+
+	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
+
+	public static final int LAYER_MIN = 2;
+	public static final int LAYER_MAX = 6;
+	public static final int CHANCE_CASTLE = 1; // Promile
+	public static final int ITERATIONS_MOSS = 80;
+	public static final int CHANCE_MOSS = 70;
+	public static final int ITERATIONS_CRACKED = 80;
+	public static final int CHANCE_CRACKED = 70;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -41,7 +44,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 		int z = args.getChunkZ();
 		
 		// Apply chances
-		if (rand.nextInt(1000) < CHANCE_OF_CASTLE) {
+		if (rand.nextInt(1000) < CHANCE_CASTLE) {
 								
 			// Register the room as constant room
 			DungeonMaze.instance.registerConstantRoom(W.getName(), c, x, y, z);
@@ -170,8 +173,8 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 			c.getBlock(x + 0, yFloor + 4, z + 6).setType(Material.WEB);
 			
 			// Add some moss and cracked stone bricks
-			for (int i = 0; i < MOSS_ITERATIONS; i++) {
-				if (rand.nextInt(100) < MOSS_CHANCE) {
+			for (int i = 0; i < ITERATIONS_MOSS; i++) {
+				if (rand.nextInt(100) < CHANCE_MOSS) {
 					
 					Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
 					if (block.getType() == Material.COBBLESTONE)
@@ -182,8 +185,8 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 				}
 			}
 			
-			for (int i = 0; i < CRACKED_ITERATIONS; i++) {
-				if (rand.nextInt(100) < CRACKED_CHANCE) {
+			for (int i = 0; i < ITERATIONS_CRACKED; i++) {
+				if (rand.nextInt(100) < CHANCE_CRACKED) {
 					
 					Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
 					if (block.getType() == Material.SMOOTH_BRICK)
@@ -466,7 +469,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -475,6 +478,6 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -8,7 +8,8 @@ import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 
 public class OresInGroundPopulator extends BlockPopulator {
-	public static final int CHANCE_OF_ORE = 5; //Promile
+
+	public static final int CHANCE_ORE = 5; //Promile
 
 	@Override
 	public void populate(World world, Random random, Chunk source) {
@@ -17,7 +18,7 @@ public class OresInGroundPopulator extends BlockPopulator {
 			for (int x=0; x < 16; x+=1) {
 				for (int z=0; z < 16; z+=1) {
 					
-					if (random.nextInt(1000) < CHANCE_OF_ORE) {
+					if (random.nextInt(1000) < CHANCE_ORE) {
 						switch (random.nextInt(9)) {
     					case 0:
     						source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.GOLD_ORE);

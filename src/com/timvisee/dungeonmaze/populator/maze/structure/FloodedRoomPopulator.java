@@ -11,10 +11,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class FloodedRoomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_FLOODEDROOM = 5; //Promile
-	public static final int CHANCE_OF_WATER = 33; // If it's no water it will be lava
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_FLOODEDROOM = 5; //Promile
+	public static final int CHANCE_WATER = 33; // If it's no water it will be lava
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -26,7 +27,7 @@ public class FloodedRoomPopulator extends MazeRoomBlockPopulator {
 		int yFloor = args.getFloorY();
 		int z = args.getChunkZ();
 		
-		if (rand.nextInt(1000) < CHANCE_OF_FLOODEDROOM) {
+		if (rand.nextInt(1000) < CHANCE_FLOODEDROOM) {
 			// Register the current room as constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
 								
@@ -49,7 +50,7 @@ public class FloodedRoomPopulator extends MazeRoomBlockPopulator {
 
 			// Fill the room with lava or water
 			Material type = Material.LAVA;
-			if(rand.nextInt(100) < CHANCE_OF_WATER)
+			if(rand.nextInt(100) < CHANCE_WATER)
 				type = Material.WATER;
 				
 			for (int x2=x + 1; x2 <= x + 6; x2+=1) {
@@ -68,7 +69,7 @@ public class FloodedRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -77,6 +78,6 @@ public class FloodedRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

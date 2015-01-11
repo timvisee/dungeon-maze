@@ -9,11 +9,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class PoolPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 1;
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 1;
 	public static final int NO_LAVA_NEAR_SPAWN_RADIUS = 2; // In chunks
-	public static final int POOL_CHANCE = 5; // Includes lava pools
-	public static final int LAVA_CHANCE = 35; // Rest is water
+	public static final int CHANCE_POOL = 5; // Includes lava pools
+	public static final int CHANCE_LAVA = 35; // Rest is water
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -26,10 +27,10 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 		if(Math.abs(c.getX()) < NO_LAVA_NEAR_SPAWN_RADIUS || Math.abs(c.getZ()) < NO_LAVA_NEAR_SPAWN_RADIUS)
 			allowLava = false;
 		
-		if(rand.nextInt(100) < POOL_CHANCE) {
+		if(rand.nextInt(100) < CHANCE_POOL) {
 			LiquidType liquidType = LiquidType.WATER;
 
-			if(allowLava && rand.nextInt(100) < LAVA_CHANCE)
+			if(allowLava && rand.nextInt(100) < CHANCE_LAVA)
 				liquidType = LiquidType.LAVA;
 
 			int poolX = x + rand.nextInt(6) + 1;
@@ -68,7 +69,7 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -77,6 +78,6 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

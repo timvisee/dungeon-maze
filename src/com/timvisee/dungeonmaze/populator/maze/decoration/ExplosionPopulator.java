@@ -12,9 +12,9 @@ import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 
 public class ExplosionPopulator extends ChunkBlockPopulator {
 	
-	public static final int EXPLOSION_CHANCE = 80;
-	public static final int BIG_EXPLOSION_CHANCE = 50;
-	public static final int HUGE_EXPLOSION_CHANCE = 10;
+	public static final int CHANCE_EXPLOSION = 80;
+	public static final int CHANCE_EXPLOSION_BIG = 50;
+	public static final int CHANCE_EXPLOSION_HUGE = 10;
 
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {
@@ -23,11 +23,11 @@ public class ExplosionPopulator extends ChunkBlockPopulator {
 		Chunk c = args.getSourceChunk();
 		
 		// Apply chances
-		if (rand.nextInt(100) < EXPLOSION_CHANCE) {
+		if (rand.nextInt(100) < CHANCE_EXPLOSION) {
 			float power = 2.0f;
-			if (rand.nextInt(100) < BIG_EXPLOSION_CHANCE) {
+			if (rand.nextInt(100) < CHANCE_EXPLOSION_BIG) {
 				power = 4.0f;
-				if (rand.nextInt(100) < HUGE_EXPLOSION_CHANCE) {
+				if (rand.nextInt(100) < CHANCE_EXPLOSION_HUGE) {
 					for (int x = -3; x <= 3; x++)
 						for (int z = -3; z <= 3; z++)
 							if (x != 0 || z != 0)

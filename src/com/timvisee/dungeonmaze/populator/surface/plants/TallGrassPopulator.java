@@ -9,7 +9,8 @@ import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulator;
 import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 
 public class TallGrassPopulator extends SurfaceBlockPopulator {
-	public static final int CHANCE_OF_GRASS = 35;
+
+	public static final int CHANCE_GRASS = 35;
 	public static final int ITERATIONS = 100;
 
 	@Override
@@ -20,7 +21,7 @@ public class TallGrassPopulator extends SurfaceBlockPopulator {
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
 			// Apply chances
-			if(rand.nextInt(100) < CHANCE_OF_GRASS) {
+			if(rand.nextInt(100) < CHANCE_GRASS) {
 				int xGrass = rand.nextInt(16);
 				int zGrass = rand.nextInt(16);
 				

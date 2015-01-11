@@ -11,9 +11,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SanctuaryPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 1;
-	public static final int CHANCE_OF_SANCTUARY = 3; //Promile
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 1;
+	public static final int CHANCE_SANCTUARY = 3; //Promile
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -25,7 +26,7 @@ public class SanctuaryPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Apply chances
-		if (rand.nextInt(1000) < CHANCE_OF_SANCTUARY) {
+		if (rand.nextInt(1000) < CHANCE_SANCTUARY) {
 			
 			// Register the current room as constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, 30, z);
@@ -66,7 +67,7 @@ public class SanctuaryPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -75,6 +76,6 @@ public class SanctuaryPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

@@ -10,10 +10,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class TorchPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 2;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_TORCH = 10;
-	public static final double CHANCE_OF_TORCH_ADDITION_PER_LEVEL = 3.333; /* to 30 */
+
+	public static final int LAYER_MIN = 2;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_TORCH = 10;
+	public static final double CHANCE_TORCH_ADDITION_EACH_LEVEL = 3.333; /* to 30 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -24,7 +25,7 @@ public class TorchPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_OF_TORCH + (CHANCE_OF_TORCH_ADDITION_PER_LEVEL * (y - 30) / 6)) {
+		if(rand.nextInt(100) < CHANCE_TORCH + (CHANCE_TORCH_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
 								
 			int torchX = x + rand.nextInt(6) + 1;
 			int torchY = args.getFloorY() + 1;
@@ -46,7 +47,7 @@ public class TorchPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -55,6 +56,6 @@ public class TorchPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

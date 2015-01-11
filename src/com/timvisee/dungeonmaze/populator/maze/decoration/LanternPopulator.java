@@ -10,14 +10,15 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class LanternPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 3;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_1 = 30;
-	public static final double CHANCE_1_ADDITION_PER_LEVEL = 7.5; /* to 75 */
-	public static final int ITERATIONS_1 = 2;
-	public static final int CHANCE_2 = 10;
-	public static final double CHANCE_2_ADDITION_PER_LEVEL = 4.167; /* to 35 */
-	public static final int ITERATIONS_2 = 2;
+
+	public static final int LAYER_MIN = 3;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_SINGLE = 30;
+	public static final double CHANCE_SINGLE_ADDITION_EACH_LEVEL = 7.5; /* to 75 */
+	public static final int ITERATIONS_SINGLE = 2;
+	public static final int CHANCE_DOUBLE = 10;
+	public static final double CHANCE_DOUBLE_ADDITION_EACH_LEVEL = 4.167; /* to 35 */
+	public static final int ITERATIONS_DOUBLE = 2;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -29,8 +30,8 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 		int floorOffset = args.getFloorOffset();
 		
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_1 + (CHANCE_1_ADDITION_PER_LEVEL * (y - 30) / 6)) {
-			for(int i = 0; i < ITERATIONS_1; i++) {
+		if(rand.nextInt(100) < CHANCE_SINGLE + (CHANCE_SINGLE_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
+			for(int i = 0; i < ITERATIONS_SINGLE; i++) {
 				int lanternX = x + rand.nextInt(8);
 				int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
 				int lanternZ = z + rand.nextInt(8);
@@ -41,8 +42,8 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 			}
 		}
 		
-		if(rand.nextInt(100) < CHANCE_2 + (CHANCE_2_ADDITION_PER_LEVEL * (y - 30) / 6)) {
-			for(int i = 0; i < ITERATIONS_2; i++) {
+		if(rand.nextInt(100) < CHANCE_DOUBLE + (CHANCE_DOUBLE_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
+			for(int i = 0; i < ITERATIONS_DOUBLE; i++) {
 				int lanternX = x + rand.nextInt(8);
 				int lanternY = rand.nextInt(4 - floorOffset) + 2 + floorOffset;
 				int lanternZ = z + rand.nextInt(8);
@@ -60,7 +61,7 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -69,7 +70,7 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 
 	// Depricated, might use later again to rotate pumpkins correctly

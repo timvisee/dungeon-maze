@@ -10,10 +10,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SoulsandPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 3;
-	public static final int MAX_LAYER = 7;
+
+	public static final int LAYER_MIN = 3;
+	public static final int LAYER_MAX = 7;
 	public static final int CHANCE = 20;
-	public static final double CHANCE_ADDITION_PER_LEVEL = -1.667; /* to 10 */
+	public static final double CHANCE_ADDITION_EACH_LEVEL = -1.667; /* to 10 */
 	public static final int ITERATIONS = 15;
 
 	@Override
@@ -26,7 +27,7 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
 		
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
-			if(rand.nextInt(100) < CHANCE + (CHANCE_ADDITION_PER_LEVEL * (y - 30) / 6)) {
+			if(rand.nextInt(100) < CHANCE + (CHANCE_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
 				Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt(2) + y, z + rand.nextInt(8));
 				
 				if (b.getType() == Material.COBBLESTONE)
@@ -41,7 +42,7 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -50,6 +51,6 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

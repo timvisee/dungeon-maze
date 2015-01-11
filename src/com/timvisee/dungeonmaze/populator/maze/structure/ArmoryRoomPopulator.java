@@ -15,9 +15,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_ARMORYROOM = 900; // Promile
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_ARMORYROOM = 900; // Promile
 
 	// TODO: Armory room still not used, finish it and put it into Dungeon Maze
 
@@ -33,7 +34,7 @@ public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Apply chances
-		if(rand.nextInt(1000) < CHANCE_OF_ARMORYROOM) {
+		if(rand.nextInt(1000) < CHANCE_ARMORYROOM) {
 			// Register the current room as constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c, x, y, z);
 			
@@ -189,7 +190,7 @@ public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -198,6 +199,6 @@ public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

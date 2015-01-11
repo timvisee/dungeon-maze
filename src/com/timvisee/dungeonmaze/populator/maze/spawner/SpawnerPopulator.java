@@ -16,11 +16,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SpawnerPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_SPAWNER = 6;
-	public static final double CHANCE_OF_TORCH_ADDITION_PER_LEVEL = -0.5; /* to 3 */
-	public static final double MIN_SPAWN_DISTANCE = 2; // Chunks
+
+	public static final int LAYER_MIN = 1;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_SPAWNER = 6;
+	public static final double CHANCE_TORCH_ADDITION_EACH_LEVEL = -0.5; /* to 3 */
+	public static final double SPAWN_DISTANCE_MIN = 2; // Chunks
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -30,11 +31,11 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < MIN_SPAWN_DISTANCE)
+		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 					
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_OF_SPAWNER) {
+		if(rand.nextInt(100) < CHANCE_SPAWNER) {
 			
 			int spawnerX = x + rand.nextInt(6) + 1;
 			int spawnerY = args.getFloorY() + 1;
@@ -109,7 +110,7 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -118,6 +119,6 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }

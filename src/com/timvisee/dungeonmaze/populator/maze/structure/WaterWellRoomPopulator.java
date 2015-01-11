@@ -11,9 +11,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
-	public static final int MIN_LAYER = 3;
-	public static final int MAX_LAYER = 7;
-	public static final int CHANCE_OF_WATERWELL = 2; //Promile
+
+	public static final int LAYER_MIN = 3;
+	public static final int LAYER_MAX = 7;
+	public static final int CHANCE_WATERWELL = 2; //Promile
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -26,7 +27,7 @@ public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Apply chance
-		if (rand.nextInt(1000) < CHANCE_OF_WATERWELL) {
+		if (rand.nextInt(1000) < CHANCE_WATERWELL) {
 			
 			// Register the current room as constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
@@ -80,7 +81,7 @@ public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMinimumLayer() {
-		return MIN_LAYER;
+		return LAYER_MIN;
 	}
 	
 	/**
@@ -89,6 +90,6 @@ public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
 	 */
 	@Override
 	public int getMaximumLayer() {
-		return MAX_LAYER;
+		return LAYER_MAX;
 	}
 }
