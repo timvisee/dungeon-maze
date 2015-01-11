@@ -8,7 +8,6 @@ import java.util.List;
 import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.generator.Generator;
 import com.timvisee.dungeonmaze.update.Updater;
-import com.timvisee.dungeonmaze.plugin.metrics.Metrics;
 import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -22,9 +21,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.timvisee.dungeonmaze.plugin.metrics.Metrics.Graph;
 import com.timvisee.dungeonmaze.update.Updater.UpdateResult;
 import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
+import org.mcstats.Metrics;
 
 public class DungeonMaze extends JavaPlugin {
 
@@ -209,7 +208,7 @@ public class DungeonMaze extends JavaPlugin {
 			Metrics metrics = new Metrics(this);
 			// Construct a graph, which can be immediately used and considered as valid
 			// Player count in Dungeon Maze
-			Graph graph = metrics.createGraph("Players in Dungeon Maze");
+			Metrics.Graph graph = metrics.createGraph("Players in Dungeon Maze");
 			graph.addPlotter(new Metrics.Plotter("Players") {
 				@Override
 				public int getValue() {
