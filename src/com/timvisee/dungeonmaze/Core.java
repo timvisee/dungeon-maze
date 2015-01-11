@@ -7,6 +7,8 @@ import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.module.*;
 import com.timvisee.dungeonmaze.api.ApiControllerModule;
 import com.timvisee.dungeonmaze.config.ConfigHandlerModule;
+import com.timvisee.dungeonmaze.plugin.metrics.MetricsController;
+import com.timvisee.dungeonmaze.plugin.metrics.MetricsControllerModule;
 import com.timvisee.dungeonmaze.structure.CustomStructureManagerModule;
 import com.timvisee.dungeonmaze.listener.EventListenerManagerModule;
 import com.timvisee.dungeonmaze.logger.LoggerModule;
@@ -52,6 +54,8 @@ public class Core {
     private ApiControllerModule apiControllerModule = new ApiControllerModule();
     /** Event listener manager module instance. */
     private EventListenerManagerModule eventListenerManagerModule = new EventListenerManagerModule();
+    /** Metrics controller module instance. */
+    private MetricsControllerModule metricsControllerModule = new MetricsControllerModule();
 
     /**
      * Constructor.
@@ -92,6 +96,7 @@ public class Core {
         this.moduleManager.registerModule(this.customStructureManagerModule);
         this.moduleManager.registerModule(this.apiControllerModule);
         this.moduleManager.registerModule(this.eventListenerManagerModule);
+        this.moduleManager.registerModule(this.metricsControllerModule);
 
         // Initialize all modules
         if(!this.moduleManager.initModules())
@@ -309,5 +314,23 @@ public class Core {
      */
     public EventListenerManager _getEventListenerManager() {
         return this.eventListenerManagerModule.getEventListenerManager();
+    }
+
+    /**
+     * Get the metrics controller.
+     *
+     * @return Metrics controller instance.
+     */
+    public static MetricsController getMetricsController() {
+        return Core.instance._getMetricsController();
+    }
+
+    /**
+     * Get the metrics controller.
+     *
+     * @return Metrics controller instance.
+     */
+    public MetricsController _getMetricsController() {
+        return this.metricsControllerModule.getMetricsController();
     }
 }

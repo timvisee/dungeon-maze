@@ -34,8 +34,8 @@ public class WorldManager {
 					try {
 						if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
 							w.add(world.getName());
-					} catch (NoClassDefFoundError e) {
-					} catch (NullPointerException e) {
+					} catch (NoClassDefFoundError ignored) {
+					} catch (NullPointerException ignored) {
 					}
 				}
 			}
@@ -75,7 +75,7 @@ public class WorldManager {
 	
 	/**
 	 * Get all loaded DM worlds
-	 * @return
+	 * @return A list of loaded Dungeon Maze world names.
 	 */
 	public List<String> getLoadedDMWorlds() {
 		List<String> loadedWorlds = new ArrayList<String>();

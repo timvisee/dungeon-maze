@@ -63,9 +63,6 @@ public class DungeonMaze extends JavaPlugin {
 		// Show a startup message
 		Core.getLogger().info("[DungeonMaze] Dungeon Maze v" + getVersion() + " started, took " + p.getTimeFormatted() + "!");
 		Core.getLogger().info("[DungeonMaze] Dungeon Maze made by Tim Visee - timvisee.com");
-
-		// Setup Metrics
-		setUpMetrics();
 	}
 
 	/**
@@ -200,37 +197,6 @@ public class DungeonMaze extends JavaPlugin {
 	public List<String> constantChunks = new ArrayList<String>(); // x;
 	
 	private DungeonMazeApiOld dmOldApi;
-	
-	/**
-	 * Setup the metrics statics feature
-	 * @return false if an error occurred
-	 */
-	public boolean setUpMetrics() {
-		try {
-			Metrics metrics = new Metrics(this);
-			// Construct a graph, which can be immediately used and considered as valid
-			// Player count in Dungeon Maze
-			Metrics.Graph graph = metrics.createGraph("Players in Dungeon Maze");
-			graph.addPlotter(new Metrics.Plotter("Players") {
-				@Override
-				public int getValue() {
-					List<Player> players = new ArrayList<Player>(getServer().getOnlinePlayers());
-					int count = 0;
-					for(Player p : players) {
-						if(Core.getWorldManager().isDMWorld(p.getWorld().getName()))
-							count++;
-					}
-					return count;
-				}
-			});
-			metrics.start();
-			return true;
-		} catch(IOException e) {
-			// Failed to submit the statics :-(
-			e.printStackTrace();
-			return false;
-		}
-	}
 		
 	public boolean usePermissions() {
 		return Core.getConfigHandler().usePermissions;
@@ -248,9 +214,9 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].toString().equalsIgnoreCase("createworld") ||
-					args[0].toString().equalsIgnoreCase("cw") ||
-					args[0].toString().equalsIgnoreCase("create")) {
+			if(args[0].equalsIgnoreCase("createworld") ||
+					args[0].equalsIgnoreCase("cw") ||
+					args[0].equalsIgnoreCase("create")) {
 				// Check permission
 				if(sender instanceof Player) {
 					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.createworld", sender.isOp())) {
@@ -265,7 +231,7 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				
 				// Get the world name
-				String w = args[1].toString();
+				String w = args[1];
 				
 				if(worldExists(w)) {
 					sender.sendMessage(ChatColor.DARK_RED + w);
@@ -308,9 +274,9 @@ public class DungeonMaze extends JavaPlugin {
 					p.sendMessage(ChatColor.GREEN + "The world has been succesfully generated! You have been teleported.");
 				}
 				
-			} else if(args[0].toString().equalsIgnoreCase("teleport") ||
-					args[0].toString().equalsIgnoreCase("tp") ||
-					args[0].toString().equalsIgnoreCase("warp")) {
+			} else if(args[0].equalsIgnoreCase("teleport") ||
+					args[0].equalsIgnoreCase("tp") ||
+					args[0].equalsIgnoreCase("warp")) {
 				
 				// Check permission
 				if(sender instanceof Player) {
@@ -327,14 +293,14 @@ public class DungeonMaze extends JavaPlugin {
 				}
 				
 				// The command must be ran by an in-game player
-				if(sender instanceof Player) { } else {
+				if(!(sender instanceof Player)) {
 					sender.sendMessage(ChatColor.DARK_RED + "You need to be in-game to use this command!");
 					return true;
 				}
-				
+
 				// Get the player and the world name
 				Player p = (Player) sender;
-				String w = args[1].toString();
+				String w = args[1];
 				
 				// The world must exist
 				if(!worldExists(w)) {
@@ -458,7 +424,7 @@ public class DungeonMaze extends JavaPlugin {
 				// TODO: Force check for an update!
 				Updater uc = Core.getUpdateChecker();
 				
-				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
+				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE) {
 					sender.sendMessage(ChatColor.GREEN + "No new version found!");
 				} else {
 					
@@ -505,7 +471,7 @@ public class DungeonMaze extends JavaPlugin {
 				// TODO: Force check for an update!
 				Updater uc = Core.getUpdateChecker();
 
-				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
+				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE) {
 					sender.sendMessage(ChatColor.GREEN + "No new version found!");
 				} else {
 
@@ -634,7 +600,7 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	public void registerConstantChunk(String world, int chunkX, int chunkZ) {
-		if (lastWorld != world) {
+		if (!lastWorld.equals(world)) {
 			lastWorld = world;
 			constantChunks.clear();
 		}
