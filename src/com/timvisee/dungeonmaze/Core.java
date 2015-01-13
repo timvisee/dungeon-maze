@@ -1,6 +1,8 @@
 package com.timvisee.dungeonmaze;
 
 import com.timvisee.dungeonmaze.api.ApiController;
+import com.timvisee.dungeonmaze.api.OldApiController;
+import com.timvisee.dungeonmaze.api.OldApiControllerModule;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.listener.EventListenerManager;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
@@ -52,6 +54,8 @@ public class Core {
     private CustomStructureManagerModule customStructureManagerModule = new CustomStructureManagerModule();
     /** API Controller module instance. */
     private ApiControllerModule apiControllerModule = new ApiControllerModule();
+    /** Old API Controller module instance. */
+    private OldApiControllerModule oldApiControllerModule = new OldApiControllerModule();
     /** Event listener manager module instance. */
     private EventListenerManagerModule eventListenerManagerModule = new EventListenerManagerModule();
     /** Metrics controller module instance. */
@@ -95,6 +99,7 @@ public class Core {
         this.moduleManager.registerModule(this.multiverseHandlerModule);
         this.moduleManager.registerModule(this.customStructureManagerModule);
         this.moduleManager.registerModule(this.apiControllerModule);
+        this.moduleManager.registerModule(this.oldApiControllerModule);
         this.moduleManager.registerModule(this.eventListenerManagerModule);
         this.moduleManager.registerModule(this.metricsControllerModule);
 
@@ -296,6 +301,24 @@ public class Core {
      */
     public ApiController _getApiController() {
         return this.apiControllerModule.getApiController();
+    }
+
+    /**
+     * Get the old API Controller.
+     *
+     * @return Old API Controller instance.
+     */
+    public static OldApiController getOldApiController() {
+        return Core.instance._getOldApiController();
+    }
+
+    /**
+     * Get the old API Controller.
+     *
+     * @return Old API Controller instance.
+     */
+    public OldApiController _getOldApiController() {
+        return this.oldApiControllerModule.getApiController();
     }
 
     /**

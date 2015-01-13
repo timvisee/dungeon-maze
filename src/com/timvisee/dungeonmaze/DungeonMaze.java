@@ -23,7 +23,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.timvisee.dungeonmaze.update.Updater.UpdateResult;
 import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
-import org.mcstats.Metrics;
 
 public class DungeonMaze extends JavaPlugin {
 
@@ -55,10 +54,6 @@ public class DungeonMaze extends JavaPlugin {
 
 		// Initialize the core
 		initCore();
-
-		// Set up the old API system
-		//noinspection deprecation
-		setAPI(new DungeonMazeApiOld(this));
 
 		// Show a startup message
 		Core.getLogger().info("[DungeonMaze] Dungeon Maze v" + getVersion() + " started, took " + p.getTimeFormatted() + "!");
@@ -195,8 +190,6 @@ public class DungeonMaze extends JavaPlugin {
 	public String lastWorld = "";
 	public List<String> constantRooms = new ArrayList<String>(); // x;y;z
 	public List<String> constantChunks = new ArrayList<String>(); // x;
-	
-	private DungeonMazeApiOld dmOldApi;
 		
 	public boolean usePermissions() {
 		return Core.getConfigHandler().usePermissions;
@@ -651,14 +644,17 @@ public class DungeonMaze extends JavaPlugin {
 		return constantRooms.contains(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
 
-	@Deprecated
-	public void setAPI(DungeonMazeApiOld dmAPI) {
-		this.dmOldApi = dmAPI;
-	}
-
+	/**
+	 * Get the old Dungeon Maze API.
+	 *
+	 * @return Old Dungeon Maze API.
+	 *
+	 * @deprecated This API is deprecated. The new Dungeon Maze API should be used instead. This API will be removed
+	 * soon.
+	 */
 	@Deprecated
 	public DungeonMazeApiOld getDmAPI() {
-		return dmOldApi;
+		return Core.getOldApiController().getApi();
 	}
 
 	public String getVersion() {
