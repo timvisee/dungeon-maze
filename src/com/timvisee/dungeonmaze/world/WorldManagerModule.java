@@ -1,7 +1,13 @@
 package com.timvisee.dungeonmaze.world;
 
-import com.timvisee.dungeonmaze.world.WorldManager;
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.module.Module;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorldManagerModule extends Module {
 
@@ -18,18 +24,15 @@ public class WorldManagerModule extends Module {
      */
     @Override
     public boolean init() {
-        // Initialize and the world manager
-        this.worldManager = new WorldManager();
+        // Set the world manager
+        this.worldManager = new WorldManager(false);
 
-        // Refresh the manager
-        this.worldManager.refresh();
+        // Initialize the world manager, make sure to refresh and preload. Return false on failure
+        if(!this.worldManager.init(true, true))
+            return false;
 
-        // Pre-load the worlds
-        this.worldManager.preloadWorlds();
-
-        // TODO: Do some error checking!
-
-        return true;
+        // Return the result
+        return this.worldManager.isInit();
     }
 
     /**
@@ -39,7 +42,11 @@ public class WorldManagerModule extends Module {
      */
     @Override
     public boolean isInit() {
-        return this.worldManager != null;
+        if(this.worldManager == null)
+            return false;
+
+        // Check whether the world manager is initialized, return the result
+        return this.worldManager.isInit();
     }
 
     /**
@@ -54,7 +61,44 @@ public class WorldManagerModule extends Module {
      */
     @Override
     public boolean destroy(boolean force) {
-        // TODO: Unload the world manager
+        // Make sure the world manager is initialized or the destruction must be forced
+        if(!isInit() && !force)
+            return true;
+
+        // Get the config instance
+        FileConfiguration c = Core.getConfigHandler().config;
+
+        // Unload all Dungeon Maze worlds if set in the config file
+        if(c.getBoolean("unloadWorldsOnPluginDisable", true)) {
+            // Make sure the world count is greater than zero
+            if(c.getStringList("worlds").size() > 0) {
+                // Dungeon Maze does have some worlds
+                Core.getLogger().info("[DungeonMaze] Unloading Dungeon Maze worlds...");
+
+                // Unload the Dungeon Maze worlds
+                List<String> worlds = new ArrayList<String>();
+                for(World w : Bukkit.getWorlds())
+                    if(c.getStringList("worlds").contains(w.getName()))
+                        worlds.add(w.getName());
+
+                // Unload each world
+                for(String w : worlds)
+                    Bukkit.unloadWorld(w, true);
+
+                Core.getLogger().info("[DungeonMaze] All Dungeon Maze worlds have been unloaded!");
+            } else
+                Core.getLogger().info("[DungeonMaze] No Dungeon Maze worlds to unload avaiable");
+
+        } else
+            Core.getLogger().info("[DungeonMaze] Unloading worlds has been disabled!");
+
+        // Destroy the world manager if it's set, return false on failure if the destruction isn't forced
+        if(this.worldManager != null)
+            if(this.worldManager.destroy(force))
+                if(!force)
+                    return false;
+
+        // Unset the world manager instance, return the result
         this.worldManager = null;
         return true;
     }

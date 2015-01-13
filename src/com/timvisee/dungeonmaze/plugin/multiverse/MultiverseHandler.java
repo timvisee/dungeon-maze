@@ -4,11 +4,15 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 public class MultiverseHandler {
 
     /** Multiverse core instance. */
     public MultiverseCore multiverseCore;
+
+    /** Defines the required Multiverse version. */
+    private final static String REQUIRED_MULTIVERSE_VERSION = "2.5";
 
     /**
      * Constructor.
@@ -40,9 +44,20 @@ public class MultiverseHandler {
             return true;
         }
 
+        // Set the multiverse core instance and make sure it's
         try {
+            // Get the multiverse core instance
+            MultiverseCore multiverseCore = (MultiverseCore) multiversePlugin;
+
+            // Make sure the multiverse core version is acceptable, if not, return false
+            if(!multiverseCore.getDescription().getVersion().contains(MultiverseHandler.REQUIRED_MULTIVERSE_VERSION)) {
+                // Show an error message
+                Core.getLogger().info("[DungeonMaze] Failed to hook into Multiverse, version not compatible!");
+                return false;
+            }
+
             // Try to cast the plugin instance to a multiverse core instance and set the multiverse instance
-            this.multiverseCore = (MultiverseCore) multiversePlugin;
+            this.multiverseCore = multiverseCore;
 
         } catch(Exception ex) {
             // An error occurred, disable multiverse usage.
@@ -99,5 +114,35 @@ public class MultiverseHandler {
 
         // Return the multiverse core instance.
         return this.multiverseCore;
+    }
+
+    /**
+     * Get the plugin description file of the hooked Multiverse plugin.
+     *
+     * @return The plugin description file, or null on failure. Null will also be returned if the handler isn't
+     * successfully hooked into Multiverse.
+     */
+    public PluginDescriptionFile getPluginDescription() {
+        // Make sure the handler is hooked
+        if(!isHooked())
+            return null;
+
+        // Get and return the plugin description
+        return this.multiverseCore.getDescription();
+    }
+
+    /**
+     * Get the version number of the hooked Multiverse plugin.
+     *
+     * @return The version number, or null on failure. Null will also be returned if the handler isn't
+     * successfully hooked into Multiverse.
+     */
+    public String getPluginVersion() {
+        // Make sure the handler is hooked
+        if(!isHooked())
+            return null;
+
+        // Get and return the plugins version number
+        return getPluginDescription().getVersion();
     }
 }

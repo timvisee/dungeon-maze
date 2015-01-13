@@ -64,36 +64,17 @@ public class DungeonMaze extends JavaPlugin {
 	 * On enable method, called when plugin is being disabled
 	 */
 	public void onDisable() {
-		// Get the config instance
-		FileConfiguration c = Core.getConfigHandler().config;
+		// Profile the shutdown
+		Profiler p = new Profiler(true);
 
-		// Unload all Dungeon Maze worlds if it's enabled
-		if(c.getBoolean("unloadWorldsOnPluginDisable", true)) {
-			if(c.getStringList("worlds").size() > 0) {
-				// Dungeon Maze does have some worlds
-				Core.getLogger().info("[DungeonMaze] Unloading Dungeon Maze worlds...");
-
-				// Unload the Dungeon Maze worlds
-				List<String> worlds = new ArrayList<String>();
-				for(World w : getServer().getWorlds())
-					if(c.getStringList("worlds").contains(w.getName()))
-						worlds.add(w.getName());
-
-				for(String w : worlds)
-					getServer().unloadWorld(w, true);
-
-				Core.getLogger().info("[DungeonMaze] All Dungeon Maze worlds have been unloaded!");
-			} else
-				Core.getLogger().info("[DungeonMaze] No Dungeon Maze worlds to unload avaiable");
-
-		} else
-			Core.getLogger().info("[DungeonMaze] Unloading worlds has been disabled!");
+		// Show an disabling message
+		Core.getLogger().info("[DungeonMaze] Disabling Dungeon Maze...");
 
 		// Destroy the core
 		destroyCore(true);
 
 		// Show an disabled message
-		Core.getLogger().info("[DungeonMaze] Dungeon Maze Disabled!");
+		Core.getLogger().info("[DungeonMaze] Dungeon Maze Disabled, took " + p.getTimeFormatted() + "!");
 	}
 
 	/**

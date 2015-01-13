@@ -106,6 +106,6 @@ public class ApiWorldManager {
 	 * @return MultiverseCore instance
 	 */
 	public MultiverseCore getMultiverseCore() {
-		return getDMWorldManager().getMultiverseCore();
+		return this.dm.getCore()._getMultiverseHandler().getMultiverseCore();
     }
 }

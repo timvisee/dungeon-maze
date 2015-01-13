@@ -93,10 +93,10 @@ public class Core {
         this.moduleManager.unregisterAllModules();
         this.moduleManager.registerModule(this.loggerModule);
         this.moduleManager.registerModule(this.configHandlerModule);
+        this.moduleManager.registerModule(this.multiverseHandlerModule);
         this.moduleManager.registerModule(this.worldManagerModule);
         this.moduleManager.registerModule(this.updateCheckerModule);
         this.moduleManager.registerModule(this.permissionsManagerModule);
-        this.moduleManager.registerModule(this.multiverseHandlerModule);
         this.moduleManager.registerModule(this.customStructureManagerModule);
         this.moduleManager.registerModule(this.apiControllerModule);
         this.moduleManager.registerModule(this.oldApiControllerModule);
@@ -196,6 +196,24 @@ public class Core {
     }
 
     /**
+     * Get the multiverse handler.
+     *
+     * @return Multiverse handler instance.
+     */
+    public static MultiverseHandler getMultiverseHandler() {
+        return Core.instance._getMultiverseHandler();
+    }
+
+    /**
+     * Get the multiverse handler.
+     *
+     * @return Multiverse handler instance.
+     */
+    public MultiverseHandler _getMultiverseHandler() {
+        return this.multiverseHandlerModule.getMultiverseHandler();
+    }
+
+    /**
      * Get the world manager.
      *
      * @return World manager instance.
@@ -247,24 +265,6 @@ public class Core {
      */
     public PermissionsManager _getPermissionsManager() {
         return this.permissionsManagerModule.getPermissionsManager();
-    }
-
-    /**
-     * Get the multiverse handler.
-     *
-     * @return Multiverse handler instance.
-     */
-    public static MultiverseHandler getMultiverseHandler() {
-        return Core.instance._getMultiverseHandler();
-    }
-
-    /**
-     * Get the multiverse handler.
-     *
-     * @return Multiverse handler instance.
-     */
-    public MultiverseHandler _getMultiverseHandler() {
-        return this.multiverseHandlerModule.getMultiverseHandler();
     }
 
     /**

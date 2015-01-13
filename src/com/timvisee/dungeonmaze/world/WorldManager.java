@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -16,44 +17,140 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 
 public class WorldManager {
 
-	// DM worlds
+	// TODO: Improve the quality of the code!
+
+	/** Defines whether the world manager is initialized or not. */
+	private boolean init = false;
+
+	/** Defines the Dungeon Maze worlds. */
 	private List<String> worlds = new ArrayList<String>();
+	/** Defines the Dungeon Maze worlds that need to be preloaded. */
 	private List<String> preloadWorlds = new ArrayList<String>();
-	
+
 	/**
-	 * Refresh the list with Dungeon Maze worlds
+	 * Constructor. This won't initialize the manager immediately.
 	 */
-	public void refresh() {
+	public WorldManager() {
+		this(false);
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * @param init True to initialize the world manager immediately. This will refresh the Dungeon Maze worlds but won't
+	 *             preload any world.
+	 */
+	public WorldManager(boolean init) {
+		// Initialize
+		if(init)
+			init();
+	}
+
+	/**
+	 * Initialize the world manager. This will automatically refresh the Dungeon Maze worlds on initialization, but
+	 * won't preload any world.
+	 *
+	 * @return True on success, false on failure.
+	 */
+	public boolean init() {
+		return init(true, false);
+	}
+
+	/**
+	 * Initialize the world manager. Optionally refresh the Dungeon Maze worlds and preload the worlds.
+	 *
+	 * @param refresh True to refresh the Dungeon Maze worlds, false otherwise.
+	 * @param preload True to preload the worlds, false otherwise.
+	 *
+	 * @return True on success, false on failure. True will also be returned if the world manager was already
+	 * initialized.
+	 */
+	public boolean init(boolean refresh, boolean preload) {
+		// Make sure the world manager isn't initialized already
+		if(isInit())
+			return true;
+
+		// Refresh the Dungeon Maze worlds
+		if(refresh)
+			if(!refresh())
+				return false;
+
+		// Preload the worlds
+		if(preload)
+			if(!preloadWorlds())
+				return false;
+
+		// Set whether the world manager is initialized, return the result
+		this.init = true;
+		return true;
+	}
+
+	/**
+	 * Check whether the world manager is initialized.
+	 *
+	 * @return True if the world manager is initialized, false otherwise.
+	 */
+	public boolean isInit() {
+		return this.init;
+	}
+
+	/**
+	 * Destroy the world manager.
+	 *
+	 * @param force True for force destroy the world manager.
+	 *
+	 * @return True if the world manager was successfully destroyed. True will also be returned if the world manager
+	 * wasn't initialized.
+	 */
+	public boolean destroy(boolean force) {
+		// Make sure the world manager is initialized or the destruction must be forced
+		if(!isInit() && !force)
+			return true;
+
+		// TODO: Peacefully unload the manager and all worlds!?
+		this.init = false;
+		return true;
+	}
+
+	/**
+	 * Refresh the list with Dungeon Maze worlds.
+	 *
+	 * @return True on success, false on failure.
+	 */
+	public boolean refresh() {
 		// Load the list from the config
-		List<String> w = DungeonMaze.instance.getConfig().getStringList("worlds");
-		
-			if (getMultiverseCore() != null) {
-				for (World world : Bukkit.getWorlds()) {
-					MultiverseCore mv = getMultiverseCore();
-					MultiverseWorld mvWorld = mv.getMVWorldManager().getMVWorld(world);
-					try {
-						if ((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !w.contains(world.getName()))
-							w.add(world.getName());
-					} catch (NoClassDefFoundError ignored) {
-					} catch (NullPointerException ignored) {
-					}
+		List<String> worlds = DungeonMaze.instance.getConfig().getStringList("worlds");
+
+		// Get the multiverse core
+		MultiverseCore multiverseCore = Core.getMultiverseHandler().getMultiverseCore();
+
+		if(multiverseCore != null) {
+			for(World world : Bukkit.getWorlds()) {
+				MultiverseWorld mvWorld = multiverseCore.getMVWorldManager().getMVWorld(world);
+				try {
+					if((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !worlds.contains(world.getName()))
+						worlds.add(world.getName());
+				} catch (NoClassDefFoundError ignored) {
+				} catch (NullPointerException ignored) {
 				}
 			}
-		
-		worlds = w;
+		}
+
+		// Set the worlds
+		this.worlds = worlds;
 
 		// Load the list from the config
-		List<String> pw = DungeonMaze.instance.getConfig().getStringList("preloadWorlds");
-		if(pw != null)
-			preloadWorlds = pw;
+		List<String> preloadWorlds = DungeonMaze.instance.getConfig().getStringList("preloadWorlds");
+		if(preloadWorlds != null)
+			this.preloadWorlds = preloadWorlds;
 		
 		// Put all the DM worlds into the bukkit.yml file
-		if (getMultiverseCore() == null) {
+		if(multiverseCore == null) {
 			FileConfiguration bukkitConfig = DungeonMaze.instance.getConfigFromPath(new File("bukkit.yml"));
 			if(bukkitConfig != null) {
 				//System.out.println("Editing bukkit.yml file...");
-				for(String entry : w)
-					bukkitConfig.set("worlds." + w + ".generator", entry);
+				for(String entry : worlds)
+					bukkitConfig.set("worlds." + worlds + ".generator", entry);
 				
 				try {
 					bukkitConfig.save(new File("bukkit.yml"));
@@ -63,18 +160,23 @@ public class WorldManager {
 				//System.out.println("Editing finished!");
 			}
 		}
+
+		// Return the result
+		return true;
 	}
 	
 	/**
-	 * Get all DM worlds
-	 * @return all DM worlds
+	 * Get all DM worlds.
+	 *
+	 * @return all DM worlds.
 	 */
 	public List<String> getDMWorlds() {
 		return this.worlds;
 	}
 	
 	/**
-	 * Get all loaded DM worlds
+	 * Get all loaded DM worlds.
+	 *
 	 * @return A list of loaded Dungeon Maze world names.
 	 */
 	public List<String> getLoadedDMWorlds() {
@@ -90,51 +192,52 @@ public class WorldManager {
 	}
 	
 	/**
-	 * Get all preload worlds of DM
-	 * @return all preload worlds
+	 * Get all preload worlds of DM.
+	 *
+	 * @return all preload worlds.
 	 */
 	public List<String> getPreloadWorlds() {
 		return preloadWorlds;
 	}
 	
 	/**
-	 * Check if a world is a DM world
-	 * @param w the world name
-	 * @return true if the world is a DM world
+	 * Check if a world is a DM world.
+	 *
+	 * @param w the world name.
+	 *
+	 * @return true if the world is a DM world.
 	 */
 	public boolean isDMWorld(String w) {
 		return getDMWorlds().contains(w);
 	}
 	
 	/**
-	 * Check if a world is a loaded DM world
-	 * @param w the world name
-	 * @return true if the world is a loaded DM world
+	 * Check if a world is a loaded DM world.
+	 *
+	 * @param w the world name.
+	 *
+	 * @return true if the world is a loaded DM world.
 	 */
 	public boolean isDMWorldLoaded(String w) {
 		return getLoadedDMWorlds().contains(w);
 	}
 	
 	/**
-	 * Preload all 'preload' DM worlds
+	 * Preload all 'preload' DM worlds.
+	 *
+	 * @return True on success, false on failure.
 	 */
-	public void preloadWorlds() {
-		if (preloadWorlds != null) {
+	public boolean preloadWorlds() {
+		if(preloadWorlds != null) {
 			for(String w : preloadWorlds) {
 					WorldCreator newWorld = new WorldCreator(w);
 					newWorld.generator(DungeonMaze.instance.getDMWorldGenerator());
-					if (Bukkit.getWorld(w) != null)
+					if(Bukkit.getWorld(w) != null)
 						newWorld.createWorld();
 			}
 		}
+
+		// Return the result
+		return true;
 	}
-	
-	public MultiverseCore getMultiverseCore() {
-        MultiverseCore mv = (MultiverseCore) DungeonMaze.instance.getServer().getPluginManager().getPlugin("Multiverse-Core");
- 
-        if (mv != null)
-        	if (mv.getDescription().getVersion().contains("2.5"))
-        			return mv;
-        return null;
-    }
 }
