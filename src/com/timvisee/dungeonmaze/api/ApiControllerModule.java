@@ -70,7 +70,16 @@ public class ApiControllerModule extends Module {
 
         // Unregister all API sessions and disable the controller
         if(this.apiController != null) {
-            this.apiController.unregisterAllApiSessions();
+            // Count the API sessions
+            final int apiSessionCount = getApiController().getApiSessionsCount();
+
+            // Unhook all hooked plugins and sessions
+            if(apiSessionCount > 0) {
+                Core.getLogger().info("[DungeonMaze] Unhooking " + apiSessionCount + " hooked plugin" + (apiSessionCount != 1 ? "s" : "") + "...");
+                this.apiController.unregisterAllApiSessions();
+            }
+
+            // Disable the API controller
             this.apiController.setEnabled(false);
         }
 

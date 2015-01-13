@@ -89,17 +89,11 @@ public class DungeonMaze extends JavaPlugin {
 		} else
 			Core.getLogger().info("[DungeonMaze] Unloading worlds has been disabled!");
 
-		// Unhook all plugins hooked into Dungeon Maze and remove/unregister their sessions
-		if(Core.getApiController().getApiSessionsCount() > 0) {
-			getLogger().info("[DungeonMaze] Unhooking all hooked plugins...");
-			Core.getApiController().unregisterAllApiSessions();
-		}
-
 		// Destroy the core
 		destroyCore(true);
 
 		// Show an disabled message
-		Core.getLogger().info("[DungeonMaze] Dungeon Maze Disabled");
+		Core.getLogger().info("[DungeonMaze] Dungeon Maze Disabled!");
 	}
 
 	/**
@@ -174,15 +168,6 @@ public class DungeonMaze extends JavaPlugin {
 	public ApiController getApiController() {
 		return Core.getApiController();
 	}
-
-
-
-
-
-
-
-
-
 
 	private final Generator generator = new Generator(this);
 	
