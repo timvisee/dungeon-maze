@@ -152,8 +152,7 @@ public class ModuleManager {
                 Core.getLogger().info("[DungeonMaze] [Module] Unload: " + m.getName() + " FAILED!");
 
                 // Return false if the force mode isn't used
-                if(!force)
-                    return false;
+                return false;
             }
 
             // Show a status message

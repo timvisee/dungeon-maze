@@ -93,6 +93,6 @@ public class MetricsController {
 
         // Un-set Metrics. return the result
         this.metrics = null;
-        return isInit();
+        return !isInit();
     }
 }
