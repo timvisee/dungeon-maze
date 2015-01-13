@@ -57,7 +57,7 @@ public class DungeonMaze extends JavaPlugin {
 
 		// Show a startup message
 		Core.getLogger().info("[DungeonMaze] Dungeon Maze v" + getVersion() + " started, took " + p.getTimeFormatted() + "!");
-		Core.getLogger().info("[DungeonMaze] Dungeon Maze made by Tim Visee - timvisee.com");
+		Core.getLogger().info("[DungeonMaze] Dungeon Maze developed by Tim Visee - timvisee.com");
 	}
 
 	/**

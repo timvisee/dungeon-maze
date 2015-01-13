@@ -20,6 +20,8 @@ public class Config extends CustomConfig {
 	}
 
 	private void mergeConfig() {
+		// TODO: Load the default configuration file from the /res directory.
+
 		if(!contains("worlds"))
 			set("worlds", new ArrayList<String>());
 		if(!contains("preloadWorlds"))

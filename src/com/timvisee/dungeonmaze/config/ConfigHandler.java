@@ -51,7 +51,7 @@ public class ConfigHandler {
 		
 		for(Object entry : list)
 			if(entry instanceof Integer)
-				return (((Integer) entry).intValue() == target);
+				return ((Integer) entry == target);
 		return false;
 	}
 	
@@ -73,7 +73,7 @@ public class ConfigHandler {
 		
 		for(Object entry : list)
 			if(entry instanceof Integer)
-				return (((Integer) entry).intValue() == target);
+				return ((Integer) entry == target);
 		return false;
 	}
 	

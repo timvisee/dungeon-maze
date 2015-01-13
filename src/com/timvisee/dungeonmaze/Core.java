@@ -126,11 +126,9 @@ public class Core {
             return true;
 
         // Destroy all modules
-        if(!this.moduleManager.destroyModules(force)) {
-            if(force)
-                this.init = false;
-            return false;
-        }
+        if(!this.moduleManager.destroyModules(force))
+            if(!force)
+                return false;
 
         // Return the result
         this.init = false;
