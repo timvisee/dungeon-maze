@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.config.ConfigHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -238,6 +239,66 @@ public class WorldManager {
 		}
 
 		// Return the result
+		return true;
+	}
+
+	/**
+	 * Prepare the server and Dungeon Maze for a new Dungeon Maze world. This will automatically edit the proper
+	 * configuration file as needed.
+	 *
+	 * @param worldName The name of the world to configure the server for.
+	 *
+	 * @return True on success, false on failure.
+	 */
+	public boolean prepareDMWorld(String worldName) {
+		// Edit the bukkit.yml file so bukkit knows what generator to use for the Dungeon Maze worlds, also update the
+		// Dungeon Maze files.
+		Core.getLogger().info("[DungeonMaze] Preparing bukkit.yml file...");
+
+		// Load the Bukkit configuration file
+		FileConfiguration serverConfig = DungeonMaze.instance.getConfigFromPath(new File("bukkit.yml"));
+
+		// Prepare the file
+		serverConfig.set("worlds." + worldName + ".generator", DungeonMaze.instance.getName());
+
+		// Save the file
+		try {
+			serverConfig.save(new File("bukkit.yml"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			Core.getLogger().info("[DungeonMaze] Failed to prepare the bukkit.yml file!");
+			return false;
+		}
+
+		// Edit the Dungeon Maze configuration file, show a message
+		Core.getLogger().info("[DungeonMaze] Preparing the Dungeon Maze configuration file...");
+
+		// Get the configuration handler, and make sure it's available
+		ConfigHandler configHandler = Core.getConfigHandler();
+		if(configHandler == null) {
+			Core.getLogger().info("[DungeonMaze] Failed to prepare the Dungeon Maze configuration file, config handler not available!");
+			return false;
+		}
+
+		// Get the current list of worlds and preload worlds form the configuration file
+		List<String> worlds = configHandler.config.getStringList("worlds");
+		List<String> preloadWorlds = configHandler.config.getStringList("preloadWorlds");
+
+		// Add the world if it doesn't exist yet
+		if(!worlds.contains(worldName))
+			worlds.add(worldName);
+		if(!preloadWorlds.contains(worldName))
+			preloadWorlds.add(worldName);
+
+		// Update the worlds and preload worlds section again
+		Core.getConfigHandler().config.set("worlds", worlds);
+		Core.getConfigHandler().config.set("preloadWorlds", preloadWorlds);
+
+		// Save the config
+		DungeonMaze.instance.saveConfig();
+
+		// Show a message, return the result
+		System.out.println("[DungeonMaze] Successfully prepared!");
 		return true;
 	}
 }

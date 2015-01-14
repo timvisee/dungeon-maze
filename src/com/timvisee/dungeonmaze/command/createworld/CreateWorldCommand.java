@@ -3,6 +3,8 @@ package com.timvisee.dungeonmaze.command.createworld;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.Command;
+import com.timvisee.dungeonmaze.world.WorldManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -14,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class CreateWorldCommand extends Command {
 
@@ -28,6 +31,8 @@ public class CreateWorldCommand extends Command {
     private static final int MIN_ARGS = 1;
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = 1;
+    /** Minecraft world name validation Regex. */
+    private static final String MINECRAFT_WORLD_NAME_REGEX = "^[[\\p{Alnum}]_-]+";
 
     /**
      * Get a list of applicable command labels for this command.
@@ -82,7 +87,12 @@ public class CreateWorldCommand extends Command {
         // Get and trim the preferred world name
         String worldName = args.get(0).trim();
 
-        // TODO: Validate the world name
+        // Validate the world name
+        if(!isValidWorldName(worldName)) {
+            sender.sendMessage(ChatColor.DARK_RED + worldName);
+            sender.sendMessage(ChatColor.DARK_RED + "The world name contains invalid characters!");
+            return true;
+        }
 
         // Make sure the world doesn't exist
         if(DungeonMaze.instance.worldExists(worldName)) {
@@ -93,32 +103,26 @@ public class CreateWorldCommand extends Command {
         // Show a status message
         sender.sendMessage(ChatColor.YELLOW + "Preparing the server...");
 
-        // Edit the bukkit.yml file so bukkit knows what generator to use for the Dungeon Maze worlds,
-        // also update the Dungeon Maze files.
-        System.out.println("Editing bukkit.yml file...");
-        FileConfiguration serverConfig = DungeonMaze.instance.getConfigFromPath(new File("bukkit.yml"));
-        serverConfig.set("worlds." + worldName + ".generator", "DungeonMaze");
-        try {
-            serverConfig.save(new File("bukkit.yml"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        // Get the world manager, and make sure it's available
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager == null) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to prepare the server, world manager not available!");
             return true;
         }
-        System.out.println("Editing Dungeon Maze config.yml file...");
-        List<String> worlds = Core.getConfigHandler().config.getStringList("worlds");
-        if(!worlds.contains(worldName))
-            worlds.add(worldName);
-        Core.getConfigHandler().config.set("worlds", worlds);
-        List<String> preloadWorlds = Core.getConfigHandler().config.getStringList("preloadWorlds");
-        if(!preloadWorlds.contains(worldName))
-            preloadWorlds.add(worldName);
-        Core.getConfigHandler().config.set("preloadWorlds", preloadWorlds);
-        DungeonMaze.instance.saveConfig();
-        System.out.println("Editing finished!");
+        if(!worldManager.isInit()) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to prepare the server, world manager not available!");
+            return true;
+        }
+
+        // Prepare the server for the new world
+        if(!worldManager.prepareDMWorld(worldName)) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to prepare the server!");
+            return true;
+        }
 
         // Show a status message
         sender.sendMessage(ChatColor.YELLOW + "Generating the DungeonMaze '" + worldName + "'...");
-        // TODO: Could cause some lag, broadcast this to the server!
+        Bukkit.broadcastMessage("[DungeonMaze] Generating a new world, expecting lag for a while...");
 
         // Create the world
         WorldCreator newWorld = new WorldCreator(worldName);
@@ -127,17 +131,29 @@ public class CreateWorldCommand extends Command {
 
         // Show a status message
         // TODO: Is this message a duplicate of the message bellow?
+        Bukkit.broadcastMessage("[DungeonMaze] World generation finished!");
         sender.sendMessage(ChatColor.GREEN + "The DungeonMaze '" + worldName + "' has successfully been generated!");
 
         // If the command was executed by a player, teleport the player
         if(sender instanceof Player) {
-            // Get the player instance
-            Player player = (Player) sender;
-            player.teleport(world.getSpawnLocation());
-            player.sendMessage(ChatColor.GREEN + "The world has been successfully generated! You have been teleported.");
+            // Teleport the player
+            ((Player) sender).teleport(world.getSpawnLocation());
+            sender.sendMessage(ChatColor.GREEN + "You have been teleported!");
         }
 
         // Return the result
         return true;
+    }
+
+    /**
+     * Check whether a Minecraft world name is valid.
+     *
+     * param worldName The world name to validate.
+     *
+     * @return True if the world name is valid, false otherwise.
+     */
+    public boolean isValidWorldName(String worldName) {
+        // Do a regex check
+        return Pattern.compile(MINECRAFT_WORLD_NAME_REGEX).matcher(worldName).matches();
     }
 }
