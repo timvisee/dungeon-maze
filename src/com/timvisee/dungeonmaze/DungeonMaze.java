@@ -165,7 +165,17 @@ public class DungeonMaze extends JavaPlugin {
 	public boolean useBypassPermissions() {
 		return Core.getConfigHandler().useBypassPermissions;
 	}
-	
+
+	/**
+	 * Handle Bukkit commands.
+	 *
+	 * @param sender The command sender (Bukkit).
+	 * @param cmd The command (Bukkit).
+	 * @param commandLabel The command label (Bukkit).
+	 * @param args The command arguments (Bukkit).
+	 *
+	 * @return True if the command was executed, false otherwise.
+	 */
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		// Get the command handler, and make sure it's valid
 		CommandHandler commandHandler = Core.getCommandHandler();

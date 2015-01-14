@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.command;
 
+import com.timvisee.dungeonmaze.command.createworld.CreateWorldCommand;
 import com.timvisee.dungeonmaze.command.version.VersionCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -37,6 +38,7 @@ public class CommandHandler {
 
         // Initialize the commands
         cmds.add(new VersionCommand());
+        cmds.add(new CreateWorldCommand());
 
         // Return the result
         return true;
@@ -99,7 +101,7 @@ public class CommandHandler {
         // Loop through each available command to check whether it's applicable
         for(Command entry : cmds) {
             // Make sure the command is applicable
-            if(!entry.isApplicableCommand(cmd))
+            if(!entry.isApplicable(cmd, args))
                 continue;
 
             // Execute the command, return true if the command was successfully executed
