@@ -3,6 +3,8 @@ package com.timvisee.dungeonmaze;
 import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.api.OldApiController;
 import com.timvisee.dungeonmaze.api.OldApiControllerModule;
+import com.timvisee.dungeonmaze.command.CommandHandler;
+import com.timvisee.dungeonmaze.command.CommandHandlerModule;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.listener.EventListenerManager;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
@@ -42,6 +44,8 @@ public class Core {
     private LoggerModule loggerModule = new LoggerModule();
     /** Config handler module instance. */
     private ConfigHandlerModule configHandlerModule = new ConfigHandlerModule();
+    /** Command handler module instance. */
+    private CommandHandlerModule commandHandlerModule = new CommandHandlerModule();
     /** World manager module instance. */
     private WorldManagerModule worldManagerModule = new WorldManagerModule();
     /** Update checker module instance. */
@@ -93,6 +97,7 @@ public class Core {
         this.moduleManager.unregisterAllModules();
         this.moduleManager.registerModule(this.loggerModule);
         this.moduleManager.registerModule(this.configHandlerModule);
+        this.moduleManager.registerModule(this.commandHandlerModule);
         this.moduleManager.registerModule(this.multiverseHandlerModule);
         this.moduleManager.registerModule(this.worldManagerModule);
         this.moduleManager.registerModule(this.updateCheckerModule);
@@ -161,7 +166,7 @@ public class Core {
     public static Logger getLogger() {
         return Core.instance._getLogger();
     }
-
+    
     /**
      * Get the logger.
      *
@@ -191,6 +196,24 @@ public class Core {
      */
     public ConfigHandler _getConfigHandler() {
         return this.configHandlerModule.getConfigHandler();
+    }
+
+    /**
+     * Get the command handler.
+     *
+     * @return Command handler instance.
+     */
+    public static CommandHandler getCommandHandler() {
+        return Core.instance._getCommandHandler();
+    }
+
+    /**
+     * Get the command handler.
+     *
+     * @return Command handler instance.
+     */
+    public CommandHandler _getCommandHandler() {
+        return this.commandHandlerModule.getCommandHandler();
     }
 
     /**

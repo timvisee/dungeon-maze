@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.timvisee.dungeonmaze.api.ApiController;
+import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.generator.Generator;
 import com.timvisee.dungeonmaze.update.Updater;
 import com.timvisee.dungeonmaze.util.Profiler;
@@ -166,7 +167,15 @@ public class DungeonMaze extends JavaPlugin {
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if(commandLabel.equalsIgnoreCase("dungeonmaze") || commandLabel.equalsIgnoreCase("dm")) {
+		// Get the command handler, and make sure it's valid
+		CommandHandler commandHandler = Core.getCommandHandler();
+		if(commandHandler == null)
+			return false;
+
+		// Handle the command, return the result
+		return commandHandler.onCommand(sender, cmd, commandLabel, args);
+
+		/*if(commandLabel.equalsIgnoreCase("dungeonmaze") || commandLabel.equalsIgnoreCase("dm")) {
 			if(args.length == 0) {
 				sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
 				sender.sendMessage(ChatColor.GOLD + "Use the command " + ChatColor.YELLOW + "/dm createworld <name>" + ChatColor.GOLD + " to create a new Dungeon Maze world");
@@ -491,7 +500,7 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 		}
-		return false;
+		return false;*/
 	}
 	
 	public boolean worldExists(String w) {
