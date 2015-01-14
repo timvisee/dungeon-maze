@@ -100,9 +100,17 @@ public class CommandHandler {
 
         // Loop through each available command to check whether it's applicable
         for(Command entry : cmds) {
-            // Make sure the command is applicable
-            if(!entry.isApplicable(cmd, args))
+            // Make sure the command label is applicable
+            if(!entry.isApplicableCommand(cmd))
                 continue;
+
+            // Make sure the command is applicable
+            if(!entry.isApplicable(cmd, args)) {
+                // TODO: Improve the quality of the message shown!
+                sender.sendMessage(ChatColor.DARK_RED + "Invalid command arguments!");
+                sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + bukkitCmdLbl + " help " + cmd + ChatColor.YELLOW + " to view help!");
+                return true;
+            }
 
             // Execute the command, return true if the command was successfully executed
             if(entry.onCommand(sender, cmd, args))
@@ -111,7 +119,7 @@ public class CommandHandler {
 
         // Unknown command, show a warning, return the result
         sender.sendMessage(ChatColor.DARK_RED + "Unknown Dungeon Maze command!");
-        sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + bukkitCmdLbl + " help " + ChatColor.YELLOW + "to view help.");
+        sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + bukkitCmdLbl + " help " + ChatColor.YELLOW + "to view help.");
         return true;
     }
 
