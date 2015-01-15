@@ -1,6 +1,7 @@
 package com.timvisee.dungeonmaze.command;
 
 import com.timvisee.dungeonmaze.command.createworld.CreateWorldCommand;
+import com.timvisee.dungeonmaze.command.listworld.ListWorldCommand;
 import com.timvisee.dungeonmaze.command.version.VersionCommand;
 import com.timvisee.dungeonmaze.command.teleport.TeleportCommand;
 import org.bukkit.ChatColor;
@@ -41,6 +42,7 @@ public class CommandHandler {
         cmds.add(new VersionCommand());
         cmds.add(new CreateWorldCommand());
         cmds.add(new TeleportCommand());
+        cmds.add(new ListWorldCommand());
 
         // Return the result
         return true;

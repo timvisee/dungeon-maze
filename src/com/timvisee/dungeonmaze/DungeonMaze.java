@@ -192,37 +192,7 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].equalsIgnoreCase("listworlds") || args[0].equalsIgnoreCase("lw") ||
-					args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("l")) {
-
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// Check permission
-				if(sender instanceof Player) {
-					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.listworlds", sender.isOp())) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-				
-				sender.sendMessage(ChatColor.YELLOW + "==========[ DUNGEON MAZE WORLDS ]==========");
-				List<String> worlds = Core.getWorldManager().getDMWorlds();
-				if(worlds.size() > 0) {
-					for(String w : worlds) {
-						if(Core.getWorldManager().isDMWorldLoaded(w))
-							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
-						else
-							sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");
-					}
-				} else
-					sender.sendMessage(ChatColor.DARK_RED + "You don't have any Dungeon Maze world yet!");
-				return true;
-				
-			} else if(args[0].equalsIgnoreCase("reload")) {
+			if(args[0].equalsIgnoreCase("reload")) {
 				
 				// Check wrong command values
 				if(args.length != 1) {
