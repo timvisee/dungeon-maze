@@ -93,7 +93,7 @@ public class ListWorldCommand extends Command {
     @Override
     public boolean onCommand(CommandSender sender, String parentCmd, String cmd, List<String> args) {
         // Get the list of Dungeon Maze worlds
-        List<String> worlds = Core.getWorldManager().getDMWorlds();
+        List<String> worlds = Core.getWorldManager().getDungeonMazeWorlds();
 
         // Get the Dungeon Maze world manager, and make sure the instance is valid
         WorldManager worldManager = Core.getWorldManager();
@@ -106,7 +106,7 @@ public class ListWorldCommand extends Command {
         sender.sendMessage(ChatColor.YELLOW + "==========[ DUNGEON MAZE WORLDS ]==========");
         if(worlds.size() > 0) {
             for(String w : worlds) {
-                if(worldManager.isDMWorldLoaded(w))
+                if(worldManager.isDungeonMazeWorldLoaded(w))
                     sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
                 else
                     sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");

@@ -7,7 +7,6 @@ import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,7 +117,7 @@ public class ReloadCommand extends Command {
         // Reload configs and worlds
         Core.getConfigHandler().load();
         Core.getWorldManager();
-        Core.getWorldManager().preloadWorlds();
+        Core.getWorldManager().preloadDungeonMazeWorlds();
 
         // Show a success message
         Core.getLogger().info("[DungeonMaze] Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");

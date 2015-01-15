@@ -57,7 +57,7 @@ public class ApiWorldManager {
 	 * @return List of all DM worlds
 	 */
 	public List<String> getDMWorlds() {
-		return getDMWorldManager().getDMWorlds();
+		return getDMWorldManager().getDungeonMazeWorlds();
 	}
 	
 	/**
@@ -65,7 +65,7 @@ public class ApiWorldManager {
 	 * @return List of all loaded DM worlds
 	 */
 	public List<String> getLoadedDMWorlds() {
-		return getDMWorldManager().getLoadedDMWorlds();
+		return getDMWorldManager().getLoadedDungeonMazeWorlds();
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class ApiWorldManager {
 	 * @return all preload worlds
 	 */
 	public List<String> getPreloadWorlds() {
-		return getDMWorldManager().getPreloadWorlds();
+		return getDMWorldManager().getDungeonMazeWorlds(true);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class ApiWorldManager {
 	 * @return true if the world is a DM world
 	 */
 	public boolean isDMWorld(String w) {
-		return getDMWorldManager().isDMWorld(w);
+		return getDMWorldManager().isDungeonMazeWorld(w);
 	}
 	
 	/**
@@ -91,14 +91,14 @@ public class ApiWorldManager {
 	 * @return true if the world is a loaded DM world
 	 */
 	public boolean isDMWorldLoaded(String w) {
-		return getDMWorldManager().isDMWorldLoaded(w);
+		return getDMWorldManager().isDungeonMazeWorldLoaded(w);
 	}
 	
 	/**
 	 * Preload all 'preload' DM worlds
 	 */
 	public void preloadWorlds() {
-		getDMWorldManager().preloadWorlds();
+		getDMWorldManager().preloadDungeonMazeWorlds();
 	}
 	
 	/**

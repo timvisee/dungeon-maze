@@ -17,7 +17,7 @@ public class BlockListener implements Listener {
 		Block b = e.getBlockPlaced();
 		String w = b.getWorld().getName();
 		
-		if(Core.getWorldManager().isDMWorld(w)) {
+		if(Core.getWorldManager().isDungeonMazeWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(Core.getConfigHandler().worldProtection) {
@@ -38,7 +38,7 @@ public class BlockListener implements Listener {
 		Block b = e.getBlock();
 		String w = b.getWorld().getName();
 		
-		if(Core.getWorldManager().isDMWorld(w)) {
+		if(Core.getWorldManager().isDungeonMazeWorld(w)) {
 			// The world is a Dungeon Maze world
 			
 			if(Core.getConfigHandler().worldProtection) {

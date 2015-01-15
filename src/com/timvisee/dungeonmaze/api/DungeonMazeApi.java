@@ -202,7 +202,7 @@ public class DungeonMazeApi {
 		if(!isHooked())
 			return false;
 		
-		if(getDMCore()._getWorldManager().isDMWorld(w))
+		if(getDMCore()._getWorldManager().isDungeonMazeWorld(w))
 			if(getDMCore()._getConfigHandler().worldProtection)
 				return getDMCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
 		return true;
@@ -219,7 +219,7 @@ public class DungeonMazeApi {
 		if(!isHooked())
 			return true;
 		
-		if(getDMCore()._getWorldManager().isDMWorld(w))
+		if(getDMCore()._getWorldManager().isDungeonMazeWorld(w))
 			if(!getDMCore()._getConfigHandler().allowSurface)
 				return getDMCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
 		return true;

@@ -27,7 +27,7 @@ public class PlayerListener implements Listener {
 			// The player is above the surface
 			
 			Core.getWorldManager();
-			if(Core.getWorldManager().isDMWorld(w)) {
+			if(Core.getWorldManager().isDungeonMazeWorld(w)) {
 				if(Core.getConfigHandler().allowSurface == false) {
 					// The player is not allowed on the surface
 					

@@ -1,7 +1,9 @@
 package com.timvisee.dungeonmaze.command.teleport;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.Command;
+import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -104,16 +106,29 @@ public class TeleportCommand extends Command {
         Player player = (Player) sender;
         String worldName = args.get(0);
 
+        // Get the world manager, and make sure it's valid
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager == null) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to teleport, world manager not available!");
+            return false;
+        }
+        if(!worldManager.isInit()) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to teleport, world manager not available!");
+            return true;
+        }
+
         // Make sure the world exists
-        if(!DungeonMaze.instance.worldExists(worldName)) {
+        if(!worldManager.isWorld(worldName)) {
             sender.sendMessage(ChatColor.DARK_RED + worldName);
             sender.sendMessage(ChatColor.DARK_RED + "This world doesn't exists!");
             return true;
         }
 
         // Force the world to be loaded if it isn't already loaded
-        if(!DungeonMaze.instance.worldIsLoaded(worldName))
-            DungeonMaze.instance.worldLoad(worldName);
+        if(!worldManager.loadWorld(worldName)) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to teleport, unable to load the world!");
+            return true;
+        }
 
         // Get the world instance and make sure it's valid
         World world = Bukkit.getWorld(worldName);

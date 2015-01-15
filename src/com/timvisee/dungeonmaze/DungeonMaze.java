@@ -10,7 +10,6 @@ import com.timvisee.dungeonmaze.generator.Generator;
 import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
-import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -182,33 +181,6 @@ public class DungeonMaze extends JavaPlugin {
 	
 	public boolean useBypassPermissions() {
 		return Core.getConfigHandler().useBypassPermissions;
-	}
-	
-	public boolean worldExists(String w) {
-		// Neat feature to check if a world exists
-		File worldLevelFile = new File(w + "/level.dat");
-		return worldLevelFile.exists();
-	}
-	
-	public boolean worldIsLoaded(String w) {
-		for(World entry : getServer().getWorlds())
-			if(entry.getName().equals(w))
-				return true;
-		return false;
-	}
-	
-	public void worldLoad(String w) {
-		if(worldExists(w)) {
-			if(!worldIsLoaded(w)) {
-				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] Loading world, expecting lag for a while...");
-				
-				WorldCreator newWorld = new WorldCreator(w);
-				newWorld.generator(generator);
-				newWorld.createWorld();
-				
-				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] World loaded successfully!");
-			}
-		}
 	}
 	
 	// Function to get a costum configuration file

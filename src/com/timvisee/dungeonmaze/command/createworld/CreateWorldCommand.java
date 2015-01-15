@@ -106,8 +106,19 @@ public class CreateWorldCommand extends Command {
             return true;
         }
 
+        // Get the world manager, and make sure it's valid
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager == null) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to create the world, world manager not available!");
+            return false;
+        }
+        if(!worldManager.isInit()) {
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to create the world, world manager not available!");
+            return true;
+        }
+
         // Make sure the world doesn't exist
-        if(DungeonMaze.instance.worldExists(worldName)) {
+        if(worldManager.isWorld(worldName)) {
             sender.sendMessage(ChatColor.DARK_RED + "The world '" + worldName + "' already exists!");
             return true;
         }
@@ -115,19 +126,8 @@ public class CreateWorldCommand extends Command {
         // Show a status message
         sender.sendMessage(ChatColor.YELLOW + "Preparing the server...");
 
-        // Get the world manager, and make sure it's available
-        WorldManager worldManager = Core.getWorldManager();
-        if(worldManager == null) {
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to prepare the server, world manager not available!");
-            return true;
-        }
-        if(!worldManager.isInit()) {
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to prepare the server, world manager not available!");
-            return true;
-        }
-
         // Prepare the server for the new world
-        if(!worldManager.prepareDMWorld(worldName)) {
+        if(!worldManager.prepareDungeonMazeWorld(worldName)) {
             sender.sendMessage(ChatColor.DARK_RED + "Failed to prepare the server!");
             return true;
         }

@@ -49,7 +49,7 @@ public class MetricsController {
                     List<Player> players = new ArrayList<Player>(Bukkit.getOnlinePlayers());
                     int count = 0;
                     for(Player p : players) {
-                        if(Core.getWorldManager().isDMWorld(p.getWorld().getName()))
+                        if(Core.getWorldManager().isDungeonMazeWorld(p.getWorld().getName()))
                             count++;
                     }
                     return count;
