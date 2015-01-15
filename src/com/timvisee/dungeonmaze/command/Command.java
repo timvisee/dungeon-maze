@@ -1,6 +1,9 @@
 package com.timvisee.dungeonmaze.command;
 
+import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -60,6 +63,49 @@ public abstract class Command {
      */
     public boolean hasMaxArgs() {
         return getMaxArgs() >= 0;
+    }
+
+    /**
+     * Get the permission node required to execute this command as a player.
+     *
+     * @return The permission node required to execute this command as a player, or an empty string if this command
+     * doesn't require any permission.
+     */
+    public abstract String getPermissionNode();
+
+    /**
+     * Get the default permission used if the permission couldn't be checked using any permissions plugin.
+     *
+     * @param sender The command sender to get the default permission for.
+     *
+     * @return True if the command sender has permission if the permissions system couldn't be used, false otherwise.
+     */
+    public abstract boolean getDefaultPermission(CommandSender sender);
+
+    /**
+     * Check whether this command requires any permission to be executed. This is based on the getPermission() method.
+     *
+     * @return True if this command requires any permission to be executed by a player.
+     */
+    public boolean hasPermission(CommandSender sender) {
+        // Make sure any permission is required for this command
+        if(getPermissionNode().trim().length() == 0)
+            return true;
+
+        // Make sure the command sender is a player, if not use the default
+        if(!(sender instanceof Player))
+            return getDefaultPermission(sender);
+
+        // Get the player instance
+        Player player = (Player) sender;
+
+        // Get the permissions manager, and make sure it's instance is valid
+        PermissionsManager permissionsManager = Core.getPermissionsManager();
+        if(permissionsManager == null)
+            return false;
+
+        // Check whether the player has permission, return the result
+        return permissionsManager.hasPermission(player, getPermissionNode(), getDefaultPermission(sender));
     }
 
     /**

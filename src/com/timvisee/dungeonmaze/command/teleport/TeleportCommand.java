@@ -26,6 +26,8 @@ public class TeleportCommand extends Command {
     private static final int MIN_ARGS = 1;
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = 1;
+    /** Defines the permission node required to execute this command. */
+    private static final String PERMISSION_NODE = "dungeonmaze.command.teleport";
 
     /**
      * Get a list of applicable command labels for this command.
@@ -59,6 +61,29 @@ public class TeleportCommand extends Command {
     }
 
     /**
+     * Get the permission node required to execute this command as a player.
+     *
+     * @return The permission node required to execute this command as a player, or an empty string if this command
+     * doesn't require any permission.
+     */
+    @Override
+    public String getPermissionNode() {
+        return PERMISSION_NODE;
+    }
+
+    /**
+     * Get the default permission used if the permission couldn't be checked using any permissions plugin.
+     *
+     * @param sender The command sender to get the default permission for.
+     *
+     * @return True if the command sender has permission if the permissions system couldn't be used, false otherwise.
+     */
+    @Override
+    public boolean getDefaultPermission(CommandSender sender) {
+        return sender.isOp();
+    }
+
+    /**
      * Handle the command.
      *
      * @param sender The command sender.
@@ -69,14 +94,6 @@ public class TeleportCommand extends Command {
      */
     @Override
     public boolean onCommand(CommandSender sender, String cmd, List<String> args) {
-        // If the command executor is a player, make sure the player has permission.
-        if(sender instanceof Player) {
-            if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.teleport", sender.isOp())) {
-                sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-                return true;
-            }
-        }
-
         // Make sure the command is executed by an in-game player
         if(!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.DARK_RED + "You need to be in-game to use this command!");

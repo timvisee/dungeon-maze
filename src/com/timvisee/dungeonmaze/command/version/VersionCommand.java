@@ -22,6 +22,8 @@ public class VersionCommand extends Command {
     private static final int MIN_ARGS = 0;
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = -1;
+    /** Defines the permission node required to execute this command. */
+    private static final String PERMISSION_NODE = "";
 
     /**
      * Get a list of applicable command labels for this command.
@@ -52,6 +54,29 @@ public class VersionCommand extends Command {
     @Override
     public int getMaxArgs() {
         return MAX_ARGS;
+    }
+
+    /**
+     * Get the permission node required to execute this command as a player.
+     *
+     * @return The permission node required to execute this command as a player, or an empty string if this command
+     * doesn't require any permission.
+     */
+    @Override
+    public String getPermissionNode() {
+        return PERMISSION_NODE;
+    }
+
+    /**
+     * Get the default permission used if the permission couldn't be checked using any permissions plugin.
+     *
+     * @param sender The command sender to get the default permission for.
+     *
+     * @return True if the command sender has permission if the permissions system couldn't be used, false otherwise.
+     */
+    @Override
+    public boolean getDefaultPermission(CommandSender sender) {
+        return true;
     }
 
     /**

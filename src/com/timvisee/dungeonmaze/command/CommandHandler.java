@@ -114,6 +114,12 @@ public class CommandHandler {
                 return true;
             }
 
+            // Make sure the command executor has permission
+            if(!entry.hasPermission(sender)) {
+                sender.sendMessage(ChatColor.DARK_RED + "You don't have permission to use this command!");
+                return true;
+            }
+
             // Execute the command, return true if the command was successfully executed
             if(entry.onCommand(sender, cmd, args))
                 return true;
