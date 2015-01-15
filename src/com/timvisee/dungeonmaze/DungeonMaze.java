@@ -192,54 +192,7 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].equalsIgnoreCase("check") || args[0].equalsIgnoreCase("checkupdates")) {
-				
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// Check permission
-				if(sender instanceof Player) {
-					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.checkupdates")) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-				
-				// Setup permissions
-				sender.sendMessage(ChatColor.GREEN + "Checking for updates...");
-				
-				// Get the update checker and refresh the updates data
-				// TODO: Force check for an update!
-				Updater uc = Core.getUpdateChecker();
-				
-				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-					sender.sendMessage(ChatColor.GREEN + "No new version found!");
-				} else {
-					
-					String newVer = uc.getLatestName();
-					
-					// Make sure the new version is compatible with the current bukkit version
-					if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
-						sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
-						sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
-					} else {
-						if(uc.getResult() == UpdateResult.SUCCESS)
-							sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
-						else {
-							sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
-							sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
-									ChatColor.GREEN + " to automaticly install the new version!");
-						}
-					}
-				}
-				
-				return true;
-				
-			} else if(args[0].equalsIgnoreCase("installupdate") || args[0].equalsIgnoreCase("installupdates")) {
+			if(args[0].equalsIgnoreCase("installupdate") || args[0].equalsIgnoreCase("installupdates")) {
 				// Check wrong command values
 				if(args.length != 1) {
 					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");

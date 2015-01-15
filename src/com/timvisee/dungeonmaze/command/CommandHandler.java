@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.command;
 
+import com.timvisee.dungeonmaze.command.checkupdates.CheckUpdatesCommand;
 import com.timvisee.dungeonmaze.command.createworld.CreateWorldCommand;
 import com.timvisee.dungeonmaze.command.listworld.ListWorldCommand;
 import com.timvisee.dungeonmaze.command.reload.ReloadCommand;
@@ -47,6 +48,7 @@ public class CommandHandler {
         commands.add(new ListWorldCommand());
         commands.add(new ReloadCommand());
         commands.add(new ReloadPermissionsCommand());
+        commands.add(new CheckUpdatesCommand());
 
         // Return the result
         return true;
