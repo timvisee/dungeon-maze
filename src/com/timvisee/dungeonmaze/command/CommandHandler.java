@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.command;
 import com.timvisee.dungeonmaze.command.createworld.CreateWorldCommand;
 import com.timvisee.dungeonmaze.command.listworld.ListWorldCommand;
 import com.timvisee.dungeonmaze.command.reload.ReloadCommand;
+import com.timvisee.dungeonmaze.command.reloadpermissions.ReloadPermissionsCommand;
 import com.timvisee.dungeonmaze.command.version.VersionCommand;
 import com.timvisee.dungeonmaze.command.teleport.TeleportCommand;
 import org.bukkit.ChatColor;
@@ -15,7 +16,7 @@ import java.util.List;
 public class CommandHandler {
 
     /** Defines the available commands. */
-    private List<Command> cmds = new ArrayList<Command>();
+    private List<Command> commands = new ArrayList<Command>();
 
     /**
      * Constructor.
@@ -40,11 +41,12 @@ public class CommandHandler {
             return true;
 
         // Initialize the commands
-        cmds.add(new VersionCommand());
-        cmds.add(new CreateWorldCommand());
-        cmds.add(new TeleportCommand());
-        cmds.add(new ListWorldCommand());
-        cmds.add(new ReloadCommand());
+        commands.add(new VersionCommand());
+        commands.add(new CreateWorldCommand());
+        commands.add(new TeleportCommand());
+        commands.add(new ListWorldCommand());
+        commands.add(new ReloadCommand());
+        commands.add(new ReloadPermissionsCommand());
 
         // Return the result
         return true;
@@ -56,7 +58,7 @@ public class CommandHandler {
      * @return True if the command handler is initialized.
      */
     public boolean isInit() {
-        return !cmds.isEmpty();
+        return !commands.isEmpty();
     }
 
     /**
@@ -71,7 +73,7 @@ public class CommandHandler {
             return true;
 
         // Clear the commands list, return the result
-        this.cmds.clear();
+        this.commands.clear();
         return true;
     }
 
@@ -105,7 +107,7 @@ public class CommandHandler {
         args.remove(0);
 
         // Loop through each available command to check whether it's applicable
-        for(Command entry : cmds) {
+        for(Command entry : commands) {
             // Make sure the command label is applicable
             if(!entry.isApplicableCommand(cmd))
                 continue;

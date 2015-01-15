@@ -192,29 +192,7 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].equalsIgnoreCase("reloadpermissions") || args[0].equalsIgnoreCase("reloadperms")) {
-				
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// Check permission
-				if(sender instanceof Player) {
-					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.reloadpermissions")) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-				
-				// TODO: (Re)load the permissions module!
-				
-				// Show a succes message
-				sender.sendMessage(ChatColor.GREEN + "Permissions succesfully reloaded!");
-				return true;
-				
-			} else if(args[0].equalsIgnoreCase("check") || args[0].equalsIgnoreCase("checkupdates")) {
+			if(args[0].equalsIgnoreCase("check") || args[0].equalsIgnoreCase("checkupdates")) {
 				
 				// Check wrong command values
 				if(args.length != 1) {
