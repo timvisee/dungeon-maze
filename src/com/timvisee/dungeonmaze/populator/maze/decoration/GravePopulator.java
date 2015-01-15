@@ -99,7 +99,7 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 			selectedText[0] = graveText[selectedGraveTextIndex][0];
 			selectedText[1] = graveText[selectedGraveTextIndex][1];
 			
-			if(!DungeonMaze.instance.isAnyPlayerOnline())
+			if(!isAnyPlayerOnline())
 				graveUsername = graveUsernames[random.nextInt(graveUsernames.length)];
 			else {
 				List<Player> onlinePlayers = new ArrayList<Player>(Bukkit.getOnlinePlayers());
@@ -144,5 +144,14 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 	@Override
 	public int getMaximumLayer() {
 		return LAYER_MAX;
+	}
+
+	/**
+	 * Check whether there's any player online.
+	 *
+	 * @return True if there's any player online, false otherwise.
+	 */
+	public boolean isAnyPlayerOnline() {
+		return (Bukkit.getOnlinePlayers().size() > 0);
 	}
 }

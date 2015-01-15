@@ -8,9 +8,8 @@ import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.generator.Generator;
 import com.timvisee.dungeonmaze.util.Profiler;
-import org.bukkit.ChatColor;
+import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Chunk;
-import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,6 +28,9 @@ public class DungeonMaze extends JavaPlugin {
 
 	/** Core instance. */
 	private Core core = new Core(false);
+
+	/** The Dungeon Maze chunk generator instance. */
+	private final Generator generator = new Generator(this);
 
 	/**
 	 * Constructor
@@ -143,6 +145,7 @@ public class DungeonMaze extends JavaPlugin {
 	 *
 	 * @return True if the command was executed, false otherwise.
 	 */
+	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		// Get the command handler, and make sure it's valid
 		CommandHandler commandHandler = Core.getCommandHandler();
@@ -153,123 +156,54 @@ public class DungeonMaze extends JavaPlugin {
 		return commandHandler.onCommand(sender, cmd, commandLabel, args);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-	public ApiController getApiController() {
-		return Core.getApiController();
-	}
-
-	private final Generator generator = new Generator(this);
-	
-	// Worlds
-	public String lastWorld = "";
-	public List<String> constantRooms = new ArrayList<String>(); // x;y;z
-	public List<String> constantChunks = new ArrayList<String>(); // x;
-		
-	public boolean usePermissions() {
-		return Core.getConfigHandler().usePermissions;
-	}
-	
-	public boolean useBypassPermissions() {
-		return Core.getConfigHandler().useBypassPermissions;
-	}
-	
-	// Function to get a costum configuration file
-	public FileConfiguration getConfigFromPath(File file) {
-		// The file param may not be null
-		if (file == null)
-		    return null;
-	    
-		// Get and return the config from an external file
-	    return YamlConfiguration.loadConfiguration(file);
-	}
-	
+	/**
+	 * Get the Dungeon Maze configuration.
+	 *
+	 * @return Dungeon Maze configuration.
+	 */
 	@Override
 	public FileConfiguration getConfig() {
 		return Core.getConfigHandler().config;
 	}
 
+	/**
+	 * Get the default world generator for a world. Inject the Dungeon Maze generator for Dungeon Maze worlds.
+	 *
+	 * @param worldName The name of the world to get the generator for.
+	 * @param id Unique ID, if any, that was specified to indicate which generator was requested
+	 *
+	 * @return The world generator for the specified world.
+	 */
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+		// Get the world manager, and make sure it's initialized
+		WorldManager worldManager = Core.getWorldManager();
+
+		if(worldManager == null)
+			return getDungeonMazeGenerator();
+
+		// Return the Dungeon Maze generator if the world is a Dungeon Maze world
+		if(worldManager.isDungeonMazeWorld(worldName))
+			return getDungeonMazeGenerator();
+		return null;
+	}
+
+	/**
+	 * Get the Dungeon Maze chunk generator instance.
+	 *
+	 * @return Dungeon Maze chunk generator.
+	 */
+	public ChunkGenerator getDungeonMazeGenerator() {
 		return this.generator;
 	}
-	
-	public ChunkGenerator getDMWorldGenerator() {
-		return this.generator;
-	}
-	
-	public boolean isAnyPlayerOnline() {
-		return (getServer().getOnlinePlayers().size() > 0);
-	}
-	
-	
-	
-	// TODO: Put all this codeb below in a manager class to handle all the hard stuff, and to clean up the code.
-	// TODO: Also save this data into the data folder of the world files so it can be read if needed
-	// Getters and setters for the two lists with constant chunks and constant rooms
-	public void registerConstantChunk(String world, Chunk chunk) {
-		registerConstantChunk(world, chunk.getX(), chunk.getZ());
-	}
-	
-	public void registerConstantChunk(String world, int chunkX, int chunkZ) {
-		if (!lastWorld.equals(world)) {
-			lastWorld = world;
-			constantChunks.clear();
-		}
-		constantChunks.add(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
-	}
-	
-	public void registerConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
-		registerConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
-	}
-	
-	public void registerConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
-		registerConstantRoom(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
-	}
-	
-	public void registerConstantRoom(String world, int roomX, int roomY, int roomZ) {
-		if(!lastWorld.equals(world)) {
-			lastWorld = world;
-			constantRooms.clear();
-		}
-		constantRooms.add(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
-	}
-	
-	public boolean isConstantChunk(String world, Chunk chunk) {
-		return isConstantChunk(world, chunk.getX(), chunk.getZ());
-	}
-	
-	public boolean isConstantChunk(String world, int chunkX, int chunkZ) {
-		if(!lastWorld.equals(world)) {
-			lastWorld = world;
-			constantChunks.clear();
-		}
-		return constantChunks.contains(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
-	}
-	
-	public boolean isConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
-		return isConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
-	}
-	
-	public boolean isConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
-		return isConstantRoom(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
-	}
-	
-	public boolean isConstantRoom(String world, int roomX, int roomY, int roomZ) {
-		if(!lastWorld.equals(world)) {
-			lastWorld = world;
-			constantRooms.clear();
-		}
-		return constantRooms.contains(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
+
+	/**
+	 * Get the Dungeon Maze API controller.
+	 *
+	 * @return Dungeon Maze API controller.
+	 */
+	public ApiController getApiController() {
+		return Core.getApiController();
 	}
 
 	/**
@@ -285,7 +219,82 @@ public class DungeonMaze extends JavaPlugin {
 		return Core.getOldApiController().getApi();
 	}
 
+	/**
+	 * Get the current installed Dungeon Maze version.
+	 *
+	 * @return The version number of the currently installed Dungeon Maze instance.
+	 */
 	public String getVersion() {
 		return getDescription().getVersion();
+	}
+
+
+
+
+
+
+	// TODO: Put all this code bellow in a manager class to handle all the hard stuff, and to clean up the code.
+	// TODO: Also save this data into the data folder of the world files so it can be read if needed
+
+	// Worlds
+	public String lastWorld = "";
+	public List<String> constantRooms = new ArrayList<String>(); // x;y;z
+	public List<String> constantChunks = new ArrayList<String>(); // x;
+
+	// Getters and setters for the two lists with constant chunks and constant rooms
+	public void registerConstantChunk(String world, Chunk chunk) {
+		registerConstantChunk(world, chunk.getX(), chunk.getZ());
+	}
+
+	public void registerConstantChunk(String world, int chunkX, int chunkZ) {
+		if (!lastWorld.equals(world)) {
+			lastWorld = world;
+			constantChunks.clear();
+		}
+		constantChunks.add(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
+	}
+
+	public void registerConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
+		registerConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
+	}
+
+	public void registerConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
+		registerConstantRoom(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
+	}
+
+	public void registerConstantRoom(String world, int roomX, int roomY, int roomZ) {
+		if(!lastWorld.equals(world)) {
+			lastWorld = world;
+			constantRooms.clear();
+		}
+		constantRooms.add(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
+	}
+
+	public boolean isConstantChunk(String world, Chunk chunk) {
+		return isConstantChunk(world, chunk.getX(), chunk.getZ());
+	}
+
+	public boolean isConstantChunk(String world, int chunkX, int chunkZ) {
+		if(!lastWorld.equals(world)) {
+			lastWorld = world;
+			constantChunks.clear();
+		}
+		return constantChunks.contains(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
+	}
+
+	public boolean isConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
+		return isConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
+	}
+
+	public boolean isConstantRoom(String world, int chunkX, int chunkZ, int roomX, int roomY, int roomZ) {
+		return isConstantRoom(world, (chunkX * 16) + roomX, roomY, (chunkZ * 16) + roomZ);
+	}
+
+	public boolean isConstantRoom(String world, int roomX, int roomY, int roomZ) {
+		if(!lastWorld.equals(world)) {
+			lastWorld = world;
+			constantRooms.clear();
+		}
+		return constantRooms.contains(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
 }

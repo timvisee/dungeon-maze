@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
+import com.timvisee.dungeonmaze.config.ConfigUtils;
 import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -155,7 +156,7 @@ public class WorldManager {
 		
 		// Put all the DM worlds into the bukkit.yml file
 		if(multiverseCore == null) {
-			FileConfiguration bukkitConfig = DungeonMaze.instance.getConfigFromPath(new File("bukkit.yml"));
+			FileConfiguration bukkitConfig = ConfigUtils.getConfigFromPath(new File("bukkit.yml"));
 			if(bukkitConfig != null) {
 				//System.out.println("Editing bukkit.yml file...");
 				for(String entry : worlds)
@@ -302,7 +303,7 @@ public class WorldManager {
 		// TODO: Better loading mechanics!
 		WorldCreator newWorld = new WorldCreator(worldName);
 		if(isDungeonMazeWorld(worldName))
-			newWorld.generator(DungeonMaze.instance.getDMWorldGenerator());
+			newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
 		newWorld.createWorld();
 
 		// Show a status message, return the result
@@ -347,7 +348,7 @@ public class WorldManager {
 		Core.getLogger().info("[DungeonMaze] Preparing bukkit.yml file...");
 
 		// Load the Bukkit configuration file
-		FileConfiguration serverConfig = DungeonMaze.instance.getConfigFromPath(new File("bukkit.yml"));
+		FileConfiguration serverConfig = ConfigUtils.getConfigFromPath(new File("bukkit.yml"));
 
 		// Prepare the file
 		serverConfig.set("worlds." + worldName + ".generator", DungeonMaze.instance.getName());

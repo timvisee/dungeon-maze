@@ -138,7 +138,7 @@ public class CreateWorldCommand extends Command {
 
         // Create the world
         WorldCreator newWorld = new WorldCreator(worldName);
-        newWorld.generator(DungeonMaze.instance.getDMWorldGenerator());
+        newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
         World world = newWorld.createWorld();
 
         // Show a status message
