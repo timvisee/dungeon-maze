@@ -1,32 +1,30 @@
-package com.timvisee.dungeonmaze.command.checkupdates;
+package com.timvisee.dungeonmaze.command.help;
 
-import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.command.Command;
-import com.timvisee.dungeonmaze.update.Updater;
-import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckUpdatesCommand extends Command {
+public class HelpCommand extends Command {
 
     /** Defines the applicable command labels for this command. */
     private static final List<String> APPLICABLE_COMMANDS = new ArrayList<String>() {{
-        add("checkupdates");
-        add("checkupdate");
-        add("check");
-        add("updates");
-        add("update");
-        add("cu");
+        add("help");
+        add("hlp");
+        add("h");
+        add("sos");
+        add("?");
+        add(".");
+        add("-");
     }};
     /** Defines the minimum number of required arguments for this command. */
     private static final int MIN_ARGS = 0;
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
-    private static final int MAX_ARGS = 0;
+    private static final int MAX_ARGS = -1;
     /** Defines the permission node required to execute this command. */
-    private static final String PERMISSION_NODE = "dungeonmaze.command.checkupdates";
+    private static final String PERMISSION_NODE = "";
 
     /**
      * Get a list of applicable command labels for this command.
@@ -79,7 +77,7 @@ public class CheckUpdatesCommand extends Command {
      */
     @Override
     public boolean getDefaultPermission(CommandSender sender) {
-        return sender.isOp();
+        return true;
     }
 
     /**
@@ -94,46 +92,17 @@ public class CheckUpdatesCommand extends Command {
      */
     @Override
     public boolean onCommand(CommandSender sender, String parentCmd, String cmd, List<String> args) {
-        // Profile the process
-        Profiler p = new Profiler(true);
-
-        // Show a status message
-        sender.sendMessage(ChatColor.YELLOW + "Checking for Dungeon Maze updates...");
-
-        // Get the update checker and refresh the updates data
-        // TODO: Force check for an update!
-        Updater uc = Core.getUpdateChecker();
-
-        // Make sure any update is available
-        if(uc.getResult() != Updater.UpdateResult.SUCCESS && uc.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
-            sender.sendMessage(ChatColor.GREEN + "You are running the latest Dungeon Maze version!");
-            return true;
-        }
-
-        // Get the version number of the new update
-        String newVer = uc.getLatestName();
-
-        // Show a status message
-        sender.sendMessage(ChatColor.GREEN + "Update checking succeed, took " + p.getTimeFormatted() + "!");
-
-        // Make sure the new version is compatible with the current bukkit version
-        if(uc.getResult() == Updater.UpdateResult.FAIL_NOVERSION) {
-            // Show a message
-            sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVer));
-            sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-            sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
-            return true;
-        }
-
-        // Check whether the update was installed or not
-        if(uc.getResult() == Updater.UpdateResult.SUCCESS)
-            sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
-
-        else {
-            sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
-            sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
-                    ChatColor.GREEN + " to automaticly install the new version!");
-        }
+        // View the help
+        sender.sendMessage(ChatColor.GREEN + "==========[ DUNGEON MAZE HELP ]==========");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " help " + ChatColor.WHITE + ": View help");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " createworld <name>" + ChatColor.WHITE + ": Create a Dungeon Maze world");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " teleport <world> " + ChatColor.WHITE + ": Teleport to a world");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " listworlds " + ChatColor.WHITE + ": List Dungeon Maze worlds");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " reload " + ChatColor.WHITE + ": Reload config files");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " reloadperms " + ChatColor.WHITE + ": Reload permissions system");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " checkupdates " + ChatColor.WHITE + ": Check for updates");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " installupdate" + ChatColor.WHITE + ": Install new updates");
+        sender.sendMessage(ChatColor.GOLD + "/" + parentCmd + " version " + ChatColor.WHITE + ": Check plugin version");
 
         // Return the result
         return true;

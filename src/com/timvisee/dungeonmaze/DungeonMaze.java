@@ -1,14 +1,12 @@
 package com.timvisee.dungeonmaze;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.generator.Generator;
-import com.timvisee.dungeonmaze.update.Updater;
 import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
@@ -18,11 +16,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.timvisee.dungeonmaze.update.Updater.UpdateResult;
 import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
 
 public class DungeonMaze extends JavaPlugin {
@@ -138,6 +134,28 @@ public class DungeonMaze extends JavaPlugin {
 		return true;
 	}
 
+	/**
+	 * Handle Bukkit commands.
+	 *
+	 * @param sender The command sender (Bukkit).
+	 * @param cmd The command (Bukkit).
+	 * @param commandLabel The command label (Bukkit).
+	 * @param args The command arguments (Bukkit).
+	 *
+	 * @return True if the command was executed, false otherwise.
+	 */
+	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		// Get the command handler, and make sure it's valid
+		CommandHandler commandHandler = Core.getCommandHandler();
+		if(commandHandler == null)
+			return false;
+
+		// Handle the command, return the result
+		return commandHandler.onCommand(sender, cmd, commandLabel, args);
+	}
+
+
+
 
 
 
@@ -164,107 +182,6 @@ public class DungeonMaze extends JavaPlugin {
 	
 	public boolean useBypassPermissions() {
 		return Core.getConfigHandler().useBypassPermissions;
-	}
-
-	/**
-	 * Handle Bukkit commands.
-	 *
-	 * @param sender The command sender (Bukkit).
-	 * @param cmd The command (Bukkit).
-	 * @param commandLabel The command label (Bukkit).
-	 * @param args The command arguments (Bukkit).
-	 *
-	 * @return True if the command was executed, false otherwise.
-	 */
-	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		// Get the command handler, and make sure it's valid
-		CommandHandler commandHandler = Core.getCommandHandler();
-		if(commandHandler == null)
-			return false;
-
-		// Handle the command, return the result
-		return commandHandler.onCommand(sender, cmd, commandLabel, args);
-
-		/*if(commandLabel.equalsIgnoreCase("dungeonmaze") || commandLabel.equalsIgnoreCase("dm")) {
-			if(args.length == 0) {
-				sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
-				sender.sendMessage(ChatColor.GOLD + "Use the command " + ChatColor.YELLOW + "/dm createworld <name>" + ChatColor.GOLD + " to create a new Dungeon Maze world");
-				return true;
-			}
-			
-			if(args[0].equalsIgnoreCase("installupdate") || args[0].equalsIgnoreCase("installupdates")) {
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");
-					sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-
-				// Check permission
-				if(sender instanceof Player) {
-					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.installupdate")) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-
-				// Setup permissions
-				sender.sendMessage(ChatColor.GREEN + "Checking for updates...");
-
-				// Get the update checker and refresh the updates data
-				// TODO: Force check for an update!
-				Updater uc = Core.getUpdateChecker();
-
-				if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-					sender.sendMessage(ChatColor.GREEN + "No new version found!");
-				} else {
-
-					String newVer = uc.getLatestName();
-
-					// Make sure the new version is compatible with the current bukkit version
-					if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
-						sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
-						sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-						sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
-					} else {
-						if(uc.getResult() == UpdateResult.SUCCESS)
-							sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
-						else {
-							sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer) + ", but auto-install failed, please update by yourself!");
-						}
-					}
-				}
-				return true;
-			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") ||
-					args[0].equalsIgnoreCase("?")) {
-				
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");
-					sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// View the help
-				sender.sendMessage(ChatColor.GREEN + "==========[ DUNGEON MAZE HELP ]==========");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <help/h/?> " + ChatColor.WHITE + ": View help");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " createworld <name>" + ChatColor.WHITE + ": Create a Dungeon Maze world");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " teleport <world> " + ChatColor.WHITE + ": Teleport to a world");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " listworlds " + ChatColor.WHITE + ": List Dungeon Maze worlds");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reload " + ChatColor.WHITE + ": Reload config files");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " reloadperms " + ChatColor.WHITE + ": Reload permissions system");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <checkupdates/check> " + ChatColor.WHITE + ": Check for updates");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " installupdate" + ChatColor.WHITE + ": Install new updates");
-				sender.sendMessage(ChatColor.GOLD + "/" + commandLabel + " <version/ver/v> " + ChatColor.WHITE + ": Check plugin version");
-				
-				return true;
-			} else {
-				// Handle unknown commands
-				sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-				return true;
-			}
-		}
-		return false;*/
 	}
 	
 	public boolean worldExists(String w) {

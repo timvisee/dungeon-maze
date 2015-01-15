@@ -83,13 +83,14 @@ public class VersionCommand extends Command {
      * Handle the command.
      *
      * @param sender The command sender.
-     * @param cmd    The command label.
-     * @param args   The command arguments.
+     * @param parentCmd The parent command, or an empty string if there isn't any.
+     * @param cmd The command label.
+     * @param args The command arguments.
      *
      * @return True if the command was executed, false otherwise.
      */
     @Override
-    public boolean onCommand(CommandSender sender, String cmd, List<String> args) {
+    public boolean onCommand(CommandSender sender, String parentCmd, String cmd, List<String> args) {
         // Show some version info
         sender.sendMessage(ChatColor.GREEN + "This server is running Dungeon Maze v" + DungeonMaze.instance.getVersion());
         sender.sendMessage(ChatColor.GREEN + "Developed by Tim Visee - http://timvisee.com/");

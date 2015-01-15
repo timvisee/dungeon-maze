@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze.command.checkupdates;
+package com.timvisee.dungeonmaze.command.installupdate;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.command.Command;
@@ -10,23 +10,21 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckUpdatesCommand extends Command {
+public class InstallUpdateCommand extends Command {
 
     /** Defines the applicable command labels for this command. */
     private static final List<String> APPLICABLE_COMMANDS = new ArrayList<String>() {{
-        add("checkupdates");
-        add("checkupdate");
-        add("check");
-        add("updates");
-        add("update");
-        add("cu");
+        add("installupdates");
+        add("installupdate");
+        add("install");
+        add("iu");
     }};
     /** Defines the minimum number of required arguments for this command. */
     private static final int MIN_ARGS = 0;
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = 0;
     /** Defines the permission node required to execute this command. */
-    private static final String PERMISSION_NODE = "dungeonmaze.command.checkupdates";
+    private static final String PERMISSION_NODE = "dungeonmaze.command.installupdate";
 
     /**
      * Get a list of applicable command labels for this command.
@@ -102,6 +100,7 @@ public class CheckUpdatesCommand extends Command {
 
         // Get the update checker and refresh the updates data
         // TODO: Force check for an update!
+        // TODO: Automatically install!
         Updater uc = Core.getUpdateChecker();
 
         // Make sure any update is available
@@ -131,8 +130,7 @@ public class CheckUpdatesCommand extends Command {
 
         else {
             sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
-            sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
-                    ChatColor.GREEN + " to automaticly install the new version!");
+            sender.sendMessage(ChatColor.DARK_RED + "Automatic installation failed, please update manually!");
         }
 
         // Return the result

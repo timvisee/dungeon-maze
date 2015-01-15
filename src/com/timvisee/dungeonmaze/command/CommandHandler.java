@@ -2,6 +2,8 @@ package com.timvisee.dungeonmaze.command;
 
 import com.timvisee.dungeonmaze.command.checkupdates.CheckUpdatesCommand;
 import com.timvisee.dungeonmaze.command.createworld.CreateWorldCommand;
+import com.timvisee.dungeonmaze.command.help.HelpCommand;
+import com.timvisee.dungeonmaze.command.installupdate.InstallUpdateCommand;
 import com.timvisee.dungeonmaze.command.listworld.ListWorldCommand;
 import com.timvisee.dungeonmaze.command.reload.ReloadCommand;
 import com.timvisee.dungeonmaze.command.reloadpermissions.ReloadPermissionsCommand;
@@ -42,6 +44,7 @@ public class CommandHandler {
             return true;
 
         // Initialize the commands
+        commands.add(new HelpCommand());
         commands.add(new VersionCommand());
         commands.add(new CreateWorldCommand());
         commands.add(new TeleportCommand());
@@ -49,6 +52,7 @@ public class CommandHandler {
         commands.add(new ReloadCommand());
         commands.add(new ReloadPermissionsCommand());
         commands.add(new CheckUpdatesCommand());
+        commands.add(new InstallUpdateCommand());
 
         // Return the result
         return true;
@@ -129,7 +133,7 @@ public class CommandHandler {
             }
 
             // Execute the command, return true if the command was successfully executed
-            if(entry.onCommand(sender, cmd, args))
+            if(entry.onCommand(sender, bukkitCmdLbl, cmd, args))
                 return true;
         }
 

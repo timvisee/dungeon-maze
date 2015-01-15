@@ -80,13 +80,13 @@ public class MinimalCommand extends Command {
      * Handle the command.
      *
      * @param sender The command sender.
-     * @param cmd    The command label.
+     * @param parentCmd
+     *@param cmd    The command label.
      * @param args   The command arguments.
-     *
-     * @return True if the command was executed, false otherwise.
+ *   @return True if the command was executed, false otherwise.
      */
     @Override
-    public boolean onCommand(CommandSender sender, String cmd, List<String> args) {
+    public boolean onCommand(CommandSender sender, String parentCmd, String cmd, List<String> args) {
         // Execute the command here!
 
         // Return the result

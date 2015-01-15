@@ -1,6 +1,5 @@
 package com.timvisee.dungeonmaze.command.teleport;
 
-import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.Command;
 import org.bukkit.Bukkit;
@@ -87,13 +86,14 @@ public class TeleportCommand extends Command {
      * Handle the command.
      *
      * @param sender The command sender.
-     * @param cmd    The command label.
-     * @param args   The command arguments.
+     * @param parentCmd The parent command, or an empty string if there isn't any.
+     * @param cmd The command label.
+     * @param args The command arguments.
      *
      * @return True if the command was executed, false otherwise.
      */
     @Override
-    public boolean onCommand(CommandSender sender, String cmd, List<String> args) {
+    public boolean onCommand(CommandSender sender, String parentCmd, String cmd, List<String> args) {
         // Make sure the command is executed by an in-game player
         if(!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.DARK_RED + "You need to be in-game to use this command!");

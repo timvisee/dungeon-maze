@@ -88,13 +88,14 @@ public class CreateWorldCommand extends Command {
      * Handle the command.
      *
      * @param sender The command sender.
-     * @param cmd    The command label.
-     * @param args   The command arguments.
+     * @param parentCmd The parent command, or an empty string if there isn't any.
+     * @param cmd The command label.
+     * @param args The command arguments.
      *
      * @return True if the command was executed, false otherwise.
      */
     @Override
-    public boolean onCommand(CommandSender sender, String cmd, List<String> args) {
+    public boolean onCommand(CommandSender sender, String parentCmd, String cmd, List<String> args) {
         // Get and trim the preferred world name
         String worldName = args.get(0).trim();
 
