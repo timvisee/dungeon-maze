@@ -227,6 +227,20 @@ public class PermissionsManager {
         else
         	this.log.info("Unhooked from Permissions!");
 	}
+
+	/**
+	 * Reload the permissions manager, and re-hook all permission plugins.
+	 *
+	 * @return True on success, false on failure.
+	 */
+	public boolean reload() {
+		// Unhook all permission plugins
+		unhook();
+
+		// Set up the permissions manager again
+		setup();
+		return true;
+	}
 	
 	/**
 	 * Method called when a plugin is being enabled

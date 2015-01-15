@@ -2,10 +2,12 @@ package com.timvisee.dungeonmaze.command.reload;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.command.Command;
+import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
+import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +100,20 @@ public class ReloadCommand extends Command {
         Core.getLogger().info("[DungeonMaze] Reloading Dungeon Maze...");
         sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze...");
 
-        // TODO: Reload the permissions module!
+        // Get the permissions manager and make sure it's valid
+        PermissionsManager permissionsManager = Core.getPermissionsManager();
+        if(permissionsManager == null) {
+            Core.getLogger().info("[DungeonMaze] Failed to access the permissions manager after " + p.getTimeFormatted() + "!");
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to access the permissions manager after " + p.getTimeFormatted() + "!");
+            return true;
+        }
+
+        // Reload the permissions module, show an error on failure
+        if(!permissionsManager.reload()) {
+            Core.getLogger().info("[DungeonMaze] Failed to reload permissions after " + p.getTimeFormatted() + "!");
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to reload permissions after " + p.getTimeFormatted() + "!");
+            return true;
+        }
 
         // Reload configs and worlds
         Core.getConfigHandler().load();

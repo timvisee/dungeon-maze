@@ -83,4 +83,13 @@ public class PermissionsManagerModule extends Module {
     public PermissionsManager getPermissionsManager() {
         return this.permissionsManager;
     }
+
+    /**
+     * Reload the permissions manager.
+     *
+     * @return True on success, false on failure.
+     */
+    public boolean reloadPermissionsManager() {
+        return this.permissionsManager.reload();
+    }
 }
