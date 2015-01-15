@@ -192,38 +192,7 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].equalsIgnoreCase("reload")) {
-				
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// Check permission
-				if(sender instanceof Player) {
-					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.reload")) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-
-				Core.getLogger().info("[DungeonMaze] Reloading plugin...");
-				sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze");
-				
-				// TODO: Reload the permissions module!
-				
-				// Reload configs and worlds
-				Core.getConfigHandler().load();
-				Core.getWorldManager();
-				Core.getWorldManager().preloadWorlds();
-				
-				// Show a succes message
-				Core.getLogger().info("[DungeonMaze] Dungeon Maze has been reloaded!");
-				sender.sendMessage(ChatColor.GREEN + "Dungeon Maze has been reloaded!");
-				return true;
-				
-			} else if(args[0].equalsIgnoreCase("reloadpermissions") || args[0].equalsIgnoreCase("reloadperms")) {
+			if(args[0].equalsIgnoreCase("reloadpermissions") || args[0].equalsIgnoreCase("reloadperms")) {
 				
 				// Check wrong command values
 				if(args.length != 1) {
