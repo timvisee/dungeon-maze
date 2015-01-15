@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
@@ -19,6 +20,9 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 public class WorldManager {
 
 	// TODO: Improve the quality of the code!
+
+	/** Minecraft world name validation Regex. */
+	private static final String MINECRAFT_WORLD_NAME_REGEX = "^[[\\p{Alnum}]_-]+";
 
 	/** Defines whether the world manager is initialized or not. */
 	private boolean init = false;
@@ -108,7 +112,7 @@ public class WorldManager {
 		if(!isInit() && !force)
 			return true;
 
-		// TODO: Peacefully unload the manager and all worlds!?
+		// TODO: Properly unload the manager and all worlds!?
 		this.init = false;
 		return true;
 	}
@@ -300,5 +304,17 @@ public class WorldManager {
 		// Show a message, return the result
 		System.out.println("[DungeonMaze] Successfully prepared!");
 		return true;
+	}
+
+	/**
+	 * Check whether a Minecraft world name is valid.
+	 *
+	 * param worldName The world name to validate.
+	 *
+	 * @return True if the world name is valid, false otherwise.
+	 */
+	public static boolean isValidWorldName(String worldName) {
+		// Do a regex check
+		return Pattern.compile(MINECRAFT_WORLD_NAME_REGEX).matcher(worldName).matches();
 	}
 }

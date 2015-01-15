@@ -9,14 +9,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class CreateWorldCommand extends Command {
 
@@ -31,8 +27,6 @@ public class CreateWorldCommand extends Command {
     private static final int MIN_ARGS = 1;
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = 1;
-    /** Minecraft world name validation Regex. */
-    private static final String MINECRAFT_WORLD_NAME_REGEX = "^[[\\p{Alnum}]_-]+";
 
     /**
      * Get a list of applicable command labels for this command.
@@ -88,7 +82,7 @@ public class CreateWorldCommand extends Command {
         String worldName = args.get(0).trim();
 
         // Validate the world name
-        if(!isValidWorldName(worldName)) {
+        if(!WorldManager.isValidWorldName(worldName)) {
             sender.sendMessage(ChatColor.DARK_RED + worldName);
             sender.sendMessage(ChatColor.DARK_RED + "The world name contains invalid characters!");
             return true;
@@ -130,7 +124,6 @@ public class CreateWorldCommand extends Command {
         World world = newWorld.createWorld();
 
         // Show a status message
-        // TODO: Is this message a duplicate of the message bellow?
         Bukkit.broadcastMessage("[DungeonMaze] World generation finished!");
         sender.sendMessage(ChatColor.GREEN + "The DungeonMaze '" + worldName + "' has successfully been generated!");
 
@@ -143,17 +136,5 @@ public class CreateWorldCommand extends Command {
 
         // Return the result
         return true;
-    }
-
-    /**
-     * Check whether a Minecraft world name is valid.
-     *
-     * param worldName The world name to validate.
-     *
-     * @return True if the world name is valid, false otherwise.
-     */
-    public boolean isValidWorldName(String worldName) {
-        // Do a regex check
-        return Pattern.compile(MINECRAFT_WORLD_NAME_REGEX).matcher(worldName).matches();
     }
 }

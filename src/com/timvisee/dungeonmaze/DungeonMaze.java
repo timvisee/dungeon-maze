@@ -192,67 +192,7 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].equalsIgnoreCase("createworld") ||
-					args[0].equalsIgnoreCase("cw") ||
-					args[0].equalsIgnoreCase("create")) {
-				// Check permission
-				if(sender instanceof Player) {
-					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.createworld", sender.isOp())) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-				
-				if(args.length != 2) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// Get the world name
-				String w = args[1];
-				
-				if(worldExists(w)) {
-					sender.sendMessage(ChatColor.DARK_RED + w);
-					sender.sendMessage(ChatColor.DARK_RED + "This world already exists!");
-					return true;
-				}
-				
-				// Edit the bukkit.yml file so bukkit knows what generator to use for the Dungeon Maze worlds,
-				// also update the Dungeon Maze files.
-				System.out.println("Editing bukkit.yml file...");
-				FileConfiguration serverConfig = getConfigFromPath(new File("bukkit.yml"));
-				serverConfig.set("worlds." + w + ".generator", "DungeonMaze");
-				try {
-					serverConfig.save(new File("bukkit.yml"));
-				} catch (IOException e) {
-					e.printStackTrace();
-					return true;
-				}
-				System.out.println("Editing Dungeon Maze config.yml file...");
-				List<String> worlds = Core.getConfigHandler().config.getStringList("worlds");
-				if(!worlds.contains(w))
-					worlds.add(w);
-				Core.getConfigHandler().config.set("worlds", worlds);
-				List<String> preloadWorlds = Core.getConfigHandler().config.getStringList("preloadWorlds");
-				if(!preloadWorlds.contains(w))
-					preloadWorlds.add(w);
-				Core.getConfigHandler().config.set("preloadWorlds", preloadWorlds);
-				saveConfig();
-				System.out.println("Editing finished!");
-
-				// Create the world
-				WorldCreator newWorld = new WorldCreator(w);
-				newWorld.generator(this.generator);
-				World world = newWorld.createWorld();
-				
-				// If the sender is a player, teleport him!
-				if(sender instanceof Player) {
-					Player p = (Player) sender;
-					p.teleport(world.getSpawnLocation());
-					p.sendMessage(ChatColor.GREEN + "The world has been succesfully generated! You have been teleported.");
-				}
-				
-			} else if(args[0].equalsIgnoreCase("teleport") ||
+			if(args[0].equalsIgnoreCase("teleport") ||
 					args[0].equalsIgnoreCase("tp") ||
 					args[0].equalsIgnoreCase("warp")) {
 				
@@ -468,18 +408,6 @@ public class DungeonMaze extends JavaPlugin {
 						}
 					}
 				}
-				return true;
-			} else if(args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("ver") || args[0].equalsIgnoreCase("v")) {
-				// Check wrong command values
-				if(args.length != 1) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");
-					sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-
-				sender.sendMessage(ChatColor.GREEN + "This server is running Dungeon Maze v" + DungeonMaze.instance.getVersion());
-				sender.sendMessage(ChatColor.GREEN + "Developed by Tim Visee - http://timvisee.com/");
-
 				return true;
 			} else if(args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h") ||
 					args[0].equalsIgnoreCase("?")) {
