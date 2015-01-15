@@ -192,51 +192,7 @@ public class DungeonMaze extends JavaPlugin {
 				return true;
 			}
 			
-			if(args[0].equalsIgnoreCase("teleport") ||
-					args[0].equalsIgnoreCase("tp") ||
-					args[0].equalsIgnoreCase("warp")) {
-				
-				// Check permission
-				if(sender instanceof Player) {
-					if(!Core.getPermissionsManager().hasPermission((Player) sender, "dungeonmaze.command.teleport", sender.isOp())) {
-						sender.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-						return true;
-					}
-				}
-				
-				// Check for invalid command arguments
-				if(args.length != 2) {
-					sender.sendMessage(ChatColor.DARK_RED + "Wrong command values!");sender.sendMessage(ChatColor.YELLOW + "Use " + ChatColor.GOLD + "/" + commandLabel + " help " + ChatColor.YELLOW + "to view help");
-					return true;
-				}
-				
-				// The command must be ran by an in-game player
-				if(!(sender instanceof Player)) {
-					sender.sendMessage(ChatColor.DARK_RED + "You need to be in-game to use this command!");
-					return true;
-				}
-
-				// Get the player and the world name
-				Player p = (Player) sender;
-				String w = args[1];
-				
-				// The world must exist
-				if(!worldExists(w)) {
-					sender.sendMessage(ChatColor.DARK_RED + w);
-					sender.sendMessage(ChatColor.DARK_RED + "This world doesn't exists!");
-					return true;
-				}
-				
-				// The world must be loaded, if not force the world to load
-				if(!worldIsLoaded(w))
-					worldLoad(w);
-				
-				// Telepor the player, show a status message and return true
-				p.teleport(getServer().getWorld(w).getSpawnLocation());
-				p.sendMessage(ChatColor.GREEN + "You have been teleported.");
-				return true;
-				
-			} else if(args[0].equalsIgnoreCase("listworlds") || args[0].equalsIgnoreCase("lw") ||
+			if(args[0].equalsIgnoreCase("listworlds") || args[0].equalsIgnoreCase("lw") ||
 					args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("l")) {
 
 				// Check wrong command values
@@ -457,13 +413,13 @@ public class DungeonMaze extends JavaPlugin {
 	public void worldLoad(String w) {
 		if(worldExists(w)) {
 			if(!worldIsLoaded(w)) {
-				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] Loading world, there's probably some lag for a little while");
+				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] Loading world, expecting lag for a while...");
 				
 				WorldCreator newWorld = new WorldCreator(w);
 				newWorld.generator(generator);
 				newWorld.createWorld();
 				
-				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] World succesfully loaded!");
+				getServer().broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] World loaded successfully!");
 			}
 		}
 	}
