@@ -24,7 +24,6 @@ public class DungeonMazeApiTest extends JavaPlugin {
 
         // Show a startup message
         getLogger().info("Dungeon Maze API Test v" + getVersion() + " started!");
-        getLogger().info("Dungeon Maze API Test developed by Tim Visee - timvisee.com");
     }
 
     /**
@@ -53,6 +52,9 @@ public class DungeonMazeApiTest extends JavaPlugin {
         getLogger().info("Dungeon Maze worlds (through API):");
         for(String world : worlds)
             getLogger().info(" - " + world);
+
+        // Stop the API
+        stopApi();
     }
 
     /**

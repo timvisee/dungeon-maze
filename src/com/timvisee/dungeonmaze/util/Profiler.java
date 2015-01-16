@@ -115,6 +115,10 @@ public class Profiler {
         // Get the passed time
         long time = getTime();
 
+        // Return the time if it's less than one millisecond
+        if(time <= 0)
+            return "<1 ms";
+
         // Return the time in milliseconds
         if(time < 1000)
             return time + " ms";

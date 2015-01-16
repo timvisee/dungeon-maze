@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
@@ -31,6 +32,8 @@ public class ApiController {
 	 * @param api
 	 */
 	public void registerApiSession(DungeonMazeApi api) {
+		// TODO: Validate the API session, and plugin instance!
+
 		if(isApiSession(api))
 			return;
 		
@@ -95,6 +98,10 @@ public class ApiController {
 		
 		// Remove/unregister the api instance
 		this.apiSessions.remove(api);
+
+		// Show an 'unhooked' message
+		if(api.getPlugin() != null)
+			Core.getLogger().info(api.getPlugin().getName() + " unhooked from Dungeon Maze!");
 	}
 	
 	/**
