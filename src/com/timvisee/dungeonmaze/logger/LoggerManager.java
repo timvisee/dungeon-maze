@@ -2,11 +2,11 @@ package com.timvisee.dungeonmaze.logger;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class LoggerManager {
+
+    // TODO: Should we create a custom Dungeon Maze logger, which may improve logging functionality?
 
     /** Dungeon Maze Logger instance. */
     public Logger dungeonMazeLogger;
