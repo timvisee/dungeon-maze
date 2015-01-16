@@ -1,6 +1,5 @@
 package com.timvisee.dungeonmaze.config;
 
-import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.module.Module;
 
 public class ConfigHandlerModule extends Module {

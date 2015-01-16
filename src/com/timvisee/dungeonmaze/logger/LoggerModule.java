@@ -20,6 +20,7 @@ public class LoggerModule extends Module {
     @Override
     public boolean init() {
         // Initialize the logger
+        // TODO: Get the default logger, since the original will auto include the SafeCreeper prefix
         this.log = Logger.getLogger("Minecraft");
         return true;
     }

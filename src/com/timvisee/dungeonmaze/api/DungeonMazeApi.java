@@ -35,6 +35,8 @@ public class DungeonMazeApi {
 	* @return True if succeed
 	*/
 	public boolean hook() {
+		// TODO: Don't unhook first when running this method twice!
+
 		Logger log = Logger.getLogger("Minecraft");
 		
 		try {
@@ -67,7 +69,9 @@ public class DungeonMazeApi {
 			
 			// Register the current API session in Dungeon Maze
 			this.dm.getApiController().registerApiSession(this);
-			
+
+			// TODO: Automatically do some kind of hook success test!
+
 			// Hook succeed, return true
 			return true;
 	        

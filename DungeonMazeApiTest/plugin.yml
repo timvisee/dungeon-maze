@@ -1,0 +1,11 @@
+name: DungeonMazeApiTest
+main: com.timvisee.dungeonmazeapitest.DungeonMazeApiTest
+version: 0.1
+depend: [DungeonMaze]
+commands:
+  dm:
+    description: Dungeon Maze API Test command
+    usage: /dmapitest
+  dungeonmaze:
+    description: Dungeon Maze API Test command
+    usage: /dungeonmazeapitest

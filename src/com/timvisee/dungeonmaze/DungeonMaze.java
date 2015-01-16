@@ -1,6 +1,5 @@
 package com.timvisee.dungeonmaze;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -227,6 +225,11 @@ public class DungeonMaze extends JavaPlugin {
 	public String getVersion() {
 		return getDescription().getVersion();
 	}
+
+
+
+
+
 
 
 

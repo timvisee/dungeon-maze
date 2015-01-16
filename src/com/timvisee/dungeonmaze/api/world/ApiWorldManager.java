@@ -10,7 +10,9 @@ import com.timvisee.dungeonmaze.world.WorldManager;
  * API layer for the DMWorldManager class
  */
 public class ApiWorldManager {
-	
+
+	// TODO: Update this accordingly with the non-api world manager.
+
 	private DungeonMaze dm;
 	
 	/**

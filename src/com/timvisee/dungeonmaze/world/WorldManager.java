@@ -22,8 +22,6 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 
 public class WorldManager {
 
-	// TODO: Improve the quality of the code!
-
 	/** Minecraft world name validation Regex. */
 	private static final String MINECRAFT_WORLD_NAME_REGEX = "^[[\\p{Alnum}]_-]+";
 
