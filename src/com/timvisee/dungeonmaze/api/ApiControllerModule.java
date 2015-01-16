@@ -75,7 +75,7 @@ public class ApiControllerModule extends Module {
 
             // Unhook all hooked plugins and sessions
             if(apiSessionCount > 0) {
-                Core.getLogger().info("[DungeonMaze] Unhooking " + apiSessionCount + " hooked plugin" + (apiSessionCount != 1 ? "s" : "") + "...");
+                Core.getLogger().info("Unhooking " + apiSessionCount + " hooked plugin" + (apiSessionCount != 1 ? "s" : "") + "...");
                 this.apiController.unregisterAllApiSessions();
             }
 

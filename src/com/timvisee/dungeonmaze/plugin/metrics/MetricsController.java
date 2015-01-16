@@ -65,7 +65,7 @@ public class MetricsController {
             e.printStackTrace();
 
             // Show an error message, reset the metrics instance and return the result
-            Core.getLogger().info("[DungeonMaze] Failed to set up Metrics!");
+            Core.getLogger().info("Failed to set up Metrics!");
             this.metrics = null;
             return false;
         }

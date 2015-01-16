@@ -113,13 +113,13 @@ public class ModuleManager {
             // Initialize the module
             if(!m.init()) {
                 // TODO: Improve this error message!
-                Core.getLogger().info("[DungeonMaze] [Module] Load: " + m.getName() + " FAILED!");
+                Core.getLogger().info("[Module] Load: " + m.getName() + " FAILED!");
                 return false;
             }
 
             // Show a status message
             // TODO: Should we remove this message?
-            Core.getLogger().info("[DungeonMaze] [Module] Load: " + m.getName() + " SUCCESS!");
+            Core.getLogger().info("[Module] Load: " + m.getName() + " SUCCESS!");
         }
 
         // Every module was initialized successfully, return the result
@@ -149,7 +149,7 @@ public class ModuleManager {
                 failed = true;
 
                 // TODO: Improve this error message!
-                Core.getLogger().info("[DungeonMaze] [Module] Unload: " + m.getName() + " FAILED!");
+                Core.getLogger().info("[Module] Unload: " + m.getName() + " FAILED!");
 
                 // Return false if the force mode isn't used
                 return false;
@@ -157,7 +157,7 @@ public class ModuleManager {
 
             // Show a status message
             // TODO: Should we remove this message?
-            Core.getLogger().info("[DungeonMaze] [Module] Unload: " + m.getName() + " SUCCESS!");
+            Core.getLogger().info("[Module] Unload: " + m.getName() + " SUCCESS!");
         }
 
         // Every module was initialized successfully, return the result

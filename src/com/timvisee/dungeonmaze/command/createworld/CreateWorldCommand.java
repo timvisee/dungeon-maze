@@ -134,7 +134,7 @@ public class CreateWorldCommand extends Command {
 
         // Show a status message
         sender.sendMessage(ChatColor.YELLOW + "Generating the DungeonMaze '" + worldName + "'...");
-        Bukkit.broadcastMessage("[DungeonMaze] Generating a new world, expecting lag for a while...");
+        Bukkit.broadcastMessage("Generating a new world, expecting lag for a while...");
 
         // Create the world
         WorldCreator newWorld = new WorldCreator(worldName);
@@ -142,7 +142,7 @@ public class CreateWorldCommand extends Command {
         World world = newWorld.createWorld();
 
         // Show a status message
-        Bukkit.broadcastMessage("[DungeonMaze] World generation finished!");
+        Bukkit.broadcastMessage("World generation finished!");
         sender.sendMessage(ChatColor.GREEN + "The DungeonMaze '" + worldName + "' has successfully been generated!");
 
         // If the command was executed by a player, teleport the player

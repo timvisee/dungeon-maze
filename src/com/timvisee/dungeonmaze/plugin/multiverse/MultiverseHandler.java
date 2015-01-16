@@ -39,7 +39,7 @@ public class MultiverseHandler {
         // Make sure any plugin instance was found
         if(multiversePlugin == null) {
             // Show a status message
-            Core.getLogger().info("[DungeonMaze] Multiverse not detected! Disabling Multiverse usage!");
+            Core.getLogger().info("Multiverse not detected! Disabling Multiverse usage!");
             this.multiverseCore = null;
             return true;
         }
@@ -52,7 +52,7 @@ public class MultiverseHandler {
             // Make sure the multiverse core version is acceptable, if not, return false
             if(!multiverseCore.getDescription().getVersion().contains(MultiverseHandler.REQUIRED_MULTIVERSE_VERSION)) {
                 // Show an error message
-                Core.getLogger().info("[DungeonMaze] Failed to hook into Multiverse, version not compatible!");
+                Core.getLogger().info("Failed to hook into Multiverse, version not compatible!");
                 return false;
             }
 
@@ -64,12 +64,12 @@ public class MultiverseHandler {
             this.multiverseCore = null;
 
             // Show an error message
-            Core.getLogger().info("[DungeonMaze] Failed to hook into Multiverse!");
+            Core.getLogger().info("Failed to hook into Multiverse!");
             return false;
         }
 
         // Show an status message
-        Core.getLogger().info("[DungeonMaze] Hooked into Multiverse");
+        Core.getLogger().info("Hooked into Multiverse");
         return true;
     }
 

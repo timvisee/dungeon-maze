@@ -10,6 +10,8 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 
 public class ApiController {
 
+	// TODO: Improve this controller!
+
 	boolean apiEnabled = false;
 	
 	List<DungeonMazeApi> apiSessions = new ArrayList<DungeonMazeApi>();

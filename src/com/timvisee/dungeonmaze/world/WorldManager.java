@@ -295,7 +295,7 @@ public class WorldManager {
 		Profiler p = new Profiler(true);
 
 		// Show a status message
-		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] Loading world, expecting lag for a while...");
+		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Loading world, expecting lag for a while...");
 
 		// Load the world
 		// TODO: Better loading mechanics!
@@ -305,7 +305,7 @@ public class WorldManager {
 		newWorld.createWorld();
 
 		// Show a status message, return the result
-		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "[DungeonMaze] World loaded successfully, took " + p.getTimeFormatted() + "!");
+		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World loaded successfully, took " + p.getTimeFormatted() + "!");
 		return true;
 	}
 	
@@ -343,7 +343,7 @@ public class WorldManager {
 	public boolean prepareDungeonMazeWorld(String worldName) {
 		// Edit the bukkit.yml file so bukkit knows what generator to use for the Dungeon Maze worlds, also update the
 		// Dungeon Maze files.
-		Core.getLogger().info("[DungeonMaze] Preparing bukkit.yml file...");
+		Core.getLogger().info("Preparing bukkit.yml file...");
 
 		// Load the Bukkit configuration file
 		FileConfiguration serverConfig = ConfigUtils.getConfigFromPath(new File("bukkit.yml"));
@@ -356,17 +356,17 @@ public class WorldManager {
 			serverConfig.save(new File("bukkit.yml"));
 		} catch (IOException e) {
 			e.printStackTrace();
-			Core.getLogger().info("[DungeonMaze] Failed to prepare the bukkit.yml file!");
+			Core.getLogger().info("Failed to prepare the bukkit.yml file!");
 			return false;
 		}
 
 		// Edit the Dungeon Maze configuration file, show a message
-		Core.getLogger().info("[DungeonMaze] Preparing the Dungeon Maze configuration file...");
+		Core.getLogger().info("Preparing the Dungeon Maze configuration file...");
 
 		// Get the configuration handler, and make sure it's available
 		ConfigHandler configHandler = Core.getConfigHandler();
 		if(configHandler == null) {
-			Core.getLogger().info("[DungeonMaze] Failed to prepare the Dungeon Maze configuration file, config handler not available!");
+			Core.getLogger().info("Failed to prepare the Dungeon Maze configuration file, config handler not available!");
 			return false;
 		}
 
@@ -388,7 +388,7 @@ public class WorldManager {
 		DungeonMaze.instance.saveConfig();
 
 		// Show a message, return the result
-		System.out.println("[DungeonMaze] Successfully prepared!");
+		System.out.println("Successfully prepared!");
 		return true;
 	}
 

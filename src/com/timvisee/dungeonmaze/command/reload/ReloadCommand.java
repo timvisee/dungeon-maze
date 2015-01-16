@@ -96,20 +96,20 @@ public class ReloadCommand extends Command {
         Profiler p = new Profiler(true);
 
         // Show a reload warning
-        Core.getLogger().info("[DungeonMaze] Reloading Dungeon Maze...");
+        Core.getLogger().info("Reloading Dungeon Maze...");
         sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze...");
 
         // Get the permissions manager and make sure it's valid
         PermissionsManager permissionsManager = Core.getPermissionsManager();
         if(permissionsManager == null) {
-            Core.getLogger().info("[DungeonMaze] Failed to access the permissions manager after " + p.getTimeFormatted() + "!");
+            Core.getLogger().info("Failed to access the permissions manager after " + p.getTimeFormatted() + "!");
             sender.sendMessage(ChatColor.DARK_RED + "Failed to access the permissions manager after " + p.getTimeFormatted() + "!");
             return true;
         }
 
         // Reload the permissions module, show an error on failure
         if(!permissionsManager.reload()) {
-            Core.getLogger().info("[DungeonMaze] Failed to reload permissions after " + p.getTimeFormatted() + "!");
+            Core.getLogger().info("Failed to reload permissions after " + p.getTimeFormatted() + "!");
             sender.sendMessage(ChatColor.DARK_RED + "Failed to reload permissions after " + p.getTimeFormatted() + "!");
             return true;
         }
@@ -120,7 +120,7 @@ public class ReloadCommand extends Command {
         Core.getWorldManager().preloadDungeonMazeWorlds();
 
         // Show a success message
-        Core.getLogger().info("[DungeonMaze] Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");
+        Core.getLogger().info("Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");
         sender.sendMessage(ChatColor.GREEN + "Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");
         return true;
     }

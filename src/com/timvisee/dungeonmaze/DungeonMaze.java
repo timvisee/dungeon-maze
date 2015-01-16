@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.command.CommandHandler;
@@ -46,14 +47,14 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler p = new Profiler(true);
 
 		// Show a status message
-		Core.getLogger().info("[DungeonMaze] Starting Dungeon Maze v" + getVersion() + "...");
+		Core.getLogger().info("Starting Dungeon Maze v" + getVersion() + "...");
 
 		// Initialize the core
 		initCore();
 
 		// Show a startup message
-		Core.getLogger().info("[DungeonMaze] Dungeon Maze v" + getVersion() + " started, took " + p.getTimeFormatted() + "!");
-		Core.getLogger().info("[DungeonMaze] Dungeon Maze developed by Tim Visee - timvisee.com");
+		Core.getLogger().info("Dungeon Maze v" + getVersion() + " started, took " + p.getTimeFormatted() + "!");
+		Core.getLogger().info("Dungeon Maze developed by Tim Visee - timvisee.com");
 	}
 
 	/**
@@ -64,13 +65,13 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler p = new Profiler(true);
 
 		// Show an disabling message
-		Core.getLogger().info("[DungeonMaze] Disabling Dungeon Maze...");
+		Core.getLogger().info("Disabling Dungeon Maze...");
 
 		// Destroy the core
 		destroyCore(true);
 
 		// Show an disabled message
-		Core.getLogger().info("[DungeonMaze] Dungeon Maze Disabled, took " + p.getTimeFormatted() + "!");
+		Core.getLogger().info("Dungeon Maze Disabled, took " + p.getTimeFormatted() + "!");
 	}
 
 	/**
@@ -84,17 +85,17 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler p = new Profiler(true);
 
 		// Show a status message
-		Core.getLogger().info("[DungeonMaze] Starting core...");
+		Core.getLogger().info("Starting core...");
 
 		// Initialize the core, show the result status
 		if(!this.core.init()) {
 			// Core failed to initialize, show a status message
-			Core.getLogger().info("[DungeonMaze] [ERROR] Failed to start the core, after " + p.getTimeFormatted() + "!");
+			Core.getLogger().info("[ERROR] Failed to start the core, after " + p.getTimeFormatted() + "!");
 			return false;
 		}
 
 		// Core initialized, show a status message
-		Core.getLogger().info("[DungeonMaze] Core started successfully, took " + p.getTimeFormatted() + "!");
+		Core.getLogger().info("Core started successfully, took " + p.getTimeFormatted() + "!");
 		return true;
 	}
 
@@ -119,17 +120,17 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler p = new Profiler(true);
 
 		// Show a status message
-		Core.getLogger().info("[DungeonMaze] Stopping core...");
+		Core.getLogger().info("Stopping core...");
 
 		// Destroy the core, show the result status
 		if(!this.core.destroy(force)) {
 			// Show a status message, return the result
-			Core.getLogger().info("[DungeonMaze] Failed to stop the core, after " + p.getTimeFormatted() + "!");
+			Core.getLogger().info("Failed to stop the core, after " + p.getTimeFormatted() + "!");
 			return false;
 		}
 
 		// Show a status message, return the result
-		Core.getLogger().info("[DungeonMaze] Core stopped successfully, took " + p.getTimeFormatted() + "!");
+		Core.getLogger().info("Core stopped successfully, took " + p.getTimeFormatted() + "!");
 		return true;
 	}
 

@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.logger;
 
+import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.module.Module;
 
 import java.util.logging.Logger;
@@ -9,8 +10,8 @@ public class LoggerModule extends Module {
     /** Module name. */
     private static final String MODULE_NAME = "Logger";
 
-    /** Logger instance. */
-    public Logger log;
+    /** Logger manager instance. */
+    private LoggerManager loggerManager;
 
     /**
      * Initialize the module.
@@ -19,10 +20,13 @@ public class LoggerModule extends Module {
      */
     @Override
     public boolean init() {
-        // Initialize the logger
-        // TODO: Get the default logger, since the original will auto include the SafeCreeper prefix
-        this.log = Logger.getLogger("Minecraft");
-        return true;
+        // Make sure the module isn't initialized already
+        if(isInit())
+            return true;
+
+        // Initialize the logging manager
+        this.loggerManager = new LoggerManager(false);
+        return this.loggerManager.init();
     }
 
     /**
@@ -32,7 +36,12 @@ public class LoggerModule extends Module {
      */
     @Override
     public boolean isInit() {
-        return this.log != null;
+        // Make sure the logger manager is set
+        if(this.loggerManager == null)
+            return false;
+
+        // Check whether the logger manager is initialized
+        return this.loggerManager.isInit();
     }
 
     /**
@@ -47,7 +56,21 @@ public class LoggerModule extends Module {
      */
     @Override
     public boolean destroy(boolean force) {
-        this.log = null;
+        // Make sure the logger manager is initialized, or it must be forced
+        if(!isInit() && !force)
+            return true;
+
+        // Destroy the logger manager if the instance is available
+        if(this.loggerManager != null) {
+            if(!this.loggerManager.destroy()) {
+                if(force)
+                    this.loggerManager = null;
+                return false;
+            }
+        }
+
+        // Reset the logger manager instance, return the result
+        this.loggerManager = null;
         return true;
     }
 
@@ -62,11 +85,25 @@ public class LoggerModule extends Module {
     }
 
     /**
-     * Get the logger.
+     * Get the logger manager.
      *
-     * @return Logger instance.
+     * @return Logger manager instance.
+     */
+    public LoggerManager getLoggerManager() {
+        return this.loggerManager;
+    }
+
+    /**
+     * Get the default logger.
+     *
+     * @return Default logger instance.
      */
     public Logger getLogger() {
-        return this.log;
+        // Make sure the module is initialized
+        if(!isInit())
+            return DungeonMaze.instance.getLogger();
+
+        // Get and return the logger
+        return this.loggerManager.getLogger();
     }
 }

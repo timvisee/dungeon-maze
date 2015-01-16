@@ -7,6 +7,7 @@ import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.command.CommandHandlerModule;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.listener.EventListenerManager;
+import com.timvisee.dungeonmaze.logger.LoggerManager;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.module.*;
 import com.timvisee.dungeonmaze.api.ApiControllerModule;
@@ -159,6 +160,24 @@ public class Core {
     }
 
     /**
+     * Get the logger manager.
+     *
+     * @return Logger manager instance.
+     */
+    public static LoggerManager getLoggerManager() {
+        return Core.instance._getLoggerManager();
+    }
+
+    /**
+     * Get the logger manager.
+     *
+     * @return Logger manager instance.
+     */
+    public LoggerManager _getLoggerManager() {
+        return this.loggerModule.getLoggerManager();
+    }
+
+    /**
      * Get the logger.
      *
      * @return Logger instance.
@@ -173,11 +192,12 @@ public class Core {
      * @return Logger instance.
      */
     public Logger _getLogger() {
-        // Get the logger
-        Logger log = this.loggerModule.getLogger();
+        /// Make sure the logger module is initialized
+        if(this.loggerModule == null)
+            return DungeonMaze.instance.getLogger();
 
-        // Return the proper logger
-        return (log != null) ? log : Logger.getLogger("Minecraft");
+        // Get and return the logger
+        return this.loggerModule.getLogger();
     }
 
     /**

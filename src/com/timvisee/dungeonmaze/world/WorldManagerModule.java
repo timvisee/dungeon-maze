@@ -73,7 +73,7 @@ public class WorldManagerModule extends Module {
             // Make sure the world count is greater than zero
             if(c.getStringList("worlds").size() > 0) {
                 // Dungeon Maze does have some worlds
-                Core.getLogger().info("[DungeonMaze] Unloading Dungeon Maze worlds...");
+                Core.getLogger().info("Unloading Dungeon Maze worlds...");
 
                 // Unload the Dungeon Maze worlds
                 List<String> worlds = new ArrayList<String>();
@@ -85,12 +85,12 @@ public class WorldManagerModule extends Module {
                 for(String w : worlds)
                     Bukkit.unloadWorld(w, true);
 
-                Core.getLogger().info("[DungeonMaze] All Dungeon Maze worlds have been unloaded!");
+                Core.getLogger().info("All Dungeon Maze worlds have been unloaded!");
             } else
-                Core.getLogger().info("[DungeonMaze] No Dungeon Maze worlds to unload avaiable");
+                Core.getLogger().info("No Dungeon Maze worlds to unload avaiable");
 
         } else
-            Core.getLogger().info("[DungeonMaze] Unloading worlds has been disabled!");
+            Core.getLogger().info("Unloading worlds has been disabled!");
 
         // Destroy the world manager if it's set, return false on failure if the destruction isn't forced
         if(this.worldManager != null)
