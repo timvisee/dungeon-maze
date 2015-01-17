@@ -6,6 +6,7 @@ import java.util.List;
 import com.timvisee.dungeonmaze.Core;
 import org.bukkit.plugin.Plugin;
 
+@SuppressWarnings("UnusedDeclaration")
 public class ApiController {
 
 	/** Defines whether the API is enabled. */

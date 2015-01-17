@@ -51,7 +51,7 @@ public class MultiverseHandlerModule extends Module {
         if(!this.isInit() && !force)
             return true;
 
-        // Unhook the mutliverse handler
+        // Unhook the multiverse handler
         if(this.multiverseHandler != null) {
             if(!this.multiverseHandler.unhook()) {
                 if(force)

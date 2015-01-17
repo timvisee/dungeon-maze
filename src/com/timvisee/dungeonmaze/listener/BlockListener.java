@@ -63,7 +63,7 @@ public class BlockListener implements Listener {
 		if((!Core.getPermissionsManager().hasPermission(player, "dungeonmaze.bypass.build", player.isOp())) && !(Core.getConfigHandler().isInWhiteList(block.getType()))) {
 			// The player doesn't have the bypass permission
 			event.setCancelled(true);
-			player.sendMessage(ChatColor.DARK_RED + "You don't have permission to break anything!");
+			player.sendMessage(ChatColor.DARK_RED + "You don't have permission to br!");
 		}
 	}
 }

@@ -1,10 +1,7 @@
 package com.timvisee.dungeonmaze;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import com.timvisee.dungeonmaze.api.ApiController;
+import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
 import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.generator.Generator;
 import com.timvisee.dungeonmaze.util.Profiler;
@@ -16,7 +13,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DungeonMaze extends JavaPlugin {
 
@@ -213,6 +211,7 @@ public class DungeonMaze extends JavaPlugin {
 	 * @deprecated This API is deprecated. The new Dungeon Maze API should be used instead. This API will be removed
 	 * soon.
 	 */
+	@SuppressWarnings({"deprecation", "UnusedDeclaration"})
 	@Deprecated
 	public DungeonMazeApiOld getDmAPI() {
 		return Core.getOldApiController().getApi();
@@ -246,6 +245,7 @@ public class DungeonMaze extends JavaPlugin {
 	public List<String> constantChunks = new ArrayList<String>(); // x;
 
 	// Getters and setters for the two lists with constant chunks and constant rooms
+	@SuppressWarnings("UnusedDeclaration")
 	public void registerConstantChunk(String world, Chunk chunk) {
 		registerConstantChunk(world, chunk.getX(), chunk.getZ());
 	}

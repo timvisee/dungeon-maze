@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.api;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 
+@SuppressWarnings("deprecation")
 public class OldApiController {
 
     /** Old Dungeon Maze api instance. */

@@ -90,6 +90,7 @@ public class HelpCommand extends Command {
      *
      * @return True if the command was executed, false otherwise.
      */
+    @SuppressWarnings("SpellCheckingInspection")
     @Override
     public boolean onCommand(CommandSender sender, String parentCmd, String cmd, List<String> args) {
         // View the help

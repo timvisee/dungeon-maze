@@ -12,6 +12,7 @@ import java.util.List;
 public class ListWorldCommand extends Command {
 
     /** Defines the applicable command labels for this command. */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final List<String> APPLICABLE_COMMANDS = new ArrayList<String>() {{
         add("listworlds");
         add("listworld");
@@ -24,6 +25,7 @@ public class ListWorldCommand extends Command {
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = 0;
     /** Defines the permission node required to execute this command. */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String PERMISSION_NODE = "dungeonmaze.command.listworlds";
 
     /**

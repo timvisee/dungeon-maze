@@ -20,6 +20,7 @@ import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import com.timvisee.dungeonmaze.DungeonMaze;
 
+@SuppressWarnings("UnusedDeclaration")
 public class WorldManager {
 
 	/** Minecraft world name validation Regex. */
@@ -155,18 +156,16 @@ public class WorldManager {
 		// Put all the DM worlds into the bukkit.yml file
 		if(multiverseCore == null) {
 			FileConfiguration bukkitConfig = ConfigUtils.getConfigFromPath(new File("bukkit.yml"));
-			if(bukkitConfig != null) {
-				//System.out.println("Editing bukkit.yml file...");
-				for(String entry : worlds)
-					bukkitConfig.set("worlds." + worlds + ".generator", entry);
-				
-				try {
-					bukkitConfig.save(new File("bukkit.yml"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				//System.out.println("Editing finished!");
-			}
+			//System.out.println("Editing bukkit.yml file...");
+			for(String entry : worlds)
+                bukkitConfig.set("worlds." + worlds + ".generator", entry);
+
+			try {
+                bukkitConfig.save(new File("bukkit.yml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+			//System.out.println("Editing finished!");
 		}
 
 		// Return the result

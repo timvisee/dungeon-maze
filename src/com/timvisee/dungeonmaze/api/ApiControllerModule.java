@@ -2,7 +2,6 @@ package com.timvisee.dungeonmaze.api;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.module.Module;
 
 public class ApiControllerModule extends Module {

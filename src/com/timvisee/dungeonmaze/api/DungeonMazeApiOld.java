@@ -18,11 +18,13 @@ import com.timvisee.dungeonmaze.util.MazeUtils;
 
 @Deprecated
 public class DungeonMazeApiOld {
-	
+
+	// TODO: Improve this class!
+
 	public static DungeonMaze plugin;
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param instance
 	 */
 	public DungeonMazeApiOld(DungeonMaze instance) {

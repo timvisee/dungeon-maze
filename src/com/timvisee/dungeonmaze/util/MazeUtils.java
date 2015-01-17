@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.util;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 
+@SuppressWarnings("UnusedDeclaration")
 public class MazeUtils {
 
 	/**
@@ -26,7 +27,7 @@ public class MazeUtils {
 	/**
 	 * Get the level of Dungeon Maze at a specific location in a world
 	 * @param w Name of the world to check in
- 	 * @param y Y coord to get the level of
+ 	 * @param y Y coordinate to get the level of
 	 * @return Dungeon Maze level, 0 if there's no level at the param location
 	 */
 	public static int getDMLevel(String w, int y) {

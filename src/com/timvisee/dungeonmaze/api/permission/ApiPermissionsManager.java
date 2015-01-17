@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.permission.PermissionsManager.PermissionsSystemType;
 
+@SuppressWarnings("UnusedDeclaration")
 public class ApiPermissionsManager {
 
 	/** Defines the Dungeon Maze API instance. */

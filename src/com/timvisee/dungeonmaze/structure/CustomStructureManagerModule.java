@@ -1,7 +1,6 @@
 package com.timvisee.dungeonmaze.structure;
 
 import com.timvisee.dungeonmaze.module.Module;
-import com.timvisee.dungeonmaze.structure.CustomStructureManager;
 
 public class CustomStructureManagerModule extends Module {
 
@@ -48,7 +47,7 @@ public class CustomStructureManagerModule extends Module {
      */
     @Override
     public boolean destroy(boolean force) {
-        // TODO: Unload the custom strucutre manager?
+        // TODO: Unload the custom structure manager?
         this.customStructureManager = null;
         return true;
     }

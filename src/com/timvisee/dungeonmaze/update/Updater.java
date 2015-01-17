@@ -66,7 +66,6 @@ public class Updater {
     private static final String delimiter = "^v|[\\s_-]v"; // Used for locating version numbers in file names
     private static final String[] NO_UPDATE_TAG = { "-DEV", "-PRE", "-SNAPSHOT" }; // If the version number contains one of these, don't update.
     private static final int BYTE_SIZE = 1024; // Used for downloading files
-    private final YamlConfiguration config = new YamlConfiguration(); // Config file
     private String updateFolder;// The folder that downloads will be placed in
     private Updater.UpdateResult result = Updater.UpdateResult.SUCCESS; // Used for determining the outcome of the update process
 
@@ -169,11 +168,12 @@ public class Updater {
         final File updaterFile = new File(pluginFile, "Updater");
         final File updaterConfigFile = new File(updaterFile, "config.yml");
 
-        this.config.options().header("This configuration file affects all plugins using the Updater system (version 2+ - http://forums.bukkit.org/threads/96681/ )" + '\n'
+        YamlConfiguration config = new YamlConfiguration();
+        config.options().header("This configuration file affects all plugins using the Updater system (version 2+ - http://forums.bukkit.org/threads/96681/ )" + '\n'
                 + "If you wish to use your API key, read http://wiki.bukkit.org/ServerMods_API and place it below." + '\n'
                 + "Some updating systems will not adhere to the disabled value, but these may be turned off in their plugin's configuration.");
-        this.config.addDefault("api-key", "PUT_API_KEY_HERE");
-        this.config.addDefault("disable", false);
+        config.addDefault("api-key", "PUT_API_KEY_HERE");
+        config.addDefault("disable", false);
 
         if (!updaterFile.exists()) {
             updaterFile.mkdir();
@@ -183,10 +183,10 @@ public class Updater {
         try {
             if (createFile) {
                 updaterConfigFile.createNewFile();
-                this.config.options().copyDefaults(true);
-                this.config.save(updaterConfigFile);
+                config.options().copyDefaults(true);
+                config.save(updaterConfigFile);
             } else {
-                this.config.load(updaterConfigFile);
+                config.load(updaterConfigFile);
             }
         } catch (final Exception e) {
             if (createFile) {
@@ -197,12 +197,12 @@ public class Updater {
             plugin.getLogger().log(Level.SEVERE, null, e);
         }
 
-        if (this.config.getBoolean("disable")) {
+        if (config.getBoolean("disable")) {
             this.result = UpdateResult.DISABLED;
             return;
         }
 
-        String key = this.config.getString("api-key");
+        String key = config.getString("api-key");
         if (key.equalsIgnoreCase("PUT_API_KEY_HERE") || key.equals("")) {
             key = null;
         }

@@ -93,7 +93,7 @@ public class CommandHandler {
      *
      * @return True if the command was executed, false otherwise.
      */
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command bukkitCmd, String bukkitCmdLbl, String[] bukkitArgs) {
+    public boolean onCommand(CommandSender sender, @SuppressWarnings("UnusedParameters") org.bukkit.command.Command bukkitCmd, String bukkitCmdLbl, String[] bukkitArgs) {
         // Make sure the command is a Dungeon Maze command
         if(!bukkitCmdLbl.equalsIgnoreCase("dungeonmaze") && !bukkitCmdLbl.equalsIgnoreCase("dm"))
             return false;

@@ -16,6 +16,7 @@ public class CustomStructureManager {
 	 * Get the amount of loaded custom structures
 	 * @return Amount of loaded custom structures
 	 */
+	@SuppressWarnings("UnusedDeclaration")
 	public int getStructureCount() {
 		return this.structures.size();
 	}

@@ -8,6 +8,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.inventory.ItemStack;
 
+@SuppressWarnings("UnusedDeclaration")
 public class ChestUtils {
 
 	/**
@@ -23,14 +24,11 @@ public class ChestUtils {
 		// Cast the block to a chest state instance
 		try {
 			BlockState bs = b.getState();
-			if(bs instanceof Chest) {
-				Chest c = (Chest) bs;
-				
+			if(bs instanceof Chest)
 				// Return the chest state instance
-				return c;
-			}
+				return (Chest) bs;
 		
-		} catch(Exception ex) { }
+		} catch(Exception ignored) { }
 		
 		return null;
 	}

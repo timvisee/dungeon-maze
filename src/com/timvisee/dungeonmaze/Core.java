@@ -28,6 +28,7 @@ import com.timvisee.dungeonmaze.world.WorldManager;
 
 import java.util.logging.Logger;
 
+@SuppressWarnings("UnusedDeclaration")
 public class Core {
 
     // TODO: Do we need to keep a non-static version of each method available?

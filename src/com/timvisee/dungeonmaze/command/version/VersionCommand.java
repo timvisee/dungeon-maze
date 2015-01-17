@@ -11,6 +11,7 @@ import java.util.List;
 public class VersionCommand extends Command {
 
     /** Defines the applicable command labels for this command. */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final List<String> APPLICABLE_COMMANDS = new ArrayList<String>() {{
         add("version");
         add("vers");

@@ -17,6 +17,7 @@ import java.util.List;
 public class CreateWorldCommand extends Command {
 
     /** Defines the applicable command labels for this command. */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final List<String> APPLICABLE_COMMANDS = new ArrayList<String>() {{
         add("createworld");
         add("createw");
@@ -28,6 +29,7 @@ public class CreateWorldCommand extends Command {
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = 1;
     /** Defines the permission node required to execute this command. */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String PERMISSION_NODE = "dungeonmaze.command.createworld";
 
     /**

@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.util;
 
 import java.text.DecimalFormat;
 
+@SuppressWarnings("UnusedDeclaration")
 public class Profiler {
 
     /** Defines the past time in milliseconds. */

@@ -1,7 +1,6 @@
 package com.timvisee.dungeonmaze.command.teleport;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.Command;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Bukkit;

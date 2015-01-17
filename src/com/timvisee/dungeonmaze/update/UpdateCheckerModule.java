@@ -3,7 +3,6 @@ package com.timvisee.dungeonmaze.update;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.module.Module;
-import com.timvisee.dungeonmaze.update.Updater;
 
 import java.io.File;
 

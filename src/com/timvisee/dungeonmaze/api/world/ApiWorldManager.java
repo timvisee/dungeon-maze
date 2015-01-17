@@ -11,6 +11,7 @@ import com.timvisee.dungeonmaze.world.WorldManager;
 /**
  * API layer for the DMWorldManager class
  */
+@SuppressWarnings("UnusedDeclaration")
 public class ApiWorldManager {
 
 	/** Defines the Dungeon Maze API instance. */

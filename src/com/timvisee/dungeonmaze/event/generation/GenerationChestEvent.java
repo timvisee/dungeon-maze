@@ -103,7 +103,7 @@ public class GenerationChestEvent extends EventHandler {
 
 	/**
 	 * Set the structure where the chest spawned
-	 * @param StructureType enum
+	 * @param structureType Structure type enum
 	*/
 	public void setStructureType(MazeStructureType structureType) {
 		this.structureType = structureType;
@@ -111,7 +111,7 @@ public class GenerationChestEvent extends EventHandler {
 
 	/**
 	 * Set the custom structure name
-	 * @param String
+	 * @param structureName The structure name
 	 */
 	public void setStructureName(String structureName) {
 		this.structureName = structureName;

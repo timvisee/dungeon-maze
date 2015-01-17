@@ -20,7 +20,7 @@ public class ConfigHandler {
 	public boolean usePermissions;
 	public boolean useBypassPermissions;
 	public List<String> mobs;
-	
+
 	@SuppressWarnings("unchecked")
 	public void load() {
 		// Get the config instance
@@ -42,6 +42,7 @@ public class ConfigHandler {
 	 * @param target Block type ID
 	 * @return true if the object is in the list
 	 */
+	@SuppressWarnings("UnusedDeclaration")
 	@Deprecated // Deprecate this for use Material enum
 	public boolean isInWhiteList(int target) {
 		List<Object> list = Core.getConfigHandler().blockWhiteList;

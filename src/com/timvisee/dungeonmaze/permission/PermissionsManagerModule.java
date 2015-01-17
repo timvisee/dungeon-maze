@@ -4,7 +4,6 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.module.Module;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 public class PermissionsManagerModule extends Module {
 
@@ -22,7 +21,7 @@ public class PermissionsManagerModule extends Module {
     @Override
     public boolean init() {
         // Initialize the update checker
-        this.permissionsManager = new PermissionsManager(Bukkit.getServer(), (Plugin) DungeonMaze.instance, Core.getLogger());
+        this.permissionsManager = new PermissionsManager(Bukkit.getServer(), DungeonMaze.instance, Core.getLogger());
 
         // Set up the permissions manager
         this.permissionsManager.setup();
@@ -89,6 +88,7 @@ public class PermissionsManagerModule extends Module {
      *
      * @return True on success, false on failure.
      */
+    @SuppressWarnings("UnusedDeclaration")
     public boolean reloadPermissionsManager() {
         return this.permissionsManager.reload();
     }

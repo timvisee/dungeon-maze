@@ -87,7 +87,7 @@ public class WorldManagerModule extends Module {
 
                 Core.getLogger().info("All Dungeon Maze worlds have been unloaded!");
             } else
-                Core.getLogger().info("No Dungeon Maze worlds to unload avaiable");
+                Core.getLogger().info("No Dungeon Maze worlds to unload available.");
 
         } else
             Core.getLogger().info("Unloading worlds has been disabled!");

@@ -13,6 +13,7 @@ import java.util.List;
 public class CheckUpdatesCommand extends Command {
 
     /** Defines the applicable command labels for this command. */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final List<String> APPLICABLE_COMMANDS = new ArrayList<String>() {{
         add("checkupdates");
         add("checkupdate");
@@ -26,6 +27,7 @@ public class CheckUpdatesCommand extends Command {
     /** Defines the maximum number of required arguments for this command, or a negative number to ignore this. */
     private static final int MAX_ARGS = 0;
     /** Defines the permission node required to execute this command. */
+    @SuppressWarnings("SpellCheckingInspection")
     private static final String PERMISSION_NODE = "dungeonmaze.command.checkupdates";
 
     /**
@@ -131,6 +133,7 @@ public class CheckUpdatesCommand extends Command {
 
         else {
             sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
+            //noinspection SpellCheckingInspection
             sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
                     ChatColor.GREEN + " to automatically install the new version!");
         }

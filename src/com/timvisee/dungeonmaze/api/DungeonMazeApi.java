@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 
+@SuppressWarnings("UnusedDeclaration")
 public class DungeonMazeApi {
 
 	/** Defines the Dungeon Maze plugin name. */
@@ -66,7 +67,7 @@ public class DungeonMazeApi {
 		// Profile the hooking process
 		Profiler profiler = new Profiler(true);
 
-		// Get the plugin's logger, and show a status message
+		// Get the plugins logger, and show a status message
 		Logger pluginLogger = this.plugin.getLogger();
 		pluginLogger.info("Hooking into Dungeon Maze...");
 
@@ -285,7 +286,7 @@ public class DungeonMazeApi {
 	 *
 	 * @param mob The name of the mob.
 	 *
-	 * @return True if the mobspawner is allow for this mob.
+	 * @return True if the mob spawner is allow for this mob.
 	 */
 	public boolean isMobSpawnerAllowed(String mob) {
 		return getDungeonMazeCore()._getConfigHandler().mobs.contains(mob);

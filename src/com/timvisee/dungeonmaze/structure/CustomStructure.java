@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.structure;
 
 import org.bukkit.Location;
 
+@SuppressWarnings("UnusedDeclaration")
 public class CustomStructure {
 	
 	private String name;

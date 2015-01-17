@@ -31,7 +31,7 @@ public class MultiverseHandler {
      * True will also be returned if the handler didn't hook because Multiverse wasn't found.
      */
     public boolean hook() {
-        // TODO: Rehook if we're already hooked?
+        // TODO: Re-hook if we're already hooked?
 
         // Try to get the multiverse plugin instance
         Plugin multiversePlugin = Bukkit.getPluginManager().getPlugin("Multiverse-Core");
@@ -137,6 +137,7 @@ public class MultiverseHandler {
      * @return The version number, or null on failure. Null will also be returned if the handler isn't
      * successfully hooked into Multiverse.
      */
+    @SuppressWarnings("UnusedDeclaration")
     public String getPluginVersion() {
         // Make sure the handler is hooked
         if(!isHooked())

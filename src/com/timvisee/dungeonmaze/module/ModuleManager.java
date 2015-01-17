@@ -5,6 +5,7 @@ import com.timvisee.dungeonmaze.Core;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("UnusedDeclaration")
 public class ModuleManager {
 
     /** The list of modules. */
@@ -86,10 +87,7 @@ public class ModuleManager {
             return false;
 
         // Check whether we should initialize the module, return the result
-        if(!init)
-            return true;
-
-        return module.init();
+        return !init || module.init();
     }
 
     /**
@@ -152,7 +150,8 @@ public class ModuleManager {
                 Core.getLogger().info("[Module] Unload: " + m.getName() + " FAILED!");
 
                 // Return false if the force mode isn't used
-                return false;
+                if(!force)
+                    return false;
             }
 
             // Show a status message
