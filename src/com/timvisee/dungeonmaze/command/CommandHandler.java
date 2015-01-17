@@ -1,14 +1,15 @@
 package com.timvisee.dungeonmaze.command;
 
-import com.timvisee.dungeonmaze.command.checkupdates.CheckUpdatesCommand;
-import com.timvisee.dungeonmaze.command.createworld.CreateWorldCommand;
-import com.timvisee.dungeonmaze.command.help.HelpCommand;
-import com.timvisee.dungeonmaze.command.installupdate.InstallUpdateCommand;
-import com.timvisee.dungeonmaze.command.listworld.ListWorldCommand;
-import com.timvisee.dungeonmaze.command.reload.ReloadCommand;
-import com.timvisee.dungeonmaze.command.reloadpermissions.ReloadPermissionsCommand;
-import com.timvisee.dungeonmaze.command.version.VersionCommand;
-import com.timvisee.dungeonmaze.command.teleport.TeleportCommand;
+import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.command.executable.CheckUpdatesCommand;
+import com.timvisee.dungeonmaze.command.executable.CreateWorldCommand;
+import com.timvisee.dungeonmaze.command.executable.HelpCommand;
+import com.timvisee.dungeonmaze.command.executable.InstallUpdateCommand;
+import com.timvisee.dungeonmaze.command.executable.ListWorldCommand;
+import com.timvisee.dungeonmaze.command.executable.ReloadCommand;
+import com.timvisee.dungeonmaze.command.executable.ReloadPermissionsCommand;
+import com.timvisee.dungeonmaze.command.executable.VersionCommand;
+import com.timvisee.dungeonmaze.command.executable.TeleportCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -18,8 +19,11 @@ import java.util.List;
 
 public class CommandHandler {
 
+    /** The command manager instance. */
+    private CommandManager commandManager;
+
     /** Defines the available commands. */
-    private List<Command> commands = new ArrayList<Command>();
+    private List<ExecutableCommand> commands = new ArrayList<ExecutableCommand>();
 
     /**
      * Constructor.
@@ -43,6 +47,10 @@ public class CommandHandler {
         if(isInit())
             return true;
 
+        // Initialize the command manager
+        this.commandManager = new CommandManager();
+        // TODO: Command manager initialization!
+
         // Initialize the commands
         commands.add(new HelpCommand());
         commands.add(new VersionCommand());
@@ -64,7 +72,7 @@ public class CommandHandler {
      * @return True if the command handler is initialized.
      */
     public boolean isInit() {
-        return !commands.isEmpty();
+        return this.commandManager != null;
     }
 
     /**
@@ -78,9 +86,18 @@ public class CommandHandler {
         if(!isInit())
             return true;
 
-        // Clear the commands list, return the result
-        this.commands.clear();
+        // Unset the command manager
+        this.commandManager = null;
         return true;
+    }
+
+    /**
+     * Get the command manager.
+     *
+     * @return Command manager instance.
+     */
+    public CommandManager getCommandManager() {
+        return this.commandManager;
     }
 
     /**
@@ -93,55 +110,41 @@ public class CommandHandler {
      *
      * @return True if the command was executed, false otherwise.
      */
-    public boolean onCommand(CommandSender sender, @SuppressWarnings("UnusedParameters") org.bukkit.command.Command bukkitCmd, String bukkitCmdLbl, String[] bukkitArgs) {
-        // Make sure the command is a Dungeon Maze command
-        if(!bukkitCmdLbl.equalsIgnoreCase("dungeonmaze") && !bukkitCmdLbl.equalsIgnoreCase("dm"))
-            return false;
-
+    public boolean onCommand(CommandSender sender, org.bukkit.command.Command bukkitCmd, String bukkitCmdLbl, String[] bukkitArgs) {
         // Process the arguments
         List<String> args = processArguments(bukkitArgs);
 
-        // Make sure the command has any arguments
-        if(args.size() == 0) {
-            sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
+        // Create a command reference
+        CommandReference commandReference = new CommandReference(bukkitCmdLbl, args);
+
+        // Get a suitable command for this reference, and make sure it isn't null
+        SuitableCommandResult result = this.commandManager.getSuitableCommand(commandReference);
+        if(result == null) {
+            Core.getLogger().info("Failed to parse Dungeon Maze command!");
+            return false;
+        }
+
+        // TODO: Handel non-suitable commands, for invalid argument numbers and such!
+        if(!result.isSuitable())
+            return false;
+
+        // Make sure the command is executable
+        if(!result.isExecutable()) {
+            // TODO: Show more detailed help!
+            sender.sendMessage(ChatColor.DARK_RED + "Incomplete command!");
             sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/dm help" + ChatColor.YELLOW + " to view help.");
             return true;
         }
 
-        // Get the command label
-        String cmd = args.get(0);
-        args.remove(0);
-
-        // Loop through each available command to check whether it's applicable
-        for(Command entry : commands) {
-            // Make sure the command label is applicable
-            if(!entry.isApplicableCommand(cmd))
-                continue;
-
-            // Make sure the command is applicable
-            if(!entry.isApplicable(cmd, args)) {
-                // TODO: Improve the quality of the message shown!
-                // TODO: Automatically show the command help!
-                sender.sendMessage(ChatColor.DARK_RED + "Invalid command arguments!");
-                sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + bukkitCmdLbl + " help " + cmd + ChatColor.YELLOW + " to view help!");
-                return true;
-            }
-
-            // Make sure the command executor has permission
-            if(!entry.hasPermission(sender)) {
-                sender.sendMessage(ChatColor.DARK_RED + "You don't have permission to use this command!");
-                return true;
-            }
-
-            // Execute the command, return true if the command was successfully executed
-            if(entry.onCommand(sender, bukkitCmdLbl, cmd, args))
-                return true;
+        // Make sure the command sender has permission
+        if(!result.hasPermission(sender)) {
+            sender.sendMessage(ChatColor.DARK_RED + "You don't have permission to use this command!");
+            return true;
         }
 
-        // Unknown command, show a warning, return the result
-        sender.sendMessage(ChatColor.DARK_RED + "Unknown Dungeon Maze command!");
-        sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + bukkitCmdLbl + " help " + ChatColor.YELLOW + "to view help.");
-        return true;
+        // Execute the command, return the result
+        // TODO: Should we return the result, or whether the command was used?
+        return result.executeCommand(sender);
     }
 
     /**
