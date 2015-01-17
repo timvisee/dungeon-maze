@@ -10,46 +10,60 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 public class BlockListener implements Listener {
-	
+
+	/**
+	 * Called when a block is placed.
+	 *
+	 * @param event The event reference.
+	 */
 	@EventHandler
-	public void onBlockPlace(BlockPlaceEvent e) {
-		Player p = e.getPlayer();
-		Block b = e.getBlockPlaced();
-		String w = b.getWorld().getName();
-		
-		if(Core.getWorldManager().isDungeonMazeWorld(w)) {
-			// The world is a Dungeon Maze world
-			
-			if(Core.getConfigHandler().worldProtection) {
-				// The world protection is enable
-				
-				if((!Core.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(Core.getConfigHandler().isInWhiteList(b.getType()))) {
-					// The player doesn't have the bypass permission
-					e.setCancelled(true);
-					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-				}
-			}
+	public void onBlockPlace(BlockPlaceEvent event) {
+		// Get the player, block and world name
+		Player player = event.getPlayer();
+		Block block = event.getBlockPlaced();
+		String worldName = block.getWorld().getName();
+
+		// Make sure the world is a Dungeon Maze world
+		if(!Core.getWorldManager().isDungeonMazeWorld(worldName))
+			return;
+
+		// Make sure world protection is enabled
+		if(!Core.getConfigHandler().worldProtection)
+            return;
+
+		// Make sure the player has permission to build (possibly with the bypass permission)
+		if((!Core.getPermissionsManager().hasPermission(player, "dungeonmaze.bypass.build", player.isOp())) && !(Core.getConfigHandler().isInWhiteList(block.getType()))) {
+			// The player doesn't have the bypass permission
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.DARK_RED + "You don't have permission to build here!");
 		}
 	}
-	
+
+	/**
+	 * Called when a block is broken.
+	 *
+	 * @param event The event reference.
+	 */
 	@EventHandler
-	public void onBlockBreak(BlockBreakEvent e) {
-		Player p = e.getPlayer();
-		Block b = e.getBlock();
-		String w = b.getWorld().getName();
-		
-		if(Core.getWorldManager().isDungeonMazeWorld(w)) {
-			// The world is a Dungeon Maze world
-			
-			if(Core.getConfigHandler().worldProtection) {
-				// The world protection is enable
-				
-				if((!Core.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp())) && !(Core.getConfigHandler().isInWhiteList(b.getType()))) {
-					// The player doesn't have the bypass permission
-					e.setCancelled(true);
-					p.sendMessage(ChatColor.DARK_RED + "You don't have permission!");
-				}
-			}
+	public void onBlockBreak(BlockBreakEvent event) {
+		// Get the player, block and world name
+		Player player = event.getPlayer();
+		Block block = event.getBlock();
+		String worldName = block.getWorld().getName();
+
+		// Make sure the world is a Dungeon Maze world
+		if(!Core.getWorldManager().isDungeonMazeWorld(worldName))
+			return;
+
+		// Make sure world protection is enabled
+		if(!Core.getConfigHandler().worldProtection)
+			return;
+
+		// Make sure the player has permission to build (possibly with the bypass permission)
+		if((!Core.getPermissionsManager().hasPermission(player, "dungeonmaze.bypass.build", player.isOp())) && !(Core.getConfigHandler().isInWhiteList(block.getType()))) {
+			// The player doesn't have the bypass permission
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.DARK_RED + "You don't have permission to break anything!");
 		}
 	}
 }

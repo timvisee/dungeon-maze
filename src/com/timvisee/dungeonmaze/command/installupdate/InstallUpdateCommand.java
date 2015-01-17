@@ -120,7 +120,7 @@ public class InstallUpdateCommand extends Command {
             // Show a message
             sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVer));
             sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-            sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
+            sender.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  uc.getLatestGameVersion() + " or higher!");
             return true;
         }
 

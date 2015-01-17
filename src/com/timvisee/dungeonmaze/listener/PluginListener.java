@@ -10,32 +10,42 @@ import org.bukkit.plugin.Plugin;
 import com.timvisee.dungeonmaze.DungeonMaze;
 
 public class PluginListener implements Listener {
-	
+
+	/**
+	 * Called when a plugin is enabled.
+	 *
+	 * @param event Event reference.
+	 */
 	@EventHandler
-	public void onPluginEnable(PluginEnableEvent e) {
+	public void onPluginEnable(PluginEnableEvent event) {
 		// Call the onPluginEnable method in the permissions manager
-		Core.getPermissionsManager().onPluginEnable(e);
+		Core.getPermissionsManager().onPluginEnable(event);
 	}
-	
+
+	/**
+	 * Called when a plugin is disabled.
+	 *
+	 * @param event Event reference.
+	 */
 	@EventHandler
-	public void onPluginDisable(PluginDisableEvent e) {
-		Plugin p = e.getPlugin();
+	public void onPluginDisable(PluginDisableEvent event) {
+		// Get the plugin instance
+		Plugin plugin = event.getPlugin();
 		
 		// Make sure the plugin instance isn't null
-		if(p == null)
+		if(plugin == null)
 			return;
 		
 		// Make sure it's not Dungeon Maze itself
-		if(p.equals(DungeonMaze.instance))
+		if(plugin.equals(DungeonMaze.instance))
 			return;
 		
 		// Call the onPluginDisable method in the permissions manager
-		Core.getPermissionsManager().onPluginDisable(e);
+		Core.getPermissionsManager().onPluginDisable(event);
 		
 		// Check if this plugin is hooked in to Dungeon Maze
-		if(Core.getApiController().isHooked(p)) {
+		if(Core.getApiController().isHooked(plugin))
 			// Unhook the plugin from Dungeon Maze and unregister it's API sessions
-			Core.getApiController().unhookPlugin(p);
-		}
+			Core.getApiController().unhookPlugin(plugin);
 	}
 }

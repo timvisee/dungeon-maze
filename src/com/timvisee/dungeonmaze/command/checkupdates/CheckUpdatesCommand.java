@@ -121,7 +121,7 @@ public class CheckUpdatesCommand extends Command {
             // Show a message
             sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVer));
             sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-            sender.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
+            sender.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  uc.getLatestGameVersion() + " or higher!");
             return true;
         }
 
@@ -132,7 +132,7 @@ public class CheckUpdatesCommand extends Command {
         else {
             sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
             sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
-                    ChatColor.GREEN + " to automaticly install the new version!");
+                    ChatColor.GREEN + " to automatically install the new version!");
         }
 
         // Return the result

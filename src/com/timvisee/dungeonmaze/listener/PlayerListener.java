@@ -1,6 +1,9 @@
 package com.timvisee.dungeonmaze.listener;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.config.ConfigHandler;
+import com.timvisee.dungeonmaze.permission.PermissionsManager;
+import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,81 +18,106 @@ import com.timvisee.dungeonmaze.update.Updater;
 import com.timvisee.dungeonmaze.update.Updater.UpdateResult;
 
 public class PlayerListener implements Listener {
-	
+
+	/**
+	 * Called when a player moves.
+	 *
+	 * @param event The event reference.
+	 */
 	@EventHandler
-	public void onPlayerMove(PlayerMoveEvent e) {
-		Player p = e.getPlayer();
-		Location loc = p.getLocation();
-		String w = loc.getWorld().getName();
-		double y = loc.getY();
-					
-		if(y >= 75) {
-			// The player is above the surface
-			
-			Core.getWorldManager();
-			if(Core.getWorldManager().isDungeonMazeWorld(w)) {
-				if(Core.getConfigHandler().allowSurface == false) {
-					// The player is not allowed on the surface
-					
-					if(Core.getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp()) == false) {
-						// The player doesn't have the bypass permission
-						double x = loc.getX();
-						double z = loc.getZ();
-						
-						// Check if there's a new available player location
-						for(int newY = 74; newY > 1; newY--) {
-							if(loc.getWorld().getBlockAt((int) x, (int) newY, (int) z).getType() != Material.AIR) {
-								// This block is a non-air block
-								// Check if the two above blocks are air, so the player could be teleported to this place
-								if(loc.getWorld().getBlockAt((int) x, (int) newY + 1, (int) z).getType() == Material.AIR &&
-										loc.getWorld().getBlockAt((int) x, (int) newY + 2, (int) z).getType() == Material.AIR) {
-									p.sendMessage(ChatColor.DARK_RED + "You're not allowed on the surface!");
-									Location newPLoc = new Location(loc.getWorld(), x, newY + 1, z);
-									p.teleport(newPLoc);
-									break;
-								}
-							}
-						}
-					}
-				}
-			}
-		}
+	public void onPlayerMove(PlayerMoveEvent event) {
+		// Get the player, location, world name and position
+		Player player = event.getPlayer();
+		Location location = player.getLocation();
+		double yLocation = location.getY();
+		String worldName = location.getWorld().getName();
+
+		// Make sure the player is above the surface
+		if(yLocation < 75)
+			return;
+
+		// Get the world manager, config handler and permissions manager, and make sure it's valid
+		WorldManager worldManager = Core.getWorldManager();
+		ConfigHandler configHandler = Core.getConfigHandler();
+		PermissionsManager permissionsManager = Core.getPermissionsManager();
+		if(worldManager == null || configHandler == null || permissionsManager == null)
+			return;
+
+		// Make sure the player is in a Dungeon Maze world
+		if(!worldManager.isDungeonMazeWorld(worldName))
+			return;
+
+		// Check whether the player is allowed on the surface
+		if(configHandler.allowSurface)
+			return;
+
+		// Check whether the player has permission to go on the Dungeon Maze surface
+		if(permissionsManager.hasPermission(player, "dungeonmaze.bypass.surface", player.isOp()))
+			return;
+
+		// Get the x and z location of the player
+		double xLocation = location.getX();
+		double zLocation = location.getZ();
+
+		// Check if there's a new available player location
+		for(int newY = 74; newY > 1; newY--) {
+            if(location.getWorld().getBlockAt((int) xLocation, newY, (int) zLocation).getType() != Material.AIR) {
+                // This block is a non-air block
+                // Check if the two above blocks are air, so the player could be teleported to this place
+                if(location.getWorld().getBlockAt((int) xLocation, newY + 1, (int) zLocation).getType() == Material.AIR &&
+                        location.getWorld().getBlockAt((int) xLocation, newY + 2, (int) zLocation).getType() == Material.AIR) {
+                    player.sendMessage(ChatColor.DARK_RED + "You're not allowed on the surface!");
+                    Location newPLoc = new Location(location.getWorld(), xLocation, newY + 1, zLocation);
+                    player.teleport(newPLoc);
+                    break;
+                }
+            }
+        }
 	}
-	
+
+	/**
+	 * Called when a player joins the server.
+	 *
+	 * @param event The event reference.
+	 */
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		Player p = event.getPlayer();
+		// Get the player
+		Player player = event.getPlayer();
 		
-		// Make sure the player has permission to see update notifications
-		if(Core.getPermissionsManager().hasPermission(p, "dungeonmaze.notification.update", p.isOp()) &&
-				DungeonMaze.instance.getConfig().getBoolean("updateChecker.enabled", true) &&
-				DungeonMaze.instance.getConfig().getBoolean("updateChecker.notifyInGame", true)) {
-			
-			// Get the update checker and refresh the updates data
-			Updater uc = Core.getUpdateChecker();
-			
-			if (uc == null) return;
-			
-			if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
-				p.sendMessage(ChatColor.GREEN + "No new DungeonMaze version found!");
-			} else {
-				
-				String newVer = uc.getLatestName();
-				
-				// Make sure the new version is compatible with the current bukkit version
-				if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
-					p.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
-					p.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-					p.sendMessage(ChatColor.GREEN + "Please update your Bukkkit to " +  uc.getLatestGameVersion() + " or higher!");
-				} else {
-					if(uc.getResult() == UpdateResult.SUCCESS)
-						p.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
-					else {
-						p.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVer));
-						p.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
-								ChatColor.GREEN + " to automaticly install the new version!");
-					}
-				}
+		// Check whether the player should get update notifications in-game
+		if(!Core.getPermissionsManager().hasPermission(player, "dungeonmaze.notification.update", player.isOp()) ||
+				!DungeonMaze.instance.getConfig().getBoolean("updateChecker.enabled", true) ||
+				!DungeonMaze.instance.getConfig().getBoolean("updateChecker.notifyInGame", true))
+			return;
+
+		// Get the update checker and refresh the updates data, and make sure the updater is valid
+		// TODO: Force update!
+		Updater uc = Core.getUpdateChecker();
+		if(uc == null)
+			return;
+
+		// No new version found
+		if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
+            player.sendMessage(ChatColor.GREEN + "No new DungeonMaze version found!");
+			return;
+        }
+
+		// Get the version number of the new version
+		String newVer = uc.getLatestName();
+
+		// Make sure the new version is compatible with the current bukkit version
+		if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
+			player.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
+			player.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
+			player.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  uc.getLatestGameVersion() + " or higher!");
+		} else {
+			if(uc.getResult() == UpdateResult.SUCCESS)
+				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
+			else {
+				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVer));
+				player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
+						ChatColor.GREEN + " to automatically install the new version!");
 			}
 		}
 	}
