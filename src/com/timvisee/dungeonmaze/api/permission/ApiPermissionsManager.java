@@ -216,6 +216,7 @@ public class ApiPermissionsManager {
 		if(!isPermissionsManagerValid())
 			return null;
 
+		// Get the permission groups
 		return getPermissionsManager().getGroups(player);
 	}
 }

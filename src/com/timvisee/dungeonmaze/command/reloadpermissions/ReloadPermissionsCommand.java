@@ -98,8 +98,8 @@ public class ReloadPermissionsCommand extends Command {
         Profiler p = new Profiler(true);
 
         // Show a status message
-        Core.getLogger().info("Reloading permissions...");
         sender.sendMessage(ChatColor.YELLOW + "Reloading permissions...");
+        Core.getLogger().info("Reloading permissions...");
 
         // Get the permissions manager and make sure it's valid
         PermissionsManager permissionsManager = Core.getPermissionsManager();

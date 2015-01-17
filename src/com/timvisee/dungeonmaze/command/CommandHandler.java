@@ -121,6 +121,7 @@ public class CommandHandler {
             // Make sure the command is applicable
             if(!entry.isApplicable(cmd, args)) {
                 // TODO: Improve the quality of the message shown!
+                // TODO: Automatically show the command help!
                 sender.sendMessage(ChatColor.DARK_RED + "Invalid command arguments!");
                 sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + bukkitCmdLbl + " help " + cmd + ChatColor.YELLOW + " to view help!");
                 return true;

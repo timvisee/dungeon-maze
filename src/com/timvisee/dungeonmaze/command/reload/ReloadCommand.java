@@ -96,8 +96,8 @@ public class ReloadCommand extends Command {
         Profiler p = new Profiler(true);
 
         // Show a reload warning
-        Core.getLogger().info("Reloading Dungeon Maze...");
         sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze...");
+        Core.getLogger().info("Reloading Dungeon Maze...");
 
         // Get the permissions manager and make sure it's valid
         PermissionsManager permissionsManager = Core.getPermissionsManager();

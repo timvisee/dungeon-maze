@@ -232,7 +232,7 @@ public class WorldManager {
 	 */
 	public boolean isWorld(String worldName) {
 		// Check whether the world exists by it's level data, return the result
-		File worldLevelFile = new File(worldName + "/level.dat");
+		File worldLevelFile = new File(Bukkit.getWorldContainer(), worldName + "/level.dat");
 		return worldLevelFile.exists();
 	}
 	
@@ -298,11 +298,15 @@ public class WorldManager {
 		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Loading world, expecting lag for a while...");
 
 		// Load the world
-		// TODO: Better loading mechanics!
-		WorldCreator newWorld = new WorldCreator(worldName);
-		if(isDungeonMazeWorld(worldName))
-			newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
-		newWorld.createWorld();
+		try {
+			WorldCreator newWorld = new WorldCreator(worldName);
+			if(isDungeonMazeWorld(worldName) && DungeonMaze.instance.getDungeonMazeGenerator() != null)
+				newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
+			newWorld.createWorld();
+		} catch(Exception ex) {
+			Core.getLogger().info("Failed to load the world '" + worldName + ", after " + p.getTimeFormatted() + "'!");
+			return false;
+		}
 
 		// Show a status message, return the result
 		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World loaded successfully, took " + p.getTimeFormatted() + "!");
