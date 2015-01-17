@@ -106,7 +106,7 @@ public class ListWorldCommand extends Command {
         sender.sendMessage(ChatColor.YELLOW + "==========[ DUNGEON MAZE WORLDS ]==========");
         if(worlds.size() > 0) {
             for(String w : worlds) {
-                if(worldManager.isDungeonMazeWorldLoaded(w))
+                if(worldManager.isLoadedDungeonMazeWorld(w))
                     sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.GREEN + "Loaded");
                 else
                     sender.sendMessage(ChatColor.GOLD + " - " + w + "   " + ChatColor.DARK_RED + "Not Loaded");

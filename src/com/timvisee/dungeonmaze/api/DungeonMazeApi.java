@@ -167,6 +167,11 @@ public class DungeonMazeApi {
 	 * @return Dungeon Maze core instance, null if not hooked into Dungeon Maze.
 	 */
 	public Core getDungeonMazeCore() {
+		// Make sure the Dungeon Maze instance is valid
+		if(this.dungeonMaze == null)
+			return null;
+
+		// Get and return the Core instance
 		return this.dungeonMaze.getCore();
 	}
 	
@@ -208,7 +213,7 @@ public class DungeonMazeApi {
 	 * @return World manager instance.
 	 */
 	public ApiWorldManager getWorldManager() {
-		return new ApiWorldManager(this.dungeonMaze);
+		return new ApiWorldManager(this);
 	}
 	
 	/**

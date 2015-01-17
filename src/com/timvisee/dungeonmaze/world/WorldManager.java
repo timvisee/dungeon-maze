@@ -271,7 +271,7 @@ public class WorldManager {
 	 *
 	 * @return True if the world is a Dungeon Maze world and the world is loaded, false otherwise.
 	 */
-	public boolean isDungeonMazeWorldLoaded(String worldName) {
+	public boolean isLoadedDungeonMazeWorld(String worldName) {
 		return getLoadedDungeonMazeWorlds().contains(worldName);
 	}
 

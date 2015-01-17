@@ -48,7 +48,7 @@ public class DungeonMazeApiTest extends JavaPlugin {
         this.api = new DungeonMazeApi(this);
 
         // Get the list of Dungeon Maze worlds through the API, and print the result in the console
-        List<String> worlds = api.getWorldManager().getDMWorlds();
+        List<String> worlds = api.getWorldManager().getDungeonMazeWorlds();
         getLogger().info("Dungeon Maze worlds (through API):");
         for(String world : worlds)
             getLogger().info(" - " + world);
