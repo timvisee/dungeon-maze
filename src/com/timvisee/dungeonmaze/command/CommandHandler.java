@@ -124,14 +124,10 @@ public class CommandHandler {
             return false;
         }
 
-        // TODO: Handel non-suitable commands, for invalid argument numbers and such!
-        if(!result.isSuitable())
-            return false;
-
         // Make sure the command is executable
         if(!result.isExecutable()) {
             // TODO: Show more detailed help!
-            sender.sendMessage(ChatColor.DARK_RED + "Incomplete command!");
+            sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
             sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/dm help" + ChatColor.YELLOW + " to view help.");
             return true;
         }
@@ -142,9 +138,25 @@ public class CommandHandler {
             return true;
         }
 
-        // Execute the command, return the result
-        // TODO: Should we return the result, or whether the command was used?
-        return result.executeCommand(sender);
+        // Execute the command if it's suitable
+        if(result.isSuitable())
+            // TODO: Should we return the result, or whether the command was used?
+            return result.executeCommand(sender);
+
+        // Show an warning/error message
+        switch(result.getResultType()) {
+        case WRONG_ARGUMENTS:
+            // TODO: Show more detailed help!
+            sender.sendMessage(ChatColor.DARK_RED + "Wrong command arguments!");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/dm help" + ChatColor.YELLOW + " to view help.");
+            return true;
+
+        default:
+            // TODO: Show more detailed help!
+            sender.sendMessage(ChatColor.DARK_RED + "Invalid command!");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/dm help" + ChatColor.YELLOW + " to view help.");
+            return true;
+        }
     }
 
     /**

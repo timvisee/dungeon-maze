@@ -1,8 +1,5 @@
 package com.timvisee.dungeonmaze.command;
 
-import com.timvisee.dungeonmaze.Core;
-import org.bukkit.command.Command;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +68,15 @@ public class CommandReference {
     }
 
     /**
+     * Get all command elements.
+     *
+     * @return All command elements.
+     */
+    public List<String> getCommandElements() {
+        return this.commandElements;
+    }
+
+    /**
      * Add an array of command elements.
      *
      * @param elements Array of command elements.
@@ -106,7 +112,7 @@ public class CommandReference {
      * @return The command reference element, or null on failure.
      */
     public String get(int i) {
-        return getElement(i);
+        return getCommandElement(i);
     }
 
     /**
@@ -116,7 +122,7 @@ public class CommandReference {
      *
      * @return The command reference element, or null on failure.
      */
-    public String getElement(int i) {
+    public String getCommandElement(int i) {
         // Make sure the index is in-bound
         if(i < 0 || i >= getCommandElementCount())
             return null;
@@ -132,8 +138,8 @@ public class CommandReference {
      *
      * @return The command reference range. Command references that were out of bound are not included.
      */
-    public List<String> getElementRange(int start) {
-        return getElemetRange(start, getCommandElementCount() - start);
+    public List<String> getCommandElementRange(int start) {
+        return getCommandElemetRange(start, getCommandElementCount() - start);
     }
 
     /**
@@ -144,14 +150,14 @@ public class CommandReference {
      *
      * @return The element range. Elements that were out of bound are not included.
      */
-    public List<String> getElemetRange(int start, int count) {
+    public List<String> getCommandElemetRange(int start, int count) {
         // Create a new list to put the range into
         List<String> elements = new ArrayList<String>();
 
         // Get the range
         for(int i = start; i < start + count; i++) {
             // Get the element and add it if it's valid
-            String element = getElement(i);
+            String element = getCommandElement(i);
             if(element != null)
                 elements.add(element);
         }

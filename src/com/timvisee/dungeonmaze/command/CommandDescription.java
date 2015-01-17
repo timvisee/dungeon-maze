@@ -1,6 +1,5 @@
 package com.timvisee.dungeonmaze.command;
 
-import com.timvisee.dungeonmaze.Core;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -218,7 +217,7 @@ public class CommandDescription {
             return false;
 
         // Get the parent count
-        String element = commandReference.getElement(getParentCount());
+        String element = commandReference.getCommandElement(getParentCount());
 
         // Check whether this command description has this command label
         return hasLabel(element);
@@ -575,6 +574,7 @@ public class CommandDescription {
      *
      * @return The suitable command result, or null.
      */
+    // TODO: Return the closest command?
     public SuitableCommandResult getSuitableCommand(CommandReference commandReference) {
         // Make sure the command reference is valid
         if(!commandReference.isValid())
@@ -582,7 +582,11 @@ public class CommandDescription {
 
         // Check whether this description is for the last element in the command reference, if so return this
         if(commandReference.getCommandElementCount() <= getParentCount() + 1)
-            return new SuitableCommandResult(true, this, commandReference, new CommandArguments());
+            return new SuitableCommandResult(this, commandReference, new CommandArguments());
+
+        // Get the new command reference and arguments
+        CommandReference newReference = new CommandReference(commandReference.getCommandElemetRange(0, getParentCount() + 1));
+        CommandArguments newArguments = new CommandArguments(commandReference.getCommandElementRange(getParentCount() + 1));
 
         // Loop through all the childs
         for(CommandDescription child : this.childs) {
@@ -592,28 +596,37 @@ public class CommandDescription {
             // Get and return the command description, and make sure the result isn't null
             SuitableCommandResult result = child.getSuitableCommand(commandReference);
             if(result == null)
-                return null;
+                return new SuitableCommandResult(SuitableCommandResult.SuitableCommandResultType.WRONG_ARGUMENTS, this, newReference, newArguments);
 
             // Check each parent to see if the command reference suits
             while(result.getCommandDescription() != null) {
-                // Check whether this command description has suitable arguments
-                if(result.getCommandDescription().hasSuitableArguments(commandReference))
+                // Check whether this command description has suitable, or near-suitable arguments
+                int resultDifference = result.getCommandDescription().getSuitableArgumentsDifference(commandReference);
+                if(resultDifference >= 0) {
+                    if(resultDifference > 0)
+                        result.setResultType(SuitableCommandResult.SuitableCommandResultType.WRONG_ARGUMENTS);
                     return result;
+                }
 
                 // Get the parent description
+                //noinspection ConstantConditions
                 result.setCommandDescription(result.getCommandDescription().getParent());
             }
+
+            // Return null if there really isn't any command
             return null;
         }
 
-        // Get the new command reference and arguments
-        CommandReference newReference = new CommandReference(commandReference.getElemetRange(0, getParentCount()));
-        CommandArguments newArguments = new CommandArguments(commandReference.getElementRange(getParentCount()));
-
         // Check if the remaining command reference elements fit the arguments for this command
-        if(hasSuitableArguments(commandReference))
-            return new SuitableCommandResult(true, this, newReference, newArguments);
+        int resultDifference = getSuitableArgumentsDifference(commandReference);
+        if(resultDifference >= 0) {
+            SuitableCommandResult result = new SuitableCommandResult(this, newReference, newArguments);
+            if(resultDifference > 0)
+                result.setResultType(SuitableCommandResult.SuitableCommandResultType.WRONG_ARGUMENTS);
+            return result;
+        }
 
+        // Return null if there really isn't a command
         return null;
     }
 
@@ -633,18 +646,38 @@ public class CommandDescription {
      *
      * @param commandReference The command reference.
      *
-     * @return True if the command reference matches the arguments.
+     * @return True if the arguments are suitable, false otherwise.
      */
     public boolean hasSuitableArguments(CommandReference commandReference) {
+        return getSuitableArgumentsDifference(commandReference) == 0;
+    }
+
+    /**
+     * Check if the remaining command reference elements are suitable with arguments of the current command description,
+     * and get the difference in argument count.
+     *
+     * @param commandReference The command reference.
+     *
+     * @return The difference in argument count between the reference and the actual command.
+     */
+    public int getSuitableArgumentsDifference(CommandReference commandReference) {
         // Make sure the command reference is valid
         if(!commandReference.isValid())
-            return false;
+            return -1;
 
         // Get the remaining command reference element count
         int remainingElementCount = commandReference.getCommandElementCount() - getParentCount() - 1;
 
-        // Check if the remaining element count fits in the minimum and maximum argument count
-        return getMinimumArguments() <= remainingElementCount && !(getMaximumArguments() < remainingElementCount && getMaximumArguments() > 0);
+        // Check if there are too less arguments
+        if(getMinimumArguments() > remainingElementCount)
+            return Math.abs(getMinimumArguments() - remainingElementCount);
+
+        // Check if there are too many arguments
+        if(getMaximumArguments() < remainingElementCount && getMaximumArguments() >= 0)
+            return Math.abs(remainingElementCount - getMaximumArguments());
+
+        // The arguments seem to be OK, return the result
+        return 0;
     }
 
     /**

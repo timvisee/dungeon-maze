@@ -1,12 +1,11 @@
 package com.timvisee.dungeonmaze.command;
 
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public class SuitableCommandResult {
 
-    /** Defines whether the command description is suitable. */
-    private boolean suitable = true;
+    /** Defines the type of the result. */
+    private SuitableCommandResultType resultType;
     /** The command description instance. */
     private CommandDescription commandDescription;
     /** The command reference. */
@@ -17,13 +16,24 @@ public class SuitableCommandResult {
     /**
      * Constructor.
      *
-     * @param suitable True if the command is suitable.
      * @param commandDescription The command description.
      * @param commandReference The command reference.
      * @param commandArguments The command arguments.
      */
-    public SuitableCommandResult(boolean suitable, CommandDescription commandDescription, CommandReference commandReference, CommandArguments commandArguments) {
-        this.suitable = suitable;
+    public SuitableCommandResult(CommandDescription commandDescription, CommandReference commandReference, CommandArguments commandArguments) {
+        this(SuitableCommandResultType.OK, commandDescription, commandReference, commandArguments);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param resultType The result type.
+     * @param commandDescription The command description.
+     * @param commandReference The command reference.
+     * @param commandArguments The command arguments.
+     */
+    public SuitableCommandResult(SuitableCommandResultType resultType, CommandDescription commandDescription, CommandReference commandReference, CommandArguments commandArguments) {
+        this.resultType = resultType;
         this.commandDescription = commandDescription;
         this.commandReference = commandReference;
         this.commandArguments = commandArguments;
@@ -35,7 +45,25 @@ public class SuitableCommandResult {
      * @return True if the command was suitable, false otherwise.
      */
     public boolean isSuitable() {
-        return this.suitable;
+        return this.resultType == SuitableCommandResultType.OK;
+    }
+
+    /**
+     * Get the result type.
+     *
+     * @return The result type.
+     */
+    public SuitableCommandResultType getResultType() {
+        return this.resultType;
+    }
+
+    /**
+     * Set the result type.
+     *
+     * @param resultType The result type.
+     */
+    public void setResultType(SuitableCommandResultType resultType) {
+        this.resultType = resultType;
     }
 
     /**
@@ -123,8 +151,7 @@ public class SuitableCommandResult {
 
     public enum SuitableCommandResultType {
         OK,
-        TOO_MANY_ARGUMENTS,
-        TOO_LESS_ARGUMENTS,
+        WRONG_ARGUMENTS,
         OTHER,
         INVALID
     }
