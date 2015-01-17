@@ -16,148 +16,173 @@ import com.timvisee.dungeonmaze.world.WorldManager;
 import com.timvisee.dungeonmaze.util.ChestUtils;
 import com.timvisee.dungeonmaze.util.MazeUtils;
 
+@SuppressWarnings("UnusedDeclaration")
 @Deprecated
 public class DungeonMazeApiOld {
 
-	// TODO: Improve this class!
-
-	public static DungeonMaze plugin;
+	/** Dungeon Maze plugin instance. */
+	public static DungeonMaze dungeonMaze;
 	
 	/**
 	 * Constructor.
-	 * @param instance
+	 *
+	 * @param dungeonMaze The Dungeon Maze plugin instance.
 	 */
-	public DungeonMazeApiOld(DungeonMaze instance) {
-		DungeonMazeApiOld.plugin = instance;
+	public DungeonMazeApiOld(DungeonMaze dungeonMaze) {
+		DungeonMazeApiOld.dungeonMaze = dungeonMaze;
 	}
 	
 	/**
-	 * Hook into Dungeon Maze
-	 * @return instance DM instance
+	 * Hook into the Dungeon Maze plugin.
+	 *
+	 * @return Dungeon Maze plugin instance.
 	 */
 	@Deprecated
     public static DungeonMaze hookDungeonMaze() {
-    	Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("DungeonMaze");
-        if (plugin == null && !(plugin instanceof DungeonMaze))
+		// Get the dungeon maze plugin instance, and make sure it's valid
+    	Plugin dungeonMazePlugin = Bukkit.getServer().getPluginManager().getPlugin("DungeonMaze");
+        if (dungeonMazePlugin == null)
         	return null;
-    	return (DungeonMaze) plugin;
+
+		// Get and return the Dungeon Maze plugin instance
+    	return (DungeonMaze) dungeonMazePlugin;
     }
 
 	/**
-	 * Get the DM world manager
-	 * @return DM world manager
+	 * Get the Dungeon Maze world manager.
+	 *
+	 * @return Dungeon Maze world manager.
 	 */
 	@Deprecated
 	public static WorldManager getDMWorldManager() {
-		return plugin.getCore()._getWorldManager();
+		return dungeonMaze.getCore()._getWorldManager();
 	}
 
 	/**
-	 * Get all DM worlds
-	 * @return DM worlds
+	 * Get all Dungeon Maze worlds.
+	 *
+	 * @return Dungeon Maze worlds.
 	 */
 	@Deprecated
 	public static List<String> getDMWorlds() {
-		return plugin.getCore()._getWorldManager().getDungeonMazeWorlds();
+		return dungeonMaze.getCore()._getWorldManager().getDungeonMazeWorlds();
 	}
 
 	/**
-	 * Get all loaded DM worlds
-	 * @return loaded DM worlds
+	 * Get all loaded Dungeon Maze worlds.
+	 *
+	 * @return Loaded Dungeon Maze worlds.
 	 */
 	@Deprecated
 	public static List<String> getLoadedDMWorlds() {
-		return plugin.getCore()._getWorldManager().getLoadedDungeonMazeWorlds();
+		return dungeonMaze.getCore()._getWorldManager().getLoadedDungeonMazeWorlds();
 	}
 
 	/**
-	 * Check if a world is a DM world
-	 * @param w the world
-	 * @return true if the world is a DM world
+	 * Check if a world is a Dungeon Maze world.
+	 *
+	 * @param world The world to check for.
+	 *
+	 * @return True if the world is a Dungeon Maze world, false otherwise.
 	 */
 	@Deprecated
-	public static boolean isDMWorld(World w) {
-		return isDMWorld(w.getName());
+	public static boolean isDMWorld(World world) {
+		return isDMWorld(world.getName());
 	}
 
 	/**
-	 * Check if a world is a DM world
-	 * @param w the world name
-	 * @return true if the world is a DM world
+	 * Check if a world is a Dungeon Maze world.
+	 *
+	 * @param worldName The world name.
+	 *
+	 * @return True if the world is a Dungeon Maze world, false otherwise.
 	 */
 	@Deprecated
-	public static boolean isDMWorld(String w) {
-		return plugin.getCore()._getWorldManager().isDungeonMazeWorld(w);
+	public static boolean isDMWorld(String worldName) {
+		return dungeonMaze.getCore()._getWorldManager().isDungeonMazeWorld(worldName);
 	}
 
 	/**
-	 * Check if a player is in a DM world
-	 * @param p the player
-	 * @return true if the player is in an DM world
+	 * Check if a player is in a Dungeon Maze world.
+	 *
+	 * @param player The player.
+	 *
+	 * @return True if the player is in an Dungeon Maze world.
 	 */
 	@Deprecated
-	public static boolean isInDMWorld(Player p) {
-		return isDMWorld(p.getWorld());
+	public static boolean isInDMWorld(Player player) {
+		return isDMWorld(player.getWorld());
 	}
 	
 	/**
-	 * Get the DM world a player is in
-	 * @param p the player
-	 * @return the DM world a player is in, returns null when a player isn't in a DM world
+	 * Get the Dungeon Maze world a player is in.
+	 *
+	 * @param player The player.
+	 *
+	 * @return The Dungeon Maze world a player is in, returns null when a player isn't in a Dungeon Maze world.
 	 */
 	@Deprecated
-	public static World getDMWorld(Player p) {
-		// Check if the player is in a DM world
-		if(plugin.getCore()._getWorldManager().isDungeonMazeWorld(p.getWorld().getName()))
-			return p.getWorld();
+	public static World getDMWorld(Player player) {
+		// Check if the player is in a Dungeon Maze world
+		if(dungeonMaze.getCore()._getWorldManager().isDungeonMazeWorld(player.getWorld().getName()))
+			return player.getWorld();
 		return null;
 	}
 	
 	/**
-	 * Get the DM world name a player is in
-	 * @param p the player
-	 * @return the DM world name a player is in, returns an empty string when the player isn't in a DM world
+	 * Get the Dungeon Maze world name a player is in.
+	 *
+	 * @param player The player.
+	 *
+	 * @return The Dungeon Maze world name a player is in, returns an empty string when the player isn't in a Dungeon
+	 * Maze world.
 	 */
 	@Deprecated
-	public static String getDMWorldName(Player p) {
-		// Check if the player is in a DM world
-		if(plugin.getCore()._getWorldManager().isDungeonMazeWorld(p.getWorld().getName()))
-			return p.getWorld().getName();
+	public static String getDMWorldName(Player player) {
+		// Check if the player is in a Dungeon Maze world
+		if(dungeonMaze.getCore()._getWorldManager().isDungeonMazeWorld(player.getWorld().getName()))
+			return player.getWorld().getName();
 		return "";
 	}
 	
 	/**
-	 * Check if a player is able to build in a DM world
-	 * @param w the world name
-	 * @param p the player
-	 * @return true if the player is allowed to build
+	 * Check if a player is able to build in a Dungeon Maze world.
+	 *
+	 * @param worldName The name of the world.
+	 * @param player The player.
+	 *
+	 * @return True if the player is allowed to build in the specified world.
 	 */
 	@Deprecated
-	public static boolean canBuildInDMWorld(String w, Player p) {
-		if(plugin.getCore()._getWorldManager().isDungeonMazeWorld(w))
+	public static boolean canBuildInDMWorld(String worldName, Player player) {
+		if(dungeonMaze.getCore()._getWorldManager().isDungeonMazeWorld(worldName))
 			if(DungeonMaze.instance.getCore()._getConfigHandler().worldProtection)
-				return plugin.getCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.build", p.isOp());
+				return dungeonMaze.getCore()._getPermissionsManager().hasPermission(player, "dungeonmaze.bypass.build", player.isOp());
 		return true;
 	}
 	
 	/**
-	 * Check if a player is able to go onto the surface in a DM world
-	 * @param w the world name
-	 * @param p the player
-	 * @return true if the player is allowed to go on the surface
+	 * Check if a player is able to go onto the surface in a Dungeon Maze world.
+	 *
+	 * @param worldName The name of the world.
+	 * @param player The player.
+	 *
+	 * @return True if the player is allowed to go on the surface.
 	 */
 	@Deprecated
-	public static boolean isPlayerAllowedOnDMWorldSurface(String w, Player p) {
-		if(plugin.getCore()._getWorldManager().isDungeonMazeWorld(w))
+	public static boolean isPlayerAllowedOnDMWorldSurface(String worldName, Player player) {
+		if(dungeonMaze.getCore()._getWorldManager().isDungeonMazeWorld(worldName))
 			if(!DungeonMaze.instance.getCore()._getConfigHandler().allowSurface)
-				return plugin.getCore()._getPermissionsManager().hasPermission(p, "dungeonmaze.bypass.surface", p.isOp());
+				return dungeonMaze.getCore()._getPermissionsManager().hasPermission(player, "dungeonmaze.bypass.surface", player.isOp());
 		return true;
 	}
 	
 	/**
-	 * 
-	 * @param target
-	 * @return true if the object is in the list
+	 * Check whether a block is on the build whitelist.
+	 *
+	 * @param target The block to check for.
+	 *
+	 * @return True if the object is in the list, false otherwise.
 	 */
 	@Deprecated
 	public static boolean isInWhiteList(Object target){
@@ -173,8 +198,11 @@ public class DungeonMazeApiOld {
 	}
 	
 	/**
-	 * @param mob Mob name
-	 * @return true if the mobspawner is allow for this mob
+	 * Check whether a specific mob spawner is allowed.
+	 *
+	 * @param mob Mob name.
+	 *
+	 * @return True if the mob spawner is allow for this mob.
 	 */
 	@Deprecated
 	public static boolean allowMobSpawner(String mob) {
@@ -182,26 +210,32 @@ public class DungeonMazeApiOld {
 	}
 	
 	/**
-	 * Get the level a block is on in Dungeon Maze
-	 * @param b the block
-	 * @return The level as a DungeonMaze level, returns levels 1-7. Returns 0 when the block isn't on a DungeonMaze level
+	 * Get the level a block is on in Dungeon Maze.
+	 *
+	 * @param block The block.
+	 *
+	 * @return The level as a Dungeon Maze level, returns levels 1-7. Returns 0 when the block isn't on a Dungeon Maze
+	 * level.
 	 */
 	@Deprecated
-	public static int getDMLevel(Block b) {
-		return MazeUtils.getDMLevel(b);
+	public static int getDMLevel(Block block) {
+		return MazeUtils.getDMLevel(block);
 	}
 	
 	/**
-	 * DEPRICATED:
-	 * Add items to DungeonMaze chest
-	 * @param inOrder False to add the items in random order
-	 * @param rand Random object to use as seed when items are added in random order
-	 * @param c Chest to add the items too
-	 * @param newContents List of new contents to add
-	 * @return False if failed
+	 * Add items to Dungeon Maze chest.
+	 *
+	 * @param inOrder False to add the items in random order.
+	 * @param random Random object to use as seed when items are added in random order.
+	 * @param chest Chest to add the items too.
+	 * @param newContents List of new contents to add.
+	 *
+	 * @return False if failed.
+	 *
+	 * @deprecated This method is deprecated, please use the new Dungeon Maze API.
 	 */
 	@Deprecated
-	public static boolean addItemsToChest(boolean inOrder, Random rand, Chest c, List<ItemStack> newContents) {
-		return ChestUtils.addItemsToChest(c, newContents, !inOrder, rand);
+	public static boolean addItemsToChest(boolean inOrder, Random random, Chest chest, List<ItemStack> newContents) {
+		return ChestUtils.addItemsToChest(chest, newContents, !inOrder, random);
 	}
 }
