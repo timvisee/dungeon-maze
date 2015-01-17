@@ -49,6 +49,8 @@ public class ReloadCommand extends ExecutableCommand {
         Core.getWorldManager();
         Core.getWorldManager().preloadDungeonMazeWorlds();
 
+        // TODO: Reload the core!
+
         // Show a success message
         Core.getLogger().info("Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");
         sender.sendMessage(ChatColor.GREEN + "Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");

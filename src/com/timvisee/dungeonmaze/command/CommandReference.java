@@ -165,4 +165,28 @@ public class CommandReference {
         // Return the list of elements
         return elements;
     }
+
+    /**
+     * Convert the arguments to a string.
+     *
+     * @return The arguments as a string.
+     */
+    @Override
+    public String toString() {
+        // Create a string builder to build th string in
+        StringBuilder out = new StringBuilder();
+
+        // Append each entry
+        for(String entry : this.commandElements) {
+            // Append a space between each entry
+            if(out.length() > 0)
+                out.append(" ");
+
+            // Append the current entry
+            out.append(entry);
+        }
+
+        // Return the result
+        return out.toString();
+    }
 }

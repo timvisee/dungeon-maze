@@ -101,4 +101,43 @@ public class CommandArguments {
         // Return the list of elements
         return elements;
     }
+
+    /**
+     * Convert the command reference to a string.
+     *
+     * @return The command reference as a string.
+     */
+    @Override
+    public String toString() {
+        return toString(false);
+    }
+
+    /**
+     * Convert the command reference to a string.
+     *
+     * @param includeSlash True to prefix the output with a slash.
+     *
+     * @return The string.
+     */
+    public String toString(boolean includeSlash) {
+        // Create a string builder to build th string in
+        StringBuilder out = new StringBuilder();
+
+        // Include a slash
+        if(includeSlash)
+            out.append("/");
+
+        // Append each entry
+        for(String entry : this.arguments) {
+            // Append a space between each entry
+            if(out.length() > (includeSlash ? 1 : 0))
+                out.append(" ");
+
+            // Append the current entry
+            out.append(entry);
+        }
+
+        // Return the result
+        return out.toString();
+    }
 }

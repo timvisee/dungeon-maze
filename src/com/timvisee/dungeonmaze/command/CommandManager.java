@@ -15,7 +15,7 @@ public class CommandManager {
      * Constructor.
      */
     public CommandManager() {
-        CommandDescription dungeonMazeCommand = new CommandDescription(null, new ArrayList<String>() {{
+        CommandDescription dungeonMazeCommand = new CommandDescription(new DungeonMazeCommand(), new ArrayList<String>() {{
             add("dungeonmaze");
             add("dm");
         }}, "Main Dungeon Maze command.", null);
@@ -37,6 +37,18 @@ public class CommandManager {
             add("vrsn");
             add("ver");
             add("v");
+            add("about");
+            add("who");
+            add("creator");
+            add("info");
+            add("release");
+            add("copyright");
+            add("developer");
+            add("developers");
+            add("contributor");
+            add("contributors");
+            add("license");
+            add("website");
         }}, "Dungeon Maze version command.", dungeonMazeCommand);
         versionCommand.setMaximumArguments(false);
 

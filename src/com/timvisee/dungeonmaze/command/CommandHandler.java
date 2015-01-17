@@ -128,7 +128,7 @@ public class CommandHandler {
         if(!result.isExecutable()) {
             // TODO: Show more detailed help!
             sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
-            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/dm help" + ChatColor.YELLOW + " to view help.");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " help" + ChatColor.YELLOW + " to view help.");
             return true;
         }
 
@@ -147,14 +147,14 @@ public class CommandHandler {
         switch(result.getResultType()) {
         case WRONG_ARGUMENTS:
             // TODO: Show more detailed help!
-            sender.sendMessage(ChatColor.DARK_RED + "Wrong command arguments!");
-            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/dm help" + ChatColor.YELLOW + " to view help.");
+            sender.sendMessage(ChatColor.DARK_RED + "Incorrect command arguments!");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " help" + ChatColor.YELLOW + " to view help.");
             return true;
 
         default:
             // TODO: Show more detailed help!
             sender.sendMessage(ChatColor.DARK_RED + "Invalid command!");
-            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/dm help" + ChatColor.YELLOW + " to view help.");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " help" + ChatColor.YELLOW + " to view help.");
             return true;
         }
     }
