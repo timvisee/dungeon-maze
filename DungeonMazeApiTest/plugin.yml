@@ -3,9 +3,9 @@ main: com.timvisee.dungeonmazeapitest.DungeonMazeApiTest
 version: 0.1
 depend: [DungeonMaze]
 commands:
-  dungeonMazeApi:
+  dmapitest:
     description: Dungeon Maze API Test command
     usage: /dmapitest
-  dungeonmaze:
+  dungeonmazeapitest:
     description: Dungeon Maze API Test command
     usage: /dungeonmazeapitest
