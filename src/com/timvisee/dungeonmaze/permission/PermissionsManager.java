@@ -221,7 +221,8 @@ public class PermissionsManager {
 	public void unhook() {
         // Break the WorldGuard hook
         this.permsType = PermissionsSystemType.NONE;
-        
+
+		// TODO: Fix the code bellow!
         if(!permsType.equals(PermissionsSystemType.NONE))
         	System.out.println();
         else

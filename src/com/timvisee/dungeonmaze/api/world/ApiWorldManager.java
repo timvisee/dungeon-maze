@@ -13,8 +13,6 @@ import com.timvisee.dungeonmaze.world.WorldManager;
  */
 public class ApiWorldManager {
 
-	// TODO: Use worldManager object memory caching!
-
 	/** Defines the Dungeon Maze API instance. */
 	private DungeonMazeApi dungeonMazeApi;
 	
@@ -44,26 +42,51 @@ public class ApiWorldManager {
 	public void setDungeonMazeApi(DungeonMazeApi dungeonMazeApi) {
 		this.dungeonMazeApi = dungeonMazeApi;
 	}
-	
+
+	/**
+	 * Get the Dungeon Maze core.
+	 *
+	 * @return Dungeon Maze core instance.
+	 */
+	private Core getCore() {
+		// Make sure the API instance is valid
+		if(this.dungeonMazeApi == null)
+			return null;
+
+		// Get and return the Core instance
+		return this.dungeonMazeApi.getDungeonMazeCore();
+	}
+
 	/**
 	 * Get the Dungeon Maze world manager.
 	 *
 	 * @return Dungeon Maze world manager instance.
 	 */
 	private WorldManager getWorldManager() {
-		// Make sure the API instance is valid
-		if(this.dungeonMazeApi == null)
-			return null;
-
 		// Get the Core instance and make sure it's valid
-		Core core = this.dungeonMazeApi.getDungeonMazeCore();
+		Core core = getCore();
 		if(core == null)
 			return null;
 
 		// Get and return the world manager
 		return core._getWorldManager();
 	}
-	
+
+	/**
+	 * Check whether the world manager is valid and ready to use.
+	 *
+	 * @return True if the world manager is valid and ready, false otherwise.
+	 */
+	private boolean isWorldManagerValid() {
+		// Make sure the world manager instance is set
+		WorldManager worldManager = getWorldManager();
+		if(worldManager == null)
+			return false;
+
+		// Check whether the world manager is initialized, return the result
+		return worldManager.isInit();
+	}
+
 	/**
 	 * Refresh the list with Dungeon Maze worlds.
 	 *
@@ -71,7 +94,7 @@ public class ApiWorldManager {
 	 */
 	public boolean refresh() {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return false;
 
 		// Refresh the world manager
@@ -85,7 +108,7 @@ public class ApiWorldManager {
 	 */
 	public List<String> getDungeonMazeWorlds() {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return null;
 
 		// Get the list of Dungeon Maze worlds
@@ -101,7 +124,7 @@ public class ApiWorldManager {
 	 */
 	public List<String> getDungeonMazeWorlds(boolean preloadWorlds) {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return null;
 
 		// Get the list of Dungeon Maze worlds
@@ -115,7 +138,7 @@ public class ApiWorldManager {
 	 */
 	public List<String> getLoadedDungeonMazeWorlds() {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return null;
 
 		// Get the list of loaded Dungeon Maze worlds
@@ -131,7 +154,7 @@ public class ApiWorldManager {
 	 */
 	public boolean isWorld(String worldName) {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return false;
 
 		// Check whether the world exists
@@ -147,7 +170,7 @@ public class ApiWorldManager {
 	 */
 	public boolean isDungeonMazeWorld(String w) {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return false;
 
 		// Check whether a world is a Dungeon Maze world
@@ -163,7 +186,7 @@ public class ApiWorldManager {
 	 */
 	public boolean isWorldLoaded(String worldName) {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return false;
 
 		// Check whether a world is loaded
@@ -179,7 +202,7 @@ public class ApiWorldManager {
 	 */
 	public boolean isLoadedDungeonMazeWorld(String w) {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return false;
 
 		// Check whether a world is a loaded Dungeon Maze world
@@ -195,7 +218,7 @@ public class ApiWorldManager {
 	 */
 	public boolean loadWorld(String worldName) {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return false;
 
 		// Load a world
@@ -209,7 +232,7 @@ public class ApiWorldManager {
 	 */
 	public int preloadDungeonMazeWorlds() {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return -1;
 
 		// Preload the Dungeon Maze worlds
@@ -226,7 +249,7 @@ public class ApiWorldManager {
 	 */
 	public boolean prepareDungeonMazeWorld(String worldName) {
 		// Make sure the world manager instance is valid
-		if(getWorldManager() == null)
+		if(!isWorldManagerValid())
 			return false;
 
 		// Prepare a Dungeon Maze world
@@ -250,12 +273,8 @@ public class ApiWorldManager {
 	 * @return Multiverse Core instance.
 	 */
 	public MultiverseCore getMultiverseCore() {
-		// Make sure the API instance is valid
-		if(this.dungeonMazeApi == null)
-			return null;
-
 		// Get the Core instance and make sure it's valid
-		Core core = this.dungeonMazeApi.getDungeonMazeCore();
+		Core core = getCore();
 		if(core == null)
 			return null;
 

@@ -222,7 +222,7 @@ public class DungeonMazeApi {
 	 * @return Permissions manager instance.
 	 */
 	public ApiPermissionsManager getPermissionsManager() {
-		return new ApiPermissionsManager(this.dungeonMaze);
+		return new ApiPermissionsManager(this);
 	}
 	
 	/**
