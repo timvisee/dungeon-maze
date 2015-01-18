@@ -2,8 +2,7 @@ package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.command.CommandArguments;
-import com.timvisee.dungeonmaze.command.CommandReference;
+import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Bukkit;
@@ -18,14 +17,14 @@ public class CreateWorldCommand extends ExecutableCommand {
     /**
      * Execute the command.
      *
-     * @param sender           The command sender.
+     * @param sender The command sender.
      * @param commandReference The command reference.
      * @param commandArguments The command arguments.
      *
      * @return True if the command was executed successfully, false otherwise.
      */
     @Override
-    public boolean executeCommand(CommandSender sender, CommandReference commandReference, CommandArguments commandArguments) {
+    public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Get and trim the preferred world name
         String worldName = commandArguments.get(0).trim();
 

@@ -18,9 +18,9 @@ The Software shall be used for Good, not Evil.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR SIMILAR
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR SIMILAR DEALINGS IN THE
 SOFTWARE.
 */
 
@@ -48,7 +48,7 @@ public class HTTP {
      * <pre>{
      *    "HTTP-Version": "HTTP/1.1" (for example),
      *    "Status-Code": "200" (for example),
-     *    "Reason-Phrase": "OK" (for example)
+     *    "Reason-Phrase": "EQUALS" (for example)
      * }</pre>
      * In addition, the other parameters in the header will be captured, using
      * the HTTP field names as JSON names, so that <pre>
@@ -115,7 +115,7 @@ public class HTTP {
      * <pre>{
      *    "HTTP-Version": "HTTP/1.1" (for example),
      *    "Status-Code": "200" (for example),
-     *    "Reason-Phrase": "OK" (for example)
+     *    "Reason-Phrase": "EQUALS" (for example)
      * }</pre>
      * Any other members of the JSONObject will be output as HTTP fields.
      * The result will end with two CRLF pairs.

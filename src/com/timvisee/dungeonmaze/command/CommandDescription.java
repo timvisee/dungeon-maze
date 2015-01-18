@@ -1,16 +1,19 @@
 package com.timvisee.dungeonmaze.command;
 
+import com.timvisee.dungeonmaze.util.StringUtils;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class CommandDescription {
 
     /** Defines the acceptable labels. */
+    // TODO: Make this list sorted!
     private List<String> labels = new ArrayList<String>();
     /** Command description. */
     private String description = "";
+    /** Detailed description. */
+    private String detailedDescription = "";
     /** The executable command instance. */
     private ExecutableCommand executableCommand;
     /** The parent command. */
@@ -26,54 +29,64 @@ public class CommandDescription {
 
     /**
      * Constructor.
+     *
      * @param executableCommand The executable command, or null.
      * @param label Command label.
      * @param description Command description.
+     * @param detailedDescription Detailed comment description.
      * @param parent Parent command.
      */
-    public CommandDescription(ExecutableCommand executableCommand, String label, String description, CommandDescription parent) {
-        this(executableCommand, label, description, parent, null);
+    public CommandDescription(ExecutableCommand executableCommand, String label, String description, String detailedDescription, CommandDescription parent) {
+        this(executableCommand, label, description, parent, detailedDescription, null);
     }
 
     /**
      * Constructor.
+     *
      * @param executableCommand The executable command, or null.
      * @param labels List of command labels.
      * @param description Command description.
+     * @param detailedDescription Detailed comment description.
      * @param parent Parent command.
      */
-    public CommandDescription(ExecutableCommand executableCommand, List<String> labels, String description, CommandDescription parent) {
-        this(executableCommand, labels, description, parent, null);
+    public CommandDescription(ExecutableCommand executableCommand, List<String> labels, String description, String detailedDescription, CommandDescription parent) {
+        this(executableCommand, labels, description, detailedDescription, parent, null);
     }
 
     /**
      * Constructor.
+     *
      * @param executableCommand The executable command, or null.
      * @param label Command label.
      * @param description Command description.
      * @param parent Parent command.
+     * @param detailedDescription Detailed comment description.
      * @param arguments Command arguments.
      */
-    public CommandDescription(ExecutableCommand executableCommand, String label, String description, CommandDescription parent, List<CommandArgumentDescription> arguments) {
+    public CommandDescription(ExecutableCommand executableCommand, String label, String description, CommandDescription parent, String detailedDescription, List<CommandArgumentDescription> arguments) {
         setExecutableCommand(executableCommand);
         setLabel(label);
         setDescription(description);
+        setDetailedDescription(detailedDescription);
         setParent(parent);
         setArguments(arguments);
     }
 
     /**
      * Constructor.
+     *
      * @param executableCommand The executable command, or null.
      * @param labels List of command labels.
      * @param description Command description.
+     * @param detailedDescription Detailed comment description.
      * @param parent Parent command.
      * @param arguments Command arguments.
      */
-    public CommandDescription(ExecutableCommand executableCommand, List<String> labels, String description, CommandDescription parent, List<CommandArgumentDescription> arguments) {
+    public CommandDescription(ExecutableCommand executableCommand, List<String> labels, String description, String detailedDescription, CommandDescription parent, List<CommandArgumentDescription> arguments) {
         setExecutableCommand(executableCommand);
         setLabels(labels);
         setDescription(description);
+        setDetailedDescription(detailedDescription);
         setParent(parent);
         setArguments(arguments);
     }
@@ -90,6 +103,40 @@ public class CommandDescription {
 
         // Return the first command on the list
         return this.labels.get(0);
+    }
+
+    /**
+     * Get the label most similar to the reference. The first label will be returned if no reference was supplied.
+     *
+     * @param reference The command reference.
+     *
+     * @return The most similar label, or the first label. An empty label will be returned if no label was set.
+     */
+    public String getLabel(CommandParts reference) {
+        // Ensure there's any item in the command list
+        if(this.labels.size() == 0)
+            return "";
+
+        // Return the first label if we can't use the reference
+        if(reference == null)
+            return this.labels.get(0);
+
+        // Get the correct label from the reference
+        String preferred = reference.get(getParentCount());
+
+        // Check whether the preferred label is in the label list
+        double currentDifference = -1;
+        String currentLabel = this.labels.get(0);
+        for(String entry : this.labels) {
+            double entryDifference = StringUtils.getDifference(entry, preferred);
+            if(entryDifference < currentDifference || currentDifference < 0) {
+                currentDifference = entryDifference;
+                currentLabel = entry;
+            }
+        }
+
+        // Return the most similar label
+        return currentLabel;
     }
 
     /**
@@ -211,16 +258,25 @@ public class CommandDescription {
      *
      * @return True if the command reference is suitable to this command label, false otherwise.
      */
-    public boolean isSuitableLabel(CommandReference commandReference) {
+    public boolean isSuitableLabel(CommandParts commandReference) {
         // Make sure the command reference is valid
-        if(!commandReference.isValid())
+        if(commandReference.getCount() <= 0)
             return false;
 
+        return true;
+
         // Get the parent count
-        String element = commandReference.getCommandElement(getParentCount());
+        /*String element = commandReference.get(getParentCount());
 
         // Check whether this command description has this command label
-        return hasLabel(element);
+        return hasLabel(element);*/
+    }
+
+    /**
+     * Get the absolute command label, without a slash.
+     */
+    public String getAbsoluteLabel() {
+        return getAbsoluteLabel(false);
     }
 
     /**
@@ -228,20 +284,76 @@ public class CommandDescription {
      *
      * @return Absolute command label.
      */
-    // TODO: Rewrite this method!
-    public String getAbsoluteLabel() {
-        // Create a string builder to shape the command in
-        StringBuilder sb = new StringBuilder();
+    public String getAbsoluteLabel(boolean includeSlash) {
+        return getAbsoluteLabel(includeSlash, null);
+    }
+
+    /**
+     * Get the absolute command label.
+     *
+     * @return Absolute command label.
+     */
+    public String getAbsoluteLabel(boolean includeSlash, CommandParts reference) {
+        // Get the command reference, and make sure it is valid
+        CommandParts out = getCommandReference(reference);
+        if(out == null)
+            return "";
+
+        // Return the result
+        return (includeSlash ? "/" : "") + out.toString();
+    }
+
+    /**
+     * Get the command reference.
+     *
+     * @param reference The reference to use as template, which is used to choose the most similar reference.
+     *
+     * @return Command reference.
+     */
+    public CommandParts getCommandReference(CommandParts reference) {
+        // Build the reference
+        List<String> referenceList = new ArrayList<String>();
 
         // Check whether this command has a parent, if so, add the absolute parent command
         if(getParent() != null)
-            sb.append(getParent().getAbsoluteLabel());
+            referenceList.addAll(getParent().getCommandReference(reference).getList());
 
-        // Add the command
-        sb.append(" ").append(getLabel());
+        // Get the current label
+        referenceList.add(getLabel(reference));
 
-        // Return the build command
-        return sb.toString();
+        // Return the reference
+        return new CommandParts(referenceList);
+    }
+
+    /**
+     * Get the difference between this command and another command reference.
+     *
+     * @param other The other command reference.
+     *
+     * @return The command difference. Zero if there's no difference. A negative number on error.
+     */
+    public double getCommandDifference(CommandParts other) {
+        return getCommandDifference(other, false);
+    }
+
+    /**
+     * Get the difference between this command and another command reference.
+     *
+     * @param other The other command reference.
+     * @param fullCompare True to fully compare both command references.
+     *
+     * @return The command difference. Zero if there's no difference. A negative number on error.
+     */
+    public double getCommandDifference(CommandParts other, boolean fullCompare) {
+        // Make sure the reference is valid
+        if(other == null)
+            return -1;
+
+        // Get the command reference
+        CommandParts reference = getCommandReference(other);
+
+        // Compare the two references, return the result
+        return reference.getDifference(new CommandParts(other.getRange(0, reference.getCount())), fullCompare);
     }
 
     /**
@@ -280,13 +392,13 @@ public class CommandDescription {
      *
      * @return True on success, false on failure.
      */
-    public boolean execute(CommandSender sender, CommandReference commandReference, CommandArguments commandArguments) {
+    public boolean execute(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Make sure the command is executable
         if(!isExecutable())
             return false;
 
         // Execute the command, return the result
-        return this.executableCommand.executeCommand(sender, commandReference, commandArguments);
+        return getExecutableCommand().executeCommand(sender, commandReference, commandArguments);
     }
 
     /**
@@ -542,7 +654,7 @@ public class CommandDescription {
      * @return Command description.
      */
     public String getDescription() {
-        return this.description;
+        return hasDescription() ? this.description : this.detailedDescription;
     }
 
     /**
@@ -568,63 +680,130 @@ public class CommandDescription {
     }
 
     /**
-     * Get the command description that matches the specified command reference.
+     * Get the command detailed description.
      *
-     * @param commandReference The command reference.
-     *
-     * @return The suitable command result, or null.
+     * @return Command detailed description.
      */
-    // TODO: Return the closest command?
-    public SuitableCommandResult getSuitableCommand(CommandReference commandReference) {
+    public String getDetailedDescription() {
+        return hasDetailedDescription() ? this.detailedDescription : this.description;
+    }
+
+    /**
+     * Set the command detailed description.
+     *
+     * @param detailedDescription New command description. Null to reset the description.
+     */
+    public void setDetailedDescription(String detailedDescription) {
+        if(detailedDescription == null)
+            this.detailedDescription = "";
+
+        else
+            this.detailedDescription = detailedDescription;
+    }
+
+    /**
+     * Check whether this command has any detailed description.
+     *
+     * @return True if this command has any detailed description.
+     */
+    public boolean hasDetailedDescription() {
+        return (this.detailedDescription.trim().length() != 0);
+    }
+
+    /**
+     * Find the best suitable command for a query reference.
+     *
+     * @param queryReference The query reference to find a command for.
+     *
+     * @return The command found, or null.
+     */
+    public FoundCommandResult findCommand(final CommandParts queryReference) {
         // Make sure the command reference is valid
-        if(!commandReference.isValid())
+        if(queryReference.getCount() <= 0)
             return null;
 
-        // Check whether this description is for the last element in the command reference, if so return this
-        if(commandReference.getCommandElementCount() <= getParentCount() + 1)
-            return new SuitableCommandResult(this, commandReference, new CommandArguments());
+        // Check whether this description is for the last element in the command reference, if so return the current command
+        // TODO: Is this indeed equally for all cases?
+        if(queryReference.getCount() <= getParentCount() + 1)
+            return new FoundCommandResult(
+                    this,
+                    getCommandReference(queryReference),
+                    new CommandParts(),
+                    queryReference);
 
         // Get the new command reference and arguments
-        CommandReference newReference = new CommandReference(commandReference.getCommandElemetRange(0, getParentCount() + 1));
-        CommandArguments newArguments = new CommandArguments(commandReference.getCommandElementRange(getParentCount() + 1));
+        CommandParts newReference = new CommandParts(queryReference.getRange(0, getParentCount() + 1));
+        CommandParts newArguments = new CommandParts(queryReference.getRange(getParentCount() + 1));
 
-        // Loop through all the childs
+        // Handle the child's, if this command has any
+        if(getChilds().size() > 0) {
+            // Get all child's, and sort them by their difference in comparison to the query reference
+            List<CommandDescription> commandChilds = getChilds();
+            Collections.sort(commandChilds, new Comparator<CommandDescription>() {
+                @Override
+                public int compare(CommandDescription o1, CommandDescription o2) {
+                    return Double.compare(
+                            o1.getCommandDifference(queryReference),
+                            o2.getCommandDifference(queryReference));
+                }
+            });
+
+            // Get the difference of the first child in the list
+            // TODO: Should we fully compare? Or do some kind of smart compare with arguments?
+            double firstChildDifference = commandChilds.get(0).getCommandDifference(queryReference, true);
+
+            // TODO: Check if the query reference perfectly fits the command arguments
+
+            // Loop through each child
+            for(CommandDescription child : commandChilds) {
+                // Get the query reference for this child
+                final CommandParts childReference = child.getCommandReference(queryReference);
+
+                // Get the difference
+                double childDifference = childReference.getDifference(queryReference);
+
+                // Get the best suitable command
+                FoundCommandResult result = child.findCommand(queryReference);
+                if(result != null)
+                    return result;
+            }
+        }
+
+        if(getSuitableArgumentsDifference(queryReference) == 0)
+            return new FoundCommandResult(this, newReference, newArguments, queryReference);
+
+        /* // Loop through all the child's
         for(CommandDescription child : this.childs) {
-            if(!child.isSuitableLabel(commandReference))
+            if(!child.isSuitableLabel(queryReference))
                 continue;
 
             // Get and return the command description, and make sure the result isn't null
-            SuitableCommandResult result = child.getSuitableCommand(commandReference);
+            FoundCommandResult result = child.findCommand(queryReference);
             if(result == null)
-                return new SuitableCommandResult(SuitableCommandResult.SuitableCommandResultType.WRONG_ARGUMENTS, this, newReference, newArguments);
+                return new FoundCommandResult(FoundCommandResult.ResultType.WRONG_ARGUMENTS, this, newReference, newArguments, queryReference);
 
             // Check each parent to see if the command reference suits
             while(result.getCommandDescription() != null) {
                 // Check whether this command description has suitable, or near-suitable arguments
-                int resultDifference = result.getCommandDescription().getSuitableArgumentsDifference(commandReference);
-                if(resultDifference >= 0) {
-                    if(resultDifference > 0)
-                        result.setResultType(SuitableCommandResult.SuitableCommandResultType.WRONG_ARGUMENTS);
+                int resultDifference2 = result.getCommandDescription().getSuitableArgumentsDifference(queryReference);
+                if(resultDifference2 >= 0) {
+                    if(resultDifference2 > 0)
+                        result.setResultType(FoundCommandResult.ResultType.WRONG_ARGUMENTS);
                     return result;
                 }
 
                 // Get the parent description
-                //noinspection ConstantConditions
                 result.setCommandDescription(result.getCommandDescription().getParent());
             }
 
             // Return null if there really isn't any command
             return null;
-        }
+        }*/
 
         // Check if the remaining command reference elements fit the arguments for this command
-        int resultDifference = getSuitableArgumentsDifference(commandReference);
-        if(resultDifference >= 0) {
-            SuitableCommandResult result = new SuitableCommandResult(this, newReference, newArguments);
-            if(resultDifference > 0)
-                result.setResultType(SuitableCommandResult.SuitableCommandResultType.WRONG_ARGUMENTS);
-            return result;
-        }
+        int resultDifference = getSuitableArgumentsDifference(queryReference);
+        if(resultDifference >= 0)
+            return new FoundCommandResult(this, newReference, newArguments, queryReference);
 
         // Return null if there really isn't a command
         return null;
@@ -637,8 +816,8 @@ public class CommandDescription {
      *
      * @return True if so, false otherwise.
      */
-    public boolean hasSuitableCommand(CommandReference commandReference) {
-        return getSuitableCommand(commandReference) != null;
+    public boolean hasSuitableCommand(CommandParts commandReference) {
+        return findCommand(commandReference) != null;
     }
 
     /**
@@ -648,7 +827,7 @@ public class CommandDescription {
      *
      * @return True if the arguments are suitable, false otherwise.
      */
-    public boolean hasSuitableArguments(CommandReference commandReference) {
+    public boolean hasSuitableArguments(CommandParts commandReference) {
         return getSuitableArgumentsDifference(commandReference) == 0;
     }
 
@@ -660,13 +839,13 @@ public class CommandDescription {
      *
      * @return The difference in argument count between the reference and the actual command.
      */
-    public int getSuitableArgumentsDifference(CommandReference commandReference) {
+    public int getSuitableArgumentsDifference(CommandParts commandReference) {
         // Make sure the command reference is valid
-        if(!commandReference.isValid())
+        if(commandReference.getCount() <= 0)
             return -1;
 
         // Get the remaining command reference element count
-        int remainingElementCount = commandReference.getCommandElementCount() - getParentCount() - 1;
+        int remainingElementCount = commandReference.getCount() - getParentCount() - 1;
 
         // Check if there are too less arguments
         if(getMinimumArguments() > remainingElementCount)
@@ -676,7 +855,7 @@ public class CommandDescription {
         if(getMaximumArguments() < remainingElementCount && getMaximumArguments() >= 0)
             return Math.abs(remainingElementCount - getMaximumArguments());
 
-        // The arguments seem to be OK, return the result
+        // The arguments seem to be EQUALS, return the result
         return 0;
     }
 

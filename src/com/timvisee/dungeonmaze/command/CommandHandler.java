@@ -1,17 +1,9 @@
 package com.timvisee.dungeonmaze.command;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.command.executable.CheckUpdatesCommand;
-import com.timvisee.dungeonmaze.command.executable.CreateWorldCommand;
-import com.timvisee.dungeonmaze.command.executable.HelpCommand;
-import com.timvisee.dungeonmaze.command.executable.InstallUpdateCommand;
-import com.timvisee.dungeonmaze.command.executable.ListWorldCommand;
-import com.timvisee.dungeonmaze.command.executable.ReloadCommand;
-import com.timvisee.dungeonmaze.command.executable.ReloadPermissionsCommand;
-import com.timvisee.dungeonmaze.command.executable.VersionCommand;
-import com.timvisee.dungeonmaze.command.executable.TeleportCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import ru.tehkode.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,9 +13,6 @@ public class CommandHandler {
 
     /** The command manager instance. */
     private CommandManager commandManager;
-
-    /** Defines the available commands. */
-    private List<ExecutableCommand> commands = new ArrayList<ExecutableCommand>();
 
     /**
      * Constructor.
@@ -50,17 +39,6 @@ public class CommandHandler {
         // Initialize the command manager
         this.commandManager = new CommandManager();
         // TODO: Command manager initialization!
-
-        // Initialize the commands
-        commands.add(new HelpCommand());
-        commands.add(new VersionCommand());
-        commands.add(new CreateWorldCommand());
-        commands.add(new TeleportCommand());
-        commands.add(new ListWorldCommand());
-        commands.add(new ReloadCommand());
-        commands.add(new ReloadPermissionsCommand());
-        commands.add(new CheckUpdatesCommand());
-        commands.add(new InstallUpdateCommand());
 
         // Return the result
         return true;
@@ -114,21 +92,37 @@ public class CommandHandler {
         // Process the arguments
         List<String> args = processArguments(bukkitArgs);
 
-        // Create a command reference
-        CommandReference commandReference = new CommandReference(bukkitCmdLbl, args);
+        // Create a command reference, and make sure at least one command part is available
+        CommandParts commandReference = new CommandParts(bukkitCmdLbl, args);
+        if(commandReference.getCount() == 0)
+            return false;
 
         // Get a suitable command for this reference, and make sure it isn't null
-        SuitableCommandResult result = this.commandManager.getSuitableCommand(commandReference);
+        FoundCommandResult result = this.commandManager.findCommand(commandReference);
+
         if(result == null) {
             Core.getLogger().info("Failed to parse Dungeon Maze command!");
             return false;
+        }
+
+        // Get the base command
+        String baseCommand = commandReference.get(0);
+
+        // Make sure the command difference isn't too big
+        if(result.getDifference() > 0.12) {
+            // TODO: Show arguments!
+            sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
+            if(result.getCommandDescription() != null)
+                sender.sendMessage(ChatColor.YELLOW + "Did you mean " + ChatColor.GOLD + "/" + result.getCommandDescription().getCommandReference(commandReference) + ChatColor.YELLOW + "?");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + baseCommand + " help" + ChatColor.YELLOW + " to view help.");
+            return true;
         }
 
         // Make sure the command is executable
         if(!result.isExecutable()) {
             // TODO: Show more detailed help!
             sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
-            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " help" + ChatColor.YELLOW + " to view help.");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + baseCommand + " help" + ChatColor.YELLOW + " to view help.");
             return true;
         }
 
@@ -138,25 +132,23 @@ public class CommandHandler {
             return true;
         }
 
-        // Execute the command if it's suitable
-        if(result.isSuitable())
-            // TODO: Should we return the result, or whether the command was used?
-            return result.executeCommand(sender);
-
-        // Show an warning/error message
-        switch(result.getResultType()) {
-        case WRONG_ARGUMENTS:
+        // Make sure the command sender has permission
+        if(!result.hasProperArguments()) {
+            CommandParts parts = new CommandParts(result.getCommandDescription().getCommandReference(commandReference).getRange(1));
             // TODO: Show more detailed help!
             sender.sendMessage(ChatColor.DARK_RED + "Incorrect command arguments!");
-            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " help" + ChatColor.YELLOW + " to view help.");
-            return true;
-
-        default:
-            // TODO: Show more detailed help!
-            sender.sendMessage(ChatColor.DARK_RED + "Invalid command!");
-            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " help" + ChatColor.YELLOW + " to view help.");
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + baseCommand + " help " + parts.toString() + ChatColor.YELLOW + " to view help.");
             return true;
         }
+
+        // Execute the command if it's suitable
+        return result.executeCommand(sender);
+
+        // Show an warning/error message
+        // TODO: Show more detailed help!
+        /*sender.sendMessage(ChatColor.DARK_RED + "Invalid command!");
+        sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + baseCommand + " help" + ChatColor.YELLOW + " to view help.");
+        return true;*/
     }
 
     /**

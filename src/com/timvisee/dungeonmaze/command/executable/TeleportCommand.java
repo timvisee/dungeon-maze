@@ -1,8 +1,7 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.command.CommandArguments;
-import com.timvisee.dungeonmaze.command.CommandReference;
+import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Bukkit;
@@ -23,7 +22,7 @@ public class TeleportCommand extends ExecutableCommand {
      * @return True if the command was executed successfully, false otherwise.
      */
     @Override
-    public boolean executeCommand(CommandSender sender, CommandReference commandReference, CommandArguments commandArguments) {
+    public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Make sure the command is executed by an in-game player
         if(!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.DARK_RED + "You need to be in-game to use this command!");

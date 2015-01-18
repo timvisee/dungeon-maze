@@ -2,16 +2,16 @@ package com.timvisee.dungeonmaze.command;
 
 import org.bukkit.command.CommandSender;
 
-public class SuitableCommandResult {
+public class FoundCommandResult {
 
-    /** Defines the type of the result. */
-    private SuitableCommandResultType resultType;
     /** The command description instance. */
     private CommandDescription commandDescription;
     /** The command reference. */
-    private CommandReference commandReference;
+    private CommandParts commandReference;
     /** The command arguments. */
-    private CommandArguments commandArguments;
+    private CommandParts commandArguments;
+    /** The original search query reference. */
+    private CommandParts queryReference;
 
     /**
      * Constructor.
@@ -19,24 +19,13 @@ public class SuitableCommandResult {
      * @param commandDescription The command description.
      * @param commandReference The command reference.
      * @param commandArguments The command arguments.
+     * @param queryReference The original query reference.
      */
-    public SuitableCommandResult(CommandDescription commandDescription, CommandReference commandReference, CommandArguments commandArguments) {
-        this(SuitableCommandResultType.OK, commandDescription, commandReference, commandArguments);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param resultType The result type.
-     * @param commandDescription The command description.
-     * @param commandReference The command reference.
-     * @param commandArguments The command arguments.
-     */
-    public SuitableCommandResult(SuitableCommandResultType resultType, CommandDescription commandDescription, CommandReference commandReference, CommandArguments commandArguments) {
-        this.resultType = resultType;
+    public FoundCommandResult(CommandDescription commandDescription, CommandParts commandReference, CommandParts commandArguments, CommandParts queryReference) {
         this.commandDescription = commandDescription;
         this.commandReference = commandReference;
         this.commandArguments = commandArguments;
+        this.queryReference = queryReference;
     }
 
     /**
@@ -44,26 +33,11 @@ public class SuitableCommandResult {
      *
      * @return True if the command was suitable, false otherwise.
      */
-    public boolean isSuitable() {
-        return this.resultType == SuitableCommandResultType.OK;
-    }
+    public boolean hasProperArguments() {
+        if(this.commandDescription == null)
+            return false;
 
-    /**
-     * Get the result type.
-     *
-     * @return The result type.
-     */
-    public SuitableCommandResultType getResultType() {
-        return this.resultType;
-    }
-
-    /**
-     * Set the result type.
-     *
-     * @param resultType The result type.
-     */
-    public void setResultType(SuitableCommandResultType resultType) {
-        this.resultType = resultType;
+        return getCommandDescription().getSuitableArgumentsDifference(commandReference) == 0;
     }
 
     /**
@@ -136,7 +110,7 @@ public class SuitableCommandResult {
      *
      * @return The command reference.
      */
-    public CommandReference getCommandReference() {
+    public CommandParts getCommandReference() {
         return this.commandReference;
     }
 
@@ -145,14 +119,29 @@ public class SuitableCommandResult {
      *
      * @return The command arguments.
      */
-    public CommandArguments getCommandArguments() {
+    public CommandParts getCommandArguments() {
         return this.commandArguments;
     }
 
-    public enum SuitableCommandResultType {
-        OK,
-        WRONG_ARGUMENTS,
-        OTHER,
-        INVALID
+    /**
+     * Get the original query reference.
+     *
+     * @return Original query reference.
+     */
+    public CommandParts getQueryReference() {
+        return this.queryReference;
+    }
+
+    /**
+     * Get the difference value between the original query and the result reference.
+     *
+     * @return The difference value.
+     */
+    public double getDifference() {
+        // TODO: Should we fully compare?
+        if(this.commandDescription != null)
+            return this.commandDescription.getCommandDifference(this.queryReference);
+
+        return this.queryReference.getDifference(commandReference, true);
     }
 }

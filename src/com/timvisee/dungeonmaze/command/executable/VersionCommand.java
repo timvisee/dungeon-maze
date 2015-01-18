@@ -1,7 +1,8 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.command.*;
+import com.timvisee.dungeonmaze.command.CommandParts;
+import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -19,15 +20,16 @@ public class VersionCommand extends ExecutableCommand {
      * @return True if the command was executed successfully, false otherwise.
      */
     @Override
-    public boolean executeCommand(CommandSender sender, CommandReference commandReference, CommandArguments commandArguments) {
+    public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Show some version info
+        sender.sendMessage(" ");
         sender.sendMessage(ChatColor.GREEN + "==========[ DUNGEON MAZE ABOUT ]==========");
         sender.sendMessage(ChatColor.GOLD + "Release: " + ChatColor.WHITE + "Dungeon Maze v" + DungeonMaze.instance.getVersion());
         sender.sendMessage(ChatColor.GOLD + "Developers:");
         printDeveloper(sender, "Tim Visee", "timvisee", "Lead Developer");
         printDeveloper(sender, "Xephi", "xephi", "Contributor");
         sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.WHITE + "http://timvisee.com/");
-        sender.sendMessage(ChatColor.GOLD + "License: " + ChatColor.WHITE + "GNU GPL v2.0");
+        sender.sendMessage(ChatColor.GOLD + "License: " + ChatColor.WHITE + "GNU GPL v2.0" + ChatColor.GRAY + ChatColor.ITALIC + " (See LICENSE.txt)");
         sender.sendMessage(ChatColor.GOLD + "Copyright: " + ChatColor.WHITE + "Copyright (c) Tim Visee 2015. All rights reserved.");
         return true;
     }
@@ -44,18 +46,18 @@ public class VersionCommand extends ExecutableCommand {
     private void printDeveloper(CommandSender sender, String name, String minecraftName, String function) {
         // Print the name
         StringBuilder msg = new StringBuilder();
-        msg.append(ChatColor.DARK_GRAY + " - " + ChatColor.WHITE);
+        msg.append(ChatColor.GRAY + " - " + ChatColor.WHITE);
         msg.append(name);
 
         // Append the Minecraft name, if available
         if(minecraftName.length() != 0)
-            msg.append(ChatColor.DARK_GRAY + ", " + ChatColor.WHITE + minecraftName);
-        msg.append(ChatColor.DARK_GRAY + " (" + function + ")");
+            msg.append(ChatColor.GRAY + " // " + ChatColor.WHITE + minecraftName);
+        msg.append(ChatColor.GRAY + "" + ChatColor.ITALIC + " (" + function + ")");
 
         // Show the online status
         if(minecraftName.length() != 0)
             if(isPlayerOnline(minecraftName))
-                msg.append(ChatColor.GREEN + " (In-Game)");
+                msg.append(ChatColor.GREEN + "" + ChatColor.ITALIC + " (In-Game)");
 
         // Print the message
         sender.sendMessage(msg.toString());

@@ -1,8 +1,7 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.command.CommandArguments;
-import com.timvisee.dungeonmaze.command.CommandReference;
+import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.util.Profiler;
@@ -21,7 +20,7 @@ public class ReloadPermissionsCommand extends ExecutableCommand {
      * @return True if the command was executed successfully, false otherwise.
      */
     @Override
-    public boolean executeCommand(CommandSender sender, CommandReference commandReference, CommandArguments commandArguments) {
+    public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Profile the permissions reload process
         Profiler p = new Profiler(true);
 

@@ -13,5 +13,5 @@ public abstract class ExecutableCommand {
      *
      * @return True if the command was executed successfully, false otherwise.
      */
-    public abstract boolean executeCommand(CommandSender sender, CommandReference commandReference, CommandArguments commandArguments);
+    public abstract boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments);
 }
