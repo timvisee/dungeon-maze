@@ -46,7 +46,7 @@ public class VersionCommand extends ExecutableCommand {
     private void printDeveloper(CommandSender sender, String name, String minecraftName, String function) {
         // Print the name
         StringBuilder msg = new StringBuilder();
-        msg.append(ChatColor.GRAY + " - " + ChatColor.WHITE);
+        msg.append(" " + ChatColor.WHITE);
         msg.append(name);
 
         // Append the Minecraft name, if available

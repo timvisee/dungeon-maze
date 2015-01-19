@@ -14,10 +14,13 @@ public class CommandManager {
 
     /**
      * Constructor.
+     *
+     * @param registerCommands True to register the commands, false otherwise.
      */
-    public CommandManager() {
+    public CommandManager(boolean registerCommands) {
         // Register the commands
-        registerCommands();
+        if(registerCommands)
+            registerCommands();
     }
 
     /**
