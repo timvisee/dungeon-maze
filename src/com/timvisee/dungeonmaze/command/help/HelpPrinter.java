@@ -149,10 +149,9 @@ public class HelpPrinter {
         sender.sendMessage(ChatColor.GOLD + "Alternatives:");
 
         // Get the label used
-        final String usedLabel = commandReference.get(command.getParentCount() - 1);
+        final String usedLabel = commandReference.get(command.getParentCount());
 
         // Create a list of alternatives
-        // TODO: FIX: Sometimes showing the non-alternative too!
         List<String> alternatives = new ArrayList<String>();
         for(String entry : command.getLabels()) {
             // Exclude the proper argument

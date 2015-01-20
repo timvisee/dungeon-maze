@@ -66,9 +66,12 @@ public class HelpProvider {
             return;
         }
 
+        // Get the proper command reference to use for the help page
+        CommandParts commandReference = command.getCommandReference(result.getQueryReference());
+
         // Print the command help information
         if(showCommand)
-            HelpPrinter.printCommand(sender, command, helpQuery);
+            HelpPrinter.printCommand(sender, command, commandReference);
         if(showDescription)
             HelpPrinter.printCommandDescription(sender, command);
         if(showArguments)
@@ -76,8 +79,8 @@ public class HelpProvider {
         if(showPermissions)
             HelpPrinter.printPermissions(sender, command);
         if(showAlternatives)
-            HelpPrinter.printAlternatives(sender, command, helpQuery);
+            HelpPrinter.printAlternatives(sender, command, commandReference);
         if(showCommands)
-            HelpPrinter.printChilds(sender, command, helpQuery);
+            HelpPrinter.printChilds(sender, command, commandReference);
     }
 }
