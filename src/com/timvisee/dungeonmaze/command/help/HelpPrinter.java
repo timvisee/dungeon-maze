@@ -25,6 +25,7 @@ public class HelpPrinter {
      * @param commandReference The command reference used.
      */
     public static void printCommand(CommandSender sender, CommandDescription command, CommandParts commandReference) {
+        // Print the proper command syntax
         sender.sendMessage(ChatColor.GOLD + "Command: " + HelpSyntaxHelper.getCommandSyntax(command, commandReference, null, true));
     }
 
@@ -52,6 +53,7 @@ public class HelpPrinter {
      * @param sender The command sender to print the help to.
      * @param command The command to print the argument help for.
      */
+    @SuppressWarnings("StringConcatenationInsideStringBufferAppend")
     public static void printArguments(CommandSender sender, CommandDescription command) {
         // Make sure there are any commands to print
         if(!command.hasArguments() && command.getMaximumArguments() >= 0)
@@ -150,7 +152,7 @@ public class HelpPrinter {
         final String usedLabel = commandReference.get(command.getParentCount() - 1);
 
         // Create a list of alternatives
-        // TODO: Sometimes showing the non-alternative too!
+        // TODO: FIX: Sometimes showing the non-alternative too!
         List<String> alternatives = new ArrayList<String>();
         for(String entry : command.getLabels()) {
             // Exclude the proper argument
