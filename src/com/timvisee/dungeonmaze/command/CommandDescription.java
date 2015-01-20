@@ -723,7 +723,7 @@ public class CommandDescription {
             return null;
 
         // Check whether this description is for the last element in the command reference, if so return the current command
-        // TODO: Is this indeed equally for all cases?
+        // TODO: Is the case bellow indeed true for all cases?
         if(queryReference.getCount() <= getParentCount() + 1)
             return new FoundCommandResult(
                     this,
@@ -749,19 +749,15 @@ public class CommandDescription {
             });
 
             // Get the difference of the first child in the list
-            // TODO: Should we fully compare? Or do some kind of smart compare with arguments?
             double firstChildDifference = commandChilds.get(0).getCommandDifference(queryReference, true);
 
-            // TODO: Check if the query reference perfectly fits the command arguments
+            // Check if the reference perfectly suits the arguments of the current command if it doesn't perfectly suits a child command
+            if(firstChildDifference > 0.0)
+                if(getSuitableArgumentsDifference(queryReference) == 0)
+                    return new FoundCommandResult(this, newReference, newArguments, queryReference);
 
             // Loop through each child
             for(CommandDescription child : commandChilds) {
-                // Get the query reference for this child
-                final CommandParts childReference = child.getCommandReference(queryReference);
-
-                // Get the difference
-                double childDifference = childReference.getDifference(queryReference);
-
                 // Get the best suitable command
                 FoundCommandResult result = child.findCommand(queryReference);
                 if(result != null)
@@ -769,43 +765,15 @@ public class CommandDescription {
             }
         }
 
+        /* // Return the current command if the reference perfectly fits the command arguments
         if(getSuitableArgumentsDifference(queryReference) == 0)
-            return new FoundCommandResult(this, newReference, newArguments, queryReference);
-
-        /* // Loop through all the child's
-        for(CommandDescription child : this.childs) {
-            if(!child.isSuitableLabel(queryReference))
-                continue;
-
-            // Get and return the command description, and make sure the result isn't null
-            FoundCommandResult result = child.findCommand(queryReference);
-            if(result == null)
-                return new FoundCommandResult(FoundCommandResult.ResultType.WRONG_ARGUMENTS, this, newReference, newArguments, queryReference);
-
-            // Check each parent to see if the command reference suits
-            while(result.getCommandDescription() != null) {
-                // Check whether this command description has suitable, or near-suitable arguments
-                int resultDifference2 = result.getCommandDescription().getSuitableArgumentsDifference(queryReference);
-                if(resultDifference2 >= 0) {
-                    if(resultDifference2 > 0)
-                        result.setResultType(FoundCommandResult.ResultType.WRONG_ARGUMENTS);
-                    return result;
-                }
-
-                // Get the parent description
-                result.setCommandDescription(result.getCommandDescription().getParent());
-            }
-
-            // Return null if there really isn't any command
-            return null;
-        }*/
+            return new FoundCommandResult(this, newReference, newArguments, queryReference);*/
 
         // Check if the remaining command reference elements fit the arguments for this command
-        int resultDifference = getSuitableArgumentsDifference(queryReference);
-        if(resultDifference >= 0)
+        if(getSuitableArgumentsDifference(queryReference) >= 0)
             return new FoundCommandResult(this, newReference, newArguments, queryReference);
 
-        // Return null if there really isn't a command
+        // No command found, return null
         return null;
     }
 
@@ -910,10 +878,12 @@ public class CommandDescription {
      * @return True if the command description is valid, false otherwise.
      */
     public boolean isValid() {
-        // TODO: Improve the quality of this method
-
         // Make sure any command label is set
         if(getLabels().size() == 0)
+            return false;
+
+        // Make sure the permissions are set up properly
+        if(this.permissions == null)
             return false;
 
         // Everything seems to be correct, return the result
