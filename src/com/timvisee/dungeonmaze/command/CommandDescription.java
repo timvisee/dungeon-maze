@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.command;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.util.StringUtils;
 import org.bukkit.command.CommandSender;
 
@@ -175,47 +176,54 @@ public class CommandDescription {
      * Set the command label.
      *
      * @param commandLabel Command label to set.
-     *
      * @param overwrite True to replace all old command labels, false to append this command label to the currently
      *                  existing labels.
+     *
+     * @return Trie if the command label is added, or if it was added already. False on failure.
      */
-    public void setLabel(String commandLabel, boolean overwrite) {
+    public boolean setLabel(String commandLabel, boolean overwrite) {
         // Check whether this new command should overwrite the previous ones
-        if(!overwrite) {
-            addLabel(commandLabel);
-            return;
-        }
+        if(!overwrite)
+            return addLabel(commandLabel);
 
         // Replace all labels with this new one
         this.labels.clear();
-        this.labels.add(commandLabel);
+        return this.labels.add(commandLabel);
     }
 
     /**
      * Add a command label to the list.
      *
      * @param commandLabel Command label to add.
+     *
+     * @return True if the label was added, or if it was added already. False on error.
      */
-    public void addLabel(String commandLabel) {
-        // TODO: Verify command label
+    public boolean addLabel(String commandLabel) {
+        // Verify the label
+        if(!isValidLabel(commandLabel))
+            return false;
 
         // Ensure this command isn't a duplicate
         if(hasLabel(commandLabel))
-            return;
+            return true;
 
         // Add the command to the list
-        this.labels.add(commandLabel);
+        return this.labels.add(commandLabel);
     }
 
     /**
      * Add a list of command labels.
      *
      * @param commandLabels List of command labels to add.
+     *
+     * @return True if succeed, false on failure.
      */
-    public void addLabels(List<String> commandLabels) {
+    public boolean addLabels(List<String> commandLabels) {
         // Add each command label separately
         for(String cmd : commandLabels)
-            addLabel(cmd);
+            if(!addLabel(cmd))
+                return false;
+        return true;
     }
 
     /**
@@ -263,13 +271,34 @@ public class CommandDescription {
         if(commandReference.getCount() <= 0)
             return false;
 
-        return true;
-
         // Get the parent count
-        /*String element = commandReference.get(getParentCount());
+        String element = commandReference.get(getParentCount());
 
         // Check whether this command description has this command label
-        return hasLabel(element);*/
+        return hasLabel(element);
+    }
+
+    /**
+     * Check whether a label is valid to use.
+     *
+     * @param label The label to test.
+     *
+     * @return True if the label is valid to use, false otherwise.
+     */
+    public static boolean isValidLabel(String label) {
+        // Make sure the label isn't null
+        if(label == null)
+            return false;
+
+        // Trim the label
+        label = label.trim();
+
+        // Make sure the label is at least one character long
+        if(label.length() <= 0)
+            return false;
+
+        // Make sure the label doesn't contain any spaces, return the result
+        return !label.contains(" ");
     }
 
     /**
@@ -764,10 +793,6 @@ public class CommandDescription {
                     return result;
             }
         }
-
-        /* // Return the current command if the reference perfectly fits the command arguments
-        if(getSuitableArgumentsDifference(queryReference) == 0)
-            return new FoundCommandResult(this, newReference, newArguments, queryReference);*/
 
         // Check if the remaining command reference elements fit the arguments for this command
         if(getSuitableArgumentsDifference(queryReference) >= 0)

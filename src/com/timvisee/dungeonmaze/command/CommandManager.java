@@ -208,7 +208,7 @@ public class CommandManager {
         for(CommandDescription commandDescription : this.commandDescriptions) {
             // Check whether there's a command description available for the current command
             if(!commandDescription.isSuitableLabel(queryReference))
-                return null;
+                continue;
 
             // TODO: Handle unknown/similar labels.
             // TODO: Handle references without the base command.
