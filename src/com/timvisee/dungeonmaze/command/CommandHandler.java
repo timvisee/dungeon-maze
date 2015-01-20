@@ -152,6 +152,7 @@ public class CommandHandler {
             sender.sendMessage(ChatColor.DARK_RED + "Incorrect command arguments!");
             sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + baseCommand + " help " + helpCommandReference + ChatColor.YELLOW + " to view detailed help.");
 
+            // Show the command argument help
             HelpProvider.showHelp(sender, commandReference, commandReference, true, false, true, false, false, false);
             return true;
         }
