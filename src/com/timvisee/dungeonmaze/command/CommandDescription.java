@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.command;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.util.StringUtils;
+import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.*;
@@ -766,8 +767,8 @@ public class CommandDescription {
 
         // Handle the child's, if this command has any
         if(getChilds().size() > 0) {
-            // Get all child's, and sort them by their difference in comparison to the query reference
-            List<CommandDescription> commandChilds = getChilds();
+            // Get a new instance of the child's list, and sort them by their difference in comparison to the query reference
+            List<CommandDescription> commandChilds = new ArrayList<CommandDescription>(getChilds());
             Collections.sort(commandChilds, new Comparator<CommandDescription>() {
                 @Override
                 public int compare(CommandDescription o1, CommandDescription o2) {
