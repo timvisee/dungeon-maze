@@ -34,7 +34,7 @@ public class HelpProvider {
     public static void showHelp(CommandSender sender, CommandParts reference, CommandParts helpQuery, boolean showCommand, boolean showDescription, boolean showArguments, boolean showPermissions, boolean showAlternatives, boolean showCommands) {
         // Print the help header
         sender.sendMessage(" ");
-        sender.sendMessage(ChatColor.GREEN + "==========[ DUNGEON MAZE HELP ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE HELP ]==========");
 
         // Find the command for this help query, one with and one without a prefixed base command
         FoundCommandResult result = Core.getCommandHandler().getCommandManager().findCommand(new CommandParts(helpQuery.getList()));

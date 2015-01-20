@@ -33,13 +33,14 @@ public class ListWorldCommand extends ExecutableCommand {
         }
 
         // Show the list of worlds
-        sender.sendMessage(ChatColor.GREEN + "==========[ DUNGEON MAZE WORLDS ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE WORLDS ]==========");
+        sender.sendMessage(ChatColor.GOLD + "Dungeon Maze worlds:");
         if(worlds.size() > 0) {
             for(String w : worlds) {
                 if(worldManager.isLoadedDungeonMazeWorld(w))
-                    sender.sendMessage(ChatColor.GOLD + " " + w + ": " + ChatColor.GREEN  + ChatColor.ITALIC + "Loaded");
+                    sender.sendMessage(ChatColor.YELLOW + "" + ChatColor.ITALIC + " " + w + ": " + ChatColor.GREEN  + "Loaded");
                 else
-                    sender.sendMessage(ChatColor.GOLD + " " + w + ": " + ChatColor.DARK_RED + ChatColor.ITALIC + "Not Loaded");
+                    sender.sendMessage(ChatColor.YELLOW + "" + ChatColor.ITALIC + " " + w + ": " + ChatColor.DARK_RED + "Not Loaded");
             }
         } else
             // No Dungeon Maze world available, show a message
