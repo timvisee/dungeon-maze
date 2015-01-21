@@ -32,10 +32,6 @@ public class HelpProvider {
      * @param showCommands True to show the child commands.
      */
     public static void showHelp(CommandSender sender, CommandParts reference, CommandParts helpQuery, boolean showCommand, boolean showDescription, boolean showArguments, boolean showPermissions, boolean showAlternatives, boolean showCommands) {
-        // Print the help header
-        sender.sendMessage(" ");
-        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE HELP ]==========");
-
         // Find the command for this help query, one with and one without a prefixed base command
         FoundCommandResult result = Core.getCommandHandler().getCommandManager().findCommand(new CommandParts(helpQuery.getList()));
         CommandParts commandReferenceOther = new CommandParts(reference.get(0), helpQuery.getList());
@@ -68,6 +64,40 @@ public class HelpProvider {
 
         // Get the proper command reference to use for the help page
         CommandParts commandReference = command.getCommandReference(result.getQueryReference());
+
+        // Get the base command
+        String baseCommand = commandReference.get(0);
+
+        // Make sure the difference between the command reference and the actual command isn't too big
+        final double commandDifference = result.getDifference();
+        if(commandDifference > 0.20) {
+            // Show the unknown command warning
+            sender.sendMessage(ChatColor.DARK_RED + "No help found for '" + helpQuery + "'!");
+
+            // Get the suggested command
+            CommandParts suggestedCommandParts = new CommandParts(result.getCommandDescription().getCommandReference(commandReference).getRange(1));
+
+            // Show a command suggestion if available and the difference isn't too big
+            if(commandDifference < 0.75)
+                if(result.getCommandDescription() != null)
+                    sender.sendMessage(ChatColor.YELLOW + "Did you mean " + ChatColor.GOLD + "/" + baseCommand + " help " + suggestedCommandParts + ChatColor.YELLOW + "?");
+
+            // Show the help command
+            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + baseCommand + " help" + ChatColor.YELLOW + " to view help.");
+            return;
+        }
+
+        // Show a message when the command handler is assuming a command
+        if(commandDifference > 0) {
+            // Get the suggested command
+            CommandParts suggestedCommandParts = new CommandParts(result.getCommandDescription().getCommandReference(commandReference).getRange(1));
+
+            // Show the suggested command
+            sender.sendMessage(ChatColor.DARK_RED + "No help found, assuming '" + ChatColor.GOLD + suggestedCommandParts + ChatColor.DARK_RED + "'!");
+        }
+
+        // Print the help header
+        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE HELP ]==========");
 
         // Print the command help information
         if(showCommand)

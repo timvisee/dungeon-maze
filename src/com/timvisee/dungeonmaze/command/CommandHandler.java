@@ -123,6 +123,16 @@ public class CommandHandler {
             return true;
         }
 
+        // Show a message when the command handler is assuming a command
+        if(commandDifference > 0) {
+            // Get the suggested command
+            CommandParts suggestedCommandParts = new CommandParts(result.getCommandDescription().getCommandReference(commandReference));
+
+            // Show the suggested command
+            sender.sendMessage(ChatColor.DARK_RED + "Unknown command, assuming " + ChatColor.GOLD + "/" + suggestedCommandParts +
+                    ChatColor.DARK_RED + "!");
+        }
+
         // Make sure the command is executable
         if(!result.isExecutable()) {
             // Get the command reference
@@ -145,15 +155,18 @@ public class CommandHandler {
 
         // Make sure the command sender has permission
         if(!result.hasProperArguments()) {
-            // Get the command reference
-            CommandParts helpCommandReference = new CommandParts(result.getCommandReference().getRange(1));
+            // Get the command and the suggested command reference
+            CommandParts suggestedCommandReference = new CommandParts(result.getCommandDescription().getCommandReference(commandReference));
+            CommandParts helpCommandReference = new CommandParts(suggestedCommandReference.getRange(1));
 
             // Show the invalid arguments warning
             sender.sendMessage(ChatColor.DARK_RED + "Incorrect command arguments!");
-            sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + baseCommand + " help " + helpCommandReference + ChatColor.YELLOW + " to view detailed help.");
 
             // Show the command argument help
-            HelpProvider.showHelp(sender, commandReference, commandReference, true, false, true, false, false, false);
+            HelpProvider.showHelp(sender, commandReference, suggestedCommandReference, true, false, true, false, false, false);
+
+            // Show the command to use for detailed help
+            sender.sendMessage(ChatColor.GOLD + "Detailed help: " + ChatColor.WHITE + "/" + baseCommand + " help " + helpCommandReference);
             return true;
         }
 
