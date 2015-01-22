@@ -81,18 +81,18 @@ public class CommandHandler {
      * Process a command.
      *
      * @param sender The command sender (Bukkit).
-     * @param bukkitCmd The command (Bukkit).
-     * @param bukkitCmdLbl The command label (Bukkit).
+     * @param bukkitCommand The command (Bukkit).
+     * @param bukkitCommandLabel The command label (Bukkit).
      * @param bukkitArgs The command arguments (Bukkit).
      *
      * @return True if the command was executed, false otherwise.
      */
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command bukkitCmd, String bukkitCmdLbl, String[] bukkitArgs) {
+    public boolean onCommand(CommandSender sender, @SuppressWarnings("UnusedParameters") org.bukkit.command.Command bukkitCommand, String bukkitCommandLabel, String[] bukkitArgs) {
         // Process the arguments
         List<String> args = processArguments(bukkitArgs);
 
         // Create a command reference, and make sure at least one command part is available
-        CommandParts commandReference = new CommandParts(bukkitCmdLbl, args);
+        CommandParts commandReference = new CommandParts(bukkitCommandLabel, args);
         if(commandReference.getCount() == 0)
             return false;
 
@@ -110,7 +110,6 @@ public class CommandHandler {
         final double commandDifference = result.getDifference();
         if(commandDifference > 0.12) {
             // Show the unknown command warning
-            // TODO: Show argument information!
             sender.sendMessage(ChatColor.DARK_RED + "Unknown command!");
 
             // Show a command suggestion if available and the difference isn't too big

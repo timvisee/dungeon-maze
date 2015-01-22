@@ -10,8 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.update.Updater;
@@ -98,7 +97,7 @@ public class PlayerListener implements Listener {
 			return;
 
 		// No new version found
-		if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE && uc.getResult() != UpdateResult.FAIL_NOVERSION) {
+		if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE) {
             player.sendMessage(ChatColor.GREEN + "No new DungeonMaze version found!");
 			return;
         }

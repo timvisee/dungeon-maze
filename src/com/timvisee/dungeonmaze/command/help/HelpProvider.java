@@ -44,8 +44,6 @@ public class HelpProvider {
                 result = resultOther;
         }
 
-        // TODO: Make sure the command is close enough to a know command!
-
         // Make sure a result was found
         if(result == null) {
             // Show a warning message

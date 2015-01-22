@@ -34,9 +34,11 @@ public class FoundCommandResult {
      * @return True if the command was suitable, false otherwise.
      */
     public boolean hasProperArguments() {
+        // Make sure the command description is set
         if(this.commandDescription == null)
             return false;
 
+        // Get and return the result
         return getCommandDescription().getSuitableArgumentsDifference(commandReference) == 0;
     }
 
@@ -55,6 +57,7 @@ public class FoundCommandResult {
      * @param commandDescription The command description.
      *
      */
+    @SuppressWarnings("UnusedDeclaration")
     public void setCommandDescription(CommandDescription commandDescription) {
         this.commandDescription = commandDescription;
     }

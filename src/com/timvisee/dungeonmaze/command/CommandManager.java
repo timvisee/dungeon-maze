@@ -9,7 +9,6 @@ import java.util.List;
 public class CommandManager {
 
     /** The list of commandDescriptions. */
-    // TODO: Make this list sorted!
     private List<CommandDescription> commandDescriptions = new ArrayList<CommandDescription>();
 
     /**

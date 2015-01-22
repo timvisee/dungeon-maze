@@ -1,12 +1,11 @@
 package com.timvisee.dungeonmaze.command;
 
-import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.util.StringUtils;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import java.util.*;
 
+@SuppressWarnings("UnusedDeclaration")
 public class CommandDescription {
 
     /** Defines the acceptable labels. */
@@ -753,7 +752,6 @@ public class CommandDescription {
             return null;
 
         // Check whether this description is for the last element in the command reference, if so return the current command
-        // TODO: Is the case bellow indeed true for all cases?
         if(queryReference.getCount() <= getParentCount() + 1)
             return new FoundCommandResult(
                     this,
