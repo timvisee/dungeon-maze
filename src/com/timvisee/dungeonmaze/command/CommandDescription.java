@@ -9,7 +9,6 @@ import java.util.*;
 public class CommandDescription {
 
     /** Defines the acceptable labels. */
-    // TODO: Make this list sorted!
     private List<String> labels = new ArrayList<String>();
     /** Command description. */
     private String description = "";

@@ -2,20 +2,20 @@ package com.timvisee.dungeonmaze.api;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.module.Module;
+import com.timvisee.dungeonmaze.service.Service;
 
-public class OldApiControllerModule extends Module {
+public class OldApiControllerService extends Service {
 
-    /** Module name. */
-    private static final String MODULE_NAME = "Old API Controller";
+    /** Service name. */
+    private static final String SERVICE_NAME = "Old API Controller";
 
     /** Old API Controller instance. */
     private OldApiController apiController;
 
     /**
-     * Initialize the module.
+     * Initialize the service.
      *
-     * @return True on success, false on failure. True will also be returned if the module was initialized already.
+     * @return True on success, false on failure. True will also be returned if the service was initialized already.
      */
     @Override
     public boolean init() {
@@ -35,9 +35,9 @@ public class OldApiControllerModule extends Module {
     }
 
     /**
-     * Check whether the module is initialized.
+     * Check whether the service is initialized.
      *
-     * @return True if the module is initialized, false otherwise.
+     * @return True if the service is initialized, false otherwise.
      */
     @Override
     public boolean isInit() {
@@ -50,13 +50,13 @@ public class OldApiControllerModule extends Module {
     }
 
     /**
-     * Destroy the module. The destruction won't be forced.
+     * Destroy the service. The destruction won't be forced.
      *
-     * @param force True to force the destruction. This wil re-destroy the module even if it isn't initialized.
+     * @param force True to force the destruction. This wil re-destroy the service even if it isn't initialized.
      *              This will also force the initialization state to be set to false even if an error occurred while
      *              destroying.
      *
-     * @return True on success, false on failure. True will also be returned if the module wasn't initialized. False
+     * @return True on success, false on failure. True will also be returned if the service wasn't initialized. False
      * might be returned if force is set to true, even though the initialization state is set to false.
      */
     @Override
@@ -75,13 +75,13 @@ public class OldApiControllerModule extends Module {
     }
 
     /**
-     * Get the name of the module.
+     * Get the name of the service.
      *
-     * @return Module name.
+     * @return Service name.
      */
     @Override
     public String getName() {
-        return MODULE_NAME;
+        return SERVICE_NAME;
     }
 
     /**

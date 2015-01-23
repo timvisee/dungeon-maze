@@ -36,7 +36,7 @@ public class ReloadPermissionsCommand extends ExecutableCommand {
             return true;
         }
 
-        // Reload the permissions module, show an error on failure
+        // Reload the permissions service, show an error on failure
         if(!permissionsManager.reload()) {
             Core.getLogger().info("Failed to reload permissions after " + p.getTimeFormatted() + "!");
             sender.sendMessage(ChatColor.DARK_RED + "Failed to reload permissions after " + p.getTimeFormatted() + "!");
