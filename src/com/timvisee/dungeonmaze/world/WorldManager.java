@@ -125,8 +125,16 @@ public class WorldManager {
 	 * @return True on success, false on failure.
 	 */
 	public boolean refresh() {
+		// Get the Dungeon Maze config
+		ConfigHandler configHandler = DungeonMaze.instance.getCore()._getConfigHandler();
+		FileConfiguration config = configHandler.config;
+
+		// Make sure the config file was loaded successfully
+		if(config == null)
+			return false;
+
 		// Load the list from the config
-		List<String> worlds = DungeonMaze.instance.getConfig().getStringList("worlds");
+		List<String> worlds = config.getStringList("worlds");
 
 		// Get the multiverse core
 		MultiverseCore multiverseCore = Core.getMultiverseHandler().getMultiverseCore();
@@ -149,7 +157,7 @@ public class WorldManager {
 		this.dungeonMazeWorlds = worlds;
 
 		// Load the list from the config
-		List<String> preloadWorlds = DungeonMaze.instance.getConfig().getStringList("preloadWorlds");
+		List<String> preloadWorlds = config.getStringList("preloadWorlds");
 		if(preloadWorlds != null)
 			this.dungeonMazeWorldsPreload = preloadWorlds;
 		

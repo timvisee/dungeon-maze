@@ -1,17 +1,20 @@
 package com.timvisee.dungeonmaze.logger;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.config.ConfigHandler;
+import de.bananaco.bpermissions.imp.YamlConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.logging.Logger;
 
 public class LoggerManager {
 
-    // TODO: Should we create a custom Dungeon Maze logger, which may improve logging functionality?
-
-    /** Dungeon Maze Logger instance. */
-    public Logger dungeonMazeLogger;
-    /** Minecraft Logger instance. */
-    public Logger minecraftLogger;
+    /** Dungeon Maze logger instance. */
+    private DungeonMazeLogger dungeonMazeLogger;
+    /** Logger instance for Dungeon Maze. */
+    public Logger loggerDungeonMaze;
+    /** Logger instance for Minecraft. */
+    public Logger loggerMinecraft;
 
     /**
      * Constructor.
@@ -31,8 +34,17 @@ public class LoggerManager {
      */
     public boolean init() {
         // Get and initialize the loggers
-        this.dungeonMazeLogger = DungeonMaze.instance.getLogger();
-        this.minecraftLogger = Logger.getLogger("Minecraft");
+        this.loggerDungeonMaze = DungeonMaze.instance.getLogger();
+        this.loggerMinecraft = Logger.getLogger("Minecraft");
+        this.dungeonMazeLogger = new DungeonMazeLogger(this.loggerDungeonMaze);
+
+        // Get the Dungeon Maze configuration
+        FileConfiguration config = DungeonMaze.instance.getConfig();
+        if(config != null) {
+            this.dungeonMazeLogger.setLoggingDebug(config.getBoolean("logging.debug", true));
+            this.dungeonMazeLogger.setLoggingError(config.getBoolean("logging.error", true));
+        }
+
         return true;
     }
 
@@ -42,7 +54,7 @@ public class LoggerManager {
      * @return True if the manager is initialized, false otherwise.
      */
     public boolean isInit() {
-        return this.dungeonMazeLogger != null && this.minecraftLogger != null;
+        return this.loggerDungeonMaze != null && this.loggerMinecraft != null;
     }
 
     /**
@@ -51,29 +63,9 @@ public class LoggerManager {
      * @return True on success, false on failure. True will also be returned if the manager wasn't initialized.
      */
     public boolean destroy() {
-        this.dungeonMazeLogger = null;
-        this.minecraftLogger = null;
+        this.loggerDungeonMaze = null;
+        this.loggerMinecraft = null;
         return true;
-    }
-
-    /**
-     * Get the default logger.
-     *
-     * @return Default logger instance.
-     */
-    public Logger getLogger() {
-        // Make sure the Dungeon Maze logger isn't null
-        Logger log = getDungeonMazeLogger();
-        if(log != null)
-            return log;
-
-        // Make sure the Minecraft logger isn't null
-        log = getMinecraftLogger();
-        if(log != null)
-            return log;
-
-        // Return the Minecraft logger
-        return DungeonMaze.instance.getLogger();
     }
 
     /**
@@ -81,16 +73,39 @@ public class LoggerManager {
      *
      * @return Dungeon Maze logger instance.
      */
-    public Logger getDungeonMazeLogger() {
+    public DungeonMazeLogger getLogger() {
+        // Make sure the Dungeon Maze logger instance is set
+        if(this.dungeonMazeLogger == null)
+            return new DungeonMazeLogger(DungeonMaze.instance.getLogger());
+
+        // Return the logger
         return this.dungeonMazeLogger;
     }
 
     /**
-     * Get the Minecraft logger.
+     * Get the Dungeon Maze logger.
      *
-     * @return Minecraft logger instance.
+     * @return Dungeon Maze logger instance.
      */
-    public Logger getMinecraftLogger() {
-        return this.minecraftLogger;
+    public DungeonMazeLogger getDungeonMazeLogger() {
+        return this.dungeonMazeLogger;
+    }
+
+    /**
+     * Get the logger instance for Dungeon Maze.
+     *
+     * @return Logger instance for Dungeon Maze.
+     */
+    public Logger getLoggerDungeonMaze() {
+        return this.loggerDungeonMaze;
+    }
+
+    /**
+     * Get the logger instance for Minecraft.
+     *
+     * @return Logger instance for Minecraft.
+     */
+    public Logger getLoggerMinecraft() {
+        return this.loggerMinecraft;
     }
 }

@@ -21,7 +21,7 @@ public class PermissionsManagerService extends Service {
     @Override
     public boolean init() {
         // Initialize the update checker
-        this.permissionsManager = new PermissionsManager(Bukkit.getServer(), DungeonMaze.instance, Core.getLogger());
+        this.permissionsManager = new PermissionsManager(Bukkit.getServer(), DungeonMaze.instance, Core.getLogger().getLogger());
 
         // Set up the permissions manager
         this.permissionsManager.setup();

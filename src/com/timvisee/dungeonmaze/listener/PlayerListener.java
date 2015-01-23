@@ -7,6 +7,7 @@ import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -83,11 +84,22 @@ public class PlayerListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		// Get the player
 		Player player = event.getPlayer();
-		
+
+		// Get the Dungeon Maze config
+		ConfigHandler configHandler = DungeonMaze.instance.getCore()._getConfigHandler();
+		FileConfiguration config = configHandler.config;
+
+		// Check whether the update checker is enabled and whether the user should be notified in-game
+		boolean updateCheckerEnabled = true;
+		boolean updateCheckerNotifyInGame = true;
+		if(config != null) {
+			updateCheckerEnabled = config.getBoolean("updateChecker.enabled", true);
+			updateCheckerNotifyInGame = config.getBoolean("updateChecker.notifyInGame", true);
+		}
+
 		// Check whether the player should get update notifications in-game
 		if(!Core.getPermissionsManager().hasPermission(player, "dungeonmaze.notification.update", player.isOp()) ||
-				!DungeonMaze.instance.getConfig().getBoolean("updateChecker.enabled", true) ||
-				!DungeonMaze.instance.getConfig().getBoolean("updateChecker.notifyInGame", true))
+				!updateCheckerEnabled || !updateCheckerNotifyInGame)
 			return;
 
 		// Get the update checker and refresh the updates data, and make sure the updater is valid

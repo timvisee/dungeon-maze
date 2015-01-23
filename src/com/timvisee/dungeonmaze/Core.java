@@ -7,6 +7,7 @@ import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.command.CommandHandlerService;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.listener.EventListenerManager;
+import com.timvisee.dungeonmaze.logger.DungeonMazeLogger;
 import com.timvisee.dungeonmaze.logger.LoggerManager;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.service.*;
@@ -179,23 +180,23 @@ public class Core {
     }
 
     /**
-     * Get the logger.
+     * Get the Dungeon Maze logger.
      *
-     * @return Logger instance.
+     * @return Dungeon Maze logger instance.
      */
-    public static Logger getLogger() {
+    public static DungeonMazeLogger getLogger() {
         return Core.instance._getLogger();
     }
     
     /**
-     * Get the logger.
+     * Get the Dungeon Maze logger.
      *
-     * @return Logger instance.
+     * @return Dungeon Maze logger instance.
      */
-    public Logger _getLogger() {
+    public DungeonMazeLogger _getLogger() {
         /// Make sure the logger service is initialized
         if(this.loggerService == null)
-            return DungeonMaze.instance.getLogger();
+            return new DungeonMazeLogger(DungeonMaze.instance.getLogger());
 
         // Get and return the logger
         return this.loggerService.getLogger();

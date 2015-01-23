@@ -154,16 +154,6 @@ public class DungeonMaze extends JavaPlugin {
 	}
 
 	/**
-	 * Get the Dungeon Maze configuration.
-	 *
-	 * @return Dungeon Maze configuration.
-	 */
-	@Override
-	public FileConfiguration getConfig() {
-		return Core.getConfigHandler().config;
-	}
-
-	/**
 	 * Get the default world generator for a world. Inject the Dungeon Maze generator for Dungeon Maze worlds.
 	 *
 	 * @param worldName The name of the world to get the generator for.

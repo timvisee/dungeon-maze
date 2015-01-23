@@ -110,14 +110,13 @@ public class ServiceManager {
 
             // Initialize the service
             if(!m.init()) {
-                // TODO: Improve this error message!
-                Core.getLogger().info("[Service] Load: " + m.getName() + " FAILED!");
+                // Show an error message
+                Core.getLogger().error("Service " + m.getName() + " failed to load!");
                 return false;
             }
 
-            // Show a status message
-            // TODO: Should we remove this message?
-            Core.getLogger().info("[Service] Load: " + m.getName() + " SUCCESS!");
+            // Show a debug message
+            Core.getLogger().debug("Service " + m.getName() + " loaded!");
         }
 
         // Every service was initialized successfully, return the result
@@ -146,17 +145,16 @@ public class ServiceManager {
                 // Set the failed state
                 failed = true;
 
-                // TODO: Improve this error message!
-                Core.getLogger().info("[Service] Unload: " + m.getName() + " FAILED!");
+                // Show an error message
+                Core.getLogger().error("Service '" + m.getName() + "' failed to unload!");
 
                 // Return false if the force mode isn't used
                 if(!force)
                     return false;
             }
 
-            // Show a status message
-            // TODO: Should we remove this message?
-            Core.getLogger().info("[Service] Unload: " + m.getName() + " SUCCESS!");
+            // Show a debug message
+            Core.getLogger().debug("[Service] Service " + m.getName() + " unloaded!");
         }
 
         // Every service was initialized successfully, return the result

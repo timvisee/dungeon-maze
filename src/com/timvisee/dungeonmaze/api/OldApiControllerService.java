@@ -2,7 +2,9 @@ package com.timvisee.dungeonmaze.api;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.service.Service;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class OldApiControllerService extends Service {
 
@@ -23,10 +25,19 @@ public class OldApiControllerService extends Service {
         this.apiController = new OldApiController(false);
 
         // Show a status message
-        Core.getLogger().info("Old Dungeon Maze API started!");
+        Core.getLogger().debug("Old Dungeon Maze API started!");
+
+        // Get the Dungeon Maze config
+        ConfigHandler configHandler = DungeonMaze.instance.getCore()._getConfigHandler();
+        FileConfiguration config = configHandler.config;
+
+        // Check whether the API should be enabled
+        boolean apiEnabled = true;
+        if(config != null)
+            apiEnabled = config.getBoolean("api.enabled", true);
 
         // Enable the API if it should be enabled
-        if(DungeonMaze.instance.getConfig().getBoolean("api.enabled", true))
+        if(apiEnabled)
             this.apiController.init();
         else
             Core.getLogger().info("Not enabling Old Dungeon Maze API, disabled in config file!");

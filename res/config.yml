@@ -36,3 +36,8 @@ mobs:
 - Skeleton
 - Spider
 - Zombie
+
+# Logging settings
+logging:
+    debug: false
+    error: true

@@ -94,14 +94,14 @@ public class LoggerService extends Service {
     }
 
     /**
-     * Get the default logger.
+     * Get the Dungeon Maze logger.
      *
-     * @return Default logger instance.
+     * @return Dungeon Maze logger instance.
      */
-    public Logger getLogger() {
-        // Make sure the service is initialized
-        if(!isInit())
-            return DungeonMaze.instance.getLogger();
+    public DungeonMazeLogger getLogger() {
+        // Make sure the Logger manager isn't null
+        if(this.loggerManager == null)
+            return new DungeonMazeLogger(DungeonMaze.instance.getLogger());
 
         // Get and return the logger
         return this.loggerManager.getLogger();
