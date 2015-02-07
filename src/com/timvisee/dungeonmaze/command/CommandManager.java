@@ -209,9 +209,6 @@ public class CommandManager {
             if(!commandDescription.isSuitableLabel(queryReference))
                 continue;
 
-            // TODO: Handle unknown/similar labels.
-            // TODO: Handle references without the base command.
-
             // Find the command reference, return the result
             return commandDescription.findCommand(queryReference);
         }

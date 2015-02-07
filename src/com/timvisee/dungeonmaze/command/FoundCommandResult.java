@@ -39,7 +39,7 @@ public class FoundCommandResult {
             return false;
 
         // Get and return the result
-        return getCommandDescription().getSuitableArgumentsDifference(commandReference) == 0;
+        return getCommandDescription().getSuitableArgumentsDifference(this.queryReference) == 0;
     }
 
     /**
@@ -141,10 +141,11 @@ public class FoundCommandResult {
      * @return The difference value.
      */
     public double getDifference() {
-        // TODO: Should we fully compare?
+        // Get the difference through the command found
         if(this.commandDescription != null)
             return this.commandDescription.getCommandDifference(this.queryReference);
 
+        // Get the difference from the query reference
         return this.queryReference.getDifference(commandReference, true);
     }
 }

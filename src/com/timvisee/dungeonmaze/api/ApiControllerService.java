@@ -4,7 +4,6 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.service.Service;
-import de.bananaco.bpermissions.imp.YamlConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ApiControllerService extends Service {
@@ -43,8 +42,6 @@ public class ApiControllerService extends Service {
         else
             Core.getLogger().info("Not enabling Dungeon Maze API, disabled in config file!");
 
-        // TODO: Do some error handling!
-
         return true;
     }
 
@@ -56,11 +53,7 @@ public class ApiControllerService extends Service {
     @Override
     public boolean isInit() {
         // Check whether the API controller is instantiated
-        if(this.apiController == null)
-            return false;
-
-        // TODO: Better check!
-        return true;
+        return this.apiController != null;
     }
 
     /**

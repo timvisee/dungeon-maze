@@ -29,6 +29,7 @@ public class DungeonMazeApiOld {
 	 * @param dungeonMaze The Dungeon Maze plugin instance.
 	 */
 	public DungeonMazeApiOld(DungeonMaze dungeonMaze) {
+		//noinspection deprecation
 		DungeonMazeApiOld.dungeonMaze = dungeonMaze;
 	}
 	
@@ -87,6 +88,7 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static boolean isDMWorld(World world) {
+		//noinspection deprecation
 		return isDMWorld(world.getName());
 	}
 
@@ -111,6 +113,7 @@ public class DungeonMazeApiOld {
 	 */
 	@Deprecated
 	public static boolean isInDMWorld(Player player) {
+		//noinspection deprecation
 		return isDMWorld(player.getWorld());
 	}
 	
@@ -190,9 +193,9 @@ public class DungeonMazeApiOld {
 		
 		if(list == null)
 			return(false);
-		
-		for(int x = 0; x < list.size(); ++x)
-			if(list.get(x).equals(target))
+
+		for(Object aList : list)
+			if(aList.equals(target))
 				return true;
 		return false;
 	}
