@@ -53,7 +53,7 @@ public class CreateWorldCommand extends ExecutableCommand {
         }
 
         // Show a status message
-        sender.sendMessage(ChatColor.YELLOW + "Preparing the server...");
+        sender.sendMessage(ChatColor.GOLD + "Preparing the server...");
 
         // Prepare the server for the new world
         if(!worldManager.prepareDungeonMazeWorld(worldName)) {
@@ -62,8 +62,8 @@ public class CreateWorldCommand extends ExecutableCommand {
         }
 
         // Show a status message
-        sender.sendMessage(ChatColor.YELLOW + "Generating the DungeonMaze '" + worldName + "'...");
-        Bukkit.broadcastMessage("Generating a new world, expecting lag for a while...");
+        sender.sendMessage(ChatColor.GOLD + "Generating the DungeonMaze " + ChatColor.YELLOW + worldName + ChatColor.GOLD + "...");
+        Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Generating a new world, expecting lag for a while...");
 
         // Create the world
         WorldCreator newWorld = new WorldCreator(worldName);
@@ -72,7 +72,7 @@ public class CreateWorldCommand extends ExecutableCommand {
 
         // Show a status message
         Bukkit.broadcastMessage("World generation finished!");
-        sender.sendMessage(ChatColor.GREEN + "The DungeonMaze '" + worldName + "' has successfully been generated!");
+        sender.sendMessage(ChatColor.GREEN + "The DungeonMaze " + ChatColor.GOLD + worldName + ChatColor.GREEN + " has successfully been generated!");
 
         // If the command was executed by a player, teleport the player
         if(sender instanceof Player) {

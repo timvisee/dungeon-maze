@@ -5,6 +5,7 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.util.Profiler;
+import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -45,8 +46,11 @@ public class ReloadCommand extends ExecutableCommand {
 
         // Reload configs and worlds
         Core.getConfigHandler().load();
-        Core.getWorldManager();
-        Core.getWorldManager().preloadDungeonMazeWorlds();
+
+        // Get the world manager and preload all worlds if it's valid
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager != null)
+            worldManager.preloadDungeonMazeWorlds();
 
         // TODO: Reload the core!
 

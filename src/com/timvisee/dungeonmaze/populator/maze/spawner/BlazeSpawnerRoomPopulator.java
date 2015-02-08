@@ -24,6 +24,8 @@ import com.timvisee.dungeonmaze.util.ChestUtils;
 
 public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
+	// TODO: Fix the treasure chests not spawning!
+
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
 	public static final int CHANCE_SPANWER_ROOM = 2; //Promile

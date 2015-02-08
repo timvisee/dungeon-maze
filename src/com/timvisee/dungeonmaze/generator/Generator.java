@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-
 import com.timvisee.dungeonmaze.DungeonMaze;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -67,18 +66,23 @@ import com.timvisee.dungeonmaze.populator.surface.plants.TreePopulator;
 
 public class Generator extends ChunkGenerator {
 
-	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
-
+	/** Defines the Dungeon Maze plugin instance. */
 	public static DungeonMaze plugin;
-	
+
+	/**
+	 * Constructor.
+	 *
+	 * @param instance The Dungeon Maze instance.
+	 */
 	public Generator(DungeonMaze instance) {
+		// Set the Dungeon Maze instance
 		plugin = instance;
 	}
-	
+
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world) {
 		return Arrays.asList(
-				/*new BrokenWallsPopulator(),*/
+				//new BrokenWallsPopulator(),
 				new SpawnChamberPopulator(),
 				new OresInGroundPopulator(),
 				new OasisChunkPopulator(),
@@ -86,7 +90,7 @@ public class Generator extends ChunkGenerator {
 				new BossRoomInsanePopulator(),
 				new LibraryRoomPopulator(),
 				new AbandonedDefenceCastleRoomPopulator(),
-				/*new ArmoryRoomPopulator(),*/
+				//new ArmoryRoomPopulator(),
 				new WaterWellRoomPopulator(),
 				new SanctuaryPopulator(),
 				new BlazeSpawnerRoomPopulator(),
@@ -130,121 +134,131 @@ public class Generator extends ChunkGenerator {
 				new CobblestonePopulator(),
 				new MushroomPopulator(),
 				new ExplosionPopulator()
-				);
+		);
 	}
 
-	// Here you set the monster spawning to true (you override the default server settings)
+	@SuppressWarnings({"ConstantConditions", "deprecation"})
 	@Override
-	public boolean canSpawn(World world, int x, int z) {
-		return true;
-	}
+	public short[][] generateExtBlockSections(World world, Random rand, int chunkX, int chunkZ, BiomeGrid biomes) {
+		// Create a chunk
+		ShortChunk chunk = new ShortChunk(world, chunkX, chunkZ);
 
-	// This will return the world spawn location
-	@Override
-	public Location getFixedSpawnLocation(World world, Random random) {
-		return new Location(world, 4, 68, 4);
-	}
-
-	// This will convert the relative chunks to bytes that can be written to the chunk
-	public int xyzToByte(int x, int y, int z) {
-		return (x * 16 + z) * 128 + y;
-	}
-
-	// Generate a chunk
-	@Override
-	public byte[] generate(World world, Random rand, int chunkx, int chunkz) {
-		// Create a byte variable to write the chunk inside and return this variable
-		byte[] result = new byte[32768];
-		
 		// This will set the whole floor to stone (the floor of each chunk)
-		for (int y = 30 + 3; y > 0; y--)
-			for (int x = 0; x < 16; x++)
-				for (int z = 0; z < 16; z++)
-					result[xyzToByte(x, y, z)] = (byte) Material.STONE.getId();
-
-		// Set the lowest layer to bedrock
-		for (int x = 0; x < 16; x++)
-			for (int z = 0; z < 16; z++)
-				result[xyzToByte(x, 0, z)] = (byte) Material.BEDROCK.getId();
+		chunk.setLayers(0, 30 + 3, Material.STONE);
 
 		// The layers for each 5 rooms in the variable y
 		for (int y=30; y < 30+(7*6); y+=6) {
-			
+
 			// The 4 rooms on each layer saved in the variables x and z
 			for (int x=0; x < 16; x+=8) {
 				for (int z=0; z < 16; z+=8) {
-					
+
 					int xr = (rand.nextInt(3) - 1) * (x + 7);
 					int zr = (rand.nextInt(3) - 1) * (z + 7);
-					
+
 					int yfloor = rand.nextInt(2);
-					
+
 					// All the y of the room in the variable y2
 					for (int y2 = y + yfloor; y2 < y+8; y2++) {
-						
+
 						// All the x of the room in the variable x2
 						for (int x2 = x; x2 < x+8; x2++) {
-							
+
 							// All the z of the room in the variable z2
 							for (int z2 = z; z2 < z+8; z2++) {
-								
+
 								// Make the bottom of the room
 								if(y2 == y + yfloor)
 									for (int xb = x; xb < x + 8; xb++)
 										for (int zb = z; zb < z + 8; zb++)
-											result[xyzToByte(xb, y2, zb)] = (byte) Material.COBBLESTONE.getId();
-								
+											chunk.setBlock(xb, y2, zb, Material.COBBLESTONE);
+
 								// Fill the walls of the place with cobblestone
 								if ((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7))
-									result[xyzToByte(x2, y2, z2)] = (byte) 98;
+									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
 								else if (xr == x2)
-									result[xyzToByte(x2, y2, z2)] = (byte) 98;
+									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
 								else if (zr == z2)
-									result[xyzToByte(x2, y2, z2)] = (byte) 98;
+									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
 								else
-									result[xyzToByte(x2, y2, z2)] = (byte) Material.AIR.getId();
+									chunk.clearBlock(x2, y2, z2);
 							}
 						}
 					}
 				}
 			}
 		}
-		
+
 		// Create the nose generator which generates wave formes to use for the surface.
 		Random random = new Random(world.getSeed());
 		SimplexOctaveGenerator octave = new SimplexOctaveGenerator(random, 8);
 		octave.setScale(1 / 48.0);
-		
+
 		// Generate the ceiling and the grass land
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				/*int height = getHeight(world, chunkx + x * 0.0625, chunkz + z * 0.0625, 2) + 30+(7*6) + 7;*/
-				double height = octave.noise(x + chunkx * 16, z + chunkz * 16, 0.5, 0.5) * 4 + 9;
-				
-				result[xyzToByte(x, 30+(7*6), z)] = (byte) Material.COBBLESTONE.getId();
+				/*int worldHeight = getHeight(world, chunkx + x * 0.0625, chunkz + z * 0.0625, 2) + 30+(7*6) + 7;*/
+				double height = octave.noise(x + chunkX * 16, z + chunkZ * 16, 0.5, 0.5) * 4 + 9;
+
+				chunk.setBlock(x, 30+(7*6), z, Material.COBBLESTONE);
 				for(int y = 30+(7*6)+1; y < 30+(7*6)+4; y++)
-					result[xyzToByte(x, y, z)] = (byte) Material.STONE.getId();
-				
+					chunk.setBlock(x, y, z, Material.STONE);
+
 				// Get the current biome
-				Biome biome = world.getBiome((chunkx*16) + x, (chunkz*16) + z);
-				
+				Biome biome = world.getBiome((chunkX*16) + x, (chunkZ*16) + z);
+
 				if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
 					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
-						result[xyzToByte(x, y, z)] = (byte) Material.SAND.getId();
-					
+						chunk.setBlock(x, y, z, Material.SAND);
+
 				} else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_ISLAND)){
 					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
-						result[xyzToByte(x, y, z)] = (byte) Material.DIRT.getId();
-					result[xyzToByte(x, (int) (30+(7*6)+2+height), z)] = (byte) Material.MYCEL.getId();
-					
+						chunk.setBlock(x, y, z, Material.DIRT);
+					chunk.setBlock(x, (int) (30+(7*6)+2+height), z, Material.MYCEL);
+
 				} else {
 					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
-						result[xyzToByte(x, y, z)] = (byte) Material.DIRT.getId();
-					result[xyzToByte(x, (int) (30+(7*6)+2+height), z)] = (byte) Material.GRASS.getId();
+						chunk.setBlock(x, y, z, Material.DIRT);
+					chunk.setBlock(x, (int) (30+(7*6)+2+height), z, Material.GRASS);
 				}
 			}
-		}	
-		
-		return result;
+		}
+
+		// Set the bottom layer to bedrock
+		chunk.setLayer(0, Material.BEDROCK);
+
+		// Return the chunk data
+		return chunk.getChunkData();
+	}
+
+	/**
+	 * Define whether monsters can spawn in the world. This overwrites the server settings.
+	 *
+	 * @param world The world.
+	 * @param x The X coordinate of the monster.
+	 * @param z The Z coordinate of the monster.
+	 *
+	 * @return True if the monster may spawn, false otherwise.
+	 */
+	@Override
+	public boolean canSpawn(World world, int x, int z) {
+		// TODO: Make sure the world is a Dungeon Maze world, return the setting from the config.
+
+		return true;
+	}
+
+	/**
+	 * Get the spawn location of a Dungeon Maze world.
+	 *
+	 * @param world The world.
+	 * @param random The random seed.
+	 *
+	 * @return The spawn location for the player.
+	 */
+	@Override
+	public Location getFixedSpawnLocation(World world, Random random) {
+		// TODO: Make sure the world is a Dungeon Maze world.
+
+		return new Location(world, 4, 68, 4);
 	}
 }

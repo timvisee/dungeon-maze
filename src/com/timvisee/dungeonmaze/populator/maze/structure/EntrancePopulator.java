@@ -31,7 +31,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 			// Choose a rand hole look
 			switch(rand.nextInt(4)) {
 			case 0:
-				// Get ground height
+				// Get ground worldHeight
 				for(yground = 100; c.getBlock(x + 0, yground, z + 3).getType() == Material.AIR; yground--);
 				
 				// Generate the hole
@@ -146,7 +146,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				
 			case 1:
 				
-				// Get ground height
+				// Get ground worldHeight
 				for(yground = 100; c.getBlock(x + 3, yground, z + 7).getType() == Material.AIR; yground--);
 				
 				// Generate the hole
@@ -239,7 +239,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				
 			case 2:
 				
-				// Get ground height
+				// Get ground worldHeight
 				for(yground = 100; c.getBlock(x + 3, yground, z + 3).getType() == Material.AIR; yground--);
 				
 				// Generate the hole
@@ -310,7 +310,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				
 			case 3:
 				
-				// Get ground height
+				// Get ground worldHeight
 				for(yground = 100; c.getBlock(x + 3, yground, z + 3).getType() == Material.AIR; yground--);
 				
 				// Generate the hole
@@ -373,7 +373,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				
 			default:
 				
-				// Get ground height
+				// Get ground worldHeight
 				for(yground = 100; c.getBlock(x + 3, yground, z + 3).getType() == Material.AIR; yground--);
 				
 				// Generate the hole

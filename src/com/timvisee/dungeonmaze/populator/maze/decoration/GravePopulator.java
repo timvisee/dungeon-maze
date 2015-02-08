@@ -73,25 +73,25 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 					"Metonymia",
 					"Notch",
 					"Jeb"
-					};
+			};
 			String[][] graveText = {
-						{"Rest In","Pieces"},
-						{"Ate raw", "porkchop"},
-						{"Tried the","Nether"},
-						{"Took a bath in","a lake of lava"},
-						{"CREEPER!",""},
-						{"Shot an arrow","straight up"},
-						{"Found a hole","in the bedrock"},
-						{"Suffocated","in gravel"},
-						{"Tried the","/kill command"},
-						{"Flew with a pig","of a mountain"},
-						{"Lava ended","his life"},
-						{"Used TNT the","wrong way"},
-						{"Found a","flooded room"},
-						{"Found a","creeper spawner"},
-						{"Found a","Boss Room"},
-						{"Joined the","bad side!"}
-					};
+					{"Rest In","Pieces"},
+					{"Ate raw", "porkchop"},
+					{"Tried the","Nether"},
+					{"Took a bath in","a lake of lava"},
+					{"CREEPER!",""},
+					{"Shot an arrow","straight up"},
+					{"Found a hole","in the bedrock"},
+					{"Suffocated","in gravel"},
+					{"Tried the","/kill command"},
+					{"Flew with a pig","of a mountain"},
+					{"Lava ended","his life"},
+					{"Used TNT the","wrong way"},
+					{"Found a","flooded room"},
+					{"Found a","creeper spawner"},
+					{"Found a","Boss Room"},
+					{"Joined the","bad side!"}
+			};
 			
 			String graveUsername = "Notch";
 			String[] selectedText = new String[]{"", ""};

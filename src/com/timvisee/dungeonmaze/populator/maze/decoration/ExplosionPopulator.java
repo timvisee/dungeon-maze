@@ -21,7 +21,11 @@ public class ExplosionPopulator extends ChunkBlockPopulator {
 		World w = args.getWorld();
 		Random rand = args.getRandom();
 		Chunk c = args.getSourceChunk();
-		
+
+		// Make sure the world instance is valid
+		if(w == null)
+			return;
+
 		// Apply chances
 		if (rand.nextInt(100) < CHANCE_EXPLOSION) {
 			float power = 2.0f;
@@ -49,7 +53,9 @@ public class ExplosionPopulator extends ChunkBlockPopulator {
 			}
 			double x = rand.nextDouble() * 16 + c.getX() * 16;
 			double z = rand.nextDouble() * 16 + c.getZ() * 16;
-			w.createExplosion(x, rand.nextInt((30+(7*6))-30)+30, z, power);
+
+			// TODO: Fix this!
+			// w.createExplosion(x, rand.nextInt((30 + (7 * 6)) - 30) + 30, z, power);
 		}
 	}
 }

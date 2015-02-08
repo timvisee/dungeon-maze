@@ -162,19 +162,8 @@ public class WorldManager {
 			this.dungeonMazeWorldsPreload = preloadWorlds;
 		
 		// Put all the DM worlds into the bukkit.yml file
-		if(multiverseCore == null) {
-			FileConfiguration bukkitConfig = ConfigUtils.getConfigFromPath(new File("bukkit.yml"));
-			//System.out.println("Editing bukkit.yml file...");
-			for(String entry : worlds)
-                bukkitConfig.set("worlds." + worlds + ".generator", entry);
-
-			try {
-                bukkitConfig.save(new File("bukkit.yml"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-			//System.out.println("Editing finished!");
-		}
+		//if(multiverseCore == null)
+			setBukkitConfigWorldGenerator(worlds);
 
 		// Return the result
 		return true;
@@ -206,18 +195,30 @@ public class WorldManager {
 		// Return all Dungeon Maze worlds
 		return this.dungeonMazeWorlds;
 	}
-	
+
 	/**
-	 * Get all loaded Dungeon Maze worlds.
+	 * Get all loaded Dungeon Maze worlds. This will refresh the list of worlds.
 	 *
 	 * @return A list of loaded Dungeon Maze worlds.
 	 */
 	public List<String> getLoadedDungeonMazeWorlds() {
+		return getLoadedDungeonMazeWorlds(true);
+	}
+
+	/**
+	 * Get all loaded Dungeon Maze worlds.
+	 *
+	 * @param refreshWorlds True to refresh the list of Dungeon Maze worlds.
+	 *
+	 * @return A list of loaded Dungeon Maze worlds.
+	 */
+	public List<String> getLoadedDungeonMazeWorlds(boolean refreshWorlds) {
 		// Create a list to put all worlds in
 		List<String> worlds = new ArrayList<String>();
 
 		// Refresh the world lists
-		refresh();
+		if(refreshWorlds)
+			refresh();
 
 		// Check for each world if it's loaded or not
 		for(String entry : this.dungeonMazeWorlds) {
@@ -279,7 +280,7 @@ public class WorldManager {
 	 * @return True if the world is a Dungeon Maze world and the world is loaded, false otherwise.
 	 */
 	public boolean isLoadedDungeonMazeWorld(String worldName) {
-		return getLoadedDungeonMazeWorlds().contains(worldName);
+		return getLoadedDungeonMazeWorlds(false).contains(worldName);
 	}
 
 	/**
@@ -354,22 +355,8 @@ public class WorldManager {
 	public boolean prepareDungeonMazeWorld(String worldName) {
 		// Edit the bukkit.yml file so bukkit knows what generator to use for the Dungeon Maze worlds, also update the
 		// Dungeon Maze files.
-		Core.getLogger().info("Preparing bukkit.yml file...");
-
-		// Load the Bukkit configuration file
-		FileConfiguration serverConfig = ConfigUtils.getConfigFromPath(new File("bukkit.yml"));
-
-		// Prepare the file
-		serverConfig.set("worlds." + worldName + ".generator", DungeonMaze.instance.getName());
-
-		// Save the file
-		try {
-			serverConfig.save(new File("bukkit.yml"));
-		} catch (IOException e) {
-			e.printStackTrace();
-			Core.getLogger().info("Failed to prepare the bukkit.yml file!");
-			return false;
-		}
+		// Set the generator in the bukkit config file
+		setBukkitConfigWorldGenerator(worldName);
 
 		// Edit the Dungeon Maze configuration file, show a message
 		Core.getLogger().info("Preparing the Dungeon Maze configuration file...");
@@ -394,13 +381,63 @@ public class WorldManager {
 		// Update the worlds and preload worlds section again
 		Core.getConfigHandler().config.set("worlds", worlds);
 		Core.getConfigHandler().config.set("preloadWorlds", preloadWorlds);
+		try {
+			// TODO: Improve this statement below!
+			Core.getConfigHandler().config.save(new File("./plugins/DungeonMaze/config.yml"));
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 
 		// Save the config
 		DungeonMaze.instance.saveConfig();
 
 		// Show a message, return the result
-		System.out.println("Successfully prepared!");
+		Core.getLogger().info("Successfully prepared!");
 		return true;
+	}
+
+	/**
+	 * Set the Dungeon Maze world generator for the specified world in the Bukkit configuration file.
+	 *
+	 * @param worldName The name of the world to set the generator for.
+	 *
+	 * @return True on success, false on failure.
+	 */
+	public boolean setBukkitConfigWorldGenerator(String worldName) {
+		List<String> worlds = new ArrayList<String>();
+		worlds.add(worldName);
+		return setBukkitConfigWorldGenerator(worlds);
+	}
+
+	/**
+	 * Set the Dungeon Maze world generator for the specified world in the Bukkit configuration file.
+	 *
+	 * @param worldNames The name of the world to set the generator for.
+	 *
+	 * @return True on success, false on failure.
+	 */
+	public boolean setBukkitConfigWorldGenerator(List<String> worldNames) {
+		try {
+			// Get the Bukkit configuration file
+			Core.getLogger().info("Editing the Bukkit configuration file...");
+			File bukkitConfig = new File("bukkit.yml");
+
+			// Load the Bukkit configuration file
+			FileConfiguration serverConfig = ConfigUtils.getConfigFromPath(bukkitConfig);
+
+			// Set the world generator
+			for(String worldName : worldNames)
+				serverConfig.set("worlds." + worldName + ".generator", DungeonMaze.instance.getName());
+
+			// Save the file
+			serverConfig.save(bukkitConfig);
+			Core.getLogger().info("The Bukkit configuration file has been edited successfully!");
+			return true;
+
+		} catch(Exception ex) {
+			Core.getLogger().info("Failed to edit the bukkit.yml file!");
+			return false;
+		}
 	}
 
 	/**
