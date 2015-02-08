@@ -48,7 +48,7 @@ public class CreateWorldCommand extends ExecutableCommand {
 
         // Make sure the world doesn't exist
         if(worldManager.isWorld(worldName)) {
-            sender.sendMessage(ChatColor.DARK_RED + "The world '" + worldName + "' already exists!");
+            sender.sendMessage(ChatColor.DARK_RED + "The world " + ChatColor.GOLD + worldName + ChatColor.DARK_RED + " already exists!");
             return true;
         }
 

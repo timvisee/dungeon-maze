@@ -53,9 +53,7 @@ public class ExplosionPopulator extends ChunkBlockPopulator {
 			}
 			double x = rand.nextDouble() * 16 + c.getX() * 16;
 			double z = rand.nextDouble() * 16 + c.getZ() * 16;
-
-			// TODO: Fix this!
-			// w.createExplosion(x, rand.nextInt((30 + (7 * 6)) - 30) + 30, z, power);
+			w.createExplosion(x, rand.nextInt((30 + (7 * 6)) - 30) + 30, z, power);
 		}
 	}
 }
