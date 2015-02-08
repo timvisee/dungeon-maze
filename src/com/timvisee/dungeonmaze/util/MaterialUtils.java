@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze.generator;
+package com.timvisee.dungeonmaze.util;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Material;

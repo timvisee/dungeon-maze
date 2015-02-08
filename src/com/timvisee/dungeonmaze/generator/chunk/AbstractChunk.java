@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze.generator;
+package com.timvisee.dungeonmaze.generator.chunk;
 
 import org.bukkit.Material;
 import org.bukkit.World;

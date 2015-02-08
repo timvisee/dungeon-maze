@@ -1,5 +1,6 @@
-package com.timvisee.dungeonmaze.generator;
+package com.timvisee.dungeonmaze.generator.chunk;
 
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 import org.bukkit.Material;
 import org.bukkit.World;
 
@@ -248,8 +249,8 @@ public class ShortChunk extends AbstractChunk {
      */
     public void setLayer(int y, short materialId) {
         // Set the layer
-        for(int x = 0; x <= ShortChunk.CHUNK_BLOCK_WIDTH; x++)
-            for(int z = 0; z <= ShortChunk.CHUNK_BLOCK_WIDTH; z++)
+        for(int x = 0; x <= CHUNK_BLOCK_WIDTH; x++)
+            for(int z = 0; z <= CHUNK_BLOCK_WIDTH; z++)
                 setBlock(x, y, z, materialId);
     }
 

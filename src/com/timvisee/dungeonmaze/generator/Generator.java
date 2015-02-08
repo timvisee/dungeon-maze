@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
+import com.timvisee.dungeonmaze.generator.chunk.ShortChunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -141,7 +143,7 @@ public class Generator extends ChunkGenerator {
 	@Override
 	public short[][] generateExtBlockSections(World world, Random rand, int chunkX, int chunkZ, BiomeGrid biomes) {
 		// Create a chunk
-		ShortChunk chunk = new ShortChunk(world, chunkX, chunkZ);
+		BukkitChunk chunk = new BukkitChunk(world, chunkX, chunkZ);
 
 		// This will set the whole floor to stone (the floor of each chunk)
 		chunk.setLayers(0, 30 + 3, Material.STONE);
