@@ -97,6 +97,32 @@ public class CommandManager {
         teleportCommand.addArgument(new CommandArgumentDescription("world", "The name of the world to teleport to.", false));
         teleportCommand.setCommandPermissions("dungeonmaze.command.teleport", CommandPermissions.DefaultPermission.OP_ONLY);
 
+        // Register the load world command
+        CommandDescription loadWorldCommand = new CommandDescription(
+                new LoadWorldCommand(),
+                new ArrayList<String>() {{
+                    add("loadworld");
+                    add("load");
+                }},
+                "Load a world",
+                "Load a world if it isn't loaded." ,
+                dungeonMazeCommand);
+        loadWorldCommand.addArgument(new CommandArgumentDescription("world", "The name of the world to load.", false));
+        loadWorldCommand.setCommandPermissions("dungeonmaze.command.loadworld", CommandPermissions.DefaultPermission.OP_ONLY);
+
+        // Register the unload world command
+        CommandDescription unloadWorldCommand = new CommandDescription(
+                new UnloadWorldCommand(),
+                new ArrayList<String>() {{
+                    add("unloadworld");
+                    add("unload");
+                }},
+                "Unload a world",
+                "Unload a loaded world." ,
+                dungeonMazeCommand);
+        unloadWorldCommand.addArgument(new CommandArgumentDescription("world", "The name of the world to unload.", false));
+        unloadWorldCommand.setCommandPermissions("dungeonmaze.command.unloadworld", CommandPermissions.DefaultPermission.OP_ONLY);
+
         // Register the list world command
         CommandDescription listWorldCommand = new CommandDescription(
                 new ListWorldCommand(),

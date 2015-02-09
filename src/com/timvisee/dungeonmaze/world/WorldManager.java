@@ -320,6 +320,36 @@ public class WorldManager {
 		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World loaded successfully, took " + p.getTimeFormatted() + "!");
 		return true;
 	}
+
+	/**
+	 * Unload a world if it's loaded. The world doesn't need to be a Dungeon Maze world.
+	 *
+	 * @param worldName The name of the world to unload.
+	 *
+	 * @return True if any world was unloaded, false otherwise. True will also be returned if the world was not loaded.
+	 */
+	public boolean unloadWorld(String worldName) {
+		// Make sure the world exists
+		if(!isWorld(worldName))
+			return false;
+
+		// Make sure the world isn't loaded yet
+		if(!isWorldLoaded(worldName))
+			return true;
+
+		// Show a status message
+		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Unloading world, expecting lag for a while...");
+
+		// Profile the world loading
+		Profiler p = new Profiler(true);
+
+		// Unload and save the world
+		boolean unloaded = Bukkit.unloadWorld(worldName, true);
+
+		// Show a status message, return the result
+		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World unloaded successfully, took " + p.getTimeFormatted() + "!");
+		return unloaded;
+	}
 	
 	/**
 	 * Preload all the Dungeon Maze worlds that should be preloaded.
