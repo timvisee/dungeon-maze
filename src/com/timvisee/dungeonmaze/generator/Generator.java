@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
-import com.timvisee.dungeonmaze.generator.chunk.ShortChunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -149,11 +148,11 @@ public class Generator extends ChunkGenerator {
 		chunk.setLayers(0, 30 + 3, Material.STONE);
 
 		// The layers for each 5 rooms in the variable y
-		for (int y=30; y < 30+(7*6); y+=6) {
+		for (int y = 30; y < 30 + (7 * 6); y += 6) {
 
 			// The 4 rooms on each layer saved in the variables x and z
-			for (int x=0; x < 16; x+=8) {
-				for (int z=0; z < 16; z+=8) {
+			for(int x = 0; x < 16; x += 8) {
+				for(int z = 0; z < 16; z += 8) {
 
 					int xr = (rand.nextInt(3) - 1) * (x + 7);
 					int zr = (rand.nextInt(3) - 1) * (z + 7);
@@ -161,22 +160,22 @@ public class Generator extends ChunkGenerator {
 					int yfloor = rand.nextInt(2);
 
 					// All the y of the room in the variable y2
-					for (int y2 = y + yfloor; y2 < y+8; y2++) {
+					for(int y2 = y + yfloor; y2 < y + 8; y2++) {
 
 						// All the x of the room in the variable x2
-						for (int x2 = x; x2 < x+8; x2++) {
+						for(int x2 = x; x2 < x + 8; x2++) {
 
 							// All the z of the room in the variable z2
-							for (int z2 = z; z2 < z+8; z2++) {
+							for(int z2 = z; z2 < z + 8; z2++) {
 
 								// Make the bottom of the room
 								if(y2 == y + yfloor)
-									for (int xb = x; xb < x + 8; xb++)
-										for (int zb = z; zb < z + 8; zb++)
+									for(int xb = x; xb < x + 8; xb++)
+										for(int zb = z; zb < z + 8; zb++)
 											chunk.setBlock(xb, y2, zb, Material.COBBLESTONE);
 
 								// Fill the walls of the place with cobblestone
-								if ((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7))
+								if((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7))
 									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
 								else if (xr == x2)
 									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
@@ -197,31 +196,31 @@ public class Generator extends ChunkGenerator {
 		octave.setScale(1 / 48.0);
 
 		// Generate the ceiling and the grass land
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
+		for(int x = 0; x < 16; x++) {
+			for(int z = 0; z < 16; z++) {
 				/*int worldHeight = getHeight(world, chunkx + x * 0.0625, chunkz + z * 0.0625, 2) + 30+(7*6) + 7;*/
 				double height = octave.noise(x + chunkX * 16, z + chunkZ * 16, 0.5, 0.5) * 4 + 9;
 
 				chunk.setBlock(x, 30+(7*6), z, Material.COBBLESTONE);
-				for(int y = 30+(7*6)+1; y < 30+(7*6)+4; y++)
+				for(int y = 30 + (7 * 6) + 1; y < 30 + (7 * 6) + 4; y++)
 					chunk.setBlock(x, y, z, Material.STONE);
 
 				// Get the current biome
-				Biome biome = world.getBiome((chunkX*16) + x, (chunkZ*16) + z);
+				Biome biome = world.getBiome((chunkX * 16) + x, (chunkZ * 16) + z);
 
 				if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
-					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
+					for(int y = 30 + (7 * 6) + 4; y < 30 + (7 * 6) + 2 + height; y++)
 						chunk.setBlock(x, y, z, Material.SAND);
 
 				} else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_ISLAND)){
-					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
+					for(int y = 30 + (7 * 6) + 4; y < 30 + (7 * 6) + 2 + height; y++)
 						chunk.setBlock(x, y, z, Material.DIRT);
-					chunk.setBlock(x, (int) (30+(7*6)+2+height), z, Material.MYCEL);
+					chunk.setBlock(x, (int) (30 + (7 * 6) + 2 + height), z, Material.MYCEL);
 
 				} else {
-					for(int y = 30+(7*6)+4; y < 30+(7*6)+2+height; y++)
+					for(int y = 30 + (7 * 6) + 4; y < 30+(7*6)+2+height; y++)
 						chunk.setBlock(x, y, z, Material.DIRT);
-					chunk.setBlock(x, (int) (30+(7*6)+2+height), z, Material.GRASS);
+					chunk.setBlock(x, (int) (30 + (7 * 6) + 2 + height), z, Material.GRASS);
 				}
 			}
 		}

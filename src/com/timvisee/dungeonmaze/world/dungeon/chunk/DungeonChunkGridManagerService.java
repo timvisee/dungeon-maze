@@ -1,14 +1,14 @@
-package com.timvisee.dungeonmaze.command;
+package com.timvisee.dungeonmaze.world.dungeon.chunk;
 
 import com.timvisee.dungeonmaze.service.Service;
 
-public class CommandHandlerService extends Service {
+public class DungeonChunkGridManagerService extends Service {
 
     /** Service name. */
-    private static final String SERVICE_NAME = "Command Handler";
+    private static final String SERVICE_NAME = "Dungeon Chunk Grid Manager";
 
-    /** Command handler instance. */
-    private CommandHandler commandHandler;
+    /** Dungeon chunk grid manager instance. */
+    private DungeonChunkGridManager dungeonChunkGridManager;
 
     /**
      * Initialize the service.
@@ -17,11 +17,11 @@ public class CommandHandlerService extends Service {
      */
     @Override
     public boolean init() {
-        // Initialize the command handler
-        this.commandHandler = new CommandHandler(false);
+        // Construct the dungeon chunk grid manager
+        this.dungeonChunkGridManager = new DungeonChunkGridManager();
 
-        // Initialize the command handler, return the result
-        return this.commandHandler.init();
+        // Initialize the dungeon chunk grid manager, return the result
+        return this.dungeonChunkGridManager.init();
     }
 
     /**
@@ -31,12 +31,12 @@ public class CommandHandlerService extends Service {
      */
     @Override
     public boolean isInit() {
-        // Make sure the command handler is set
-        if(this.commandHandler == null)
+        // Make sure the dungeon chunk grid manager is set
+        if(this.dungeonChunkGridManager == null)
             return false;
 
-        // Check whether the command handler is initialized
-        return this.commandHandler.isInit();
+        // Check whether the dungeon chunk grid manager is initialized
+        return this.dungeonChunkGridManager.isInit();
     }
 
     /**
@@ -51,21 +51,21 @@ public class CommandHandlerService extends Service {
      */
     @Override
     public boolean destroy(boolean force) {
-        // Make sure the command handler is initialized
+        // Make sure the dungeon chunk grid manager is initialized
         if(!this.isInit() && !force)
             return true;
 
-        // Destroy the command handler
-        if(this.commandHandler != null) {
-            if(!this.commandHandler.destroy()) {
+        // Destroy the dungeon chunk grid manager
+        if(this.dungeonChunkGridManager != null) {
+            if(!this.dungeonChunkGridManager.destroy()) {
                 if(force)
-                    this.commandHandler = null;
+                    this.dungeonChunkGridManager = null;
                 return false;
             }
         }
 
         // Return the result
-        this.commandHandler = null;
+        this.dungeonChunkGridManager = null;
         return true;
     }
 
@@ -80,11 +80,11 @@ public class CommandHandlerService extends Service {
     }
 
     /**
-     * Get the command handler.
+     * Get the dungeon chunk grid manager.
      *
-     * @return Command handler instance.
+     * @return Dungeon chunk grid manager instance.
      */
-    public CommandHandler getCommandHandler() {
-        return this.commandHandler;
+    public DungeonChunkGridManager getDungeonChunkGridManager() {
+        return this.dungeonChunkGridManager;
     }
 }

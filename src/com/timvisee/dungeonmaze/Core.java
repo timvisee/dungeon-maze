@@ -26,8 +26,8 @@ import com.timvisee.dungeonmaze.world.WorldManagerService;
 import com.timvisee.dungeonmaze.structure.CustomStructureManager;
 import com.timvisee.dungeonmaze.update.Updater;
 import com.timvisee.dungeonmaze.world.WorldManager;
-
-import java.util.logging.Logger;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunkGridManager;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunkGridManagerService;
 
 @SuppressWarnings("UnusedDeclaration")
 public class Core {
@@ -49,14 +49,16 @@ public class Core {
     private ConfigHandlerService configHandlerService = new ConfigHandlerService();
     /** Command handler service instance. */
     private CommandHandlerService commandHandlerService = new CommandHandlerService();
+    /** Multiverse handler service instance. */
+    private MultiverseHandlerService multiverseHandlerService = new MultiverseHandlerService();
     /** World manager service instance. */
     private WorldManagerService worldManagerService = new WorldManagerService();
+    /** Dungeon chunk grid manager service instance. */
+    private DungeonChunkGridManagerService dungeonChunkGridManagerService = new DungeonChunkGridManagerService();
     /** Update checker service instance. */
     private UpdateCheckerService updateCheckerService = new UpdateCheckerService();
     /** Permissions manager service instance. */
     private PermissionsManagerService permissionsManagerService = new PermissionsManagerService();
-    /** Multiverse handler service instance. */
-    private MultiverseHandlerService multiverseHandlerService = new MultiverseHandlerService();
     /** Custom structure manager service instance. */
     private CustomStructureManagerService customStructureManagerService = new CustomStructureManagerService();
     /** API Controller service instance. */
@@ -103,6 +105,7 @@ public class Core {
         this.serviceManager.registerService(this.commandHandlerService);
         this.serviceManager.registerService(this.multiverseHandlerService);
         this.serviceManager.registerService(this.worldManagerService);
+        this.serviceManager.registerService(this.dungeonChunkGridManagerService);
         this.serviceManager.registerService(this.updateCheckerService);
         this.serviceManager.registerService(this.permissionsManagerService);
         this.serviceManager.registerService(this.customStructureManagerService);
@@ -272,6 +275,24 @@ public class Core {
      */
     public WorldManager _getWorldManager() {
         return this.worldManagerService.getWorldManager();
+    }
+
+    /**
+     * Get the dungeon chunk grid manager.
+     *
+     * @return Dungeon chunk grid manager instance.
+     */
+    public static DungeonChunkGridManager getDungeonChunkGridManager() {
+        return Core.instance._getDungeonChunkGridManager();
+    }
+
+    /**
+     * Get the dungeon chunk grid manager.
+     *
+     * @return Dungeon chunk grid manager instance.
+     */
+    public DungeonChunkGridManager _getDungeonChunkGridManager() {
+        return this.dungeonChunkGridManagerService.getDungeonChunkGridManager();
     }
 
     /**
