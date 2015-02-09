@@ -124,6 +124,42 @@ public class DungeonChunkGridManager {
     }
 
     /**
+     * Unload the chunk grid for a specific world.
+     *
+     * @param world The world to unload the chunk grid for.
+     *
+     * @return True if any chunk grid was unloaded, false otherwise. If there wasn't any loaded chunk grid for the
+     * specified world, false will be returned.
+     */
+    public boolean unloadChunkGrid(World world) {
+        // Set whether any chunk grid was unloaded
+        boolean unloaded = false;
+
+        // Show a status message
+        Core.getLogger().info("Unloading all dungeon chunks for '" + world.getName() + "'...");
+
+        // Loop through each loaded chunk grid to see if it matches the world
+        for(int i = this.grids.size() - 1; i >= 0; i--) {
+            // Get the current grid
+            DungeonChunkGrid grid = this.grids.get(i);
+
+            // Make sure the world matches
+            if(!grid.getWorld().equals(world))
+                continue;
+
+            // Save all the dungeon chunks in the grid
+            grid.saveLoadedChunks();
+
+            // Remove the grid from the list
+            this.grids.remove(i);
+            unloaded = true;
+        }
+
+        // Return true if any chunk grid was unloaded
+        return unloaded;
+    }
+
+    /**
      * Get a loaded dungeon chunk grid for a specific world.
      *
      * @param world The world to get the dungeon chunk grid for.
