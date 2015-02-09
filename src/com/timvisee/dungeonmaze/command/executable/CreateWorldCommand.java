@@ -53,7 +53,7 @@ public class CreateWorldCommand extends ExecutableCommand {
         }
 
         // Show a status message
-        sender.sendMessage(ChatColor.GOLD + "Preparing the server...");
+        sender.sendMessage(ChatColor.YELLOW + "Preparing the server...");
 
         // Prepare the server for the new world
         if(!worldManager.prepareDungeonMazeWorld(worldName)) {
@@ -62,7 +62,7 @@ public class CreateWorldCommand extends ExecutableCommand {
         }
 
         // Show a status message
-        sender.sendMessage(ChatColor.GOLD + "Generating the DungeonMaze " + ChatColor.YELLOW + worldName + ChatColor.GOLD + "...");
+        sender.sendMessage(ChatColor.YELLOW + "Generating the DungeonMaze " + ChatColor.GOLD + worldName + ChatColor.YELLOW + "...");
         Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Generating a new world, expecting lag for a while...");
 
         // Create the world

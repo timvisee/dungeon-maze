@@ -1,5 +1,6 @@
-package com.timvisee.dungeonmaze.world.dungeon.chunk;
+package com.timvisee.dungeonmaze.world.dungeon.chunk.grid;
 
+import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.World;
 
 import java.util.ArrayList;

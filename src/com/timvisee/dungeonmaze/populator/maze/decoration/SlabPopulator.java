@@ -22,7 +22,7 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
 		int z = args.getChunkZ();
-		
+
 		for(int i = 0; i < ITERATIONS; i++) {
 			if(rand.nextInt(100) < CHANCE_SLAB) {
 				int slabX = x + rand.nextInt(6) + 1;

@@ -26,8 +26,8 @@ import com.timvisee.dungeonmaze.world.WorldManagerService;
 import com.timvisee.dungeonmaze.structure.CustomStructureManager;
 import com.timvisee.dungeonmaze.update.Updater;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunkGridManager;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunkGridManagerService;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManagerService;
 
 @SuppressWarnings("UnusedDeclaration")
 public class Core {

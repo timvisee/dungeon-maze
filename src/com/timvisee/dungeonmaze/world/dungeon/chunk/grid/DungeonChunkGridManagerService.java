@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze.world.dungeon.chunk;
+package com.timvisee.dungeonmaze.world.dungeon.chunk.grid;
 
 import com.timvisee.dungeonmaze.service.Service;
 
@@ -12,6 +12,7 @@ public class DungeonChunkGridManagerService extends Service {
 
     /**
      * Initialize the service.
+     *
      *
      * @return True on success, false on failure. True will also be returned if the service was initialized already.
      */
