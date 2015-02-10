@@ -68,6 +68,8 @@ public class UnloadWorldCommand extends ExecutableCommand {
             return true;
         }
 
+        // TODO: Don't allow unloading the main world.
+
         // Show a status message, return the result
         sender.sendMessage(ChatColor.GREEN + "The world " + ChatColor.GOLD + worldName + ChatColor.GREEN + " has been unloaded, took " + p.getTimeFormatted() + "!");
         return true;

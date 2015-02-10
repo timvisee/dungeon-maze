@@ -347,7 +347,10 @@ public class WorldManager {
 		boolean unloaded = Bukkit.unloadWorld(worldName, true);
 
 		// Show a status message, return the result
-		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World unloaded successfully, took " + p.getTimeFormatted() + "!");
+		if(unloaded)
+			Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World unloaded successfully, took " + p.getTimeFormatted() + "!");
+		else
+			Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Failed to unload the world!");
 		return unloaded;
 	}
 	
