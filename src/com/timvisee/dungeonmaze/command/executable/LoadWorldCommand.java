@@ -62,13 +62,14 @@ public class LoadWorldCommand extends ExecutableCommand {
             return true;
         }
 
-        // Force the world to be loaded if it isn't already loaded
-        if(!worldManager.loadWorld(worldName)) {
+        // Load the world, store the instance
+        World world = worldManager.loadWorld(worldName);
+
+        // Make sure the world was loaded
+        if(world == null) {
             sender.sendMessage(ChatColor.DARK_RED + "Failed to load the world!");
             return true;
         }
-
-        // TODO: Load with the proper world generator.
 
         // Show a status message, return the result
         sender.sendMessage(ChatColor.GREEN + "The world " + ChatColor.GOLD + worldName + ChatColor.GREEN + " has been loaded, took " + p.getTimeFormatted() + "!");

@@ -70,6 +70,8 @@ public class CreateWorldCommand extends ExecutableCommand {
         newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
         World world = newWorld.createWorld();
 
+        // TODO: Immediately save the level.dat file!
+
         // Show a status message
         Bukkit.broadcastMessage("World generation finished!");
         sender.sendMessage(ChatColor.GREEN + "The DungeonMaze " + ChatColor.GOLD + worldName + ChatColor.GREEN + " has successfully been generated!");

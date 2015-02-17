@@ -7,6 +7,7 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.api.DungeonMazeApi;
 import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandler;
 import com.timvisee.dungeonmaze.world.WorldManager;
+import org.bukkit.World;
 
 /**
  * API layer for the DMWorldManager class
@@ -215,14 +216,15 @@ public class ApiWorldManager {
 	 *
 	 * @param worldName The name of the world to load.
 	 *
-	 * @return True if any world was loaded, false otherwise. True will also be returned if the world was already loaded.
+	 * @return The world instance if the world is loaded, null otherwise.
+	 * The world instance will also be returned if the world was already loaded.
 	 */
-	public boolean loadWorld(String worldName) {
+	public World loadWorld(String worldName) {
 		// Make sure the world manager instance is valid
 		if(!isWorldManagerValid())
-			return false;
+			return null;
 
-		// Load a world
+		// Load a world, return the result
 		return getWorldManager().loadWorld(worldName);
 	}
 

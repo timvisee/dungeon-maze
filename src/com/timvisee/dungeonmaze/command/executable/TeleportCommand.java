@@ -51,16 +51,12 @@ public class TeleportCommand extends ExecutableCommand {
             return true;
         }
 
-        // Force the world to be loaded if it isn't already loaded
-        if(!worldManager.loadWorld(worldName)) {
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to teleport, unable to load the world!");
-            return true;
-        }
+        // Try to load the world
+        World world = worldManager.loadWorld(worldName);
 
-        // Get the world instance and make sure it's valid
-        World world = Bukkit.getWorld(worldName);
+        // Make sure the world was loaded successfully
         if(world == null) {
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to teleport!");
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to teleport, unable to load the world!");
             return true;
         }
 

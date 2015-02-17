@@ -78,7 +78,7 @@ public class HelpPrinter {
 
         // Show the unlimited arguments argument
         if(command.getMaximumArguments() < 0)
-            sender.sendMessage(" " + ChatColor.YELLOW + ChatColor.ITALIC + "... : " + ChatColor.WHITE + "Any additional arguments." + ChatColor.DARK_GRAY + ChatColor.ITALIC + " (Optional)");
+            sender.sendMessage(" " + ChatColor.YELLOW + ChatColor.ITALIC + "... : " + ChatColor.WHITE + "Any additional arguments." + ChatColor.GRAY + ChatColor.ITALIC + " (Optional)");
     }
 
     /**

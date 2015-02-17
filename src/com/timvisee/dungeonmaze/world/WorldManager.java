@@ -268,6 +268,10 @@ public class WorldManager {
 			if(entry.getName().equals(worldName))
 				return true;
 
+		// Try to get the world from the Bukkit server instance
+		if(Bukkit.getWorld(worldName) != null)
+			return true;
+
 		// The world doesn't seem to be loaded, return false
 		return false;
 	}
@@ -289,7 +293,7 @@ public class WorldManager {
 	 * @return The main world.
 	 */
 	public World getMainWorld() {
-		return Bukkit.getServer().getWorlds().get(0);
+		return Bukkit.getWorlds().get(0);
 	}
 
 	/**
@@ -319,16 +323,17 @@ public class WorldManager {
 	 *
 	 * @param worldName The name of the world to load.
 	 *
-	 * @return True if any world was loaded, false otherwise. True will also be returned if the world was already loaded.
+	 * @return The world instance if the world is loaded, null otherwise.
+	 * The world instance will also be returned if the world was already loaded.
 	 */
-	public boolean loadWorld(String worldName) {
+	public World loadWorld(String worldName) {
 		// Make sure the world exists
 		if(!isWorld(worldName))
-			return false;
+			return null;
 
 		// Make sure the world isn't loaded yet
 		if(isWorldLoaded(worldName))
-			return true;
+			return Bukkit.getServer().getWorld(worldName);
 
 		// Profile the world loading
 		Profiler p = new Profiler(true);
@@ -336,20 +341,35 @@ public class WorldManager {
 		// Show a status message
 		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Loading world, expecting lag for a while...");
 
+		// Store the loaded world
+		World world;
+
 		// Load the world
 		try {
+			// Set up the world creator to load the world
 			WorldCreator newWorld = new WorldCreator(worldName);
-			if(isDungeonMazeWorld(worldName) && DungeonMaze.instance.getDungeonMazeGenerator() != null)
+
+			// Set the proper world generator if a Dungeon Maze world is loaded
+			if(isDungeonMazeWorld(worldName))
 				newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
-			newWorld.createWorld();
+
+			// Load the world
+			world = newWorld.createWorld();
+
 		} catch(Exception ex) {
 			Core.getLogger().info("Failed to load the world '" + worldName + ", after " + p.getTimeFormatted() + "'!");
-			return false;
+			return null;
+		}
+
+		// Make sure the world instance is valid
+		if(world == null) {
+			Core.getLogger().info("Failed to load the world '" + worldName + ", after " + p.getTimeFormatted() + "'!");
+			return null;
 		}
 
 		// Show a status message, return the result
 		Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World loaded successfully, took " + p.getTimeFormatted() + "!");
-		return true;
+		return world;
 	}
 
 	/**
@@ -402,7 +422,7 @@ public class WorldManager {
 		// Preload all Dungeon Maze worlds that should be preloaded
 		int preloadedWorlds = 0;
 		for(String worldName : getDungeonMazeWorlds(true))
-			preloadedWorlds += loadWorld(worldName) ? 1 : 0;
+			preloadedWorlds += (loadWorld(worldName) != null) ? 1 : 0;
 
 		// Return the result
 		return preloadedWorlds;
