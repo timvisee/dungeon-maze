@@ -68,6 +68,8 @@ public class LoadWorldCommand extends ExecutableCommand {
             return true;
         }
 
+        // TODO: Load with the proper world generator.
+
         // Show a status message, return the result
         sender.sendMessage(ChatColor.GREEN + "The world " + ChatColor.GOLD + worldName + ChatColor.GREEN + " has been loaded, took " + p.getTimeFormatted() + "!");
         return true;

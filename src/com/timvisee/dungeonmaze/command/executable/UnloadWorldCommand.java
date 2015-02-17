@@ -62,13 +62,17 @@ public class UnloadWorldCommand extends ExecutableCommand {
             return true;
         }
 
+        // Make sure the main world isn't unloaded
+        if(worldManager.isMainWorld(worldName)) {
+            sender.sendMessage(ChatColor.DARK_RED + "The main world can't be unloaded!");
+            return true;
+        }
+
         // Force the world to be loaded if it isn't already loaded
         if(!worldManager.unloadWorld(worldName)) {
             sender.sendMessage(ChatColor.DARK_RED + "Failed to unload the world!");
             return true;
         }
-
-        // TODO: Don't allow unloading the main world.
 
         // Show a status message, return the result
         sender.sendMessage(ChatColor.GREEN + "The world " + ChatColor.GOLD + worldName + ChatColor.GREEN + " has been unloaded, took " + p.getTimeFormatted() + "!");

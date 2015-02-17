@@ -284,6 +284,37 @@ public class WorldManager {
 	}
 
 	/**
+	 * Get the main world.
+	 *
+	 * @return The main world.
+	 */
+	public World getMainWorld() {
+		return Bukkit.getServer().getWorlds().get(0);
+	}
+
+	/**
+	 * Check whether the world is the main world.
+	 *
+	 * @param world The world to check.
+	 *
+	 * @return True if the world is the main world.
+	 */
+	public boolean isMainWorld(World world) {
+		return getMainWorld().equals(world);
+	}
+
+	/**
+	 * Check whether the world is the main world.
+	 *
+	 * @param worldName The name of the world to check.
+	 *
+	 * @return True if the world is the main world.
+	 */
+	public boolean isMainWorld(String worldName) {
+		return getMainWorld().getName().equals(worldName);
+	}
+
+	/**
 	 * Load a world if it isn't loaded yet. The world doesn't need to be a Dungeon Maze world.
 	 *
 	 * @param worldName The name of the world to load.
