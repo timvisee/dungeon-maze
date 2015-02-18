@@ -6,12 +6,12 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.util.Profiler;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UnloadWorldCommand extends ExecutableCommand {
 
@@ -67,6 +67,32 @@ public class UnloadWorldCommand extends ExecutableCommand {
         if(worldManager.isMainWorld(worldName)) {
             sender.sendMessage(ChatColor.DARK_RED + "The main world can't be unloaded!");
             return true;
+        }
+
+        // Get all players in the world
+        List<Player> players = new ArrayList<Player>();
+        for(Player player : Bukkit.getOnlinePlayers())
+            if(player.getWorld().getName().equals(worldName))
+                players.add(player);
+        int playerCount = players.size();
+
+        // Teleport all players away
+        if(playerCount > 0) {
+            // Get the main world
+            World mainWorld = worldManager.getMainWorld();
+            Location mainWorldSpawn = mainWorld.getSpawnLocation();
+
+            // Teleport all players
+            for(Player player : players) {
+                // Teleport the player to the spawn of the main world
+                player.teleport(mainWorldSpawn);
+
+                // Show a message to the player
+                player.sendMessage(ChatColor.YELLOW + "The current world is being unloaded, you've been teleported!");
+            }
+
+            // Show a status message
+            sender.sendMessage(ChatColor.YELLOW + "Teleported " + ChatColor.GOLD + playerCount + ChatColor.YELLOW + " player" + (playerCount != 1 ? "s" : "") + " away!");
         }
 
         // Force the world to be loaded if it isn't already loaded

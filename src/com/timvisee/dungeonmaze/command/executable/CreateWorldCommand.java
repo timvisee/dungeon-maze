@@ -99,7 +99,7 @@ public class CreateWorldCommand extends ExecutableCommand {
         if(sender instanceof Player) {
             // Teleport the player
             ((Player) sender).teleport(world.getSpawnLocation());
-            sender.sendMessage(ChatColor.GREEN + "You have been teleported!");
+            sender.sendMessage(ChatColor.GREEN + "You have been teleported to " + ChatColor.GOLD + worldName + ChatColor.GREEN + "!");
         }
 
         // Return the result

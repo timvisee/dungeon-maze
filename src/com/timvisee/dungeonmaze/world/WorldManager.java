@@ -394,6 +394,20 @@ public class WorldManager {
 		// Profile the world loading
 		Profiler p = new Profiler(true);
 
+		// Automatically save the world before unloading
+		// TODO: Replace this with a this.getWorld() method!
+		World world = Bukkit.getWorld(worldName);
+		if(world != null) {
+			try {
+				Core.getLogger().info("Auto saving world before unloading...");
+				world.save();
+				Core.getLogger().info("World successfully saved, took " + p.getTimeFormatted() + "!");
+			} catch(Exception ex) {
+				Core.getLogger().error("Failed to save the world! (Error: " + ex.getMessage() + ")");
+			}
+		} else
+			Core.getLogger().info("Unable to auto save the world before unloading!");
+
 		// Unload and save the world
 		boolean unloaded = Bukkit.unloadWorld(worldName, true);
 

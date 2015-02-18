@@ -63,7 +63,7 @@ public class TeleportCommand extends ExecutableCommand {
 
         // Teleport the player, show a status message and return true
         player.teleport(world.getSpawnLocation());
-        player.sendMessage(ChatColor.GREEN + "You have been teleported!");
+        player.sendMessage(ChatColor.GREEN + "You have been teleported to " + ChatColor.GOLD + worldName + ChatColor.GREEN + "!");
         return true;
     }
 }
