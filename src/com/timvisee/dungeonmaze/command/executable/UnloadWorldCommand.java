@@ -41,11 +41,12 @@ public class UnloadWorldCommand extends ExecutableCommand {
 
         // Get the world manager, and make sure it's valid
         WorldManager worldManager = Core.getWorldManager();
-        if(worldManager == null) {
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to unload the world, world manager not available!");
-            return false;
-        }
-        if(!worldManager.isInit()) {
+        boolean showWorldManagerError = false;
+        if(worldManager == null)
+            showWorldManagerError = true;
+        else if(!worldManager.isInit())
+            showWorldManagerError = true;
+        if(showWorldManagerError) {
             sender.sendMessage(ChatColor.DARK_RED + "Failed to unload the world, world manager not available!");
             return true;
         }

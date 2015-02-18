@@ -452,6 +452,8 @@ public class WorldManager {
 			return false;
 		}
 
+		// TODO: Improve the configuration management here!
+
 		// Get the current list of worlds and preload worlds form the configuration file
 		List<String> worlds = configHandler.config.getStringList("worlds");
 		List<String> preloadWorlds = configHandler.config.getStringList("preloadWorlds");
@@ -466,14 +468,15 @@ public class WorldManager {
 		Core.getConfigHandler().config.set("worlds", worlds);
 		Core.getConfigHandler().config.set("preloadWorlds", preloadWorlds);
 		try {
-			// TODO: Improve this statement below!
-			Core.getConfigHandler().config.save(new File("./plugins/DungeonMaze/config.yml"));
+			// Get the configuration file
+			File configFile = new File(DungeonMaze.instance.getDataFolder(), "config.yml");
+
+			// Save the configuration
+			Core.getConfigHandler().config.save(configFile);
+
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-
-		// Save the config
-		DungeonMaze.instance.saveConfig();
 
 		// Show a message, return the result
 		Core.getLogger().info("Successfully prepared!");
