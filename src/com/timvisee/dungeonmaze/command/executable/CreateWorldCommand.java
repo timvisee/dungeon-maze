@@ -78,7 +78,17 @@ public class CreateWorldCommand extends ExecutableCommand {
         newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
         World world = newWorld.createWorld();
 
-        // TODO: Immediately save the level.dat file!
+        // Force-save the level.dat file for the world, profile the process
+        Profiler pWorldSave = new Profiler(true);
+        try {
+            // Force-save the world, and show some status messages
+            Core.getLogger().info("Force saving the level.dat file for '" + world.getName() + "'...");
+            world.save();
+            Core.getLogger().info("World saved successfully, took " + pWorldSave.getTimeFormatted() + "!");
+
+        } catch(Exception ex) {
+            Core.getLogger().error("Failed to save the world after " + pWorldSave.getTimeFormatted() + "!");
+        }
 
         // Show a status message
         Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World generation finished, took " + p.getTimeFormatted() + "!");
