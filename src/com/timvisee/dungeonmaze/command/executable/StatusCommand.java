@@ -69,6 +69,9 @@ public class StatusCommand extends ExecutableCommand {
         } else
             sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
+        // Print the service count
+        sender.sendMessage(ChatColor.GOLD + "Running Services: " + ChatColor.WHITE + Core.instance.getServiceManager().getServiceCount(true) + ChatColor.GRAY + " / " + Core.instance.getServiceManager().getServiceCount());
+
         // Print the plugin runtime
         printPluginRuntime(sender);
 

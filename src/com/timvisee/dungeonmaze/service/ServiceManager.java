@@ -59,7 +59,27 @@ public class ServiceManager {
      * @return Number of services.
      */
     public int getServiceCount() {
-        return this.services.size();
+        return getServiceCount(false);
+    }
+
+    /**
+     * Get the number of services.
+     *
+     * @param init True to only get the number of initialized services.
+     *
+     * @return Number of services.
+     */
+    public int getServiceCount(boolean init) {
+        // Return the number of services
+        if(!init)
+            return this.services.size();
+
+        // Get the number of initialized services
+        int initCount = 0;
+        for(Service service : this.services)
+            if(service.isInit())
+                initCount++;
+        return initCount;
     }
 
     /**
