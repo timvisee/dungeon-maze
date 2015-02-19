@@ -17,7 +17,8 @@ public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
 	private int ceilingOffset = 0;
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 *
 	 * @param w World
 	 * @param rand Random instance
 	 * @param c Source chunk

@@ -19,6 +19,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 import com.timvisee.dungeonmaze.DungeonMaze;
+import org.bukkit.scheduler.BukkitScheduler;
 
 @SuppressWarnings("UnusedDeclaration")
 public class WorldManager {
@@ -84,7 +85,7 @@ public class WorldManager {
 
 		// Preload the worlds
 		if(preload)
-			if(preloadDungeonMazeWorlds() < 0)
+			if(!schedulePreloadDungeonMazeWorlds())
 				return false;
 
 		// Set whether the world manager is initialized, return the result
@@ -147,9 +148,7 @@ public class WorldManager {
 					if((mvWorld.getGenerator().contains("dungeonmaze") || mvWorld.getGenerator().contains("DungeonMaze")) && !worlds.contains(world.getName()))
 						worlds.add(world.getName());
 
-				} catch (NoClassDefFoundError ignored) {
-				} catch (NullPointerException ignored) {
-				}
+				} catch (NoClassDefFoundError | NullPointerException ignored) { }
 			}
 		}
 
@@ -419,7 +418,7 @@ public class WorldManager {
 			Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Failed to unload the world!");
 		return unloaded;
 	}
-	
+
 	/**
 	 * Preload all the Dungeon Maze worlds that should be preloaded.
 	 *
@@ -441,6 +440,32 @@ public class WorldManager {
 
 		// Return the result
 		return preloadedWorlds;
+	}
+
+	/**
+	 * Schedule to preload the Dungeon Maze worlds as soon as possible.
+	 *
+	 * @return True if the task was scheduled successfully, false otherwise.
+	 */
+	public boolean schedulePreloadDungeonMazeWorlds() {
+		// Get the scheduler
+		BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+
+		// Make sure the scheduler is valid
+		if(scheduler == null)
+			return false;
+
+		// Show a status message
+		Core.getLogger().info("Scheduled to preload all Dungeon Maze worlds!");
+
+		// Schedule the task
+		scheduler.scheduleSyncDelayedTask(DungeonMaze.instance, new Runnable() {
+			@Override
+			public void run() {
+				preloadDungeonMazeWorlds();
+			}
+		});
+		return true;
 	}
 
 	/**
