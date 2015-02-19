@@ -53,21 +53,6 @@ public class CommandManager {
         helpCommand.addArgument(new CommandArgumentDescription("query", "The command or query to view help for.", true));
         helpCommand.setMaximumArguments(false);
 
-        // Register the version command
-        CommandDescription versionCommand = new CommandDescription(
-                new VersionCommand(),
-                new ArrayList<String>() {{
-                    add("version");
-                    add("ver");
-                    add("v");
-                    add("about");
-                    add("info");
-                }},
-                "Version info",
-                "Show detailed information about the installed Dungeon Maze version, and shows the developers, contributors, license and other information.",
-                dungeonMazeCommand);
-        versionCommand.setMaximumArguments(false);
-
         // Register the create command
         CommandDescription createWorldCommand = new CommandDescription(
                 new CreateWorldCommand(),
@@ -194,6 +179,35 @@ public class CommandManager {
                 "Try to install any availble update.",
                 dungeonMazeCommand);
         installUpdateCommand.setCommandPermissions("dungeonmaze.command.installupdate", CommandPermissions.DefaultPermission.OP_ONLY);
+
+        // Register the status command
+        CommandDescription statusCommand = new CommandDescription(
+                new StatusCommand(),
+                new ArrayList<String>() {{
+                    add("status");
+                    add("stats");
+                    add("s");
+                }},
+                "Status info",
+                "Show detailed plugin status.",
+                dungeonMazeCommand);
+        statusCommand.setMaximumArguments(false);
+        installUpdateCommand.setCommandPermissions("dungeonmaze.command.status", CommandPermissions.DefaultPermission.OP_ONLY);
+
+        // Register the version command
+        CommandDescription versionCommand = new CommandDescription(
+                new VersionCommand(),
+                new ArrayList<String>() {{
+                    add("version");
+                    add("ver");
+                    add("v");
+                    add("about");
+                    add("info");
+                }},
+                "Version info",
+                "Show detailed information about the installed Dungeon Maze version, and shows the developers, contributors, license and other information.",
+                dungeonMazeCommand);
+        versionCommand.setMaximumArguments(false);
 
         // Add the base command to the commands array
         this.commandDescriptions.add(dungeonMazeCommand);

@@ -28,13 +28,12 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 		Random rand = args.getRandom();
 		int x = args.getX();
 		int y = args.getY();
-		int ceilingOffset = args.getCeilingY() - y;
-		int z = args.getZ();
-
 		int yCeiling = args.getCeilingY();
+		int z = args.getZ();
+		int layer = args.getLayer();
 		
 		// Apply chances
-		if(rand.nextInt(1000) < CHANCE_TOPTURVE + (CHANCE_TOPTURVE_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
+		if(rand.nextInt(1000) < CHANCE_TOPTURVE + (CHANCE_TOPTURVE_ADDITION_EACH_LEVEL * layer)) {
 			
 			// Register the current room as constant room
 			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
@@ -63,7 +62,7 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 				ore1.setType(Material.LAPIS_ORE);
 				break;
 			case 4:
-				ore1.setType(Material.COAL_ORE); // orriginally diamond, changed to coal because ore2 could be diamond too
+				ore1.setType(Material.COAL_ORE); // Originally diamond, changed to coal because ore2 could be diamond too
 				break;
 			default:
 				ore1.setType(Material.COAL_ORE);
