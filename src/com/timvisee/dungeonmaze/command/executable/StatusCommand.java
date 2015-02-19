@@ -6,8 +6,10 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.world.WorldManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class StatusCommand extends ExecutableCommand {
 
@@ -33,6 +35,19 @@ public class StatusCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GOLD + "Dungeon Maze worlds: " + ChatColor.WHITE + worldManager.getDungeonMazeWorlds().size());
         else
             sender.sendMessage(ChatColor.GOLD + "Dungeon Maze worlds: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
+
+        // Print the Dungeon Maze player count
+        int playerCount = Bukkit.getOnlinePlayers().size();
+        int dungeonMazePlayerCount = 0;
+        if(worldManager != null) {
+            for(Player player : Bukkit.getOnlinePlayers())
+                if(worldManager.isDungeonMazeWorld(player.getWorld().getName()))
+                    dungeonMazePlayerCount++;
+
+            sender.sendMessage(ChatColor.GOLD + "Dungeon Maze players: " + ChatColor.WHITE + dungeonMazePlayerCount + ChatColor.GRAY + " / " + playerCount);
+
+        } else
+            sender.sendMessage(ChatColor.GOLD + "Dungeon Maze players: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Get the permissions manager
         PermissionsManager permissionsManager = Core.getPermissionsManager();

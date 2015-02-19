@@ -192,7 +192,7 @@ public class CommandManager {
                 "Show detailed plugin status.",
                 dungeonMazeCommand);
         statusCommand.setMaximumArguments(false);
-        installUpdateCommand.setCommandPermissions("dungeonmaze.command.status", CommandPermissions.DefaultPermission.OP_ONLY);
+        statusCommand.setCommandPermissions("dungeonmaze.command.status", CommandPermissions.DefaultPermission.OP_ONLY);
 
         // Register the version command
         CommandDescription versionCommand = new CommandDescription(
