@@ -105,24 +105,24 @@ public class HelpPrinter {
             boolean nodePermission = true;
             if(sender instanceof Player)
                 nodePermission = Core.getPermissionsManager().hasPermission((Player) sender, node, false);
-            final String nodePermsString = ChatColor.DARK_GRAY + (nodePermission ? ChatColor.ITALIC + " (Permission!)" : ChatColor.ITALIC + " (No Permission!)");
+            final String nodePermsString = ChatColor.GRAY + (nodePermission ? ChatColor.ITALIC + " (Permission!)" : ChatColor.ITALIC + " (No Permission!)");
             sender.sendMessage(" " + ChatColor.YELLOW + ChatColor.ITALIC + node + nodePermsString);
         }
 
         // Print the default permission
         switch(permissions.getDefaultPermission()) {
         case ALLOWED:
-            sender.sendMessage(ChatColor.GOLD + " Default: " + ChatColor.DARK_GRAY + ChatColor.ITALIC + "Permission!");
+            sender.sendMessage(ChatColor.GOLD + " Default: " + ChatColor.GRAY + ChatColor.ITALIC + "Permission!");
             break;
 
         case OP_ONLY:
-            final String defaultPermsString = ChatColor.DARK_GRAY + (permissions.getDefaultPermissionCommandSender(sender) ? ChatColor.ITALIC + " (Permission!)" : ChatColor.ITALIC + " (No Permission!)");
+            final String defaultPermsString = ChatColor.GRAY + (permissions.getDefaultPermissionCommandSender(sender) ? ChatColor.ITALIC + " (Permission!)" : ChatColor.ITALIC + " (No Permission!)");
             sender.sendMessage(ChatColor.GOLD + " Default: " + ChatColor.YELLOW + ChatColor.ITALIC + "OP's Only!" + defaultPermsString);
             break;
 
         case NOT_ALLOWED:
         default:
-            sender.sendMessage(ChatColor.GOLD + " Default: " + ChatColor.DARK_GRAY + ChatColor.ITALIC + "No Permission!");
+            sender.sendMessage(ChatColor.GOLD + " Default: " + ChatColor.GRAY + ChatColor.ITALIC + "No Permission!");
             break;
         }
 

@@ -135,6 +135,7 @@ public class CommandManager {
                 "Reload the Dungeon maze plugin.",
                 dungeonMazeCommand);
         reloadCommand.setCommandPermissions("dungeonmaze.command.reload", CommandPermissions.DefaultPermission.OP_ONLY);
+        reloadCommand.addArgument(new CommandArgumentDescription("force", "True or False to force reload.", true));
 
         // Register the reload permissions command
         CommandDescription reloadPermissionsCommand = new CommandDescription(

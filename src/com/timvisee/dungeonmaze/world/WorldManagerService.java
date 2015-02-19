@@ -94,7 +94,7 @@ public class WorldManagerService extends Service {
 
         // Destroy the world manager if it's set, return false on failure if the destruction isn't forced
         if(this.worldManager != null)
-            if(this.worldManager.destroy(force))
+            if(!this.worldManager.destroy(force))
                 if(!force)
                     return false;
 

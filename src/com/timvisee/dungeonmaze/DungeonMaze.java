@@ -66,7 +66,7 @@ public class DungeonMaze extends JavaPlugin {
 		// Profile the shutdown
 		Profiler p = new Profiler(true);
 
-		// Show an disabling message
+		// Show an disbling message
 		Core.getLogger().info("Disabling Dungeon Maze...");
 
 		// Destroy the core
@@ -82,7 +82,7 @@ public class DungeonMaze extends JavaPlugin {
 	 *
 	 * @return True on success, false on failure.
 	 */
-	private boolean initCore() {
+	public boolean initCore() {
 		// Profile the initialization
 		Profiler p = new Profiler(true);
 
@@ -117,7 +117,7 @@ public class DungeonMaze extends JavaPlugin {
 	 *
 	 * @return True on success, false on failure.
 	 */
-	private boolean destroyCore(boolean force) {
+	public boolean destroyCore(boolean force) {
 		// Profile the core destruction
 		Profiler p = new Profiler(true);
 

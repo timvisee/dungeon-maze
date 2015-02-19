@@ -38,7 +38,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 		// Register the current room as constant room
 		DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
 		
-		// Break out the orriginal walls
+		// Break out the original walls
 		for (int xx = 0; xx < 8; xx++)
 			for (int yy = y + 2; yy < 30+(7*6); yy++)
 				for(int zz = 0; zz < 8; zz++)
@@ -57,7 +57,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 		    for (int zz=z; zz <= z + 7; zz++)
 		        c.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
 		        
-		// Change the layer underneeth the stone floor to cobblestone
+		// Change the layer underneath the stone floor to cobblestone
 		for (int xx=x; xx <= x + 8; xx++)
 		    for (int zz=z; zz <= z + 0; zz++)
 		        c.getBlock(xx, y + 1, zz).setType(Material.COBBLESTONE);
@@ -67,7 +67,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 		    for (int zz=z; zz <= z + 8; zz++)
 		        c.getBlock(xx, y + 6, zz).setType(Material.SMOOTH_BRICK);
 		
-		// Generate 4 circulair blocks in the middle of the floor
+		// Generate 4 circular blocks in the middle of the floor
 		for (int xx=x + 3; xx <= x + 4; xx++) {
 		    for (int zz=z + 3; zz <= z + 4; zz++) {
 		        c.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
