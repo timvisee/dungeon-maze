@@ -29,6 +29,8 @@ import com.timvisee.dungeonmaze.world.WorldManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManagerService;
 
+import java.util.Date;
+
 @SuppressWarnings("UnusedDeclaration")
 public class Core {
 
@@ -68,7 +70,10 @@ public class Core {
     /** Event listener manager service instance. */
     private EventListenerManagerService eventListenerManagerService = new EventListenerManagerService();
     /** Metrics controller service instance. */
-    private MetricsControllerService metricsControllerService = new MetricsControllerService();
+    private MetricsControllerService metricsControllerService = new MetricsControllerService();// Enabled date
+
+    /** Defines the initialization time of the core. */
+    private Date initTime = new Date();
 
     /**
      * Constructor.
@@ -94,6 +99,9 @@ public class Core {
         // Make sure the Core hasn't been instantiated already
         if(this.isInit())
             return true;
+
+        // Set the initialization time
+        this.initTime = new Date();
 
         // Initialize the service manager
         this.serviceManager = new ServiceManager();
@@ -419,5 +427,23 @@ public class Core {
      */
     public MetricsController _getMetricsController() {
         return this.metricsControllerService.getMetricsController();
+    }
+
+    /**
+     * Get the initialization time of the Core.
+     *
+     * @return Core initialization time.
+     */
+    public static Date getInitializationTime() {
+        return Core.instance._getInitializationTime();
+    }
+
+    /**
+     * Get the initialization time of the Core.
+     *
+     * @return Core initialization time.
+     */
+    public Date _getInitializationTime() {
+        return this.initTime;
     }
 }

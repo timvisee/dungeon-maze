@@ -11,6 +11,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.text.DecimalFormat;
+import java.util.Date;
+
 public class StatusCommand extends ExecutableCommand {
 
     /**
@@ -64,8 +67,49 @@ public class StatusCommand extends ExecutableCommand {
         } else
             sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
+        // Print the plugin runtime
+        printPluginRuntime(sender);
+
         // Show the version status
         sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.WHITE + "Dungeon Maze v" + DungeonMaze.getVersionName() + ChatColor.GRAY + " (code: " + DungeonMaze.getVersionCode() + ")");
         return true;
+    }
+
+    /**
+     * Print the plugin runtime.
+     *
+     * @param sender Command sender to print the runtime to.
+     */
+    public void printPluginRuntime(CommandSender sender) {
+        // Get the runtime
+        long runtime = new Date().getTime() - Core.getInitializationTime().getTime();
+
+        // Calculate the timings
+        int millis = (int) (runtime % 1000);
+        runtime/=1000;
+        int seconds = (int) (runtime % 60);
+        runtime/=60;
+        int minutes = (int) (runtime % 60);
+        runtime/=60;
+        int hours = (int) runtime;
+
+        // Create a double and triple digit formatter
+        DecimalFormat doubleDigit = new DecimalFormat("######00");
+        DecimalFormat tripleDigit = new DecimalFormat("000");
+
+        // Generate the timing string
+        StringBuilder runtimeStr = new StringBuilder(ChatColor.WHITE + doubleDigit.format(seconds) + ChatColor.GRAY + "." + ChatColor.WHITE + tripleDigit.format(millis));
+        String measurement = "Seconds";
+        if(minutes > 0 || hours > 0) {
+            runtimeStr.insert(0, ChatColor.WHITE + doubleDigit.format(minutes) + ChatColor.GRAY + ":");
+            measurement = "Minutes";
+            if(hours > 0) {
+                runtimeStr.insert(0, ChatColor.WHITE + doubleDigit.format(hours) + ChatColor.GRAY + ":");
+                measurement = "Hours";
+            }
+        }
+
+        // Print the runtime
+        sender.sendMessage(ChatColor.GOLD + "Runtime: " + ChatColor.WHITE + runtimeStr + " " + ChatColor.GRAY + measurement);
     }
 }
