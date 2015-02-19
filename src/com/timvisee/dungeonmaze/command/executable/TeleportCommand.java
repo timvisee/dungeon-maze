@@ -4,7 +4,6 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;

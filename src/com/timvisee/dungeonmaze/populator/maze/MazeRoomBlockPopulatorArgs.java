@@ -7,8 +7,14 @@ import org.bukkit.World;
 
 public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
 
-	int x, z,
-	floorOffset, ceilingOffset = 0;
+	/** Defines the X coordinate of the chunk. */
+	private int x = 0;
+	/** Defines the Z coordinate of the chunk. */
+	private int z = 0;
+	/** Defines the floor offset. */
+	private int floorOffset = 0;
+	/** Defines the ceiling offset. */
+	private int ceilingOffset = 0;
 	
 	/**
 	 * Constructor

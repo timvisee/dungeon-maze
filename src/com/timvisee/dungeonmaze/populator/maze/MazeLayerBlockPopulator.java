@@ -12,17 +12,20 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 
 	public static final int MIN_LAYER = 1;
 	public static final int MAX_LAYER = 7;
-	public static final int LAYER_AMOUNT = 7;
+	public static final int LAYER_COUNT = 7;
 	
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Random rand = args.getRandom();
 		Chunk c = args.getSourceChunk();
-		
+
+		// Get the minimum and maximum layer count
+		int layerMin = Math.max(getMinimumLayer(), 1);
+		int layerMax =  Math.min(getMaximumLayer(), LAYER_COUNT);
+
 		// The layers
-		for(int l = Math.max(getMinimumLayer(), 1); l <= Math.min(getMaximumLayer(), LAYER_AMOUNT); l++) {
-			
+		for(int l = layerMin; l <= layerMax; l++) {
 			// Calculate the Y coord based on the current layer
 			int y = 30 + ((l - 1) * 6);
 			

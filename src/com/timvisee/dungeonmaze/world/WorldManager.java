@@ -293,6 +293,7 @@ public class WorldManager {
 	 * @return The main world.
 	 */
 	public World getMainWorld() {
+		// TODO: Fix this method!
 		return Bukkit.getWorlds().get(0);
 	}
 

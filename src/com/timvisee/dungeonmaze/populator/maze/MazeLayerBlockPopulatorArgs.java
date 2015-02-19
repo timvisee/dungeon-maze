@@ -9,7 +9,9 @@ import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 
 public class MazeLayerBlockPopulatorArgs extends ChunkBlockPopulatorArgs {
 
+	/** Defines the current layer number. */
 	int layer = 1;
+	/** Defines the current Y coordinate of the room. */
 	int y = 0;
 	
 	/**
@@ -53,6 +55,7 @@ public class MazeLayerBlockPopulatorArgs extends ChunkBlockPopulatorArgs {
 	 * Get the Y coord in the current chunk
 	 * @return Y coord in the current chunk
 	 */
+	// TODO: Remove this method?
 	public int getChunkY() {
 		return this.getY();
 	}
