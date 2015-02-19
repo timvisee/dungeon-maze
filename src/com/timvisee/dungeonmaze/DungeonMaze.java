@@ -9,7 +9,6 @@ import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,6 +21,11 @@ public class DungeonMaze extends JavaPlugin {
 
 	/** Dungeon Maze instance. */
 	public static DungeonMaze instance;
+
+	/** Defines the current Dungeon Maze version name. */
+	private static final String VERSION_NAME = "0.2";
+	/** Defines the current Dungeon Maze version code. */
+	private static final int VERSION_CODE = 15;
 
 	/** Core instance. */
 	private Core core = new Core(false);
@@ -45,13 +49,13 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler p = new Profiler(true);
 
 		// Show a status message
-		Core.getLogger().info("Starting Dungeon Maze v" + getVersion() + "...");
+		Core.getLogger().info("Starting Dungeon Maze v" + getVersionName() + "...");
 
 		// Initialize the core
 		initCore();
 
 		// Show a startup message
-		Core.getLogger().info("Dungeon Maze v" + getVersion() + " started, took " + p.getTimeFormatted() + "!");
+		Core.getLogger().info("Dungeon Maze v" + getVersionName() + " started, took " + p.getTimeFormatted() + "!");
 		Core.getLogger().info("Dungeon Maze developed by Tim Visee - timvisee.com");
 	}
 
@@ -208,12 +212,22 @@ public class DungeonMaze extends JavaPlugin {
 	}
 
 	/**
-	 * Get the current installed Dungeon Maze version.
+	 * Get the current installed Dungeon Maze version name.
 	 *
-	 * @return The version number of the currently installed Dungeon Maze instance.
+	 * @return The version name of the currently installed Dungeon Maze instance.
 	 */
-	public String getVersion() {
-		return getDescription().getVersion();
+	public static String getVersionName() {
+		//return getDescription().getVersion();
+		return VERSION_NAME;
+	}
+
+	/**
+	 * Get the current installed Dungeon Maze version code.
+	 *
+	 * @return The version code of the currently installed Dungeon Maze instance.
+	 */
+	public static int getVersionCode() {
+		return VERSION_CODE;
 	}
 
 

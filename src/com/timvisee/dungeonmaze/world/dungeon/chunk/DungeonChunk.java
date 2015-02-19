@@ -134,7 +134,7 @@ public class DungeonChunk {
         save(config.getConfigurationSection(CONFIG_DUNGEON_CHUNK_SECTION));
 
         // Append the current Dungeon Maze version to the file
-        config.set("version", DungeonMaze.instance.getVersion());
+        config.set("version", DungeonMaze.instance.getVersionName());
 
         // Save the file
         try {

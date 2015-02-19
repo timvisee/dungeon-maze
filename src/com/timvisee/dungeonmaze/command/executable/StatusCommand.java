@@ -6,12 +6,8 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-import java.security.Permissions;
 
 public class StatusCommand extends ExecutableCommand {
 
@@ -34,9 +30,9 @@ public class StatusCommand extends ExecutableCommand {
 
         // Print the number of Dungeon Maze worlds
         if(worldManager != null)
-            sender.sendMessage(ChatColor.GOLD + "DungeonMaze worlds: " + ChatColor.WHITE + worldManager.getDungeonMazeWorlds().size());
+            sender.sendMessage(ChatColor.GOLD + "Dungeon Maze worlds: " + ChatColor.WHITE + worldManager.getDungeonMazeWorlds().size());
         else
-            sender.sendMessage(ChatColor.GOLD + "DungeonMaze worlds: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
+            sender.sendMessage(ChatColor.GOLD + "Dungeon Maze worlds: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Get the permissions manager
         PermissionsManager permissionsManager = Core.getPermissionsManager();
@@ -54,7 +50,7 @@ public class StatusCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Show the version status
-        sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.WHITE + DungeonMaze.instance.getVersion());
+        sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.WHITE + "Dungeon Maze v" + DungeonMaze.getVersionName() + ChatColor.GRAY + " (code: " + DungeonMaze.getVersionCode() + ")");
         return true;
     }
 }
