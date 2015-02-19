@@ -11,7 +11,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class StatusCommand extends ExecutableCommand {
@@ -72,6 +74,26 @@ public class StatusCommand extends ExecutableCommand {
 
         // Show the version status
         sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.WHITE + "Dungeon Maze v" + DungeonMaze.getVersionName() + ChatColor.GRAY + " (code: " + DungeonMaze.getVersionCode() + ")");
+
+        // Print the server status header
+        sender.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "Server Status:");
+
+        // Print the server status
+        sender.sendMessage(ChatColor.GOLD + "Server Version: " + ChatColor.WHITE + Bukkit.getVersion());
+        sender.sendMessage(ChatColor.GOLD + "Bukkit Version: " + ChatColor.WHITE + Bukkit.getBukkitVersion());
+        sender.sendMessage(ChatColor.GOLD + "Running Plugins: " + ChatColor.WHITE + String.valueOf(Bukkit.getPluginManager().getPlugins().length));
+
+        // Print the server time
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sender.sendMessage(ChatColor.GOLD + "Server Time: " + ChatColor.WHITE + dateFormat.format(new Date()));
+
+        // Print the machine status header
+        sender.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + "Machine Status:");
+
+        // Return server/java info
+        sender.sendMessage(ChatColor.GOLD + "OS Name: " + ChatColor.WHITE + System.getProperty("os.name"));
+        sender.sendMessage(ChatColor.GOLD + "OS Version: " + ChatColor.WHITE + System.getProperty("os.version"));
+        sender.sendMessage(ChatColor.GOLD + "Java Version: " + ChatColor.WHITE + System.getProperty("java.version"));
         return true;
     }
 
