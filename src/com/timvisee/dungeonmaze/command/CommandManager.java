@@ -197,6 +197,20 @@ public class CommandManager {
         statusCommand.setMaximumArguments(false);
         statusCommand.setCommandPermissions("dungeonmaze.command.status", CommandPermissions.DefaultPermission.OP_ONLY);
 
+        // Register the status command
+        CommandDescription serviceCommand = new CommandDescription(
+                new ServiceCommand(),
+                new ArrayList<String>() {{
+                    add("services");
+                    add("service");
+                    add("serv");
+                }},
+                "Services command",
+                "Show detailed information about all the Dungeon Maze serivces.",
+                dungeonMazeCommand);
+        serviceCommand.setMaximumArguments(false);
+        serviceCommand.setCommandPermissions("dungeonmaze.command.services", CommandPermissions.DefaultPermission.OP_ONLY);
+
         // Register the version command
         CommandDescription versionCommand = new CommandDescription(
                 new VersionCommand(),
