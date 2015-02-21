@@ -536,10 +536,11 @@ public class WorldManager {
 	 * configuration file as needed.
 	 *
 	 * @param worldName The name of the world to configure the server for.
+     * @param preload True to automatically preload the world on startup, false otherwise.
 	 *
 	 * @return True on success, false on failure.
 	 */
-	public boolean prepareDungeonMazeWorld(String worldName) {
+	public boolean prepareDungeonMazeWorld(String worldName, boolean preload) {
 		// Edit the bukkit.yml file so bukkit knows what generator to use for the Dungeon Maze worlds, also update the
 		// Dungeon Maze files.
 		// Set the generator in the bukkit config file
@@ -564,8 +565,9 @@ public class WorldManager {
 		// Add the world if it doesn't exist yet
 		if(!worlds.contains(worldName))
 			worlds.add(worldName);
-		if(!preloadWorlds.contains(worldName))
-			preloadWorlds.add(worldName);
+        if(preload)
+            if(!preloadWorlds.contains(worldName))
+                preloadWorlds.add(worldName);
 
 		// Update the worlds and preload worlds section again
 		Core.getConfigHandler().config.set("worlds", worlds);

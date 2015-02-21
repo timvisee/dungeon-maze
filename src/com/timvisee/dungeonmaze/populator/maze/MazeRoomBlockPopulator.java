@@ -26,7 +26,6 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 		// The 4 rooms on each layer
 		for(int chunkX = 0; chunkX < 16; chunkX += 8) {
 			for(int chunkZ = 0; chunkZ < 16; chunkZ += 8) {
-
 				// Make sure this room isn't constant
 				if(DungeonMaze.instance.isConstantRoom(w.getName(), c, chunkX, y, chunkZ))
 					continue;

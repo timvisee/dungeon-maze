@@ -247,16 +247,17 @@ public class ApiWorldManager {
 	 * configuration file as needed.
 	 *
 	 * @param worldName The name of the world to configure the server for.
+     * @param preload True to automatically preload the world on startup, false otherwise.
 	 *
 	 * @return True on success, false on failure.
 	 */
-	public boolean prepareDungeonMazeWorld(String worldName) {
+	public boolean prepareDungeonMazeWorld(String worldName, boolean preload) {
 		// Make sure the world manager instance is valid
 		if(!isWorldManagerValid())
 			return false;
 
 		// Prepare a Dungeon Maze world
-		return getWorldManager().prepareDungeonMazeWorld(worldName);
+		return getWorldManager().prepareDungeonMazeWorld(worldName, preload);
 	}
 
 	/**

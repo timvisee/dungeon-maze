@@ -136,7 +136,12 @@ public class StatusCommand extends ExecutableCommand {
         // Print the server status
         sender.sendMessage(ChatColor.GOLD + "Server Version: " + ChatColor.WHITE + Bukkit.getVersion());
         sender.sendMessage(ChatColor.GOLD + "Bukkit Version: " + ChatColor.WHITE + Bukkit.getBukkitVersion());
-        sender.sendMessage(ChatColor.GOLD + "Running Plugins: " + ChatColor.WHITE + String.valueOf(Bukkit.getPluginManager().getPlugins().length));
+        sender.sendMessage(ChatColor.GOLD + "Running Plugins: " + ChatColor.WHITE + Bukkit.getPluginManager().getPlugins().length);
+
+        // Get the world manager
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager != null)
+            sender.sendMessage(ChatColor.GOLD + "Loaded Worlds: " + ChatColor.WHITE + Bukkit.getWorlds().size() + ChatColor.GRAY + " / " + worldManager.getWorlds().size());
 
         // Print the server time
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

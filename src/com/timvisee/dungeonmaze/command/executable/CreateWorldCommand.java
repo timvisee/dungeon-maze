@@ -36,6 +36,30 @@ public class CreateWorldCommand extends ExecutableCommand {
             return true;
         }
 
+        // Set whether the world should be preloaded
+        boolean preloadWorld = true;
+
+        // Get whether the world should be preloaded based on the arguments
+        if(commandArguments.getCount() >= 2) {
+            String arg = commandArguments.get(1);
+
+            // Check whether the argument equals 'force'
+            if(arg.equalsIgnoreCase("preload"))
+                preloadWorld = true;
+
+            else if(arg.equalsIgnoreCase("true") || arg.equalsIgnoreCase("t") || arg.equalsIgnoreCase("yes") || arg.equalsIgnoreCase("y"))
+                preloadWorld = true;
+
+            else if(arg.equalsIgnoreCase("false") || arg.equalsIgnoreCase("f") || arg.equalsIgnoreCase("no") || arg.equalsIgnoreCase("n"))
+                preloadWorld = false;
+
+            else {
+                sender.sendMessage(ChatColor.DARK_RED + arg);
+                sender.sendMessage(ChatColor.DARK_RED + "Invalid argument!");
+                return true;
+            }
+        }
+
         // Get the world manager, and make sure it's valid
         WorldManager worldManager = Core.getWorldManager();
         boolean showWorldManagerError = false;
@@ -60,7 +84,7 @@ public class CreateWorldCommand extends ExecutableCommand {
         sender.sendMessage(ChatColor.YELLOW + "Preparing the server...");
 
         // Prepare the server for the new world
-        if(!worldManager.prepareDungeonMazeWorld(worldName)) {
+        if(!worldManager.prepareDungeonMazeWorld(worldName, preloadWorld)) {
             sender.sendMessage(ChatColor.DARK_RED + "Failed to prepare the server!");
             return true;
         }

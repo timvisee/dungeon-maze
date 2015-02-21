@@ -64,6 +64,7 @@ public class CommandManager {
                 "Create a new Dungeon Maze world, the name of the world must be unique.",
                 dungeonMazeCommand);
         createWorldCommand.addArgument(new CommandArgumentDescription("world", "The name of the world to create.", false));
+        createWorldCommand.addArgument(new CommandArgumentDescription("preload", "True or False to preload the world on startup.", true));
         createWorldCommand.setCommandPermissions("dungeonmaze.command.createworld", CommandPermissions.DefaultPermission.OP_ONLY);
 
         // Register the teleport command
