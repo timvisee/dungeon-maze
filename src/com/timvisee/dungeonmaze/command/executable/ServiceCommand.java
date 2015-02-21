@@ -73,9 +73,9 @@ public class ServiceCommand extends ExecutableCommand {
         for(Service service : services) {
             // Check whether the service is initialized
             if(service.isInit())
-                sender.sendMessage(ChatColor.WHITE + " " + service.getName() + " " + ChatColor.GREEN + ChatColor.ITALIC + "(Loaded)");
+                sender.sendMessage(ChatColor.WHITE + " " + service.getName() + " service " + ChatColor.GREEN + ChatColor.ITALIC + "(Loaded)");
             else
-                sender.sendMessage(ChatColor.WHITE + " " + service.getName() + " " + ChatColor.DARK_RED + ChatColor.ITALIC + "(Not loaded)");
+                sender.sendMessage(ChatColor.WHITE + " " + service.getName() + " service " + ChatColor.DARK_RED + ChatColor.ITALIC + "(Not loaded)");
         }
     }
 }

@@ -125,16 +125,14 @@ public class CommandManager {
 
         // Register the reload command
         CommandDescription reloadCommand = new CommandDescription(
-
                 new ReloadCommand(),
                 new ArrayList<String>() {{
                     add("reload");
-                    add("restart");
                     add("rld");
                     add("r");
                 }},
-                "Reload plugin",
-                "Reload the Dungeon maze plugin.",
+                "Reload Dungeon Maze",
+                "Reload the Dungeon Maze plugin.",
                 dungeonMazeCommand);
         reloadCommand.setCommandPermissions("dungeonmaze.command.reload", CommandPermissions.DefaultPermission.OP_ONLY);
         reloadCommand.addArgument(new CommandArgumentDescription("force", "True or False to force reload.", true));
@@ -152,6 +150,19 @@ public class CommandManager {
                 "Reload the permissions system and rehook the installed permissions system.",
                 dungeonMazeCommand);
         reloadPermissionsCommand.setCommandPermissions("dungeonmaze.command.reloadpermissions", CommandPermissions.DefaultPermission.OP_ONLY);
+
+        // Register the restart command
+        CommandDescription restartCommand = new CommandDescription(
+                new RestartCommand(),
+                new ArrayList<String>() {{
+                    add("restart");
+                    add("rstrt");
+                }},
+                "Restart Dungeon Maze",
+                "Restart the Dungeon Maze plugin.",
+                dungeonMazeCommand);
+        restartCommand.setCommandPermissions("dungeonmaze.command.restart", CommandPermissions.DefaultPermission.OP_ONLY);
+        restartCommand.addArgument(new CommandArgumentDescription("force", "True or False to force restart.", true));
 
         // Register the check updates command
         CommandDescription checkUpdatesCommand = new CommandDescription(

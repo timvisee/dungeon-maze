@@ -4,6 +4,7 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
+import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.util.Profiler;
 import com.timvisee.dungeonmaze.world.WorldManager;
@@ -26,7 +27,10 @@ public class ReloadCommand extends ExecutableCommand {
         // Profile the reload process
         Profiler p = new Profiler(true);
 
-        // Set whether the reload is forced
+        // Show a status message
+        sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze...");
+
+        /* // Set whether the reload is forced
         boolean force = false;
 
         // Get whether the reload should be forced from the command arguments
@@ -48,58 +52,23 @@ public class ReloadCommand extends ExecutableCommand {
                 sender.sendMessage(ChatColor.DARK_RED + "Invalid argument!");
                 return true;
             }
-        }
+        }*/
 
-        // Show a reload warning
-        if(force) {
-            sender.sendMessage(ChatColor.YELLOW + "Force reloading Dungeon Maze...");
-            Core.getLogger().info("Force reloading Dungeon Maze...");
-        } else {
-            sender.sendMessage(ChatColor.YELLOW + "Reloading Dungeon Maze...");
-            Core.getLogger().info("Reloading Dungeon Maze...");
-        }
+        // Reload the configuration
+        ConfigHandler configHandler = Core.getConfigHandler();
+        if(configHandler != null) {
+            configHandler.load();
+            sender.sendMessage(ChatColor.YELLOW + "Reloaded the configuration!");
+        } else
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to reload the configuration!");
 
-        // Profile the Dungeon Maze Core destruction
-        Profiler stopCoreProfiler = new Profiler(true);
-
-        // Destroy the Dungeon Maze core
-        if(!DungeonMaze.instance.destroyCore(force)) {
-            // Failed to destroy the core, show a status message
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to stop the Dungeon Maze Core after " + stopCoreProfiler.getTimeFormatted() + "!");
-            sender.sendMessage(ChatColor.DARK_RED + "Please use " + ChatColor.GOLD + "/reload" + ChatColor.DARK_RED + " for plugin instability reasons!");
-            Core.getLogger().error("Failed to stop the core, after " + stopCoreProfiler.getTimeFormatted() + "!");
-
-            // Return if the reload isn't force
-            if(!force)
-                return true;
-        }
-
-        // Show a status message
-        sender.sendMessage(ChatColor.YELLOW + "Dungeon Maze Core stopped, took " + stopCoreProfiler.getTimeFormatted() + "!");
-
-        // Profile the core starting
-        Profiler startCoreProfiler = new Profiler(true);
-
-        // Initialize the core, show the result status
-        if(!DungeonMaze.instance.initCore()) {
-            // Core failed to initialize, show a status message
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to start the Dungeon Maze Core after " + startCoreProfiler.getTimeFormatted() + "!");
-            sender.sendMessage(ChatColor.DARK_RED + "Please use " + ChatColor.GOLD + "/reload" + ChatColor.DARK_RED + " for plugin instability reasons!");
-            Core.getLogger().error("Failed to start the core, after " + startCoreProfiler.getTimeFormatted() + "!");
-
-            // Return if the reload isn't forced
-            if(!force)
-                return true;
-        }
-
-        // Core initialized, show a status message
-        Core.getLogger().info("Core started successfully, took " + p.getTimeFormatted() + "!");
-        sender.sendMessage(ChatColor.YELLOW + "Dungeon Maze Core started, took " + startCoreProfiler.getTimeFormatted() + "!");
-
-        // Show a status message of the running services
-        final int runningServices = Core.instance.getServiceManager().getServiceCount(true);
-        final int totalServices = Core.instance.getServiceManager().getServiceCount();
-        sender.sendMessage(ChatColor.YELLOW + "Started " + ChatColor.GOLD + runningServices + ChatColor.YELLOW + " out of " + ChatColor.GOLD + totalServices + ChatColor.YELLOW + " Dungeon Maze services!");
+        // Get the world manager to reload the world list, and make sure it's valid
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager != null) {
+            worldManager.refresh();
+            sender.sendMessage(ChatColor.YELLOW + "Reloaded the worlds!");
+        } else
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to reload the worlds!");
 
         // Dungeon Maze reloaded, show a status message
         sender.sendMessage(ChatColor.GREEN + "Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");
