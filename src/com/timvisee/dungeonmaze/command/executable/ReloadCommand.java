@@ -62,9 +62,6 @@ public class ReloadCommand extends ExecutableCommand {
         // Profile the Dungeon Maze Core destruction
         Profiler stopCoreProfiler = new Profiler(true);
 
-        // Show a status message
-        sender.sendMessage(ChatColor.YELLOW + "Stopping the Dungeon Maze Core...");
-
         // Destroy the Dungeon Maze core
         if(!DungeonMaze.instance.destroyCore(force)) {
             // Failed to destroy the core, show a status message
@@ -79,7 +76,6 @@ public class ReloadCommand extends ExecutableCommand {
 
         // Show a status message
         sender.sendMessage(ChatColor.YELLOW + "Dungeon Maze Core stopped, took " + stopCoreProfiler.getTimeFormatted() + "!");
-        sender.sendMessage(ChatColor.YELLOW + "Starting the Dungeon Maze Core...");
 
         // Profile the core starting
         Profiler startCoreProfiler = new Profiler(true);
@@ -96,9 +92,16 @@ public class ReloadCommand extends ExecutableCommand {
                 return true;
         }
 
-        // Core initialized, show a status message, return the result
+        // Core initialized, show a status message
         Core.getLogger().info("Core started successfully, took " + p.getTimeFormatted() + "!");
         sender.sendMessage(ChatColor.YELLOW + "Dungeon Maze Core started, took " + startCoreProfiler.getTimeFormatted() + "!");
+
+        // Show a status message of the running services
+        final int runningServices = Core.instance.getServiceManager().getServiceCount(true);
+        final int totalServices = Core.instance.getServiceManager().getServiceCount();
+        sender.sendMessage(ChatColor.YELLOW + "Started " + ChatColor.GOLD + runningServices + ChatColor.YELLOW + " out of " + ChatColor.GOLD + totalServices + ChatColor.YELLOW + " Dungeon Maze services!");
+
+        // Dungeon Maze reloaded, show a status message
         sender.sendMessage(ChatColor.GREEN + "Dungeon Maze has been reloaded successfully, took " + p.getTimeFormatted() + "!");
         return true;
     }

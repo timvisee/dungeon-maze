@@ -125,9 +125,11 @@ public class CommandManager {
 
         // Register the reload command
         CommandDescription reloadCommand = new CommandDescription(
+
                 new ReloadCommand(),
                 new ArrayList<String>() {{
                     add("reload");
+                    add("restart");
                     add("rld");
                     add("r");
                 }},

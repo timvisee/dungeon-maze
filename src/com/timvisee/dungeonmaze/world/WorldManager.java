@@ -34,6 +34,8 @@ public class WorldManager {
 	private List<String> dungeonMazeWorlds = new ArrayList<String>();
 	/** Defines the Dungeon Maze worlds that need to be preloaded. */
 	private List<String> dungeonMazeWorldsPreload = new ArrayList<String>();
+	/** Defines all the worlds in the server. (Including the Dungeon Maze worlds) */
+	private List<String> worlds = new ArrayList<String>();
 
 	/**
 	 * Constructor. This won't initialize the manager immediately.
@@ -164,8 +166,69 @@ public class WorldManager {
 		//if(multiverseCore == null)
 			setBukkitConfigWorldGenerator(worlds);
 
+		// Get all the filesystem objects in the worlds directory of the server
+		File[] files = Bukkit.getWorldContainer().listFiles();
+
+		// List all the worlds
+		if(files != null) {
+			// Reset the worlds list
+			this.worlds.clear();
+
+			// Loop through all the filesystem objects in the worlds directory
+			for(File worldDirectory : files) {
+				// Make sure the file is a directory
+				if(!worldDirectory.isDirectory())
+					continue;
+
+				// Get the name of the world
+				String worldName = worldDirectory.getName();
+
+				// Make sure this world is valid
+				if(!isWorld(worldName))
+					continue;
+
+				// Add the world to the list
+				this.worlds.add(worldName);
+			}
+		}
+
 		// Return the result
 		return true;
+	}
+
+	/**
+	 * Get all the worlds in the server. The worlds don't have to be loaded. This also includes all the Dungeon Maze
+	 * worlds.
+	 *
+	 * @return All worlds.
+	 */
+	public List<String> getWorlds() {
+		return getWorlds(false);
+	}
+
+	/**
+	 * Get all the worlds in the server. The worlds don't have to be loaded. This also includes all the Dungeon Maze
+	 * worlds.
+	 *
+	 * @param excludeDungeonMaze True to exclude all the Dungeon Maze worlds, false otherwise.
+	 *
+	 * @return All worlds.
+	 */
+	public List<String> getWorlds(boolean excludeDungeonMaze) {
+		// Return the list of worlds if the Dungeon Maze worlds don't have to be excluded
+		if(!excludeDungeonMaze)
+			return this.worlds;
+
+		// Create a list to put all the worlds in
+		List<String> otherWorlds = new ArrayList<String>();
+
+		// Loop through all the worlds, add it to the list if it isn't a Dungeon Maze world
+		for(String worldName : this.worlds)
+			if(!isDungeonMazeWorld(worldName))
+				otherWorlds.add(worldName);
+
+		// Return the list of other worlds
+		return otherWorlds;
 	}
 
 	/**
@@ -282,7 +345,7 @@ public class WorldManager {
 	 *
 	 * @return True if the world is a Dungeon Maze world and the world is loaded, false otherwise.
 	 */
-	public boolean isLoadedDungeonMazeWorld(String worldName) {
+	public boolean isDungeonMazeWorldLoaded(String worldName) {
 		return getLoadedDungeonMazeWorlds(false).contains(worldName);
 	}
 

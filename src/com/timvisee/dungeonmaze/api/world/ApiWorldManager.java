@@ -208,7 +208,7 @@ public class ApiWorldManager {
 			return false;
 
 		// Check whether a world is a loaded Dungeon Maze world
-		return getWorldManager().isLoadedDungeonMazeWorld(w);
+		return getWorldManager().isDungeonMazeWorldLoaded(w);
 	}
 
 	/**

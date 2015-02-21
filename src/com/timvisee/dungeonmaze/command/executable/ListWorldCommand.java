@@ -22,29 +22,43 @@ public class ListWorldCommand extends ExecutableCommand {
      */
     @Override
     public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
-        // Get the list of Dungeon Maze worlds
-        List<String> worlds = Core.getWorldManager().getDungeonMazeWorlds();
-
-        // Get the Dungeon Maze world manager, and make sure the instance is valid
+        // Get the world manager and make sure it's valid
         WorldManager worldManager = Core.getWorldManager();
         if(worldManager == null) {
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to list the Dungeon Maze worlds!");
-            return false;
+            sender.sendMessage(ChatColor.DARK_RED + "Error, failed to list the worlds!");
+            return true;
         }
 
-        // Show the list of worlds
+        // Get the list of Dungeon Maze worlds and other worlds
+        List<String> dungeonMazeWorlds = worldManager.getDungeonMazeWorlds();
+        List<String> otherWorlds = worldManager.getWorlds(true);
+
+        // Show the list of Dungeon Maze worlds
         sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE WORLDS ]==========");
         sender.sendMessage(ChatColor.GOLD + "Dungeon Maze worlds:");
-        if(worlds.size() > 0) {
-            for(String w : worlds) {
-                if(worldManager.isLoadedDungeonMazeWorld(w))
-                    sender.sendMessage(ChatColor.YELLOW + "" + ChatColor.ITALIC + " " + w + ": " + ChatColor.GREEN  + "Loaded");
+        if(dungeonMazeWorlds.size() > 0) {
+            for(String worldName : dungeonMazeWorlds) {
+                if(worldManager.isDungeonMazeWorldLoaded(worldName))
+                    sender.sendMessage(ChatColor.WHITE + " " + worldName + ChatColor.GREEN + ChatColor.ITALIC + " (Loaded)");
                 else
-                    sender.sendMessage(ChatColor.YELLOW + "" + ChatColor.ITALIC + " " + w + ": " + ChatColor.DARK_RED + "Not Loaded");
+                    sender.sendMessage(ChatColor.WHITE + " " + worldName + ChatColor.GRAY + ChatColor.ITALIC + " (Not Loaded)");
             }
         } else
             // No Dungeon Maze world available, show a message
-            sender.sendMessage(ChatColor.DARK_RED + "You don't have any Dungeon Maze world yet!");
+            sender.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + " No Dungeon Maze worlds available!");
+
+        // Show the list of other worlds
+        sender.sendMessage(ChatColor.GOLD + "Other worlds:");
+        if(otherWorlds.size() > 0) {
+            for(String worldName : otherWorlds) {
+                if(worldManager.isWorldLoaded(worldName))
+                    sender.sendMessage(ChatColor.WHITE + " " + worldName + ChatColor.GREEN + ChatColor.ITALIC + " (Loaded)");
+                else
+                    sender.sendMessage(ChatColor.WHITE + " " + worldName + ChatColor.GRAY + ChatColor.ITALIC + " (Not Loaded)");
+            }
+        } else
+            // No other world available, show a message
+            sender.sendMessage(ChatColor.GRAY + "" + ChatColor.ITALIC + " No other worlds available!");
 
         // Return the result
         return true;
