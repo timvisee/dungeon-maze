@@ -14,6 +14,8 @@ public class DungeonChunkGrid {
     /** Defines the loaded chunks in the grid. */
     private List<DungeonChunk> chunks = new ArrayList<DungeonChunk>();
 
+    /** Defines the Dungeon Maze data directory name. */
+    private static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
     /** Defines the chunk data directory name. */
     private static final String CHUNK_DATA_DIRECTORY = "chunks";
 
@@ -50,9 +52,7 @@ public class DungeonChunkGrid {
      * @return The chunk grid data directory
      */
     public File getChunkGridDirectory() {
-        // TODO: Get the dungeon maze world data directory using some method!
-
-        return new File(this.world.getWorldFolder(), "DungeonMaze/" + CHUNK_DATA_DIRECTORY);
+        return DungeonChunkGridManager.getChunkGridDataDirectory(this.world);
     }
 
     /**

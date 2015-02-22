@@ -2,8 +2,10 @@ package com.timvisee.dungeonmaze.world.dungeon.chunk.grid;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.world.WorldManager;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,11 @@ public class DungeonChunkGridManager {
 
     /** The list of loaded chunk grids. */
     private List<DungeonChunkGrid> grids = new ArrayList<DungeonChunkGrid>();
+
+    /** Defines the Dungeon Maze data directory name. */
+    private static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
+    /** Defines the chunk data directory name. */
+    private static final String CHUNK_DATA_DIRECTORY = "chunks";
 
     /**
      * Constructor.
@@ -31,8 +38,13 @@ public class DungeonChunkGridManager {
         if(this.init)
             return true;
 
+        // Get the world manager
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager != null)
+            // Load the chunk grids for all the loaded Dungeon Maze worlds
+            loadChunkGridsForWorldNames(worldManager.getLoadedDungeonMazeWorlds());
+
         // Initialize the manager, return the result
-        // TODO: Initialization code here!
         this.init = true;
         return true;
     }
@@ -57,8 +69,12 @@ public class DungeonChunkGridManager {
         if(!this.init)
             return true;
 
-        // TODO: Unload all grids!
-        // TODO: Destroy code here!
+        // Unload all chunk grids
+        if(!unloadAllChunkGrids())
+            return false;
+
+        // Clear the grids list
+        this.grids.clear();
 
         // Set the initialization state, return the result
         this.init = false;
@@ -92,7 +108,7 @@ public class DungeonChunkGridManager {
         if(dungeonChunkGrid != null)
             return dungeonChunkGrid;
 
-        // TODO: Should we create the dungeon chunk grid for this world?
+        // The world doesn't seem to be an existing Dungeon Maze world, return null
         return null;
     }
 
@@ -103,7 +119,7 @@ public class DungeonChunkGridManager {
      *
      * @return The dungeon chunk grid, or null on failure.
      */
-    private DungeonChunkGrid loadChunkGrid(World world) {
+    public DungeonChunkGrid loadChunkGrid(World world) {
         // Make sure the dungeon chunk grid isn't loaded already
         DungeonChunkGrid dungeonChunkGrid = getLoadedChunkGrid(world);
         if(dungeonChunkGrid != null)
@@ -115,18 +131,76 @@ public class DungeonChunkGridManager {
             return null;
 
         // Make sure the world exists
-        // TODO: Should we create the dungeon chunk grid if it doesn't exist? Create a separate method for this?
         if(!worldManager.isWorld(world.getName()))
             return null;
 
-        // TODO: Load the data!
-        return null;
+        // Make sure the world is a Dungeon Maze world
+        if(!worldManager.isDungeonMazeWorld(world.getName()))
+            return null;
+
+        // Make sure this world has any chunk grid data available, if not create it
+        createChunkGridData(world);
+
+        // Load the chunk grid, add it to the list and return the result
+        dungeonChunkGrid = new DungeonChunkGrid(world);
+        this.grids.add(dungeonChunkGrid);
+        return dungeonChunkGrid;
+    }
+
+    /**
+     * Load the dungeon chunk grids for a list of worlds.
+     *
+     * @param worlds The list of worlds to load the chunk grids for.
+     *
+     * @return The list of loaded chunk grids. The list may contain null elements for worlds the chunk grid couldn't
+     * be loaded for.
+     */
+    public List<DungeonChunkGrid> loadChunkGrids(List<World> worlds) {
+        // Create a list of chunk grids
+        List<DungeonChunkGrid> grids = new ArrayList<DungeonChunkGrid>();
+
+        // Load the chunk grid for each world
+        for(World world : worlds) {
+            // Make sure the item isn't null
+            if(world == null)
+                grids.add(null);
+            else
+                grids.add(loadChunkGrid(world));
+        }
+
+        // Return the list of chunk grids
+        return grids;
+    }
+
+    /**
+     * Load the dungeon chunk grids for a list of worlds.
+     *
+     * @param worldNames The list of world names to load the chunk grids for. The worlds must be loaded.
+     *
+     * @return The list of loaded chunk grids. The list may contain null elements for worlds the chunk grid couldn't be
+     * loaded for.
+     */
+    public List<DungeonChunkGrid> loadChunkGridsForWorldNames(List<String> worldNames) {
+        // Get the world manager, and make sure it's valid
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager == null)
+            return null;
+
+        // Create a list of worlds
+        List<World> worlds = new ArrayList<World>();
+
+        // Fill the worlds list with world instances
+        for(String worldName : worldNames)
+            worlds.add(Bukkit.getWorld(worldName));
+
+        // Load the chunk grids for the worlds, return the result
+        return loadChunkGrids(worlds);
     }
 
     /**
      * Unload the chunk grid for a specific world.
      *
-     * @param world The world to unload the chunk grid for.
+     * @param world The world to unload the chunk grid for. Or null to unload the chunk grids for all the worlds.
      *
      * @return True if any chunk grid was unloaded, false otherwise. If there wasn't any loaded chunk grid for the
      * specified world, false will be returned.
@@ -136,7 +210,10 @@ public class DungeonChunkGridManager {
         boolean unloaded = false;
 
         // Show a status message
-        Core.getLogger().info("Unloading all dungeon chunks for '" + world.getName() + "'...");
+        if(world != null)
+            Core.getLogger().info("Unloading all dungeon chunks for '" + world.getName() + "'...");
+        else
+            Core.getLogger().info("Unloading all dungeon chunks for all worlds...");
 
         // Loop through each loaded chunk grid to see if it matches the world
         for(int i = this.grids.size() - 1; i >= 0; i--) {
@@ -144,8 +221,9 @@ public class DungeonChunkGridManager {
             DungeonChunkGrid grid = this.grids.get(i);
 
             // Make sure the world matches
-            if(!grid.getWorld().equals(world))
-                continue;
+            if(world != null)
+                if(!grid.getWorld().equals(world))
+                    continue;
 
             // Save all the dungeon chunks in the grid
             grid.saveLoadedChunks();
@@ -157,6 +235,63 @@ public class DungeonChunkGridManager {
 
         // Return true if any chunk grid was unloaded
         return unloaded;
+    }
+
+    /**
+     * Unload all the loaded chunk grids.
+     *
+     * @return True if all chunk grids are unloaded.
+     */
+    public boolean unloadAllChunkGrids() {
+        // Unload all chunk grids
+        unloadChunkGrid(null);
+
+        // Check whether there's any chunk grid left
+        return this.grids.size() == 0;
+    }
+
+    /**
+     * Create chunk grid data for a world.
+     *
+     * @param world The world to create the data for.
+     *
+     * @return True if any data is created, false otherwise. True will also be returned if the chunk grid data was
+     * already available for this world.
+     */
+    public boolean createChunkGridData(World world) {
+        // Make sure the world has no chunk grid data
+        if(hasChunkGridData(world))
+            return true;
+
+        // Get the chunk grid data folder
+        File chunkGridDataFolder = getChunkGridDataDirectory(world);
+
+        // Create the chunk grid data for a world, return the result
+        return chunkGridDataFolder.mkdirs();
+    }
+
+    /**
+     * Check whether a world has any chunk grid data.
+     *
+     * @param world The world to check for.
+     *
+     * @return True if the world has any chunk grid data, false otherwise. False will also be returned on error.
+     */
+    public boolean hasChunkGridData(World world) {
+        // Get the world manager and make sure it's valid
+        WorldManager worldManager = Core.getWorldManager();
+        if(worldManager == null)
+            return false;
+
+        // Make sure the world exists
+        if(!worldManager.isWorld(world.getName()))
+            return false;
+
+        // Get the chunk grid data directory for this world
+        File chunkGridDataFolder = getChunkGridDataDirectory(world);
+
+        // Check whether the directory exists
+        return chunkGridDataFolder.isDirectory();
     }
 
     /**
@@ -185,5 +320,16 @@ public class DungeonChunkGridManager {
      */
     public boolean isLoadedChunkGrid(World world) {
         return getLoadedChunkGrid(world) != null;
+    }
+
+    /**
+     * Get the chunk grid data directory for a specific world.
+     *
+     * @param world The world to get the data directory for.
+     *
+     * @return The chunk grid data directory for the world.
+     */
+    public static File getChunkGridDataDirectory(World world) {
+        return new File(world.getWorldFolder(), DUNGEON_MAZE_DATA_DIRECTORY + "/" + CHUNK_DATA_DIRECTORY);
     }
 }

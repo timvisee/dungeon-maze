@@ -66,7 +66,7 @@ public class RestartCommand extends ExecutableCommand {
         if(!DungeonMaze.instance.destroyCore(force)) {
             // Failed to destroy the core, show a status message
             sender.sendMessage(ChatColor.DARK_RED + "Failed to stop the Dungeon Maze Core after " + stopCoreProfiler.getTimeFormatted() + "!");
-            sender.sendMessage(ChatColor.DARK_RED + "Please use " + ChatColor.GOLD + "/restart" + ChatColor.DARK_RED + " for plugin instability reasons!");
+            sender.sendMessage(ChatColor.DARK_RED + "Please use " + ChatColor.GOLD + "/reload" + ChatColor.DARK_RED + " for plugin instability reasons!");
             Core.getLogger().error("Failed to stop the core, after " + stopCoreProfiler.getTimeFormatted() + "!");
 
             // Return if the restart isn't force
@@ -84,7 +84,7 @@ public class RestartCommand extends ExecutableCommand {
         if(!DungeonMaze.instance.initCore()) {
             // Core failed to initialize, show a status message
             sender.sendMessage(ChatColor.DARK_RED + "Failed to start the Dungeon Maze Core after " + startCoreProfiler.getTimeFormatted() + "!");
-            sender.sendMessage(ChatColor.DARK_RED + "Please use " + ChatColor.GOLD + "/restart" + ChatColor.DARK_RED + " for plugin instability reasons!");
+            sender.sendMessage(ChatColor.DARK_RED + "Please use " + ChatColor.GOLD + "/reload" + ChatColor.DARK_RED + " for plugin instability reasons!");
             Core.getLogger().error("Failed to start the core, after " + startCoreProfiler.getTimeFormatted() + "!");
 
             // Return if the restart isn't forced
@@ -93,7 +93,6 @@ public class RestartCommand extends ExecutableCommand {
         }
 
         // Core initialized, show a status message
-        Core.getLogger().info("Core started successfully, took " + p.getTimeFormatted() + "!");
         sender.sendMessage(ChatColor.YELLOW + "Dungeon Maze Core started, took " + startCoreProfiler.getTimeFormatted() + "!");
 
         // Show a status message of the running services

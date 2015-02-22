@@ -105,6 +105,10 @@ public class DungeonChunk {
      * @return The dungeon chunk.
      */
     public static DungeonChunk load(World world, ConfigurationSection config) {
+        // Make sure the configuration contains the proper values
+        if(!config.isSet("position.x") || !config.isSet("position.z"))
+            return null;
+
         // Get the position
         int x = config.getInt("position.x", 0);
         int z = config.getInt("position.z", 0);
@@ -112,7 +116,7 @@ public class DungeonChunk {
         // Construct a new dungeon chunk
         DungeonChunk dungeonChunk = new DungeonChunk(world, x, z);
 
-        // TODO: Load all other stuff!
+        // TODO: Load all other chunk stuff!
 
         // Return the instance
         return dungeonChunk;
@@ -134,7 +138,8 @@ public class DungeonChunk {
         save(config.getConfigurationSection(CONFIG_DUNGEON_CHUNK_SECTION));
 
         // Append the current Dungeon Maze version to the file
-        config.set("version", DungeonMaze.instance.getVersionName());
+        config.set("version.name", DungeonMaze.getVersionName());
+        config.set("version.code", DungeonMaze.getVersionCode());
 
         // Save the file
         try {

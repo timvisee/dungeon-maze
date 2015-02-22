@@ -5,6 +5,7 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -60,8 +61,19 @@ public class TeleportCommand extends ExecutableCommand {
             return true;
         }
 
+        // Get the spawn location to teleport the player to
+        Location spawn = world.getSpawnLocation();
+
+        // Force-set the location on Dungeon Maze worlds
+        // TODO: Fix this!
+        if(worldManager.isDungeonMazeWorld(worldName)) {
+            spawn.setX(4);
+            spawn.setY(68);
+            spawn.setZ(4);
+        }
+
         // Teleport the player, show a status message and return true
-        player.teleport(world.getSpawnLocation());
+        player.teleport(spawn);
         player.sendMessage(ChatColor.GREEN + "You have been teleported to " + ChatColor.GOLD + worldName + ChatColor.GREEN + "!");
         return true;
     }
