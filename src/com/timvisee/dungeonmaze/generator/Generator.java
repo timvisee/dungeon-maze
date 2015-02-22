@@ -4,8 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGrid;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -141,6 +145,20 @@ public class Generator extends ChunkGenerator {
 	@SuppressWarnings({"ConstantConditions", "deprecation"})
 	@Override
 	public short[][] generateExtBlockSections(World world, Random rand, int chunkX, int chunkZ, BiomeGrid biomes) {
+        // Get the chunk grid manager, and make sure it's valid
+        DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
+        if(chunkGridManager == null)
+            return null;
+
+        // Create or get the chunk grid for the current world
+        DungeonChunkGrid dungeonChunkGrid = chunkGridManager.getChunkGrid(world);
+
+        // Create or get the chunk data for the current chunk
+        DungeonChunk dungeonChunk = dungeonChunkGrid.getChunk(chunkX, chunkZ);
+
+        // TODO: Generate the room data for the Dungeon Chunk before generating it!
+        // TODO: Clear the data on the current dungeon chunk?
+
 		// Create a chunk
 		BukkitChunk chunk = new BukkitChunk(world, chunkX, chunkZ);
 
@@ -258,7 +276,7 @@ public class Generator extends ChunkGenerator {
 	 */
 	@Override
 	public Location getFixedSpawnLocation(World world, Random random) {
-		// TODO: Make sure the world is a Dungeon Maze world.
+		// TODO: Make sure the world is a Dungeon Maze world?
 
 		return new Location(world, 4, 68, 4);
 	}

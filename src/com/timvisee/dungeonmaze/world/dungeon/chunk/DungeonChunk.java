@@ -1,6 +1,7 @@
 package com.timvisee.dungeonmaze.world.dungeon.chunk;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGrid;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,8 +18,6 @@ public class DungeonChunk {
 
     /** Defines the dungeon chunk data section name. */
     private final static String CONFIG_DUNGEON_CHUNK_SECTION = "dungeonChunk";
-    /** Defines the name of the dungeon chunk data file. */
-    private final static String CHUNK_DATA_FILE = "data.dmc";
 
     /**
      * Constructor.
@@ -61,14 +60,26 @@ public class DungeonChunk {
     }
 
     /**
+     * Check whether this chunk is at a specific position.
+     *
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
+     *
+     * @return True if the chunk is at this position, false otherwise.
+     */
+    public boolean isAt(int chunkX, int chunkZ) {
+        return this.x == chunkX && this.z == chunkZ;
+    }
+
+    /**
      * Get the chunk data file.
      *
-     * @param chunkGridDataDirectory The chunk grid data directory.
+     * @param dungeonChunkGrid The Dungeon Chunk Grid instance.
      *
      * @return The chunk data file.
      */
-    public File getChunkDataFile(File chunkGridDataDirectory) {
-        return new File(chunkGridDataDirectory, this.x + "/" + this.z + "/" + CHUNK_DATA_FILE);
+    public File getChunkDataFile(DungeonChunkGrid dungeonChunkGrid) {
+        return dungeonChunkGrid.getChunkDataFile(this.x, this.z);
     }
 
     /**

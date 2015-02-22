@@ -14,6 +14,8 @@ public class DungeonChunkGrid {
     /** Defines the loaded chunks in the grid. */
     private List<DungeonChunk> chunks = new ArrayList<DungeonChunk>();
 
+    /** Defines the name of the dungeon chunk data file. */
+    private final static String CHUNK_DATA_FILE = "data.dmc";
     /** Defines the Dungeon Maze data directory name. */
     private static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
     /** Defines the chunk data directory name. */
@@ -56,6 +58,111 @@ public class DungeonChunkGrid {
     }
 
     /**
+     * Get the data file for a chunk.
+     *
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
+     *
+     * @return The chunk data file.
+     */
+    public File getChunkDataFile(int chunkX, int chunkZ) {
+        return new File(getChunkGridDirectory(), chunkX + "/" + chunkZ + "/" + CHUNK_DATA_FILE);
+    }
+
+    /**
+     * Get a specific dungeon chunk instance. The dungeon chunk data will be created if it doesn't exist yet.
+     *
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
+     *
+     * @return The dungeon chunk instance, or null on failure.
+     */
+    public DungeonChunk getChunk(int chunkX, int chunkZ) {
+        // Loop through all the loaded chunks to see if it's loaded
+        for(DungeonChunk chunk : this.chunks)
+            if(chunk.isAt(chunkX, chunkZ))
+                return chunk;
+
+        // Create or load the chunk data, return the result
+        return loadChunk(chunkX, chunkZ);
+    }
+
+    /**
+     * Load a dungeon chunk. The chunk data will be created if it doesn't exist.
+     *
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
+     *
+     * @return The dungeon chunk instance, or null on failure.
+     */
+    public DungeonChunk loadChunk(int chunkX, int chunkZ) {
+        // Make sure the chunk isn't loaded yet
+        if(isChunkLoaded(chunkX, chunkZ))
+            return getChunk(chunkX, chunkZ);
+
+        // Create the chunk data if it doesn't have any data stored yet
+        if(!hasChunkData(chunkX, chunkZ))
+            return createChunkData(chunkX, chunkZ);
+
+        // Load the chunk data
+        return DungeonChunk.load(this.world, getChunkDataFile(chunkX, chunkZ));
+    }
+
+    /**
+     * Create the chunk data for a specific hunk. The current chunk data will be returned if any data already exists
+     * for this chunk.
+     *
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
+     *
+     * @return The dungeon chunk instance on success, or null on failure.
+     */
+    public DungeonChunk createChunkData(int chunkX, int chunkZ) {
+        // Make sure no data exists for this chunk
+        if(hasChunkData(chunkX, chunkZ))
+            return getChunk(chunkX, chunkZ);
+
+        // Create the chunk data for this chunk, save it and return the instance
+        DungeonChunk dungeonChunk = new DungeonChunk(this.world, chunkX, chunkZ);
+        dungeonChunk.save(getChunkDataFile(chunkX, chunkZ));
+        return dungeonChunk;
+    }
+
+    /**
+     * Check whether a chunk has any data stored.
+     *
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
+     *
+     * @return True if this chunk has any data stored, false otherwise.
+     */
+    public boolean hasChunkData(int chunkX, int chunkZ) {
+        // Get the data file of the chunk
+        File chunkDataFile = getChunkDataFile(chunkX, chunkZ);
+
+        // Check whether this chunk has any data file
+        return chunkDataFile.exists();
+    }
+
+    /**
+     * Check whether a specific chunk is loaded.
+     *
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
+     *
+     * @return True if the chunk is loaded, false otherwise.
+     */
+    public boolean isChunkLoaded(int chunkX, int chunkZ) {
+        // Loop through all the loaded chunks to see if it's loaded
+        for(DungeonChunk chunk : this.chunks)
+            if(chunk.isAt(chunkX, chunkZ))
+                return true;
+
+        // The chunk doesn't seem to be loaded, return false
+        return false;
+    }
+
+    /**
      * Save all the loaded chunks in the current chunks grid.
      *
      * @return The number of saved chunks.
@@ -67,7 +174,7 @@ public class DungeonChunkGrid {
         // Loop through all chunks
         for(DungeonChunk chunk : this.chunks) {
             // Get the chunk data file
-            File chunkDataFile = chunk.getChunkDataFile(getChunkGridDirectory());
+            File chunkDataFile = chunk.getChunkDataFile(this);
 
             // Save the data
             if(chunk.save(chunkDataFile))
