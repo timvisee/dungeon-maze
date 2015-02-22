@@ -49,6 +49,15 @@ public class DungeonChunkGrid {
     }
 
     /**
+     * Get the number of loaded dungeon chunks. This is different than loaded minecraft world chunks.
+     *
+     * @return The number of loaded dungeon chunks.
+     */
+    public int getLoadedChunksCount() {
+        return this.chunks.size();
+    }
+
+    /**
      * The the chunk grid data directory
      *
      * @return The chunk grid data directory
@@ -77,7 +86,7 @@ public class DungeonChunkGrid {
      *
      * @return The dungeon chunk instance, or null on failure.
      */
-    public DungeonChunk getChunk(int chunkX, int chunkZ) {
+    public DungeonChunk getOrCreateChunk(int chunkX, int chunkZ) {
         // Loop through all the loaded chunks to see if it's loaded
         for(DungeonChunk chunk : this.chunks)
             if(chunk.isAt(chunkX, chunkZ))
@@ -98,14 +107,20 @@ public class DungeonChunkGrid {
     public DungeonChunk loadChunk(int chunkX, int chunkZ) {
         // Make sure the chunk isn't loaded yet
         if(isChunkLoaded(chunkX, chunkZ))
-            return getChunk(chunkX, chunkZ);
+            return getOrCreateChunk(chunkX, chunkZ);
 
         // Create the chunk data if it doesn't have any data stored yet
         if(!hasChunkData(chunkX, chunkZ))
             return createChunkData(chunkX, chunkZ);
 
-        // Load the chunk data
-        return DungeonChunk.load(this.world, getChunkDataFile(chunkX, chunkZ));
+        // Load a dungeon chunk and make sure it's valid
+        DungeonChunk dungeonChunk = DungeonChunk.load(this.world, getChunkDataFile(chunkX, chunkZ));
+        if(dungeonChunk == null)
+            return null;
+
+        // Add the chunk to the chunk list, return the result
+        this.chunks.add(dungeonChunk);
+        return dungeonChunk;
     }
 
     /**
@@ -120,7 +135,7 @@ public class DungeonChunkGrid {
     public DungeonChunk createChunkData(int chunkX, int chunkZ) {
         // Make sure no data exists for this chunk
         if(hasChunkData(chunkX, chunkZ))
-            return getChunk(chunkX, chunkZ);
+            return getOrCreateChunk(chunkX, chunkZ);
 
         // Create the chunk data for this chunk, save it and return the instance
         DungeonChunk dungeonChunk = new DungeonChunk(this.world, chunkX, chunkZ);

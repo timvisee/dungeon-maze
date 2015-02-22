@@ -2,16 +2,13 @@ package com.timvisee.dungeonmaze.listener;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
-
-import java.io.File;
-import java.util.Random;
 
 public class WorldListener implements Listener {
 

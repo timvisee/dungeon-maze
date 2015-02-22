@@ -6,6 +6,7 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.world.WorldManager;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -68,6 +69,15 @@ public class StatusCommand extends ExecutableCommand {
                 sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.GRAY + ChatColor.ITALIC + permissionsManager.getUsedPermissionsSystemType().getName());
         } else
             sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
+
+        // Get the dungeon chunk grid manager
+        DungeonChunkGridManager dungeonChunkGridManager = Core.getDungeonChunkGridManager();
+        if(dungeonChunkGridManager != null) {
+            int loadedChunks = dungeonChunkGridManager.getLoadedChunksCount();
+            int loadedGrids = dungeonChunkGridManager.getLoadedGridsCount();
+            sender.sendMessage(ChatColor.GOLD + "Loaded Dungeon Chunks: " + ChatColor.WHITE + loadedChunks + ChatColor.GRAY + " in " + ChatColor.WHITE + loadedGrids + ChatColor.GRAY + " grid" + (loadedGrids != 1 ? "s" : ""));
+        } else
+            sender.sendMessage(ChatColor.GOLD + "Loaded Dungeon Chunks: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Print the service count
         sender.sendMessage(ChatColor.GOLD + "Running Services: " + ChatColor.WHITE + Core.instance.getServiceManager().getServiceCount(true) + ChatColor.GRAY + " / " + Core.instance.getServiceManager().getServiceCount());

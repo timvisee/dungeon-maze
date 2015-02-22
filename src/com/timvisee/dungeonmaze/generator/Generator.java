@@ -145,16 +145,24 @@ public class Generator extends ChunkGenerator {
 	@SuppressWarnings({"ConstantConditions", "deprecation"})
 	@Override
 	public short[][] generateExtBlockSections(World world, Random rand, int chunkX, int chunkZ, BiomeGrid biomes) {
-        // Get the chunk grid manager, and make sure it's valid
-        DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
-        if(chunkGridManager == null)
-            return null;
+        // TODO: Remove or improve this try-catch!?
+        try {
+            // Get the chunk grid manager, and make sure it's valid
+            DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
+            if(chunkGridManager == null) {
+                Core.getLogger().error("Unable to generate Dungeon Maze chunk, couldn't access the chunk grid manager!");
+                return null;
+            }
 
-        // Create or get the chunk grid for the current world
-        DungeonChunkGrid dungeonChunkGrid = chunkGridManager.getChunkGrid(world);
+            // Create or get the chunk grid for the current world
+            DungeonChunkGrid dungeonChunkGrid = chunkGridManager.getOrCreateChunkGrid(world);
 
-        // Create or get the chunk data for the current chunk
-        DungeonChunk dungeonChunk = dungeonChunkGrid.getChunk(chunkX, chunkZ);
+            // Create or get the chunk data for the current chunk
+            DungeonChunk dungeonChunk = dungeonChunkGrid.getOrCreateChunk(chunkX, chunkZ);
+
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
 
         // TODO: Generate the room data for the Dungeon Chunk before generating it!
         // TODO: Clear the data on the current dungeon chunk?

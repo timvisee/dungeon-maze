@@ -114,6 +114,14 @@ public class CreateWorldCommand extends ExecutableCommand {
             Core.getLogger().error("Failed to save the world after " + pWorldSave.getTimeFormatted() + "!");
         }
 
+        // Make sure the world instance is valid
+        if(world == null) {
+            Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World generation failed after " + p.getTimeFormatted() + "!");
+            sender.sendMessage(ChatColor.DARK_RED + "The DungeonMaze " + ChatColor.GOLD + worldName + ChatColor.GREEN +
+                    " failed to geenrate after " + p.getTimeFormatted() + "!");
+            return true;
+        }
+
         // Show a status message
         Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World generation finished, took " + p.getTimeFormatted() + "!");
         sender.sendMessage(ChatColor.GREEN + "The DungeonMaze " + ChatColor.GOLD + worldName + ChatColor.GREEN +
