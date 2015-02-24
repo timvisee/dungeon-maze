@@ -136,6 +136,11 @@ public class DungeonChunkGrid {
         // Create the chunk data for this chunk, save it and return the instance
         DungeonChunk dungeonChunk = new DungeonChunk(this.world, chunkX, chunkZ);
         dungeonChunk.save(getChunkDataFile(chunkX, chunkZ));
+
+        // Add the dungeon chunk to the list
+        this.chunks.add(dungeonChunk);
+
+        // Return the new chunk
         return dungeonChunk;
     }
 

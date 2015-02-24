@@ -15,6 +15,7 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
 	@Override
 	public void populate(World world, Random rand, Chunk chunk) {
         // Store the dungeon chunk instance
+        // TODO: Use some kind of caching, to speed up this process!
         DungeonChunk dungeonChunk;
 
         try {

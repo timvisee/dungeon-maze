@@ -15,7 +15,6 @@ import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.event.generation.GenerationSpawnerEvent;
 import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulatorArgs;
@@ -29,127 +28,128 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 
 	@Override
 	public void populateLayer(MazeLayerBlockPopulatorArgs args) {
-		World w = args.getWorld();
 		Random rand = args.getRandom();
-		Chunk c = args.getSourceChunk();
+		Chunk chunk = args.getSourceChunk();
 		int x = 0;
 		int y = args.getY();
 		int z = 0;
 			
 		// Make sure the distance between the spawn chunk and the current chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
+		if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 		
 		// Apply chances
 		if (rand.nextInt(1000) < CHANCE_BOSSROOM) {
-			DungeonMaze.instance.registerConstantChunk(w.getName(), c.getX(), c.getZ());					
+            // Set this chunk as custom chunk
+            // TODO: Flag the rooms used instead of the whole chunk!
+            args.getDungeonChunk().setCustomChunk(true);
 			
 			// Clear the room!
 		     for (int x2=x; x2 < x + 15; x2+=1)
 		    	 for (int y2=y + 1; y2 <= y + (6*3) - 1; y2+=1)
 		    	  for (int z2=z; z2 <z + 15; z2+=1)
-		    	   		c.getBlock(x2, y2, z2).setType(Material.AIR);
+		    	   		chunk.getBlock(x2, y2, z2).setType(Material.AIR);
 		     // Floor
 		     for (int x2=x; x2 < x + 15; x2+=1)
 		         for (int y2=y; y2 < y + 1; y2+=1)
 		            for (int z2=z; z2 < z + 15; z2+=1)
-		             c.getBlock(x2, y2, z2).setType(Material.OBSIDIAN);
+		             chunk.getBlock(x2, y2, z2).setType(Material.OBSIDIAN);
 		     
 		     // Treasures
-		     c.getBlock(x + 7, y + 1, z + 7).setType(Material.GOLD_BLOCK);
-		     c.getBlock(x + 8, y + 1, z + 8).setType(Material.IRON_BLOCK);
+		     chunk.getBlock(x + 7, y + 1, z + 7).setType(Material.GOLD_BLOCK);
+		     chunk.getBlock(x + 8, y + 1, z + 8).setType(Material.IRON_BLOCK);
 		     
 		     // Chest1
-		     c.getBlock(x + 7, y + 1, z + 8).setType(Material.CHEST);
-		     addItemsToChest(rand, (Chest) c.getBlock(x + 7, y + 1, z + 8).getState());
+		     chunk.getBlock(x + 7, y + 1, z + 8).setType(Material.CHEST);
+		     addItemsToChest(rand, (Chest) chunk.getBlock(x + 7, y + 1, z + 8).getState());
 		     
 		     // Chest2
-		     c.getBlock(x + 8, y + 1, z + 7).setType(Material.CHEST);
-		     addItemsToChest(rand, (Chest) c.getBlock(x + 8, y + 1, z + 7).getState());
+		     chunk.getBlock(x + 8, y + 1, z + 7).setType(Material.CHEST);
+		     addItemsToChest(rand, (Chest) chunk.getBlock(x + 8, y + 1, z + 7).getState());
 		     
 		     // Glass shields
-		     c.getBlock(x + 2, y + 1, z + 3).setType(Material.GLASS);
-		     c.getBlock(x + 2, y + 1, z + 12).setType(Material.GLASS);
-		     c.getBlock(x + 3, y + 1, z + 2).setType(Material.GLASS);
-		     c.getBlock(x + 3, y + 1, z + 4).setType(Material.GLASS);
-		     c.getBlock(x + 3, y + 1, z + 11).setType(Material.GLASS);
-		     c.getBlock(x + 3, y + 1, z + 13).setType(Material.GLASS);
-		     c.getBlock(x + 4, y + 1, z + 3).setType(Material.GLASS);
-		     c.getBlock(x + 4, y + 1, z + 12).setType(Material.GLASS);
-		     c.getBlock(x + 11, y + 1, z + 3).setType(Material.GLASS);
-		     c.getBlock(x + 11, y + 1, z + 12).setType(Material.GLASS);
-		     c.getBlock(x + 12, y + 1, z + 2).setType(Material.GLASS);
-		     c.getBlock(x + 12, y + 1, z + 4).setType(Material.GLASS);
-		     c.getBlock(x + 12, y + 1, z + 11).setType(Material.GLASS);
-		     c.getBlock(x + 12, y + 1, z + 13).setType(Material.GLASS);
-		     c.getBlock(x + 13, y + 1, z + 3).setType(Material.GLASS);
-		     c.getBlock(x + 13, y + 1, z + 12).setType(Material.GLASS);
-		     c.getBlock(x + 3, y + 2, z + 3).setType(Material.GLASS);
-		     c.getBlock(x + 3, y + 2, z + 12).setType(Material.GLASS);
-		     c.getBlock(x + 12, y + 2, z + 3).setType(Material.GLASS);
-		     c.getBlock(x + 12, y + 2, z + 12).setType(Material.GLASS);
+		     chunk.getBlock(x + 2, y + 1, z + 3).setType(Material.GLASS);
+		     chunk.getBlock(x + 2, y + 1, z + 12).setType(Material.GLASS);
+		     chunk.getBlock(x + 3, y + 1, z + 2).setType(Material.GLASS);
+		     chunk.getBlock(x + 3, y + 1, z + 4).setType(Material.GLASS);
+		     chunk.getBlock(x + 3, y + 1, z + 11).setType(Material.GLASS);
+		     chunk.getBlock(x + 3, y + 1, z + 13).setType(Material.GLASS);
+		     chunk.getBlock(x + 4, y + 1, z + 3).setType(Material.GLASS);
+		     chunk.getBlock(x + 4, y + 1, z + 12).setType(Material.GLASS);
+		     chunk.getBlock(x + 11, y + 1, z + 3).setType(Material.GLASS);
+		     chunk.getBlock(x + 11, y + 1, z + 12).setType(Material.GLASS);
+		     chunk.getBlock(x + 12, y + 1, z + 2).setType(Material.GLASS);
+		     chunk.getBlock(x + 12, y + 1, z + 4).setType(Material.GLASS);
+		     chunk.getBlock(x + 12, y + 1, z + 11).setType(Material.GLASS);
+		     chunk.getBlock(x + 12, y + 1, z + 13).setType(Material.GLASS);
+		     chunk.getBlock(x + 13, y + 1, z + 3).setType(Material.GLASS);
+		     chunk.getBlock(x + 13, y + 1, z + 12).setType(Material.GLASS);
+		     chunk.getBlock(x + 3, y + 2, z + 3).setType(Material.GLASS);
+		     chunk.getBlock(x + 3, y + 2, z + 12).setType(Material.GLASS);
+		     chunk.getBlock(x + 12, y + 2, z + 3).setType(Material.GLASS);
+		     chunk.getBlock(x + 12, y + 2, z + 12).setType(Material.GLASS);
 		     
 		     // Hull
-		     c.getBlock(x + 5, y + 1, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 5, y + 1, z + 8).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 6, y + 1, z + 6).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 6, y + 1, z + 7).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 6, y + 1, z + 8).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 6, y + 1, z + 9).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 1, z + 5).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 1, z + 6).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 7, y + 1, z + 9).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 7, y + 1, z + 10).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 1, z + 5).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 1, z + 6).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 8, y + 1, z + 9).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 8, y + 1, z + 10).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 9, y + 1, z + 6).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 9, y + 1, z + 7).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 9, y + 1, z + 8).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 9, y + 1, z + 9).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 10, y + 1, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 10, y + 1, z + 8).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 5, y + 2, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 5, y + 2, z + 8).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 6, y + 2, z + 6).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 6, y + 2, z + 7).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 6, y + 2, z + 8).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 6, y + 2, z + 9).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 2, z + 5).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 2, z + 6).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 7, y + 2, z + 9).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 7, y + 2, z + 10).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 2, z + 5).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 2, z + 6).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 8, y + 2, z + 9).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 8, y + 2, z + 10).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 9, y + 2, z + 6).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 9, y + 2, z + 7).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 9, y + 2, z + 8).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 9, y + 2, z + 9).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 10, y + 2, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 10, y + 2, z + 8).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 6, y + 3, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 6, y + 3, z + 8).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 3, z + 6).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 3, z + 7).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 7, y + 3, z + 8).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 7, y + 3, z + 9).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 3, z + 6).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 3, z + 7).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 8, y + 3, z + 8).setType(Material.SOUL_SAND);
-		     c.getBlock(x + 8, y + 3, z + 9).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 9, y + 3, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 9, y + 3, z + 8).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 4, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 7, y + 4, z + 8).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 4, z + 7).setType(Material.NETHER_BRICK);
-		     c.getBlock(x + 8, y + 4, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 5, y + 1, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 5, y + 1, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 6, y + 1, z + 6).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 6, y + 1, z + 7).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 6, y + 1, z + 8).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 6, y + 1, z + 9).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 1, z + 5).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 1, z + 6).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 7, y + 1, z + 9).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 7, y + 1, z + 10).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 1, z + 5).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 1, z + 6).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 8, y + 1, z + 9).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 8, y + 1, z + 10).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 9, y + 1, z + 6).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 9, y + 1, z + 7).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 9, y + 1, z + 8).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 9, y + 1, z + 9).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 10, y + 1, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 10, y + 1, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 5, y + 2, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 5, y + 2, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 6, y + 2, z + 6).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 6, y + 2, z + 7).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 6, y + 2, z + 8).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 6, y + 2, z + 9).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 2, z + 5).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 2, z + 6).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 7, y + 2, z + 9).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 7, y + 2, z + 10).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 2, z + 5).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 2, z + 6).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 8, y + 2, z + 9).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 8, y + 2, z + 10).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 9, y + 2, z + 6).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 9, y + 2, z + 7).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 9, y + 2, z + 8).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 9, y + 2, z + 9).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 10, y + 2, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 10, y + 2, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 6, y + 3, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 6, y + 3, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 3, z + 6).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 3, z + 7).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 7, y + 3, z + 8).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 7, y + 3, z + 9).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 3, z + 6).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 3, z + 7).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 8, y + 3, z + 8).setType(Material.SOUL_SAND);
+		     chunk.getBlock(x + 8, y + 3, z + 9).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 9, y + 3, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 9, y + 3, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 4, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 7, y + 4, z + 8).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 4, z + 7).setType(Material.NETHER_BRICK);
+		     chunk.getBlock(x + 8, y + 4, z + 8).setType(Material.NETHER_BRICK);
 		     
 		     // Core spawners
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Ghast")) {
-		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 7);
+		    	Block spawnerBlock = chunk.getBlock(x + 7, y + 2, z + 7);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.GHAST, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -169,7 +169,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
-		    	Block spawnerBlock = c.getBlock(x + 7, y + 2, z + 8);
+		    	Block spawnerBlock = chunk.getBlock(x + 7, y + 2, z + 8);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -189,7 +189,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
-		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 7);
+		    	Block spawnerBlock = chunk.getBlock(x + 8, y + 2, z + 7);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -209,7 +209,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
-		    	Block spawnerBlock = c.getBlock(x + 8, y + 2, z + 8);
+		    	Block spawnerBlock = chunk.getBlock(x + 8, y + 2, z + 8);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -229,7 +229,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
-		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 7);
+		    	Block spawnerBlock = chunk.getBlock(x + 7, y + 3, z + 7);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -249,7 +249,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
-		    	Block spawnerBlock = c.getBlock(x + 7, y + 3, z + 8);
+		    	Block spawnerBlock = chunk.getBlock(x + 7, y + 3, z + 8);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -269,7 +269,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
-		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 7);
+		    	Block spawnerBlock = chunk.getBlock(x + 8, y + 3, z + 7);
 				
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -289,7 +289,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
-		    	Block spawnerBlock = c.getBlock(x + 8, y + 3, z + 8);
+		    	Block spawnerBlock = chunk.getBlock(x + 8, y + 3, z + 8);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -310,7 +310,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     
 		     //loose spawners
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
-		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 3);
+		    	Block spawnerBlock = chunk.getBlock(x + 3, y + 1, z + 3);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -330,7 +330,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
-		    	Block spawnerBlock = c.getBlock(x + 3, y + 1, z + 12);
+		    	Block spawnerBlock = chunk.getBlock(x + 3, y + 1, z + 12);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -350,7 +350,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
-		    	Block spawnerBlock =  c.getBlock(x + 12, y + 1, z + 3);
+		    	Block spawnerBlock =  chunk.getBlock(x + 12, y + 1, z + 3);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);
@@ -370,7 +370,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 		     }
 		     
 		     if (Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
-		    	Block spawnerBlock = c.getBlock(x + 12, y + 1, z + 12);
+		    	Block spawnerBlock = chunk.getBlock(x + 12, y + 1, z + 12);
 					
 				// Call the spawner generation event
 				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_INSANE, rand);

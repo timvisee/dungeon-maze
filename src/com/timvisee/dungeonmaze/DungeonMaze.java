@@ -246,21 +246,7 @@ public class DungeonMaze extends JavaPlugin {
 	// Worlds
 	public String lastWorld = "";
 	public List<String> constantRooms = new ArrayList<String>(); // x;y;z
-	public List<String> constantChunks = new ArrayList<String>(); // x;
-
-	// Getters and setters for the two lists with constant chunks and constant rooms
-	@SuppressWarnings("UnusedDeclaration")
-	public void registerConstantChunk(String world, Chunk chunk) {
-		registerConstantChunk(world, chunk.getX(), chunk.getZ());
-	}
-
-	public void registerConstantChunk(String world, int chunkX, int chunkZ) {
-		if (!lastWorld.equals(world)) {
-			lastWorld = world;
-			constantChunks.clear();
-		}
-		constantChunks.add(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
-	}
+	//public List<String> constantChunks = new ArrayList<String>(); // x;
 
 	public void registerConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
 		registerConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
@@ -276,18 +262,6 @@ public class DungeonMaze extends JavaPlugin {
 			constantRooms.clear();
 		}
 		constantRooms.add(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
-	}
-
-	public boolean isConstantChunk(String world, Chunk chunk) {
-		return isConstantChunk(world, chunk.getX(), chunk.getZ());
-	}
-
-	public boolean isConstantChunk(String world, int chunkX, int chunkZ) {
-		if(!lastWorld.equals(world)) {
-			lastWorld = world;
-			constantChunks.clear();
-		}
-		return constantChunks.contains(Integer.toString(chunkX) + ";" + Integer.toString(chunkZ));
 	}
 
 	public boolean isConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {

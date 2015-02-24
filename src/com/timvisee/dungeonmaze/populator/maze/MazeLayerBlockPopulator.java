@@ -22,12 +22,20 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 		Chunk chunk = args.getSourceChunk();
         DungeonChunk dungeonChunk = args.getDungeonChunk();
 
+        // Make sure the dungeon chunk isn't custom
+        if(dungeonChunk.isCustomChunk())
+            return;
+
 		// Get the minimum and maximum layer count
 		int layerMin = Math.max(getMinimumLayer(), 1);
 		int layerMax =  Math.min(getMaximumLayer(), LAYER_COUNT);
 
 		// The layers
 		for(int l = layerMin; l <= layerMax; l++) {
+            // Make sure the dungeon chunk isn't custom
+            if(dungeonChunk.isCustomChunk())
+                return;
+
 			// Calculate the Y coordinate based on the current layer
 			int y = 30 + ((l - 1) * 6);
 			

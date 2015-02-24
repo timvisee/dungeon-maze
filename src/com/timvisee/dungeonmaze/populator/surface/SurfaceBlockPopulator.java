@@ -2,25 +2,27 @@ package com.timvisee.dungeonmaze.populator.surface;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.populator.ChunkBlockPopulator;
+import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 
-public abstract class SurfaceBlockPopulator extends BlockPopulator {
+public abstract class SurfaceBlockPopulator extends ChunkBlockPopulator {
 	
 	@Override
-	public void populate(World w, Random rand, Chunk chunkSrc) {
-		// Make sure this chunk is not constant
-		if(DungeonMaze.instance.isConstantChunk(w.getName(), chunkSrc))
-			return;
+    public void populateChunk(ChunkBlockPopulatorArgs args) {
+        World w = args.getWorld();
+        Random rand = args.getRandom();
+        Chunk chunk = args.getSourceChunk();
 			
 		// Construct the DMMazePopulatorArgs to use the the populateMaze method
-		SurfaceBlockPopulatorArgs args = new SurfaceBlockPopulatorArgs(w, rand, chunkSrc);
+		SurfaceBlockPopulatorArgs surfaceArgs = new SurfaceBlockPopulatorArgs(w, rand, chunk);
 		
 		// Populate the maze
-		populateSurface(args);
+		populateSurface(surfaceArgs);
 	}
 	
 	/**
