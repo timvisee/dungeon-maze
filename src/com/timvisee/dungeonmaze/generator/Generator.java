@@ -145,6 +145,9 @@ public class Generator extends ChunkGenerator {
 	@SuppressWarnings({"ConstantConditions", "deprecation"})
 	@Override
 	public short[][] generateExtBlockSections(World world, Random rand, int chunkX, int chunkZ, BiomeGrid biomes) {
+        // Get or create the dungeon chunk data
+        DungeonChunk dungeonChunk;
+
         try {
             // Get the chunk grid manager, and make sure it's valid
             DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
@@ -157,7 +160,7 @@ public class Generator extends ChunkGenerator {
             DungeonChunkGrid dungeonChunkGrid = chunkGridManager.getOrCreateChunkGrid(world);
 
             // Create or get the chunk data for the current chunk
-            DungeonChunk dungeonChunk = dungeonChunkGrid.getOrCreateChunk(chunkX, chunkZ);
+            dungeonChunk = dungeonChunkGrid.getOrCreateChunk(chunkX, chunkZ);
 
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -182,10 +185,10 @@ public class Generator extends ChunkGenerator {
 					int xr = (rand.nextInt(3) - 1) * (x + 7);
 					int zr = (rand.nextInt(3) - 1) * (z + 7);
 
-					int yfloor = rand.nextInt(2);
+					int yFloor = rand.nextInt(2);
 
 					// All the y of the room in the variable y2
-					for(int y2 = y + yfloor; y2 < y + 8; y2++) {
+					for(int y2 = y + yFloor; y2 < y + 8; y2++) {
 
 						// All the x of the room in the variable x2
 						for(int x2 = x; x2 < x + 8; x2++) {
@@ -194,18 +197,18 @@ public class Generator extends ChunkGenerator {
 							for(int z2 = z; z2 < z + 8; z2++) {
 
 								// Make the bottom of the room
-								if(y2 == y + yfloor)
+								if(y2 == y + yFloor)
 									for(int xb = x; xb < x + 8; xb++)
 										for(int zb = z; zb < z + 8; zb++)
 											chunk.setBlock(xb, y2, zb, Material.COBBLESTONE);
 
 								// Fill the walls of the place with cobblestone
 								if((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7))
-									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
+									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stone brick
 								else if (xr == x2)
-									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
+									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stone brick
 								else if (zr == z2)
-									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stonebrick
+									chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stone brick
 								else
 									chunk.clearBlock(x2, y2, z2);
 							}
@@ -223,7 +226,6 @@ public class Generator extends ChunkGenerator {
 		// Generate the ceiling and the grass land
 		for(int x = 0; x < 16; x++) {
 			for(int z = 0; z < 16; z++) {
-				/*int worldHeight = getHeight(world, chunkx + x * 0.0625, chunkz + z * 0.0625, 2) + 30+(7*6) + 7;*/
 				double height = octave.noise(x + chunkX * 16, z + chunkZ * 16, 0.5, 0.5) * 4 + 9;
 
 				chunk.setBlock(x, 30+(7*6), z, Material.COBBLESTONE);

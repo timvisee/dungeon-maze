@@ -2,25 +2,34 @@ package com.timvisee.dungeonmaze.populator;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
 public class ChunkBlockPopulatorArgs {
 
-	World w;
-	Random rand;
-	Chunk chunkSrc;
-	
+    /** The world of the chunk. */
+	private World w;
+    /** The random object used for random generation with the proper seed. */
+	private Random rand;
+    /** The source chunk. */
+	private Chunk chunkSrc;
+    /** The dungeon chunk data. */
+	private DungeonChunk dungeonChunk;
+
 	/**
-	 * Constructor
-	 * @param w World
+	 * Constructor.
+     *
+	 * @param world World
 	 * @param rand Random instance
-	 * @param c Source chunk
+	 * @param chunk Source chunk
+     * @param dungeonChunk Dungeon chunk instance
 	 */
-	public ChunkBlockPopulatorArgs(World w, Random rand, Chunk c) {
-		this.w = w;
+	public ChunkBlockPopulatorArgs(World world, Random rand, Chunk chunk, DungeonChunk dungeonChunk) {
+		this.w = world;
 		this.rand = rand;
-		this.chunkSrc = c;
+		this.chunkSrc = chunk;
+        this.dungeonChunk = dungeonChunk;
 	}
 	
 	/**
@@ -70,4 +79,22 @@ public class ChunkBlockPopulatorArgs {
 	public void setSourceChunk(Chunk chunkSrc) {
 		this.chunkSrc = chunkSrc;
 	}
+
+    /**
+     * Get the dungeon chunk instance.
+     *
+     * @return Dungeon chunk instance.
+     */
+    public DungeonChunk getDungeonChunk() {
+        return this.dungeonChunk;
+    }
+
+    /**
+     * Set the dungeon chunk instance.
+     *
+     * @param dungeonChunk Dungeon chunk instance.
+     */
+    public void setDungeonChunk(DungeonChunk dungeonChunk) {
+        this.dungeonChunk = dungeonChunk;
+    }
 }

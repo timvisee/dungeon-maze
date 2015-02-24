@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 
@@ -15,14 +16,16 @@ public class MazeLayerBlockPopulatorArgs extends ChunkBlockPopulatorArgs {
 	int y = 0;
 	
 	/**
-	 * Constructor
-	 * @param w World
-	 * @param rand Random instance
-	 * @param c Source chunk
-	 * @param layer Layer
+	 * Constructor.
+     *
+	 * @param world World.
+	 * @param rand Random instance.
+	 * @param chunk Source chunk.
+     * @param dungeonChunk Dungeon chunk.
+	 * @param layer Layer.
 	 */
-	public MazeLayerBlockPopulatorArgs(World w, Random rand, Chunk c, int layer, int y) {
-		super(w, rand, c);
+	public MazeLayerBlockPopulatorArgs(World world, Random rand, Chunk chunk, DungeonChunk dungeonChunk, int layer, int y) {
+		super(world, rand, chunk, dungeonChunk);
 		this.layer = layer;
 		this.y = y;
 	}
@@ -37,32 +40,34 @@ public class MazeLayerBlockPopulatorArgs extends ChunkBlockPopulatorArgs {
 	
 	/**
 	 * Set the current layer that should be generated
-	 * @param layer 
+	 * @param layer The layer.
 	 */
 	public void setLayer(int layer) {
 		this.layer = layer;
 	}
 	
 	/**
-	 * Get the Y coord
-	 * @return Y coord
+	 * Get the Y coordinate.
+     *
+	 * @return Y coordinate.
 	 */
 	public int getY() {
 		return this.y;
 	}
-	
+
 	/**
-	 * Get the Y coord in the current chunk
-	 * @return Y coord in the current chunk
+	 * Get the Y coordinate in the current chunk.
+     *
+	 * @return Y coordinate in the current chunk.
 	 */
-	// TODO: Remove this method?
 	public int getChunkY() {
 		return this.getY();
 	}
 	
 	/**
-	 * Set the Y coord
-	 * @param y Y coord
+	 * Set the Y coordinate.
+     *
+	 * @param y Y coordinate.
 	 */
 	public void setY(int y) {
 		this.y = y;

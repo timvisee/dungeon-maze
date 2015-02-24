@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -12,34 +13,36 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 	
 	/**
-	 * Population method
-	 * @param args Populator arguments
+	 * Population method.
+     *
+	 * @param args Populator arguments.
 	 */
 	@Override
 	public void populateLayer(MazeLayerBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
+		World world = args.getWorld();
+		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int l = args.getLayer();
+        DungeonChunk dungeonChunk = args.getDungeonChunk();
+		int layer = args.getLayer();
 		int y = args.getY();
 		
 		// The 4 rooms on each layer
 		for(int chunkX = 0; chunkX < 16; chunkX += 8) {
 			for(int chunkZ = 0; chunkZ < 16; chunkZ += 8) {
 				// Make sure this room isn't constant
-				if(DungeonMaze.instance.isConstantRoom(w.getName(), c, chunkX, y, chunkZ))
+				if(DungeonMaze.instance.isConstantRoom(world.getName(), chunk, chunkX, y, chunkZ))
 					continue;
 				
-				// Calculate the global X and Y coords
-				int x = (c.getX() * 16) + chunkX;
-				int z = (c.getZ() * 16) + chunkZ;
+				// Calculate the global X and Y coordinates
+				int x = (chunk.getX() * 16) + chunkX;
+				int z = (chunk.getZ() * 16) + chunkZ;
 				
 				// Get the floor and ceiling offset
-				int floorOffset = getFloorOffset(chunkX, y, chunkZ, c);
-				int ceilingOffset = getCeilingOffset(chunkX, y, chunkZ, c);
+				int floorOffset = getFloorOffset(chunkX, y, chunkZ, chunk);
+				int ceilingOffset = getCeilingOffset(chunkX, y, chunkZ, chunk);
 				
 				// Construct the DMMazePopulatorArgs to use the the populateMaze method
-				MazeRoomBlockPopulatorArgs newArgs = new MazeRoomBlockPopulatorArgs(w, rand, c, l, x, y, z, floorOffset, ceilingOffset);
+				MazeRoomBlockPopulatorArgs newArgs = new MazeRoomBlockPopulatorArgs(world, rand, chunk, dungeonChunk, layer, x, y, z, floorOffset, ceilingOffset);
 				
 				// Populate the maze
 				populateRoom(newArgs);
@@ -48,18 +51,21 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 	}
 	
 	/**
-	 * Population method
-	 * @param args Populator arguments
+	 * Population method.
+     *
+	 * @param args Populator arguments.
 	 */
 	public abstract void populateRoom(MazeRoomBlockPopulatorArgs args);
 	
 	/**
-	 * Get the floor offset in a specific room
-	 * @param x X coord
-	 * @param y Y coord
-	 * @param z Z coord
-	 * @param c Chunk
-	 * @return Floor offset
+	 * Get the floor offset in a specific room.
+     *
+	 * @param x X coordinate.
+	 * @param y Y coordinate.
+	 * @param z Z coordinate.
+	 * @param c Chunk.
+     *
+	 * @return Floor offset.
 	 */
 	private int getFloorOffset(int x, int y, int z, Chunk c) {
 		Block testBlock = c.getBlock(x + 3, y, z + 3);
@@ -74,12 +80,14 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 	}
 	
 	/**
-	 * Get the ceiling offset in a specific room
-	 * @param x X coord
-	 * @param y Y coord
-	 * @param z Z coord
-	 * @param c Chunk
-	 * @return Ceiling offset
+	 * Get the ceiling offset in a specific room.
+     *
+	 * @param x X coordinate.
+	 * @param y Y coordinate.
+	 * @param z Z coordinate.
+	 * @param c The chunk.
+     *
+	 * @return Ceiling offset.
 	 */
 	private int getCeilingOffset(int x, int y, int z, Chunk c) {
 		Block testBlock = c.getBlock(x + 3, y + 6, z + 3);
