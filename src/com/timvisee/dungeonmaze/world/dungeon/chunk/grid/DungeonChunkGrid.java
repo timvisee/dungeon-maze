@@ -16,10 +16,6 @@ public class DungeonChunkGrid {
 
     /** Defines the name of the dungeon chunk data file. */
     private final static String CHUNK_DATA_FILE = "data.dmc";
-    /** Defines the Dungeon Maze data directory name. */
-    private static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
-    /** Defines the chunk data directory name. */
-    private static final String CHUNK_DATA_DIRECTORY = "chunks";
 
     /**
      * Constructor.

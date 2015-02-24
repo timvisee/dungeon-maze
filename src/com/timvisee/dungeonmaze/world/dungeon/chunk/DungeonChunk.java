@@ -16,6 +16,9 @@ public class DungeonChunk {
     /** Defines the X and Z coordinate of the chunk in the world. */
     private int x, z;
 
+    /** Defines whether this chunk is a custom chunk. */
+    private boolean customChunk = false;
+
     /** Defines the dungeon chunk data section name. */
     private final static String CONFIG_DUNGEON_CHUNK_SECTION = "dungeonChunk";
 
@@ -69,6 +72,24 @@ public class DungeonChunk {
      */
     public boolean isAt(int chunkX, int chunkZ) {
         return this.x == chunkX && this.z == chunkZ;
+    }
+
+    /**
+     * Check whether this chunk is a custom chunk.
+     *
+     * @return True if this chunk is a custom chunk, false if not.
+     */
+    public boolean isCustomChunk() {
+        return this.customChunk;
+    }
+
+    /**
+     * Set whether this chunk is a custom chunk.
+     *
+     * @param customChunk True if this chunk is a custom chunk.
+     */
+    public void setCustomChunk(boolean customChunk) {
+        this.customChunk = customChunk;
     }
 
     /**
@@ -127,7 +148,8 @@ public class DungeonChunk {
         // Construct a new dungeon chunk
         DungeonChunk dungeonChunk = new DungeonChunk(world, x, z);
 
-        // TODO: Load all other chunk stuff!
+        // Load whether this chunk is a custom chunk
+        dungeonChunk.setCustomChunk(config.getBoolean("customChunk.isCustom", false));
 
         // Return the instance
         return dungeonChunk;
@@ -145,8 +167,11 @@ public class DungeonChunk {
         YamlConfiguration config = new YamlConfiguration();
 
         // Create the dungeon chunk section and store the chunk
-        config.createSection(CONFIG_DUNGEON_CHUNK_SECTION);
+        ConfigurationSection chunkSection = config.createSection(CONFIG_DUNGEON_CHUNK_SECTION);
         save(config.getConfigurationSection(CONFIG_DUNGEON_CHUNK_SECTION));
+
+        // Save whether this is a custom chunk
+        chunkSection.set("customChunk.isCustom", this.customChunk);
 
         // Append the current Dungeon Maze version to the file
         config.set("version.name", DungeonMaze.getVersionName());

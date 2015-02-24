@@ -347,11 +347,8 @@ public class DungeonChunkGridManager {
         int loaded = 0;
 
         // Loop through each grid and get the number of loaded chunks
-        for(DungeonChunkGrid grid : this.grids) {
-            // TODO: Remove this debug stuff!
-            Core.getLogger().info("Got " + grid.getLoadedChunksCount() + " chunks in " + grid.getWorld().getName());
+        for(DungeonChunkGrid grid : this.grids)
             loaded += grid.getLoadedChunksCount();
-        }
 
         // Return the number of loaded chunk grids
         return loaded;

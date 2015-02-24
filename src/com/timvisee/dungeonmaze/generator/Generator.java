@@ -145,7 +145,6 @@ public class Generator extends ChunkGenerator {
 	@SuppressWarnings({"ConstantConditions", "deprecation"})
 	@Override
 	public short[][] generateExtBlockSections(World world, Random rand, int chunkX, int chunkZ, BiomeGrid biomes) {
-        // TODO: Remove or improve this try-catch!?
         try {
             // Get the chunk grid manager, and make sure it's valid
             DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
@@ -216,7 +215,7 @@ public class Generator extends ChunkGenerator {
 			}
 		}
 
-		// Create the nose generator which generates wave formes to use for the surface.
+		// Create the nose generator which generates wave forms to use for the surface.
 		Random random = new Random(world.getSeed());
 		SimplexOctaveGenerator octave = new SimplexOctaveGenerator(random, 8);
 		octave.setScale(1 / 48.0);
