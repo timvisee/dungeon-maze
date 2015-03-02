@@ -21,7 +21,8 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 6;
-	public static final int CHANCE_BOSSROOM = 4; //Promile
+	public static final float ROOM_CHANCE = .004f;
+
 	public static final double SPAWN_DISTANCE_MIN = 10; // Chunks
 
 	@Override
@@ -37,82 +38,79 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 		// Make sure the distance between the spawn and this chunk is allowed
 		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
-			
-		// Apply chances
-		if(rand.nextInt(1000) < CHANCE_BOSSROOM) {
-			// Register the current room as constant room
-			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
-			
-			// Create the floor
-			for(int x2 = x; x2 < x + 7; x2 += 1)
-			    for(int z2 = z; z2 < z + 7; z2 += 1)
-			        c.getBlock(x2, yFloor, z2).setType(Material.MOSSY_COBBLESTONE);
-			        
-			// Create the spawners
-			if(Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
-				Block spawnerBlock = c.getBlock(x + 1, yFloor + 1, z + 1);
-				
-				// Call the spawner generation event
-				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
-				Bukkit.getServer().getPluginManager().callEvent(event);
-				
-				// Make sure the event isn't cancelled yet
-				if(!event.isCancelled()) {
-					// Change the block into a creature spawner
-					spawnerBlock.setType(Material.MOB_SPAWNER);
-					
-					// Cast the created s pawner into a CreatureSpawner object
-					CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
-					
-					// Set the spawned type of the spawner
-					s.setSpawnedType(event.getSpawnedType());
-				}
-			}
-			if(Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
-				Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
-				
-				// Call the spawner generation event
-				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
-				Bukkit.getServer().getPluginManager().callEvent(event);
-				
-				// Make sure the event isn't cancelled yet
-				if(!event.isCancelled()) {
-					// Change the block into a creature spawner
-					spawnerBlock.setType(Material.MOB_SPAWNER);
-					
-					// Cast the created s pawner into a CreatureSpawner object
-					CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
-					
-					// Set the spawned type of the spawner
-					s.setSpawnedType(event.getSpawnedType());
-				}
-			}
-			if(Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
-				Block spawnerBlock = c.getBlock(x + 5, yFloor + 1, z + 5);
-				
-				// Call the spawner generation event
-				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
-				Bukkit.getServer().getPluginManager().callEvent(event);
-				
-				// Make sure the event isn't cancelled yet
-				if(!event.isCancelled()) {
-					// Change the block into a creature spawner
-					spawnerBlock.setType(Material.MOB_SPAWNER);
-					
-					// Cast the created s pawner into a CreatureSpawner object
-					BlockState bs = spawnerBlock.getState();
-					CreatureSpawner s = (CreatureSpawner) bs;
-					
-					// Set the spawned type of the spawner
-					s.setSpawnedType(event.getSpawnedType());
-				}
-			}
-			
-			// Coal ores
-			c.getBlock(x + 1, yFloor + 1, z + 5).setType(Material.COAL_ORE);
-			c.getBlock(x + 5, yFloor + 1, z + 1).setType(Material.COAL_ORE);
-		}
-	}
+
+        // Register the current room as constant room
+        DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
+
+        // Create the floor
+        for(int x2 = x; x2 < x + 7; x2 += 1)
+            for(int z2 = z; z2 < z + 7; z2 += 1)
+                c.getBlock(x2, yFloor, z2).setType(Material.MOSSY_COBBLESTONE);
+
+        // Create the spawners
+        if(Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
+            Block spawnerBlock = c.getBlock(x + 1, yFloor + 1, z + 1);
+
+            // Call the spawner generation event
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            // Make sure the event isn't cancelled yet
+            if(!event.isCancelled()) {
+                // Change the block into a creature spawner
+                spawnerBlock.setType(Material.MOB_SPAWNER);
+
+                // Cast the created s pawner into a CreatureSpawner object
+                CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+
+                // Set the spawned type of the spawner
+                s.setSpawnedType(event.getSpawnedType());
+            }
+        }
+        if(Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
+            Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
+
+            // Call the spawner generation event
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            // Make sure the event isn't cancelled yet
+            if(!event.isCancelled()) {
+                // Change the block into a creature spawner
+                spawnerBlock.setType(Material.MOB_SPAWNER);
+
+                // Cast the created s pawner into a CreatureSpawner object
+                CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+
+                // Set the spawned type of the spawner
+                s.setSpawnedType(event.getSpawnedType());
+            }
+        }
+        if(Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
+            Block spawnerBlock = c.getBlock(x + 5, yFloor + 1, z + 5);
+
+            // Call the spawner generation event
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            // Make sure the event isn't cancelled yet
+            if(!event.isCancelled()) {
+                // Change the block into a creature spawner
+                spawnerBlock.setType(Material.MOB_SPAWNER);
+
+                // Cast the created s pawner into a CreatureSpawner object
+                BlockState bs = spawnerBlock.getState();
+                CreatureSpawner s = (CreatureSpawner) bs;
+
+                // Set the spawned type of the spawner
+                s.setSpawnedType(event.getSpawnedType());
+            }
+        }
+
+        // Coal ores
+        c.getBlock(x + 1, yFloor + 1, z + 5).setType(Material.COAL_ORE);
+        c.getBlock(x + 5, yFloor + 1, z + 1).setType(Material.COAL_ORE);
+    }
 	
 	public double distance(int x1, int y1, int x2, int y2) {
 		double dx   = x1 - x2;         //horizontal difference 
@@ -120,6 +118,11 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 		double dist = Math.sqrt( dx*dx + dy*dy ); //distance using Pythagoras theorem
 		return dist;
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

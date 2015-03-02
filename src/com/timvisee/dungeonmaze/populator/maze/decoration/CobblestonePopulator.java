@@ -13,7 +13,8 @@ public class CobblestonePopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-	public static final int CHANCE_COBBLE = 20;
+	public static final float ROOM_CHANCE = .2f;
+
 	public static final int CHANCE_CORNER = 75;
 
 	@Override
@@ -22,25 +23,26 @@ public class CobblestonePopulator extends MazeRoomBlockPopulator {
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
 		int z = args.getChunkZ();
-		
-		// Check chances
-		if (rand.nextInt(100) < CHANCE_COBBLE) {
 			
-			int webX = x + rand.nextInt(6) + 1;
-			int webY = args.getFloorY();
-			int webCeilingY = args.getCeilingY();
-			int webZ = z + rand.nextInt(6) + 1;
-			
-			if (rand.nextInt(100) < CHANCE_CORNER)
-				if(c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).getType() == Material.AIR)
-					c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).setType(Material.WEB);
-			
-			else
-				if(!(c.getBlock(webX, webY - 1, webZ).getType() == Material.AIR))
-					if(c.getBlock(webX, webY, webZ).getType() == Material.AIR)
-						c.getBlock(webX, webY, webZ).setType(Material.COBBLESTONE);
-		}
+        int webX = x + rand.nextInt(6) + 1;
+        int webY = args.getFloorY();
+        int webCeilingY = args.getCeilingY();
+        int webZ = z + rand.nextInt(6) + 1;
+
+        if (rand.nextInt(100) < CHANCE_CORNER)
+            if(c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).getType() == Material.AIR)
+                c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).setType(Material.WEB);
+
+        else
+            if(!(c.getBlock(webX, webY - 1, webZ).getType() == Material.AIR))
+                if(c.getBlock(webX, webY, webZ).getType() == Material.AIR)
+                    c.getBlock(webX, webY, webZ).setType(Material.COBBLESTONE);
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

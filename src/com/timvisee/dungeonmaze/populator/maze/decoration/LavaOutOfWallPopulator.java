@@ -13,7 +13,9 @@ public class LavaOutOfWallPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
-	public static final int CHANCE_LAVA = 5;
+	public static final float ROOM_CHANCE = .05f;
+
+    // TODO: Implement this!
 	public static final double CHANCE_LAVA_ADDITION_EACH_LEVEL = -0.833; /* to 0 */
 
 	@Override
@@ -24,17 +26,20 @@ public class LavaOutOfWallPopulator extends MazeRoomBlockPopulator {
 		int y = args.getChunkY();
 		int z = args.getChunkZ();
 		int floorOffset = args.getFloorOffset();
-		
-		if(rand.nextInt(100) < CHANCE_LAVA + (CHANCE_LAVA_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
-			int lanternX = x + rand.nextInt(8);
-			int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
-			int lanternZ = z + rand.nextInt(8);
-			
-			Block b = c.getBlock(lanternX, lanternY, lanternZ);
-			if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
-				b.setType(Material.LAVA);
-		}
+
+        int lanternX = x + rand.nextInt(8);
+        int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
+        int lanternZ = z + rand.nextInt(8);
+
+        Block b = c.getBlock(lanternX, lanternY, lanternZ);
+        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
+            b.setType(Material.LAVA);
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

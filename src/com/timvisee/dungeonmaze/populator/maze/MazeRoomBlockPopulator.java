@@ -29,23 +29,33 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 		// The 4 rooms on each layer
 		for(int chunkX = 0; chunkX < 16; chunkX += 8) {
 			for(int chunkZ = 0; chunkZ < 16; chunkZ += 8) {
-				// Make sure this room isn't constant
-				if(DungeonMaze.instance.isConstantRoom(world.getName(), chunk, chunkX, y, chunkZ))
-					continue;
-				
-				// Calculate the global X and Y coordinates
-				int x = (chunk.getX() * 16) + chunkX;
-				int z = (chunk.getZ() * 16) + chunkZ;
-				
-				// Get the floor and ceiling offset
-				int floorOffset = getFloorOffset(chunkX, y, chunkZ, chunk);
-				int ceilingOffset = getCeilingOffset(chunkX, y, chunkZ, chunk);
-				
-				// Construct the DMMazePopulatorArgs to use the the populateMaze method
-				MazeRoomBlockPopulatorArgs newArgs = new MazeRoomBlockPopulatorArgs(world, rand, chunk, dungeonChunk, layer, x, y, z, floorOffset, ceilingOffset);
-				
-				// Populate the maze
-				populateRoom(newArgs);
+
+                // Iterate through this room
+                final int iterations = getRoomPopulationIterations();
+                for(int i = 0; i < iterations; i++) {
+
+                    // Check whether this this room should be populated based on it's chance
+                    if(rand.nextFloat() >= getRoomPopulationChance())
+                        continue;
+
+                    // Make sure this room isn't constant
+                    if(DungeonMaze.instance.isConstantRoom(world.getName(), chunk, chunkX, y, chunkZ))
+                        continue;
+
+                    // Calculate the global X and Y coordinates
+                    int x = (chunk.getX() * 16) + chunkX;
+                    int z = (chunk.getZ() * 16) + chunkZ;
+
+                    // Get the floor and ceiling offset
+                    int floorOffset = getFloorOffset(chunkX, y, chunkZ, chunk);
+                    int ceilingOffset = getCeilingOffset(chunkX, y, chunkZ, chunk);
+
+                    // Construct the DMMazePopulatorArgs to use the the populateMaze method
+                    MazeRoomBlockPopulatorArgs newArgs = new MazeRoomBlockPopulatorArgs(world, rand, chunk, dungeonChunk, layer, x, y, z, floorOffset, ceilingOffset);
+
+                    // Populate the maze
+                    populateRoom(newArgs);
+                }
 			}
 		}
 	}
@@ -100,4 +110,20 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 		
 		return 0;
 	}
+
+    /**
+     * Get the room population chance. This value is between 0.0 and 1.0.
+     *
+     * @return The population chance of the room.
+     */
+    public abstract float getRoomPopulationChance();
+
+    /**
+     * Get the number of times to iterate through each room.
+     *
+     * @return The number of iterations.
+     */
+    public int getRoomPopulationIterations() {
+        return 1;
+    }
 }

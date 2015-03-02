@@ -25,7 +25,8 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 6;
-	public static final int CHANCE_CASTLE = 1; // Promile
+	public static final float ROOM_CHANCE = .001f;
+
 	public static final int ITERATIONS_MOSS = 80;
 	public static final int CHANCE_MOSS = 70;
 	public static final int ITERATIONS_CRACKED = 80;
@@ -36,164 +37,160 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 		World W = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int floorOffset = args.getFloorOffset();
-		int yFloor = args.getFloorY();
-		int yCeiling = args.getCeilingY();
-		int z = args.getChunkZ();
-		
-		// Apply chances
-		if (rand.nextInt(1000) < CHANCE_CASTLE) {
-								
-			// Register the room as constant room
-			DungeonMaze.instance.registerConstantRoom(W.getName(), c, x, y, z);
-			
-			// Break out the orriginal walls
-			for(int xx = 1; xx < 7; xx++) {
-				for(int yy = yFloor + 1; yy <= yCeiling - 1; yy++) {
-					c.getBlock(x + xx, yy, z + 0).setType(Material.AIR);
-					c.getBlock(x + xx, yy, z + 7).setType(Material.AIR);
-					c.getBlock(x + 0, yy, z + xx).setType(Material.AIR);
-					c.getBlock(x + 7, yy, z + xx).setType(Material.AIR);
-				}
-			}
-			
-			// Walls
-			for(int xx = 1; xx < 7; xx++) {
-				for(int yy = floorOffset + 1; yy <= floorOffset + 2; yy++) {
-					c.getBlock(x + xx, y + yy, z + 1).setType(Material.SMOOTH_BRICK);
-					c.getBlock(x + xx, y + yy, z + 6).setType(Material.SMOOTH_BRICK);
-					c.getBlock(x + 1, y + yy, z + xx).setType(Material.SMOOTH_BRICK);
-					c.getBlock(x + 6, y + yy, z + xx).setType(Material.SMOOTH_BRICK);
-				}
-			}
-			
-			// Generate merlons
-			for(int xx = 0; xx < 7; xx++) {
-				c.getBlock(x + xx, yFloor + 3, z + 0).setType(Material.SMOOTH_BRICK);
-				c.getBlock(x + xx, yFloor + 3, z + 7).setType(Material.SMOOTH_BRICK);
-				c.getBlock(x + 0, yFloor + 3, z + xx).setType(Material.SMOOTH_BRICK);
-				c.getBlock(x + 7, yFloor + 3, z + xx).setType(Material.SMOOTH_BRICK);
-			}
-			
-			c.getBlock(x + 0, yFloor + 4, z + 1).setType(Material.STEP);
-			c.getBlock(x + 0, yFloor + 4, z + 1).setData((byte) 5);
-			c.getBlock(x + 0, yFloor + 4, z + 3).setType(Material.STEP);
-			c.getBlock(x + 0, yFloor + 4, z + 3).setData((byte) 5);
-			c.getBlock(x + 0, yFloor + 4, z + 5).setType(Material.STEP);
-			c.getBlock(x + 0, yFloor + 4, z + 5).setData((byte) 5);
-			c.getBlock(x + 7, yFloor + 4, z + 2).setType(Material.STEP);
-			c.getBlock(x + 7, yFloor + 4, z + 2).setData((byte) 5);
-			c.getBlock(x + 7, yFloor + 4, z + 4).setType(Material.STEP);
-			c.getBlock(x + 7, yFloor + 4, z + 4).setData((byte) 5);
-			c.getBlock(x + 7, yFloor + 4, z + 6).setType(Material.STEP);
-			c.getBlock(x + 7, yFloor + 4, z + 6).setData((byte) 5);
-			c.getBlock(x + 1, yFloor + 4, z + 0).setType(Material.STEP);
-			c.getBlock(x + 1, yFloor + 4, z + 0).setData((byte) 5);
-			c.getBlock(x + 3, yFloor + 4, z + 0).setType(Material.STEP);
-			c.getBlock(x + 3, yFloor + 4, z + 0).setData((byte) 5);
-			c.getBlock(x + 5, yFloor + 4, z + 0).setType(Material.STEP);
-			c.getBlock(x + 5, yFloor + 4, z + 0).setData((byte) 5);
-			c.getBlock(x + 2, yFloor + 4, z + 7).setType(Material.STEP);
-			c.getBlock(x + 2, yFloor + 4, z + 7).setData((byte) 5);
-			c.getBlock(x + 4, yFloor + 4, z + 7).setType(Material.STEP);
-			c.getBlock(x + 4, yFloor + 4, z + 7).setData((byte) 5);
-			c.getBlock(x + 6, yFloor + 4, z + 7).setType(Material.STEP);
-			c.getBlock(x + 6, yFloor + 4, z + 7).setData((byte) 5);
-			
-			// Place torches
-			c.getBlock(x + 1, yFloor + 3, z + 1).setType(Material.TORCH);
-			c.getBlock(x + 1, yFloor + 3, z + 1).setData((byte) 5);
-			c.getBlock(x + 1, yFloor + 3, z + 6).setType(Material.TORCH);
-			c.getBlock(x + 1, yFloor + 3, z + 6).setData((byte) 5);
-			c.getBlock(x + 6, yFloor + 3, z + 1).setType(Material.TORCH);
-			c.getBlock(x + 6, yFloor + 3, z + 1).setData((byte) 5);
-			c.getBlock(x + 6, yFloor + 3, z + 6).setType(Material.TORCH);
-			c.getBlock(x + 6, yFloor + 3, z + 6).setData((byte) 5);
-			
-			// Place ladders
-			c.getBlock(x + 2, yFloor + 1, z + 5).setType(Material.LADDER);
-			c.getBlock(x + 2, yFloor + 1, z + 5).setData((byte) 2);
-			c.getBlock(x + 2, yFloor + 2, z + 5).setType(Material.LADDER);
-			c.getBlock(x + 2, yFloor + 2, z + 5).setData((byte) 2);
-			
-			// Place crafting table, chests and furnaces
-			c.getBlock(x + 2, yFloor + 1, z + 2).setType(Material.WORKBENCH);
-			c.getBlock(x + 5, yFloor + 1, z + 2).setType(Material.CHEST);
-			c.getBlock(x + 5, yFloor + 1, z + 2).setData((byte) 2);
-			
-			//Call the Chest generation event
-			GenerationChestEvent event = new GenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 2), rand, genChestContent(rand), MazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
-			Bukkit.getServer().getPluginManager().callEvent(event);
-			
-			// Do the event
-			if(!event.isCancelled()) {
-				// Make sure the chest is still there, a developer could change the chest through the event!
-				if(event.getBlock().getType() == Material.CHEST)
-				// Add the contents to the chest
-				ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
-			}
+		final int x = args.getChunkX();
+		final int y = args.getChunkY();
+		final int floorOffset = args.getFloorOffset();
+		final int yFloor = args.getFloorY();
+		final int yCeiling = args.getCeilingY();
+		final int z = args.getChunkZ();
 
-			c.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.CHEST);
-			c.getBlock(x + 5, yFloor + 1, z + 3).setData((byte) 2);
-			
-			//Call the Chest generation event
-			GenerationChestEvent event2 = new GenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 3), rand, genChestContent(rand), MazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
-			Bukkit.getServer().getPluginManager().callEvent(event2);
-			
-			// Do the event
-			if(!event2.isCancelled()) {
-				// Make sure the chest is still there, a developer could change the chest through the event!
-				if(event2.getBlock().getType() == Material.CHEST)
-				// Add the contents to the chest
-				ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
-			}
-			
-			c.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.FURNACE);
-			c.getBlock(x + 5, yFloor + 1, z + 4).setData((byte) 4);
-			addItemsToFurnace(rand, (Furnace) c.getBlock(x + 5, yFloor + 1, z + 4).getState());
-			c.getBlock(x + 5, yFloor + 1, z + 5).setType(Material.FURNACE);
-			c.getBlock(x + 5, yFloor + 1, z + 5).setData((byte) 4);
-			addItemsToFurnace(rand, (Furnace) c.getBlock(x + 5, yFloor + 1, z + 5).getState());
-			
-			// Place cake (with random pieces eaten)
-			c.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.CAKE_BLOCK);
-			c.getBlock(x + 5, yFloor + 2, z + 5).setData((byte) rand.nextInt(4));
-			
-			// TODO: Place painting
-			
-			// Place some cobweb
-			c.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.WEB);
-			c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.WEB);
-			c.getBlock(x + 6, yFloor + 3, z + 6).setType(Material.WEB);
-			c.getBlock(x + 6, yFloor + 4, z + 6).setType(Material.WEB);
-			c.getBlock(x + 5, yFloor + 3, z + 6).setType(Material.WEB);
-			c.getBlock(x + 6, yFloor + 3, z + 5).setType(Material.WEB);
-			c.getBlock(x + 0, yFloor + 4, z + 6).setType(Material.WEB);
-			
-			// Add some moss and cracked stone bricks
-			for (int i = 0; i < ITERATIONS_MOSS; i++) {
-				if (rand.nextInt(100) < CHANCE_MOSS) {
-					
-					Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
-					if (block.getType() == Material.COBBLESTONE)
-						block.setType(Material.MOSSY_COBBLESTONE);
-						
-					if (block.getType() == Material.SMOOTH_BRICK)
-						block.setData((byte) 1);
-				}
-			}
-			
-			for (int i = 0; i < ITERATIONS_CRACKED; i++) {
-				if (rand.nextInt(100) < CHANCE_CRACKED) {
-					
-					Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
-					if (block.getType() == Material.SMOOTH_BRICK)
-						block.setData((byte) 2);
-				}
-			}
-		}
+        // Register the room as constant room
+        DungeonMaze.instance.registerConstantRoom(W.getName(), c, x, y, z);
+
+        // Break out the original walls
+        for(int xx = 1; xx < 7; xx++) {
+            for(int yy = yFloor + 1; yy <= yCeiling - 1; yy++) {
+                c.getBlock(x + xx, yy, z + 0).setType(Material.AIR);
+                c.getBlock(x + xx, yy, z + 7).setType(Material.AIR);
+                c.getBlock(x + 0, yy, z + xx).setType(Material.AIR);
+                c.getBlock(x + 7, yy, z + xx).setType(Material.AIR);
+            }
+        }
+
+        // Walls
+        for(int xx = 1; xx < 7; xx++) {
+            for(int yy = floorOffset + 1; yy <= floorOffset + 2; yy++) {
+                c.getBlock(x + xx, y + yy, z + 1).setType(Material.SMOOTH_BRICK);
+                c.getBlock(x + xx, y + yy, z + 6).setType(Material.SMOOTH_BRICK);
+                c.getBlock(x + 1, y + yy, z + xx).setType(Material.SMOOTH_BRICK);
+                c.getBlock(x + 6, y + yy, z + xx).setType(Material.SMOOTH_BRICK);
+            }
+        }
+
+        // Generate merlons
+        for(int xx = 0; xx < 7; xx++) {
+            c.getBlock(x + xx, yFloor + 3, z + 0).setType(Material.SMOOTH_BRICK);
+            c.getBlock(x + xx, yFloor + 3, z + 7).setType(Material.SMOOTH_BRICK);
+            c.getBlock(x + 0, yFloor + 3, z + xx).setType(Material.SMOOTH_BRICK);
+            c.getBlock(x + 7, yFloor + 3, z + xx).setType(Material.SMOOTH_BRICK);
+        }
+
+        c.getBlock(x + 0, yFloor + 4, z + 1).setType(Material.STEP);
+        c.getBlock(x + 0, yFloor + 4, z + 1).setData((byte) 5);
+        c.getBlock(x + 0, yFloor + 4, z + 3).setType(Material.STEP);
+        c.getBlock(x + 0, yFloor + 4, z + 3).setData((byte) 5);
+        c.getBlock(x + 0, yFloor + 4, z + 5).setType(Material.STEP);
+        c.getBlock(x + 0, yFloor + 4, z + 5).setData((byte) 5);
+        c.getBlock(x + 7, yFloor + 4, z + 2).setType(Material.STEP);
+        c.getBlock(x + 7, yFloor + 4, z + 2).setData((byte) 5);
+        c.getBlock(x + 7, yFloor + 4, z + 4).setType(Material.STEP);
+        c.getBlock(x + 7, yFloor + 4, z + 4).setData((byte) 5);
+        c.getBlock(x + 7, yFloor + 4, z + 6).setType(Material.STEP);
+        c.getBlock(x + 7, yFloor + 4, z + 6).setData((byte) 5);
+        c.getBlock(x + 1, yFloor + 4, z + 0).setType(Material.STEP);
+        c.getBlock(x + 1, yFloor + 4, z + 0).setData((byte) 5);
+        c.getBlock(x + 3, yFloor + 4, z + 0).setType(Material.STEP);
+        c.getBlock(x + 3, yFloor + 4, z + 0).setData((byte) 5);
+        c.getBlock(x + 5, yFloor + 4, z + 0).setType(Material.STEP);
+        c.getBlock(x + 5, yFloor + 4, z + 0).setData((byte) 5);
+        c.getBlock(x + 2, yFloor + 4, z + 7).setType(Material.STEP);
+        c.getBlock(x + 2, yFloor + 4, z + 7).setData((byte) 5);
+        c.getBlock(x + 4, yFloor + 4, z + 7).setType(Material.STEP);
+        c.getBlock(x + 4, yFloor + 4, z + 7).setData((byte) 5);
+        c.getBlock(x + 6, yFloor + 4, z + 7).setType(Material.STEP);
+        c.getBlock(x + 6, yFloor + 4, z + 7).setData((byte) 5);
+
+        // Place torches
+        c.getBlock(x + 1, yFloor + 3, z + 1).setType(Material.TORCH);
+        c.getBlock(x + 1, yFloor + 3, z + 1).setData((byte) 5);
+        c.getBlock(x + 1, yFloor + 3, z + 6).setType(Material.TORCH);
+        c.getBlock(x + 1, yFloor + 3, z + 6).setData((byte) 5);
+        c.getBlock(x + 6, yFloor + 3, z + 1).setType(Material.TORCH);
+        c.getBlock(x + 6, yFloor + 3, z + 1).setData((byte) 5);
+        c.getBlock(x + 6, yFloor + 3, z + 6).setType(Material.TORCH);
+        c.getBlock(x + 6, yFloor + 3, z + 6).setData((byte) 5);
+
+        // Place ladders
+        c.getBlock(x + 2, yFloor + 1, z + 5).setType(Material.LADDER);
+        c.getBlock(x + 2, yFloor + 1, z + 5).setData((byte) 2);
+        c.getBlock(x + 2, yFloor + 2, z + 5).setType(Material.LADDER);
+        c.getBlock(x + 2, yFloor + 2, z + 5).setData((byte) 2);
+
+        // Place crafting table, chests and furnaces
+        c.getBlock(x + 2, yFloor + 1, z + 2).setType(Material.WORKBENCH);
+        c.getBlock(x + 5, yFloor + 1, z + 2).setType(Material.CHEST);
+        c.getBlock(x + 5, yFloor + 1, z + 2).setData((byte) 2);
+
+        //Call the Chest generation event
+        GenerationChestEvent event = new GenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 2), rand, genChestContent(rand), MazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+        // Do the event
+        if(!event.isCancelled()) {
+            // Make sure the chest is still there, a developer could change the chest through the event!
+            if(event.getBlock().getType() == Material.CHEST)
+            // Add the contents to the chest
+            ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+        }
+
+        c.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.CHEST);
+        c.getBlock(x + 5, yFloor + 1, z + 3).setData((byte) 2);
+
+        //Call the Chest generation event
+        GenerationChestEvent event2 = new GenerationChestEvent(c.getBlock(x + 5, yFloor + 1, z + 3), rand, genChestContent(rand), MazeStructureType.ABANDONED_DEFENCE_CASTLE_ROOM);
+        Bukkit.getServer().getPluginManager().callEvent(event2);
+
+        // Do the event
+        if(!event2.isCancelled()) {
+            // Make sure the chest is still there, a developer could change the chest through the event!
+            if(event2.getBlock().getType() == Material.CHEST)
+            // Add the contents to the chest
+            ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+        }
+
+        c.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.FURNACE);
+        c.getBlock(x + 5, yFloor + 1, z + 4).setData((byte) 4);
+        addItemsToFurnace(rand, (Furnace) c.getBlock(x + 5, yFloor + 1, z + 4).getState());
+        c.getBlock(x + 5, yFloor + 1, z + 5).setType(Material.FURNACE);
+        c.getBlock(x + 5, yFloor + 1, z + 5).setData((byte) 4);
+        addItemsToFurnace(rand, (Furnace) c.getBlock(x + 5, yFloor + 1, z + 5).getState());
+
+        // Place cake (with random pieces eaten)
+        c.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.CAKE_BLOCK);
+        c.getBlock(x + 5, yFloor + 2, z + 5).setData((byte) rand.nextInt(4));
+
+        // TODO: Place painting
+
+        // Place some cobweb
+        c.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.WEB);
+        c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.WEB);
+        c.getBlock(x + 6, yFloor + 3, z + 6).setType(Material.WEB);
+        c.getBlock(x + 6, yFloor + 4, z + 6).setType(Material.WEB);
+        c.getBlock(x + 5, yFloor + 3, z + 6).setType(Material.WEB);
+        c.getBlock(x + 6, yFloor + 3, z + 5).setType(Material.WEB);
+        c.getBlock(x + 0, yFloor + 4, z + 6).setType(Material.WEB);
+
+        // Add some moss and cracked stone bricks
+        for (int i = 0; i < ITERATIONS_MOSS; i++) {
+            if (rand.nextInt(100) < CHANCE_MOSS) {
+
+                Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
+                if (block.getType() == Material.COBBLESTONE)
+                    block.setType(Material.MOSSY_COBBLESTONE);
+
+                if (block.getType() == Material.SMOOTH_BRICK)
+                    block.setData((byte) 1);
+            }
+        }
+
+        for (int i = 0; i < ITERATIONS_CRACKED; i++) {
+            if (rand.nextInt(100) < CHANCE_CRACKED) {
+
+                Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
+                if (block.getType() == Material.SMOOTH_BRICK)
+                    block.setData((byte) 2);
+            }
+        }
 	}
 	
 	public void addItemsToFurnace(Random random, Furnace furnace) {
@@ -462,6 +459,11 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 			result.add(items.get(random.nextInt(items.size())));
 		return result;
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

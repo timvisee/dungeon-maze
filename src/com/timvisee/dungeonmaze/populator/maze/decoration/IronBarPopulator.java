@@ -13,37 +13,41 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-	public static final int CHANCE = 25;
+	public static final float ROOM_CHANCE = .25f;
+    public static final int ROOM_ITERATIONS = 2;
 	public static final int CHANCE_DOUBLE_HEIGHT = 66;
-	public static final int ITERATIONS = 2;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int z = args.getChunkZ();
-		int floorOffset = args.getFloorOffset();
-		
-		// Iterate
-		for (int i = 0; i < ITERATIONS; i++) {
-			if (rand.nextInt(100) < CHANCE) {
-				int blockX = x + rand.nextInt(8);
-				int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
-				int blockZ = z + rand.nextInt(8);
-				
-				Block b = c.getBlock(blockX, blockY, blockZ);
-				if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
-					b.setType(Material.IRON_FENCE);
-					if(rand.nextInt(100) < CHANCE_DOUBLE_HEIGHT) {
-						Block block2 = c.getBlock(blockX, blockY + 1, blockZ);
-						block2.setType(Material.IRON_FENCE);
-					}
-				}
-			}
-		}
+		final int x = args.getChunkX();
+		final int y = args.getChunkY();
+		final int z = args.getChunkZ();
+		final int floorOffset = args.getFloorOffset();
+        int blockX = x + rand.nextInt(8);
+        int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
+        int blockZ = z + rand.nextInt(8);
+
+        Block b = c.getBlock(blockX, blockY, blockZ);
+        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
+            b.setType(Material.IRON_FENCE);
+            if(rand.nextInt(100) < CHANCE_DOUBLE_HEIGHT) {
+                Block block2 = c.getBlock(blockX, blockY + 1, blockZ);
+                block2.setType(Material.IRON_FENCE);
+            }
+        }
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
+
+    @Override
+    public int getRoomPopulationIterations() {
+        return ROOM_ITERATIONS;
+    }
 	
 	/**
 	 * Get the minimum layer

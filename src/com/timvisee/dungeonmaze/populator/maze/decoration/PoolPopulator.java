@@ -12,40 +12,39 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 1;
+	public static final float ROOM_CHANCE = .05f; // Includes lava pools
+
 	public static final int NO_LAVA_NEAR_SPAWN_RADIUS = 2; // In chunks
-	public static final int CHANCE_POOL = 5; // Includes lava pools
 	public static final int CHANCE_LAVA = 35; // Rest is water
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int z = args.getChunkZ();
+		final int x = args.getChunkX();
+		final int z = args.getChunkZ();
 		
 		boolean allowLava = true;
 		if(Math.abs(c.getX()) < NO_LAVA_NEAR_SPAWN_RADIUS || Math.abs(c.getZ()) < NO_LAVA_NEAR_SPAWN_RADIUS)
 			allowLava = false;
-		
-		if(rand.nextInt(100) < CHANCE_POOL) {
-			LiquidType liquidType = LiquidType.WATER;
 
-			if(allowLava && rand.nextInt(100) < CHANCE_LAVA)
-				liquidType = LiquidType.LAVA;
+        LiquidType liquidType = LiquidType.WATER;
 
-			int poolX = x + rand.nextInt(6) + 1;
-			int poolY = args.getFloorY();
-			int poolZ = z + rand.nextInt(6) + 1;
-			int poolW = rand.nextInt(5);
-			int poolL = rand.nextInt(5);
+        if(allowLava && rand.nextInt(100) < CHANCE_LAVA)
+            liquidType = LiquidType.LAVA;
 
-			for (int i = Math.max(poolX - poolW / 2, 1); i < Math.min(poolX - poolW / 2 + poolW, 6); i++) {
-				for (int j = Math.max(poolZ - poolL / 2, 1); j < Math.min(poolZ - poolL / 2 + poolL, 6); j++) {
-					c.getBlock(i, poolY, j).setType(liquidType.getMaterial());
-					c.getBlock(i, poolY - 1, j).setType(Material.MOSSY_COBBLESTONE);
-				}
-			}
-		}
+        int poolX = x + rand.nextInt(6) + 1;
+        int poolY = args.getFloorY();
+        int poolZ = z + rand.nextInt(6) + 1;
+        int poolW = rand.nextInt(5);
+        int poolL = rand.nextInt(5);
+
+        for (int i = Math.max(poolX - poolW / 2, 1); i < Math.min(poolX - poolW / 2 + poolW, 6); i++) {
+            for (int j = Math.max(poolZ - poolL / 2, 1); j < Math.min(poolZ - poolL / 2 + poolL, 6); j++) {
+                c.getBlock(i, poolY, j).setType(liquidType.getMaterial());
+                c.getBlock(i, poolY - 1, j).setType(Material.MOSSY_COBBLESTONE);
+            }
+        }
 	}
 	
 	public enum LiquidType {
@@ -62,7 +61,12 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 			return mat;
 		}
 	}
-	
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
+
 	/**
 	 * Get the minimum layer
 	 * @return Minimum layer

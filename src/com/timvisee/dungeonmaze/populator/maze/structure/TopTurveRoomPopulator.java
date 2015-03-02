@@ -18,7 +18,9 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 5;
-	public static final int CHANCE_TOPTURVE = 2; //Promile
+	public static final float ROOM_CHANCE = .002f;
+
+    // TODO: Implement this feature!
 	public static final double CHANCE_TOPTURVE_ADDITION_EACH_LEVEL = -0.167; /* to 2 */
 
 	@Override
@@ -26,90 +28,90 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getX();
-		int y = args.getY();
-		int yCeiling = args.getCeilingY();
-		int z = args.getZ();
-		int layer = args.getLayer();
-		
-		// Apply chances
-		if(rand.nextInt(1000) < CHANCE_TOPTURVE + (CHANCE_TOPTURVE_ADDITION_EACH_LEVEL * layer)) {
+		final int x = args.getX();
+		final int y = args.getY();
+		final int yCeiling = args.getCeilingY();
+		final int z = args.getZ();
 			
-			// Register the current room as constant room
-			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
-			
-			// Hull
-			c.getBlock(x + 3, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
-			c.getBlock(x + 3, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
-			c.getBlock(x + 4, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
-			c.getBlock(x + 4, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
-			c.getBlock(x + 2, yCeiling - 1, z + 3).setType(Material.NETHERRACK);
-			c.getBlock(x + 2, yCeiling - 1, z + 4).setType(Material.GLASS);
-			c.getBlock(x + 3, yCeiling - 1, z + 2).setType(Material.GLASS);
+        // Register the current room as constant room
+        DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
 
-			Block ore1 = c.getBlock(x + 3, yCeiling - 1, z + 3);
-			switch(rand.nextInt(5)) {
-			case 0:
-				ore1.setType(Material.GOLD_ORE);
-				break;
-			case 1:
-				ore1.setType(Material.IRON_ORE);
-				break;
-			case 2:
-				ore1.setType(Material.COAL_ORE);
-				break;
-			case 3:
-				ore1.setType(Material.LAPIS_ORE);
-				break;
-			case 4:
-				ore1.setType(Material.COAL_ORE); // Originally diamond, changed to coal because ore2 could be diamond too
-				break;
-			default:
-				ore1.setType(Material.COAL_ORE);
-			}
-			
-			c.getBlock(x + 3, yCeiling - 1, z + 5).setType(Material.NETHERRACK);
-			c.getBlock(x + 4, yCeiling - 1, z + 2).setType(Material.NETHERRACK);
+        // Hull
+        c.getBlock(x + 3, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
+        c.getBlock(x + 3, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
+        c.getBlock(x + 4, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
+        c.getBlock(x + 4, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
+        c.getBlock(x + 2, yCeiling - 1, z + 3).setType(Material.NETHERRACK);
+        c.getBlock(x + 2, yCeiling - 1, z + 4).setType(Material.GLASS);
+        c.getBlock(x + 3, yCeiling - 1, z + 2).setType(Material.GLASS);
 
-			Block ore2 = c.getBlock(x + 4, yCeiling - 1, z + 4);
-			switch(rand.nextInt(5)) {
-			case 0:
-				ore2.setType(Material.GOLD_ORE);
-				break;
-			case 1:
-				ore2.setType(Material.IRON_ORE);
-				break;
-			case 2:
-				ore2.setType(Material.COAL_ORE);
-				break;
-			case 3:
-				ore2.setType(Material.LAPIS_ORE);
-				break;
-			case 4:
-				ore2.setType(Material.DIAMOND_ORE);
-				break;
-			default:
-				ore2.setType(Material.COAL_ORE);
-			}
+        Block ore1 = c.getBlock(x + 3, yCeiling - 1, z + 3);
+        switch(rand.nextInt(5)) {
+        case 0:
+            ore1.setType(Material.GOLD_ORE);
+            break;
+        case 1:
+            ore1.setType(Material.IRON_ORE);
+            break;
+        case 2:
+            ore1.setType(Material.COAL_ORE);
+            break;
+        case 3:
+            ore1.setType(Material.LAPIS_ORE);
+            break;
+        case 4:
+            ore1.setType(Material.COAL_ORE); // Originally diamond, changed to coal because ore2 could be diamond too
+            break;
+        default:
+            ore1.setType(Material.COAL_ORE);
+        }
 
-			c.getBlock(x + 4, yCeiling - 1, z + 5).setType(Material.GLASS);
-			c.getBlock(x + 5, yCeiling - 1, z + 3).setType(Material.GLASS);
-			c.getBlock(x + 5, yCeiling - 1, z + 4).setType(Material.NETHERRACK);
-			
-			// Spawners
-			if(Core.getConfigHandler().isMobSpawnerAllowed("Pig")) {
-				c.getBlock(x + 3, yCeiling - 1, z + 4).setType(Material.MOB_SPAWNER);
-				CreatureSpawner PigSpawner = (CreatureSpawner) c.getBlock(x + 3, yCeiling - 1, z + 4).getState();
-				PigSpawner.setSpawnedType(EntityType.PIG);
-			}
-			
-			if(Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
-				c.getBlock(x + 4, yCeiling - 1, z + 3).setType(Material.MOB_SPAWNER);
-				CreatureSpawner PigSpawner2 = (CreatureSpawner) c.getBlock(x + 4, yCeiling - 1, z + 3).getState();
-				PigSpawner2.setSpawnedType(EntityType.SKELETON);
-			}
-		}
+        c.getBlock(x + 3, yCeiling - 1, z + 5).setType(Material.NETHERRACK);
+        c.getBlock(x + 4, yCeiling - 1, z + 2).setType(Material.NETHERRACK);
+
+        Block ore2 = c.getBlock(x + 4, yCeiling - 1, z + 4);
+        switch(rand.nextInt(5)) {
+        case 0:
+            ore2.setType(Material.GOLD_ORE);
+            break;
+        case 1:
+            ore2.setType(Material.IRON_ORE);
+            break;
+        case 2:
+            ore2.setType(Material.COAL_ORE);
+            break;
+        case 3:
+            ore2.setType(Material.LAPIS_ORE);
+            break;
+        case 4:
+            ore2.setType(Material.DIAMOND_ORE);
+            break;
+        default:
+            ore2.setType(Material.COAL_ORE);
+        }
+
+        c.getBlock(x + 4, yCeiling - 1, z + 5).setType(Material.GLASS);
+        c.getBlock(x + 5, yCeiling - 1, z + 3).setType(Material.GLASS);
+        c.getBlock(x + 5, yCeiling - 1, z + 4).setType(Material.NETHERRACK);
+
+        // Spawners
+        if(Core.getConfigHandler().isMobSpawnerAllowed("Pig")) {
+            c.getBlock(x + 3, yCeiling - 1, z + 4).setType(Material.MOB_SPAWNER);
+            CreatureSpawner PigSpawner = (CreatureSpawner) c.getBlock(x + 3, yCeiling - 1, z + 4).getState();
+            PigSpawner.setSpawnedType(EntityType.PIG);
+        }
+
+        if(Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
+            c.getBlock(x + 4, yCeiling - 1, z + 3).setType(Material.MOB_SPAWNER);
+            CreatureSpawner PigSpawner2 = (CreatureSpawner) c.getBlock(x + 4, yCeiling - 1, z + 3).getState();
+            PigSpawner2.setSpawnedType(EntityType.SKELETON);
+        }
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

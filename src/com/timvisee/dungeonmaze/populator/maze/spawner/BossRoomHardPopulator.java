@@ -21,6 +21,8 @@ import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulatorArgs;
 
 public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 
+    // TODO: Add layer chances!
+
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
     public static final int CHANCE_BOSSROOM = 1; //Promile

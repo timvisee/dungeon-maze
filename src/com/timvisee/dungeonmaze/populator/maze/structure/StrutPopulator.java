@@ -98,11 +98,16 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 	}
 	
 	public double distance(int x1, int y1, int x2, int y2) {
-		double dx   = x1 - x2;         //horizontal difference 
-		double dy   = y1 - y2;         //vertical difference 
-		double dist = Math.sqrt( dx*dx + dy*dy ); //distance using Pythagoras theorem
-		return dist;
+		double dx = x1 - x2; // horizontal difference
+		double dy = y1 - y2; // vertical difference
+        return Math.sqrt(dx*dx + dy*dy);
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        // TODO: Improve this!
+        return 1.0f;
+    }
 	
 	/**
 	 * Get the minimum layer

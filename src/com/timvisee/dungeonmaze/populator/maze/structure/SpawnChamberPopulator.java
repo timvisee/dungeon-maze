@@ -21,15 +21,16 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 7;
 	public static final int LAYER_MAX = 7;
+    public static final float ROOM_CHANCE = 1.0f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		World w = args.getWorld();
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int z = args.getChunkZ();
+		final int x = args.getChunkX();
+		final int y = args.getChunkY();
+		final int z = args.getChunkZ();
 		
 		// Make sure this is the chunk at (0, 0)
 		if(c.getX() != 0 || c.getZ() != 0 || x != 0 || z != 0)
@@ -366,6 +367,11 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 		
 		chest.update();
 	} */
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

@@ -12,57 +12,58 @@ public class LadderPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 6;
-	public static final int CHANCE_LADDER = 5;
+	public static final float ROOM_CHANCE = .05f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int z = args.getChunkZ();
-		
-		// Apply chances
-		if (rand.nextInt(100) < CHANCE_LADDER) {
-			int startX = x;
-			int startY = args.getFloorY() + 1;
-			int startZ = z;
+		final int x = args.getChunkX();
+		final int z = args.getChunkZ();
+        int startX = x;
+        int startY = args.getFloorY() + 1;
+        int startZ = z;
 			
-			byte ladderData = (byte) 0;
-			switch (rand.nextInt(2)) {
-			case 0:
-				int r = rand.nextInt(2);
-				startX = x + 1 + (r * 5);
-				startZ = z + rand.nextInt(2) * 7;
-				if(r == 0)
-					ladderData = (byte) 5; // North
-				else
-					ladderData = (byte) 4; // South
-				break;
-				
-			case 1:
-				int r2 = rand.nextInt(2);
-				startX = x + rand.nextInt(2) * 7;
-				startZ = z + 1 + (r2*5);
-				if(r2 == 0)
-					ladderData = (byte) 3; // East
-				else
-					ladderData = (byte) 2; // West
-				break;
-				
-			default:
-				startX = x + 1 + (rand.nextInt(2) * 5);
-				startZ = z + rand.nextInt(2) * 7;
-			}
-			
-			// Make sure there's no wall or anything else
-			if(c.getBlock(startX, startY, startZ).getType() == Material.AIR) {
-				for (int ladderY=startY; ladderY <= startY + 8; ladderY++) {
-					c.getBlock(startX, ladderY, startZ).setType(Material.LADDER);
-					c.getBlock(startX, ladderY, startZ).setData(ladderData);
-				}
-			}
-		}
+        byte ladderData = (byte) 0;
+        switch (rand.nextInt(2)) {
+        case 0:
+            int r = rand.nextInt(2);
+            startX = x + 1 + (r * 5);
+            startZ = z + rand.nextInt(2) * 7;
+            if(r == 0)
+                ladderData = (byte) 5; // North
+            else
+                ladderData = (byte) 4; // South
+            break;
+
+        case 1:
+            int r2 = rand.nextInt(2);
+            startX = x + rand.nextInt(2) * 7;
+            startZ = z + 1 + (r2*5);
+            if(r2 == 0)
+                ladderData = (byte) 3; // East
+            else
+                ladderData = (byte) 2; // West
+            break;
+
+        default:
+            startX = x + 1 + (rand.nextInt(2) * 5);
+            startZ = z + rand.nextInt(2) * 7;
+        }
+
+        // Make sure there's no wall or anything else
+        if(c.getBlock(startX, startY, startZ).getType() == Material.AIR) {
+            for (int ladderY=startY; ladderY <= startY + 8; ladderY++) {
+                c.getBlock(startX, ladderY, startZ).setType(Material.LADDER);
+                c.getBlock(startX, ladderY, startZ).setData(ladderData);
+            }
+        }
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

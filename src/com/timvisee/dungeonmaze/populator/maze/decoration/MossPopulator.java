@@ -13,8 +13,8 @@ public class MossPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-	public static final int ITERATIONS = 80;
-	public static final int CHANCE = 70;
+	public static final float ROOM_CHANCE = .7f;
+	public static final int ROOM_ITERATIONS = 80;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -23,21 +23,24 @@ public class MossPopulator extends MazeRoomBlockPopulator {
 		int x = args.getChunkX();
 		int y = args.getChunkY();
 		int z = args.getChunkZ();
-		
-		// Iterate
-		for (int i = 0; i < ITERATIONS; i++) {
-			
-			// Apply chances
-			if (rand.nextInt(100) < CHANCE) {
-				Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
-				if (block.getType() == Material.COBBLESTONE)
-					block.setType(Material.MOSSY_COBBLESTONE);
-					
-				if (block.getType() == Material.SMOOTH_BRICK)
-					block.setData((byte) 1);
-			}
-		}
+
+        Block block = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
+        if (block.getType() == Material.COBBLESTONE)
+            block.setType(Material.MOSSY_COBBLESTONE);
+
+        if (block.getType() == Material.SMOOTH_BRICK)
+            block.setData((byte) 1);
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
+
+    @Override
+    public int getRoomPopulationIterations() {
+        return ROOM_ITERATIONS;
+    }
 	
 	/**
 	 * Get the minimum layer

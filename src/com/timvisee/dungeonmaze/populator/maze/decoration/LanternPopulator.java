@@ -54,8 +54,14 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 			}
 		}
 	}
-	
-	/**
+
+    @Override
+    public float getRoomPopulationChance() {
+        // TODO: Improve this!
+        return 1.0f;
+    }
+
+    /**
 	 * Get the minimum layer
 	 * @return Minimum layer
 	 */

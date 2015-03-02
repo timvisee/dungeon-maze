@@ -21,52 +21,45 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
-	public static final int CHANCE_SKULL = 1; // Promile
-	public static final int ITERATIONS = 5;
+	public static final float ROOM_CHANCE = .001f;
+	public static final int ROOM_ITERATIONS = 5;
+
 	public static final int CHANCE_WITH_POLE = 80;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int z = args.getChunkZ();
+		final int x = args.getChunkX();
+		final int z = args.getChunkZ();
+				
+        boolean withPole = false;
+        if(rand.nextInt(100) < CHANCE_WITH_POLE)
+            withPole = true;
 
-		// Iterate
-		for (int i = 0; i < ITERATIONS; i++) {
-			
-			// Apply chances
-			if(rand.nextInt(1000) < CHANCE_SKULL) {
-				
-				boolean withPole = false;
-				if(rand.nextInt(100) < CHANCE_WITH_POLE)
-					withPole = true;
-				
-				int skullX = x + rand.nextInt(6) + 1;
-				int skullY = args.getFloorY() + 1;
-				int skullZ = z + rand.nextInt(6) + 1;
-				
-				if(withPole)
-					skullY++;
-	
-				Block poleBlock = c.getBlock(skullX, skullY - 1, skullZ);
-				Block skullBlock = c.getBlock(skullX, skullY, skullZ);
-				
-				if(withPole)
-					poleBlock.setType(Material.FENCE);
-				
-				skullBlock.setType(Material.SKULL);
-				skullBlock.setData((byte) 1);
-				
-				BlockState bs = (BlockState) skullBlock.getState();
-				Skull s = (Skull) bs;
-				
-				s.setSkullType(getRandomSkullType(rand));
-				s.setRotation(getRandomSkullRotation(rand));
-				s.setOwner(getRandomOwner(rand));
-				s.update(true, false);
-			}
-		}
+        int skullX = x + rand.nextInt(6) + 1;
+        int skullY = args.getFloorY() + 1;
+        int skullZ = z + rand.nextInt(6) + 1;
+
+        if(withPole)
+            skullY++;
+
+        Block poleBlock = c.getBlock(skullX, skullY - 1, skullZ);
+        Block skullBlock = c.getBlock(skullX, skullY, skullZ);
+
+        if(withPole)
+            poleBlock.setType(Material.FENCE);
+
+        skullBlock.setType(Material.SKULL);
+        skullBlock.setData((byte) 1);
+
+        BlockState bs = (BlockState) skullBlock.getState();
+        Skull s = (Skull) bs;
+
+        s.setSkullType(getRandomSkullType(rand));
+        s.setRotation(getRandomSkullRotation(rand));
+        s.setOwner(getRandomOwner(rand));
+        s.update(true, false);
 	}
 	
 	private String getRandomOwner(Random rand) {
@@ -104,6 +97,16 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 		};
 		return faces[rand.nextInt(faces.length)];
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
+
+    @Override
+    public int getRoomPopulationIterations() {
+        return ROOM_ITERATIONS;
+    }
 	
 	/**
 	 * Get the minimum layer

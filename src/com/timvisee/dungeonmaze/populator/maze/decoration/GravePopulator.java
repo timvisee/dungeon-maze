@@ -12,7 +12,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
@@ -20,43 +19,38 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 6;
-	public static final int CHANCE_GRAVE = 5; // Promile
+	public static final float ROOM_CHANCE = .005f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int z = args.getChunkZ();
-		
-		// Apply chances
-		if (rand.nextInt(1000) < CHANCE_GRAVE) {
-							
-			int graveX = x + rand.nextInt(6 - 2) + 1 + 2; // +2 because the grave is 3 long (so you also need to put the random on 4)
-			int graveY = args.getFloorY() + 1;
-			int graveZ = z + rand.nextInt(6) + 1;
-			
-			// The grave
-			c.getBlock(graveX, graveY, graveZ).setType(Material.DOUBLE_STEP);
-			c.getBlock(graveX - 1, graveY, graveZ).setType(Material.STEP);
-			c.getBlock(graveX - 2, graveY, graveZ).setType(Material.STEP);
-			
-			// Put a sign on a grave and write some text on it
-			c.getBlock(graveX, graveY + 1, graveZ).setType(Material.SIGN_POST);
-			c.getBlock(graveX, graveY + 1, graveZ).setData((byte) 4);
-			
-			// Update the text on the sign
-			Block b = c.getBlock(graveX, graveY + 1, graveZ);
-		    if (b != null) {
-		        BlockState bState = b.getState();
-		        if (bState instanceof Sign) {
-			        Sign s = (Sign) bState;
-			        
-			        // Add text to the grave sign
-					addGraveTextToSign(s, rand);
-		        }
-		    }
-		}
+		final int x = args.getChunkX();
+		final int z = args.getChunkZ();
+        int graveX = x + rand.nextInt(6 - 2) + 1 + 2; // +2 because the grave is 3 long (so you also need to put the random on 4)
+        int graveY = args.getFloorY() + 1;
+        int graveZ = z + rand.nextInt(6) + 1;
+
+        // The grave
+        c.getBlock(graveX, graveY, graveZ).setType(Material.DOUBLE_STEP);
+        c.getBlock(graveX - 1, graveY, graveZ).setType(Material.STEP);
+        c.getBlock(graveX - 2, graveY, graveZ).setType(Material.STEP);
+
+        // Put a sign on a grave and write some text on it
+        c.getBlock(graveX, graveY + 1, graveZ).setType(Material.SIGN_POST);
+        c.getBlock(graveX, graveY + 1, graveZ).setData((byte) 4);
+
+        // Update the text on the sign
+        Block b = c.getBlock(graveX, graveY + 1, graveZ);
+        if (b != null) {
+            BlockState bState = b.getState();
+            if (bState instanceof Sign) {
+                Sign s = (Sign) bState;
+
+                // Add text to the grave sign
+                addGraveTextToSign(s, rand);
+            }
+        }
 	}
 	
 	// Code to add text to a sign
@@ -127,6 +121,11 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 		
 		sign.setLine(line - 1, text);
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

@@ -15,7 +15,8 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MAX = 7;
 	public static final int RUINS_MAX = 2;
 	public static final int RUINS_CHANCE = 5;
-	public static final BlockFace[] dirs = new BlockFace[] {
+
+	public static final BlockFace[] DIRECTIONS = new BlockFace[] {
 			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
 
 	@Override
@@ -36,8 +37,8 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 			
 			int startHeight = rand.nextInt(2) + 1;
 	
-			BlockFace dir1 = dirs[rand.nextInt(dirs.length)];
-			BlockFace dir2 = dirs[rand.nextInt(dirs.length)];
+			BlockFace dir1 = DIRECTIONS[rand.nextInt(DIRECTIONS.length)];
+			BlockFace dir2 = DIRECTIONS[rand.nextInt(DIRECTIONS.length)];
 	
 			int height = startHeight;
 			int x2 = startX;
@@ -73,6 +74,12 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 			ruins++;
 		}
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        // TODO: Improve this!
+        return 1.0f;
+    }
 	
 	/**
 	 * Get the minimum layer

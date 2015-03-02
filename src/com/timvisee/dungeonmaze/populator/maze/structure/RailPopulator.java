@@ -95,6 +95,12 @@ public class RailPopulator extends MazeRoomBlockPopulator {
     public Minecart spawnMinecart(World world, Location location) {
     	return world.spawn(location, Minecart.class);
     }
+
+    @Override
+    public float getRoomPopulationChance() {
+        // TODO: Improve this!
+        return 1.0f;
+    }
 	
 	/**
 	 * Get the minimum layer

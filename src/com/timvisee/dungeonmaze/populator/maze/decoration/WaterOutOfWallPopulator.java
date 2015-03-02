@@ -13,30 +13,33 @@ public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 5;
 	public static final int LAYER_MAX = 7;
-	public static final int CHANCE_WATER = 4;
+	public static final float ROOM_CHANCE = .04f;
+
+    // TODO: Implement this!
 	public static final double CHANCE_WATER_ADDITION_EACH_LEVEL = -0.833; /* to 0 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk c = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int z = args.getChunkZ();
-		int floorOffset = args.getFloorOffset();
-		
-		// Apply chances
-		if(rand.nextInt(100) < CHANCE_WATER + (CHANCE_WATER_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
-			int lanternX = x + rand.nextInt(8);
-			int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
-			int lanternZ = z + rand.nextInt(8);
-			
-			Block b = c.getBlock(lanternX, lanternY, lanternZ);
-			
-			if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
-				b.setType(Material.WATER);
-		}
+		final int x = args.getChunkX();
+		final int y = args.getChunkY();
+		final int z = args.getChunkZ();
+		final int floorOffset = args.getFloorOffset();
+        int lanternX = x + rand.nextInt(8);
+        int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
+        int lanternZ = z + rand.nextInt(8);
+
+        Block b = c.getBlock(lanternX, lanternY, lanternZ);
+
+        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
+            b.setType(Material.WATER);
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer

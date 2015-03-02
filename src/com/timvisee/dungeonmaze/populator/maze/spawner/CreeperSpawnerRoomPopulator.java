@@ -20,8 +20,11 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 5;
-	public static final int CHANCE_SPAWNER = 3; //Promile
+	public static final float ROOM_CHANCE = .003f;
+
+    // TODO: Implement this!
 	public static final double CHANCE_SPAWNER_ADDITION_EACH_LEVEL = -0.333; /* to 1 */
+
 	public static final double SPAWN_DISTANCE_MIN = 5; // Chunks
 
 	@Override
@@ -37,48 +40,49 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
-		
-		// Apply chances
-		if(rand.nextInt(1000) < CHANCE_SPAWNER + (CHANCE_SPAWNER_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
-			// Register the current room as constant room
-			DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
-			
-			// Create the core
-			c.getBlock(x + 3, yFloor + 1, z + 4).setType(Material.NETHER_BRICK);
-			c.getBlock(x + 4, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
-			c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK);
-			c.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
-			c.getBlock(x + 3, yFloor + 2, z + 3).setType(Material.NETHER_BRICK);
-			
-			// Create the spawner
-			if(Core.getConfigHandler().isMobSpawnerAllowed("Creeper")) {
-				Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
-				
-				// Call the spawner generation event
-				GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.CREEPER, GenerationSpawnerEvent.GenerationSpawnerCause.CREEPER_SPAWNER_ROOM, rand);
-				Bukkit.getServer().getPluginManager().callEvent(event);
-				
-				// Make sure the event isn't cancelled yet
-				if(!event.isCancelled()) {
-					// Change the block into a creature spawner
-					spawnerBlock.setType(Material.MOB_SPAWNER);
-					
-					// Cast the created s pawner into a CreatureSpawner object
-					CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
-					
-					// Set the spawned type of the spawner
-					s.setSpawnedType(event.getSpawnedType());
-				}
-			}
-		}
-	}
+
+        // Register the current room as constant room
+        DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
+
+        // Create the core
+        c.getBlock(x + 3, yFloor + 1, z + 4).setType(Material.NETHER_BRICK);
+        c.getBlock(x + 4, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
+        c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK);
+        c.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
+        c.getBlock(x + 3, yFloor + 2, z + 3).setType(Material.NETHER_BRICK);
+
+        // Create the spawner
+        if(Core.getConfigHandler().isMobSpawnerAllowed("Creeper")) {
+            Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
+
+            // Call the spawner generation event
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.CREEPER, GenerationSpawnerEvent.GenerationSpawnerCause.CREEPER_SPAWNER_ROOM, rand);
+            Bukkit.getServer().getPluginManager().callEvent(event);
+
+            // Make sure the event isn't cancelled yet
+            if(!event.isCancelled()) {
+                // Change the block into a creature spawner
+                spawnerBlock.setType(Material.MOB_SPAWNER);
+
+                // Cast the created s pawner into a CreatureSpawner object
+                CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+
+                // Set the spawned type of the spawner
+                s.setSpawnedType(event.getSpawnedType());
+            }
+        }
+    }
 	
 	public double distance(int x1, int y1, int x2, int y2) {
-		double dx   = x1 - x2;         //horizontal difference 
-		double dy   = y1 - y2;         //vertical difference 
-		double dist = Math.sqrt( dx*dx + dy*dy ); //distance using Pythagoras theorem
-		return dist;
+		double dx = x1 - x2;         //horizontal difference
+		double dy = y1 - y2;         //vertical difference
+        return Math.sqrt( dx*dx + dy*dy );
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
 	
 	/**
 	 * Get the minimum layer
