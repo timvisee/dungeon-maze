@@ -21,29 +21,24 @@ import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulatorArgs;
 
 public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 
-    // TODO: Add layer chances!
-
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
-    public static final int CHANCE_BOSSROOM = 1; //Promile
+    public static final float LAYER_CHANCE = .001f;
+
 	public static final double SPAWN_DISTANCE_MIN = 10; // Chunks
 
 	@Override
 	public void populateLayer(MazeLayerBlockPopulatorArgs args) {
-		Random rand = args.getRandom();
-		Chunk c = args.getSourceChunk();
-        DungeonChunk dungeonChunk = args.getDungeonChunk();
-		int x = 0;
-		int y = args.getY();
-		int z = 0;
-		
+		final Random rand = args.getRandom();
+		final Chunk c = args.getSourceChunk();
+        final DungeonChunk dungeonChunk = args.getDungeonChunk();
+		final int x = 0;
+		final int y = args.getY();
+		final int z = 0;
+
 		// Make sure the distance between the spawn chunk and the current chunk is allowed
 		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
-		
-		// Calculate chances
-		if(!(rand.nextInt(1000) < CHANCE_BOSSROOM))
-            return;
 
         // Set this chunk as custom
         dungeonChunk.setCustomChunk(true);
@@ -420,4 +415,9 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 			chest.getInventory().setItem(random.nextInt(chest.getInventory().getSize()), items.get(random.nextInt(items.size())));
 		chest.update();
 	}
+
+    @Override
+    public float getLayerPopulationChance() {
+        return LAYER_CHANCE;
+    }
 }

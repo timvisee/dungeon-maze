@@ -30,21 +30,21 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MAX = 4;
 	public static final float ROOM_CHANCE = .002f;
 
+	public static final double SPAWN_DISTANCE_MIN = 5; // Chunks
+
     // TODO: Implement this!
 	public static final double CHANCE_SPANWER_ROOM_ADDITION_EACH_LEVEL = -0.167; /* to 1 */
 
-	public static final double SPAWN_DISTANCE_MIN = 5; // Chunks
-
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int yFloor = args.getFloorY();
-		int yCeiling = args.getCeilingY();
-		int z = args.getChunkZ();
+		final World w = args.getWorld();
+		final Chunk c = args.getSourceChunk();
+		final Random rand = args.getRandom();
+		final int x = args.getChunkX();
+		final int y = args.getChunkY();
+		final int yFloor = args.getFloorY();
+		final int yCeiling = args.getCeilingY();
+		final int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
@@ -58,8 +58,8 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
             for(int zz = z; zz <= z + 7; zz += 1)
                 c.getBlock(xx, yFloor, zz).setType(Material.NETHER_BRICK);
 
-        // Cobblestone layer underneeth the stone floor
-        for(int xx = x + 0; xx <= x + 7; xx += 1)
+        // Cobblestone layer underneath the stone floor
+        for(int xx = x; xx <= x + 7; xx += 1)
             for(int zz = z + 1; zz <= z + 6; zz += 1)
                 c.getBlock(xx, yFloor - 1, zz).setType(Material.COBBLESTONE);
 
@@ -71,20 +71,20 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
         // Generate corners
         for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-            c.getBlock(x + 0, yy, z + 0).setType(Material.NETHER_BRICK);
-            c.getBlock(x + 7, yy, z + 0).setType(Material.NETHER_BRICK);
-            c.getBlock(x + 0, yy, z + 7).setType(Material.NETHER_BRICK);
+            c.getBlock(x, yy, z).setType(Material.NETHER_BRICK);
+            c.getBlock(x + 7, yy, z).setType(Material.NETHER_BRICK);
+            c.getBlock(x, yy, z + 7).setType(Material.NETHER_BRICK);
             c.getBlock(x + 7, yy, z + 7).setType(Material.NETHER_BRICK);
         }
 
         // Generate fences in the corners
         for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-            c.getBlock(x + 1, yy, z + 0).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 0, yy, z + 1).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 6, yy, z + 0).setType(Material.NETHER_FENCE);
+            c.getBlock(x + 1, yy, z).setType(Material.NETHER_FENCE);
+            c.getBlock(x, yy, z + 1).setType(Material.NETHER_FENCE);
+            c.getBlock(x + 6, yy, z).setType(Material.NETHER_FENCE);
             c.getBlock(x + 7, yy, z + 1).setType(Material.NETHER_FENCE);
             c.getBlock(x + 1, yy, z + 7).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 0, yy, z + 6).setType(Material.NETHER_FENCE);
+            c.getBlock(x, yy, z + 6).setType(Material.NETHER_FENCE);
             c.getBlock(x + 6, yy, z + 7).setType(Material.NETHER_FENCE);
             c.getBlock(x + 7, yy, z + 6).setType(Material.NETHER_FENCE);
         }
@@ -127,7 +127,6 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
             int spawnerY = yFloor + 2;
             int spawnerZ = z + 3 + rand.nextInt(2);
             Block spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
-            spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
 
             // Call the spawner generation event
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.BLAZE, GenerationSpawnerEvent.GenerationSpawnerCause.BLAZE_SPAWNER_ROOM, rand);
@@ -138,7 +137,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
                 // Change the block into a creature spawner
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
-                // Cast the created s pawner into a CreatureSpawner object
+                // Cast the created spawner into a CreatureSpawner object
                 CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
 
                 // Set the spawned type of the spawner
@@ -146,7 +145,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
             }
         }
 
-        // Generate hidden content/recourses underneath the platform
+        // Generate hidden content/resources underneath the platform
         // Generate a list of chest contents
         List<ItemStack> contents = generateChestContents(rand);
         Block chest1 = c.getBlock(x + 3, yFloor, z + 3);
@@ -277,7 +276,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(357, 5, (short) 0));
 		
-		int itemCountInChest = 3;
+		int itemCountInChest;
 		switch (random.nextInt(8)) {
 		case 0:
 			itemCountInChest = 2;
@@ -323,10 +322,9 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	 * @return Distance between the two points
 	 */
 	public double distance(int x1, int y1, int x2, int y2) {
-		double dx   = x1 - x2;         //horizontal difference 
-		double dy   = y1 - y2;         //vertical difference 
-		double dist = Math.sqrt( dx*dx + dy*dy ); //distance using Pythagoras theorem
-		return dist;
+		double dx = x1 - x2; // Horizontal difference
+		double dy = y1 - y2; // Vertical difference
+        return Math.sqrt(dx*dx + dy*dy);
 	}
 
     @Override

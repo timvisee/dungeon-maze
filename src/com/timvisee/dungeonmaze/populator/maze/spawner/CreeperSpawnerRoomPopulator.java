@@ -22,10 +22,10 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MAX = 5;
 	public static final float ROOM_CHANCE = .003f;
 
-    // TODO: Implement this!
-	public static final double CHANCE_SPAWNER_ADDITION_EACH_LEVEL = -0.333; /* to 1 */
-
 	public static final double SPAWN_DISTANCE_MIN = 5; // Chunks
+
+    // TODO: Implement this!
+    public static final double CHANCE_SPAWNER_ADDITION_EACH_LEVEL = -0.333; /* to 1 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
