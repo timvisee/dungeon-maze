@@ -17,10 +17,10 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 	
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {
-		World world = args.getWorld();
+		final World world = args.getWorld();
 		Random rand = args.getRandom();
-		Chunk chunk = args.getSourceChunk();
-        DungeonChunk dungeonChunk = args.getDungeonChunk();
+		final Chunk chunk = args.getSourceChunk();
+        final DungeonChunk dungeonChunk = args.getDungeonChunk();
 
         // Make sure the dungeon chunk isn't custom
         if(dungeonChunk.isCustomChunk())
@@ -32,18 +32,28 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 
 		// The layers
 		for(int l = layerMin; l <= layerMax; l++) {
-            // Make sure the dungeon chunk isn't custom
-            if(dungeonChunk.isCustomChunk())
-                return;
 
-			// Calculate the Y coordinate based on the current layer
-			int y = 30 + ((l - 1) * 6);
-			
-			// Construct the MazePopulatorArgs to use the the populateMaze method
-			MazeLayerBlockPopulatorArgs newArgs = new MazeLayerBlockPopulatorArgs(world, rand, chunk, dungeonChunk, l, y);
-			
-			// Populate the maze
-			populateLayer(newArgs);
+            // Iterate through this layer
+            final int iterations = getLayerPopulationIterations();
+            for(int i = 0; i < iterations; i++) {
+
+                // Check whether this this layer should be populated based on it's chance
+                if(rand.nextFloat() >= getLayerPopulationChance())
+                    continue;
+
+                // Make sure the dungeon chunk isn't custom
+                if(dungeonChunk.isCustomChunk())
+                    return;
+
+                // Calculate the Y coordinate based on the current layer
+                int y = 30 + ((l - 1) * 6);
+
+                // Construct the MazePopulatorArgs to use the the populateMaze method
+                MazeLayerBlockPopulatorArgs newArgs = new MazeLayerBlockPopulatorArgs(world, rand, chunk, dungeonChunk, l, y);
+
+                // Populate the maze
+                populateLayer(newArgs);
+            }
 		}
 	}
 	
@@ -71,4 +81,22 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 	public int getMaximumLayer() {
 		return MAX_LAYER;
 	}
+
+    /**
+     * Get the layer population chance. This value is between 0.0 and 1.0.
+     *
+     * @return The population chance of the room.
+     */
+    public float getLayerPopulationChance() {
+        return 1.0f;
+    }
+
+    /**
+     * Get the number of times to iterate through each layer.
+     *
+     * @return The number of iterations.
+     */
+    public int getLayerPopulationIterations() {
+        return 1;
+    }
 }
