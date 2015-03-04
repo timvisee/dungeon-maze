@@ -7,6 +7,7 @@ import java.util.Random;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
+import com.timvisee.dungeonmaze.populator.maze.decoration.*;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGrid;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
@@ -18,28 +19,6 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 
-import com.timvisee.dungeonmaze.populator.maze.decoration.ChestPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.CoalorePopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.CobblestonePopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.CrackedStoneBrickPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.ExplosionPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.GravePopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.IronBarPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.LadderPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.LanternPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.LavaOutOfWallPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.MossPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.MushroomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.NetherrackPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.OresInGroundPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.PoolPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.SkullPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.SlabPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.SoulsandPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.TorchPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.VinePopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.WaterOutOfWallPopulator;
-import com.timvisee.dungeonmaze.populator.maze.decoration.WebPopulator;
 import com.timvisee.dungeonmaze.populator.maze.spawner.BlazeSpawnerRoomPopulator;
 import com.timvisee.dungeonmaze.populator.maze.spawner.BossRoomEasyPopulator;
 import com.timvisee.dungeonmaze.populator.maze.spawner.BossRoomHardPopulator;
@@ -134,6 +113,7 @@ public class Generator extends ChunkGenerator {
 				new SlabPopulator(),
 				new TorchPopulator(),
 				new LanternPopulator(),
+                new PumpkinPopulator(),
 				new SilverfishBlockPopulator(),
 				new WebPopulator(),
 				new VinePopulator(),
