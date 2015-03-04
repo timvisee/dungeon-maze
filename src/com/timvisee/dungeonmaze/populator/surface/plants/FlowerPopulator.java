@@ -22,7 +22,7 @@ public class FlowerPopulator extends SurfaceBlockPopulator {
         final int zFlower = rand.nextInt(16);
 
         // Get the surface level at the location of the flower
-        int ySurface = args.getSurfaceLevel(xFlower, zFlower);
+        final int ySurface = args.getSurfaceLevel(xFlower, zFlower);
 
         // Make sure the surface block is grass
         if(chunk.getBlock(xFlower, ySurface, zFlower).getType() == Material.GRASS) {
