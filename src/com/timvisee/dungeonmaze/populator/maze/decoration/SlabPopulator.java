@@ -11,6 +11,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SlabPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
 	public static final float ROOM_CHANCE = .5f;

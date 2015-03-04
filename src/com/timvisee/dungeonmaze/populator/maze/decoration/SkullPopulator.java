@@ -19,11 +19,13 @@ import org.bukkit.entity.Player;
 
 public class SkullPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
 	public static final float ROOM_CHANCE = .001f;
 	public static final int ROOM_ITERATIONS = 5;
 
+    /** Populator constants. */
 	public static final float POLE_GRAVE_CHANCE = .8f;
 
 	@Override

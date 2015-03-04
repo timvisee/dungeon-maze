@@ -14,6 +14,7 @@ import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 
 public class TreePopulator extends SurfaceBlockPopulator {
 
+    /** General populator constants. */
     public static final float CHUNK_CHANCE = .1f;
     public static final int CHUNK_ITERATIONS = 10;
 

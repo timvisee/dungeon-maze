@@ -10,6 +10,7 @@ import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 
 public class FlowerPopulator extends SurfaceBlockPopulator {
 
+    /** General populator constants. */
     public static final float CHUNK_CHANCE = .15f;
     public static final int CHUNK_ITERATIONS = 10;
 

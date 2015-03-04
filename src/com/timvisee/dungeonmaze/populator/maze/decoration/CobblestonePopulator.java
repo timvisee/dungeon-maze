@@ -11,10 +11,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class CobblestonePopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
 	public static final float ROOM_CHANCE = .2f;
 
+    /** Populator constants. */
 	public static final int CHANCE_CORNER = 75;
 
 	@Override

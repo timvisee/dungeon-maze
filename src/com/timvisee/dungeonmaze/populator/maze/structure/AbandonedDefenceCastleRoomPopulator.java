@@ -23,10 +23,12 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 
 	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 6;
 	public static final float ROOM_CHANCE = .001f;
 
+    /** Populator constants. */
 	public static final float MOSS_CHANCE = .7f;
 	public static final int MOSS_ITERATIONS = 80;
 	public static final float CRACKED_CHANCE = .7f;

@@ -11,9 +11,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SandPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
 
+    /** Populator constants. */
 	public static final int RUINS_MAX = 2;
 	public static final int RUINS_CHANCE = 5;
 	public static final BlockFace[] DIRECTIONS = new BlockFace[] {

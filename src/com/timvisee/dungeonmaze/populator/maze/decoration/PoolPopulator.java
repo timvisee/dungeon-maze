@@ -10,10 +10,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class PoolPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 1;
 	public static final float ROOM_CHANCE = .05f; // Includes lava pools
 
+    /** Populator constants. */
 	public static final int NO_LAVA_NEAR_SPAWN_RADIUS = 2; // In chunks
 	public static final int LAVA_CHANCE = 35; // Rest is water
 

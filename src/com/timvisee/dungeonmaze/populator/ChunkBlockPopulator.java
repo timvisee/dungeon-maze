@@ -40,11 +40,19 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
 
         // Iterate through this chunk
         final int iterations = getChunkPopulationIterations();
+        final int iterationsMax = getChunkPopulationIterationsMax();
+        int iterationCount = 0;
         for(int i = 0; i < iterations; i++) {
+            // Make sure we didn't iterate too many times
+            if(iterationCount >= iterationsMax && iterationsMax >= 0)
+                break;
 
             // Check whether this this chunk should be populated based on it's chance
             if(rand.nextFloat() >= getChunkPopulationChance())
                 continue;
+
+            // Increase the iterations counter
+            iterationCount++;
 
             // Make sure the chunk isn't custom
             if(dungeonChunk.isCustomChunk())
@@ -81,5 +89,14 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
      */
     public int getChunkPopulationIterations() {
         return 1;
+    }
+
+    /**
+     * Get the maximum number of times to iterate based on the chance and iteration count.
+     *
+     * @return The maximum number of times to iterate. Return a negative number of ignore the maximum.
+     */
+    public int getChunkPopulationIterationsMax() {
+        return -1;
     }
 }

@@ -19,6 +19,7 @@ import com.timvisee.dungeonmaze.util.ChestUtils;
 
 public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
 	public static final float ROOM_CHANCE = .002f;

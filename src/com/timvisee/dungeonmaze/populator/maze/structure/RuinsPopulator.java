@@ -11,9 +11,11 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class RuinsPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
 
+    /** Populator constants. */
 	public static final int RUINS_CHANCE = 20;
 	public static final double CHANCE_RUINS_ADDITION_EACH_LEVEL = 1.666; /* to 30 */
 	public static final int RUINS_MAX = 2;

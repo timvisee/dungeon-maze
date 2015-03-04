@@ -32,11 +32,19 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 
                 // Iterate through this room
                 final int iterations = getRoomPopulationIterations();
+                final int iterationsMax = getRoomPopulationIterationsMax();
+                int iterationCount = 0;
                 for(int i = 0; i < iterations; i++) {
+                    // Make sure we didn't iterate too many times
+                    if(iterationCount >= iterationsMax && iterationsMax >= 0)
+                        break;
 
                     // Check whether this this room should be populated based on it's chance
                     if(rand.nextFloat() >= getRoomPopulationChance())
                         continue;
+
+                    // Increase the iterations counter
+                    iterationCount++;
 
                     // Make sure this room isn't constant
                     if(DungeonMaze.instance.isConstantRoom(world.getName(), chunk, chunkX, y, chunkZ))
@@ -125,5 +133,14 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
      */
     public int getRoomPopulationIterations() {
         return 1;
+    }
+
+    /**
+     * Get the maximum number of times to iterate based on the chance and iteration count.
+     *
+     * @return The maximum number of times to iterate. Return a negative number of ignore the maximum.
+     */
+    public int getRoomPopulationIterationsMax() {
+        return -1;
     }
 }

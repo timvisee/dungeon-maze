@@ -1,6 +1,7 @@
 package com.timvisee.dungeonmaze.world.dungeon.chunk;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGrid;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -72,6 +73,15 @@ public class DungeonChunk {
      */
     public boolean isAt(int chunkX, int chunkZ) {
         return this.x == chunkX && this.z == chunkZ;
+    }
+
+    /**
+     * Get a new Bukkit chunk from this chunk.
+     *
+     * @return The new Bukkit chunk.
+     */
+    public BukkitChunk createBukkitChunk() {
+        return new BukkitChunk(this.world, this.x, this.z);
     }
 
     /**

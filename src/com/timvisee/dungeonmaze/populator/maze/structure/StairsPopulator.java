@@ -1,7 +1,5 @@
 package com.timvisee.dungeonmaze.populator.maze.structure;
 
-import java.util.Random;
-
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 
@@ -10,6 +8,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class StairsPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 6;
 	public static final float ROOM_CHANCE = .02f;

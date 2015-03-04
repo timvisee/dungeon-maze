@@ -11,9 +11,11 @@ import com.timvisee.dungeonmaze.populator.ChunkBlockPopulator;
 import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 
 public class ExplosionPopulator extends ChunkBlockPopulator {
-	
+
+    /** General populator constants. */
 	public static final float CHUNK_CHANCE = .8f;
 
+    /** Populator constants. */
 	public static final int CHANCE_EXPLOSION_BIG = 50;
 	public static final int CHANCE_EXPLOSION_HUGE = 10;
 

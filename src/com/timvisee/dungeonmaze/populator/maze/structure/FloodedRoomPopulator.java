@@ -12,10 +12,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class FloodedRoomPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
 	public static final float ROOM_CHANCE = .005f;
 
+    /** Populator constants. */
 	public static final int CHANCE_WATER = 33; // If it's no water it will be lava
 
 	@Override

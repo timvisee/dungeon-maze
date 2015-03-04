@@ -11,6 +11,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SoulsandPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
 	public static final float ROOM_CHANCE = .2f;
@@ -21,12 +22,12 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final Chunk c = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
-        Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt(2) + y, z + rand.nextInt(8));
+        final Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt(2) + y, z + rand.nextInt(8));
 
         if (b.getType() == Material.COBBLESTONE)
             b.setType(Material.SOUL_SAND);

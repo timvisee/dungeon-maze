@@ -35,11 +35,19 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 
             // Iterate through this layer
             final int iterations = getLayerPopulationIterations();
+            final int iterationsMax = getLayerPopulationIterationsMax();
+            int iterationCount = 0;
             for(int i = 0; i < iterations; i++) {
+                // Make sure we didn't iterate too many times
+                if(iterationCount >= iterationsMax && iterationsMax >= 0)
+                    break;
 
                 // Check whether this this layer should be populated based on it's chance
                 if(rand.nextFloat() >= getLayerPopulationChance())
                     continue;
+
+                // Increase the iterations counter
+                iterationCount++;
 
                 // Make sure the dungeon chunk isn't custom
                 if(dungeonChunk.isCustomChunk())
@@ -98,5 +106,14 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
      */
     public int getLayerPopulationIterations() {
         return 1;
+    }
+
+    /**
+     * Get the maximum number of times to iterate based on the chance and iteration count.
+     *
+     * @return The maximum number of times to iterate. Return a negative number of ignore the maximum.
+     */
+    public int getLayerPopulationIterationsMax() {
+        return -1;
     }
 }

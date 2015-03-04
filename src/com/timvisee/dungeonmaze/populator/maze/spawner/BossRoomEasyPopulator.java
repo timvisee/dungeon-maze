@@ -19,10 +19,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 6;
 	public static final float ROOM_CHANCE = .004f;
 
+    /** Populator constants. */
 	public static final double SPAWN_DISTANCE_MIN = 10; // Chunks
 
 	@Override

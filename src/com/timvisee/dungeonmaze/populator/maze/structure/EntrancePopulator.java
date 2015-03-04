@@ -11,6 +11,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class EntrancePopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 7;
 	public static final int LAYER_MAX = 7;
 	public static final int CHANCE_ENTRANCE = 5; // Promile

@@ -12,6 +12,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class GravelPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 7;
     public static final int RUINS_CHANCE = 5;

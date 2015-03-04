@@ -17,13 +17,16 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class SpawnerPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
 	public static final float ROOM_CHANCE = .06f;
 
+    /** Populator constants. */
+	public static final double SPAWN_DISTANCE_MIN = 2; // Chunks
+
     // TODO: Implement this feature!
 	public static final double CHANCE_TORCH_ADDITION_EACH_LEVEL = -0.5; /* to 3 */
-	public static final double SPAWN_DISTANCE_MIN = 2; // Chunks
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

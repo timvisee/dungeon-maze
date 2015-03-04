@@ -151,37 +151,38 @@ public class Generator extends ChunkGenerator {
 
         try {
             // Get the chunk grid manager, and make sure it's valid
-            DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
+            final DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
             if(chunkGridManager == null) {
                 Core.getLogger().error("Unable to generate Dungeon Maze chunk, couldn't access the chunk grid manager!");
                 return null;
             }
 
             // Create or get the chunk grid for the current world
-            DungeonChunkGrid dungeonChunkGrid = chunkGridManager.getOrCreateChunkGrid(world);
+            final DungeonChunkGrid dungeonChunkGrid = chunkGridManager.getOrCreateChunkGrid(world);
 
             // Create or get the chunk data for the current chunk
             dungeonChunk = dungeonChunkGrid.getOrCreateChunk(chunkX, chunkZ);
 
         } catch(Exception ex) {
             ex.printStackTrace();
+            return null;
         }
 
         // TODO: Generate the room data for the Dungeon Chunk before generating it!
         // TODO: Clear the data on the current dungeon chunk?
 
 		// Create a chunk
-		BukkitChunk chunk = new BukkitChunk(world, chunkX, chunkZ);
+		BukkitChunk chunk = dungeonChunk.createBukkitChunk();
 
 		// This will set the whole floor to stone (the floor of each chunk)
 		chunk.setLayers(0, 30 + 3, Material.STONE);
 
 		// The layers for each 5 rooms in the variable y
-		for (int y = 30; y < 30 + (7 * 6); y += 6) {
+        for(int y = 30; y < 30 + (7 * 6); y += 6) {
 
 			// The 4 rooms on each layer saved in the variables x and z
-			for(int x = 0; x < 16; x += 8) {
-				for(int z = 0; z < 16; z += 8) {
+            for(int x = 0; x < 16; x += 8) {
+                for(int z = 0; z < 16; z += 8) {
 
 					int xr = (rand.nextInt(3) - 1) * (x + 7);
 					int zr = (rand.nextInt(3) - 1) * (z + 7);
