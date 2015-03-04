@@ -14,8 +14,8 @@ public class WebPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .9f;
-    public static final int ROOM_ITERATIONS = 5;
+	public static final float ROOM_CHANCE = .25f;
+    public static final int ROOM_ITERATIONS = 4;
 
     /** Populator constants. */
 	public static final float CEILING_CHANCE = .4f;
@@ -28,6 +28,8 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         final World world = args.getWorld();
 		final Chunk c = args.getSourceChunk();
 		final Random rand = args.getRandom();
+        final int x = args.getChunkX();
+        final int z = args.getChunkZ();
 
         // Decide whether the web should be on the ground
         final boolean onCeiling = rand.nextFloat() < CEILING_CHANCE;
@@ -38,8 +40,8 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         int zWeb;
         while(true) {
             // Choose a random position
-            xWeb = rand.nextInt(8);
-            zWeb = rand.nextInt(8);
+            xWeb = x + rand.nextInt(8);
+            zWeb = z + rand.nextInt(8);
 
             // Make sure it isn't in the dungeon maze pillars
             if((xWeb == 0 || xWeb == 7) ||zWeb == 0 || zWeb == 7)
@@ -75,11 +77,6 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         // Place the web
         c.getBlock(xWeb, yWeb, zWeb).setType(Material.WEB);
 	}
-
-    @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
-    }
 	
 	/**
 	 * Get the minimum layer
@@ -98,4 +95,14 @@ public class WebPopulator extends MazeRoomBlockPopulator {
 	public int getMaximumLayer() {
 		return LAYER_MAX;
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
+
+    @Override
+    public int getRoomPopulationIterations() {
+        return ROOM_ITERATIONS;
+    }
 }
