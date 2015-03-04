@@ -14,90 +14,82 @@ public class RuinsPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 4;
+    public static final float ROOM_CHANCE = .25f;
+    public static final int ROOM_ITERATIONS = 5;
+    public static final int ROOM_ITERATIONS_MAX = 2;
 
     /** Populator constants. */
-	public static final int RUINS_CHANCE = 20;
-	public static final double CHANCE_RUINS_ADDITION_EACH_LEVEL = 1.666; /* to 30 */
-	public static final int RUINS_MAX = 2;
 	public static final BlockFace[] dirs = new BlockFace[] {
-			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
+			BlockFace.NORTH,
+            BlockFace.SOUTH,
+            BlockFace.EAST,
+            BlockFace.WEST
+    };
+
+    // TODO: Implement this feature!
+    public static final double CHANCE_RUINS_ADDITION_EACH_LEVEL = 1.666; /* to 30 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
-		final int y = args.getChunkY();
 		final int yFloor = args.getFloorY();
 		final int z = args.getChunkZ();
-		
-		// Count the ruins being generated
-		int ruins = 0;
-		
-		// Apply chances
-		while (rand.nextInt(100) < RUINS_CHANCE+(CHANCE_RUINS_ADDITION_EACH_LEVEL *(y-30)/6) && ruins < RUINS_MAX) {
-			final int startX = x + rand.nextInt(6) + 1;
-			final int startY = yFloor + 1;
-			final int startZ = z + rand.nextInt(6) + 1;
-			
-			Material blockTypeId;
-			switch(rand.nextInt(2)) {
-			case 0:
-				blockTypeId = Material.COBBLESTONE;
-				break;
+        final int startX = x + rand.nextInt(6) + 1;
+        final int startY = yFloor + 1;
+        final int startZ = z + rand.nextInt(6) + 1;
+        final int startHeight = rand.nextInt(3) + 1;
 
-			case 1:
-				blockTypeId = Material.SMOOTH_BRICK;
-				break;
+        // Choose what type of material to use for the ruins
+        Material blockTypeId;
+        switch(rand.nextInt(2)) {
+        case 0:
+            blockTypeId = Material.COBBLESTONE;
+            break;
 
-			default:
-				blockTypeId = Material.COBBLESTONE;
-			}
-			
-			int startHeight = rand.nextInt(3) + 1;
+        case 1:
+            blockTypeId = Material.SMOOTH_BRICK;
+            break;
 
-			BlockFace dir1 = dirs[rand.nextInt(dirs.length)];
-			BlockFace dir2 = dirs[rand.nextInt(dirs.length)];
+        default:
+            blockTypeId = Material.COBBLESTONE;
+        }
 
-			int height = startHeight;
-			int x2 = startX;
-			int z2 = startZ;
-			while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
-				for (int y2 = startY; y2 < startY + height; y2++)
-					if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
-						chunk.getBlock(x2, y2, z2).setType(blockTypeId);
+        // Choose two random directions
+        BlockFace dir1 = dirs[rand.nextInt(dirs.length)];
+        BlockFace dir2 = dirs[rand.nextInt(dirs.length)];
 
-				height -= rand.nextInt(3);
+        int height = startHeight;
+        int x2 = startX;
+        int z2 = startZ;
+        while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
+            for (int y2 = startY; y2 < startY + height; y2++)
+                if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
+                    chunk.getBlock(x2, y2, z2).setType(blockTypeId);
 
-				x2 += dir1.getModX();
-				z2 += dir1.getModZ();
-			}
+            height -= rand.nextInt(3);
 
-            if(dir1 != dir2) {
-                height = startHeight;
-                x2 = startX;
-                z2 = startZ;
-                while(height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
-                    for(int y2 = startY; y2 < startY + height; y2++)
-                        if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
-                            chunk.getBlock(x2, y2, z2).setType(blockTypeId);
+            x2 += dir1.getModX();
+            z2 += dir1.getModZ();
+        }
 
-                    height -= rand.nextInt(3);
+        if(dir1 != dir2) {
+            height = startHeight;
+            x2 = startX;
+            z2 = startZ;
+            while(height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
+                for(int y2 = startY; y2 < startY + height; y2++)
+                    if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
+                        chunk.getBlock(x2, y2, z2).setType(blockTypeId);
 
-                    x2 += dir2.getModX();
-                    z2 += dir2.getModZ();
-                }
+                height -= rand.nextInt(3);
+
+                x2 += dir2.getModX();
+                z2 += dir2.getModZ();
             }
-
-            ruins++;
         }
 	}
-
-    @Override
-    public float getRoomPopulationChance() {
-        // TODO: Improve this!
-        return 1.0f;
-    }
 	
 	/**
 	 * Get the minimum layer
@@ -116,4 +108,19 @@ public class RuinsPopulator extends MazeRoomBlockPopulator {
 	public int getMaximumLayer() {
 		return LAYER_MAX;
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
+
+    @Override
+    public int getRoomPopulationIterations() {
+        return ROOM_ITERATIONS;
+    }
+
+    @Override
+    public int getRoomPopulationIterationsMax() {
+        return ROOM_ITERATIONS_MAX;
+    }
 }

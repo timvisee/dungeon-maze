@@ -18,7 +18,7 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {
 		final World world = args.getWorld();
-		Random rand = args.getRandom();
+		final Random rand = args.getRandom();
 		final Chunk chunk = args.getSourceChunk();
         final DungeonChunk dungeonChunk = args.getDungeonChunk();
 
@@ -27,8 +27,8 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
             return;
 
 		// Get the minimum and maximum layer count
-		int layerMin = Math.max(getMinimumLayer(), 1);
-		int layerMax =  Math.min(getMaximumLayer(), LAYER_COUNT);
+		final int layerMin = Math.max(getMinimumLayer(), 1);
+        final int layerMax =  Math.min(getMaximumLayer(), LAYER_COUNT);
 
 		// The layers
 		for(int l = layerMin; l <= layerMax; l++) {
