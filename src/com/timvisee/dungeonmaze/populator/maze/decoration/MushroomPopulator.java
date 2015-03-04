@@ -13,45 +13,33 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 6;
-
-	public static final int CHANCE_MUSHROOM_BROWN = 1;
-	public static final int CHANCE_MUSHROOM_RED = 1;
+    public static final float ROOM_CHANCE = .02f;
+    public static final float MUSHROOM_RED_CHANCE = .5f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int yFloor = args.getFloorY();
-		int z = args.getChunkZ();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
+		final int x = args.getChunkX();
+		final int yFloor = args.getFloorY();
+		final int z = args.getChunkZ();
+
+        // Set the mushroom type
+        Material mushroomType = Material.BROWN_MUSHROOM;
 
 		// Apply chances
-		if(rand.nextInt(100) < CHANCE_MUSHROOM_BROWN) {
-			int spawnerX = x + rand.nextInt(6) + 1;
-			int spawnerY = yFloor + 1;
-			int spawnerZ = z + rand.nextInt(6) + 1;
-			
-			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
-				Block b = c.getBlock(spawnerX, spawnerY, spawnerZ);
-				b = c.getBlock(spawnerX, spawnerY, spawnerZ);
-				if(b.getType() == Material.AIR)
-					b.setType(Material.BROWN_MUSHROOM);
-			}
-		}
+		if(rand.nextFloat() < MUSHROOM_RED_CHANCE)
+            mushroomType = Material.RED_MUSHROOM;
 
-		// Apply chances
-		if(rand.nextInt(100) < CHANCE_MUSHROOM_RED) {
-			int spawnerX = x + rand.nextInt(6) + 1;
-			int spawnerY = yFloor + 1;
-			int spawnerZ = z + rand.nextInt(6) + 1;
-			
-			if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
-				Block b = c.getBlock(spawnerX, spawnerY, spawnerZ);
-				b = c.getBlock(spawnerX, spawnerY, spawnerZ);
-				if(b.getType() == Material.AIR)
-					b.setType(Material.RED_MUSHROOM);
-			}
-		}
+        final int spawnerX = x + rand.nextInt(6) + 1;
+        final int spawnerY = yFloor + 1;
+        final int spawnerZ = z + rand.nextInt(6) + 1;
+
+        if(chunk.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
+            Block b = chunk.getBlock(spawnerX, spawnerY, spawnerZ);
+            if(b.getType() == Material.AIR)
+                b.setType(mushroomType);
+        }
 	}
 
     @Override
