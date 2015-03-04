@@ -86,7 +86,8 @@ public class Generator extends ChunkGenerator {
 
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world) {
-		return Arrays.asList(
+        //noinspection unchecked
+        return (List<BlockPopulator>)(List<?>) Arrays.asList(
 				//new BrokenWallsPopulator(),
 				new SpawnChamberPopulator(),
 				new OresInGroundPopulator(),
