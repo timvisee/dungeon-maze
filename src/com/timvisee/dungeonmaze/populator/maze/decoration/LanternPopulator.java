@@ -13,53 +13,40 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
-	public static final int CHANCE_SINGLE = 30;
-	public static final double CHANCE_SINGLE_ADDITION_EACH_LEVEL = 7.5; /* to 75 */
-	public static final int ITERATIONS_SINGLE = 2;
-	public static final int CHANCE_DOUBLE = 10;
-	public static final double CHANCE_DOUBLE_ADDITION_EACH_LEVEL = 4.167; /* to 35 */
-	public static final int ITERATIONS_DOUBLE = 2;
+    public static final float ROOM_CHANCE = .3f;
+    public static final int ROOM_ITERATIONS = 3;
+    public static final int ROOM_ITERATIONS_MAX = 3; // Maybe 2?
+
+    public static final float BROKEN_CHANCE = .33f;
+
+    // TODO: Implement this feature!
+    public static final double CHANCE_SINGLE_ADDITION_EACH_LEVEL = 7.5; /* to 75 */
+    public static final double CHANCE_DOUBLE_ADDITION_EACH_LEVEL = 4.167; /* to 35 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int z = args.getChunkZ();
-		int floorOffset = args.getFloorOffset();
-		
-		// Apply chances
-		if(rand.nextInt(100) < CHANCE_SINGLE + (CHANCE_SINGLE_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
-			for(int i = 0; i < ITERATIONS_SINGLE; i++) {
-				int lanternX = x + rand.nextInt(8);
-				int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
-				int lanternZ = z + rand.nextInt(8);
-				
-				Block b = c.getBlock(lanternX, lanternY, lanternZ);
-				if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
-					b.setType(Material.JACK_O_LANTERN);
-			}
-		}
-		
-		if(rand.nextInt(100) < CHANCE_DOUBLE + (CHANCE_DOUBLE_ADDITION_EACH_LEVEL * (y - 30) / 6)) {
-			for(int i = 0; i < ITERATIONS_DOUBLE; i++) {
-				int lanternX = x + rand.nextInt(8);
-				int lanternY = rand.nextInt(4 - floorOffset) + 2 + floorOffset;
-				int lanternZ = z + rand.nextInt(8);
-				
-				Block b = c.getBlock(lanternX, lanternY, lanternZ);
-				if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
-					b.setType(Material.PUMPKIN);
-			}
-		}
-	}
+        final Chunk c = args.getSourceChunk();
+        final Random rand = args.getRandom();
+        final int x = args.getChunkX();
+        final int y = args.getChunkY();
+        final int z = args.getChunkZ();
+        final int floorOffset = args.getFloorOffset();
 
-    @Override
-    public float getRoomPopulationChance() {
-        // TODO: Improve this!
-        return 1.0f;
-    }
+        final boolean broken = rand.nextFloat() < BROKEN_CHANCE;
+
+        final int lanternX = x + rand.nextInt(8);
+        final int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
+        final int lanternZ = z + rand.nextInt(8);
+        final Block b = c.getBlock(lanternX, lanternY, lanternZ);
+
+        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
+            if(!broken)
+                b.setType(Material.SEA_LANTERN);
+
+            else
+                b.setType(Material.REDSTONE_LAMP_OFF);
+        }
+	}
 
     /**
 	 * Get the minimum layer
@@ -78,6 +65,21 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 	public int getMaximumLayer() {
 		return LAYER_MAX;
 	}
+
+    @Override
+    public float getRoomPopulationChance() {
+        return ROOM_CHANCE;
+    }
+
+    @Override
+    public int getRoomPopulationIterations() {
+        return ROOM_ITERATIONS;
+    }
+
+    @Override
+    public int getRoomPopulationIterationsMax() {
+        return ROOM_ITERATIONS_MAX;
+    }
 
 	// Deprecated, might use later again to rotate pumpkins correctly
 	/*private byte getData(int x, int z, int x2, int z2, Material type) {
