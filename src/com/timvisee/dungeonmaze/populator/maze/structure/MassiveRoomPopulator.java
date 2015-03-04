@@ -18,9 +18,9 @@ public class MassiveRoomPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final World world = args.getWorld();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int yFloor = args.getFloorY();
@@ -28,19 +28,19 @@ public class MassiveRoomPopulator extends MazeRoomBlockPopulator {
 		final int z = args.getChunkZ();
 
         // Register the current room as constant room
-        DungeonMaze.instance.registerConstantRoom(w.getName(), c, x, y, z);
+        DungeonMaze.instance.registerConstantRoom(world.getName(), chunk, x, y, z);
 
         // Walls
         for(int x2 = x; x2 <= x + 7; x2 += 1) {
             for(int y2 = yFloor + 1; y2 <= yCeiling - 1; y2 += 1) {
-                c.getBlock(x2, y2, z).setType(Material.SMOOTH_BRICK);
-                c.getBlock(x2, y2, z + 7).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x2, y2, z).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x2, y2, z + 7).setType(Material.SMOOTH_BRICK);
             }
         }
         for(int z2 = z; z2 <= z + 7; z2 += 1) {
             for(int y2 = yFloor + 1; y2 <= yCeiling - 1; y2 += 1) {
-                c.getBlock(x, y2, z2).setType(Material.SMOOTH_BRICK);
-                c.getBlock(x + 7, y2, z2).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x, y2, z2).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x + 7, y2, z2).setType(Material.SMOOTH_BRICK);
             }
         }
 
@@ -48,7 +48,7 @@ public class MassiveRoomPopulator extends MazeRoomBlockPopulator {
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1)
             for(int y2 = yFloor + 1; y2 <= yCeiling - 1; y2 += 1)
                 for(int z2 = z + 1; z2 <= z + 6; z2 += 1)
-                    c.getBlock(x2, y2, z2).setType(Material.STONE);
+                    chunk.getBlock(x2, y2, z2).setType(Material.STONE);
 
         // Fill the massive room with some ores!
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1) {
@@ -57,34 +57,34 @@ public class MassiveRoomPopulator extends MazeRoomBlockPopulator {
                     if(rand.nextInt(100) < 2) {
                         switch(rand.nextInt(8)) {
                         case 0:
-                            c.getBlock(x2, y2, z2).setType(Material.GOLD_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.GOLD_ORE);
                             break;
                         case 1:
-                            c.getBlock(x2, y2, z2).setType(Material.IRON_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.IRON_ORE);
                             break;
                         case 2:
-                            c.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
                             break;
                         case 3:
-                            c.getBlock(x2, y2, z2).setType(Material.LAPIS_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.LAPIS_ORE);
                             break;
                         case 4:
-                            c.getBlock(x2, y2, z2).setType(Material.DIAMOND_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.DIAMOND_ORE);
                             break;
                         case 5:
-                            c.getBlock(x2, y2, z2).setType(Material.REDSTONE_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.REDSTONE_ORE);
                             break;
                         case 6:
-                            c.getBlock(x2, y2, z2).setType(Material.EMERALD_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.EMERALD_ORE);
                             break;
                         case 7:
-                            c.getBlock(x2, y2, z2).setType(Material.CLAY);
+                            chunk.getBlock(x2, y2, z2).setType(Material.CLAY);
                             break;
                         case 8:
-                            c.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
                             break;
                         default:
-                            c.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
+                            chunk.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
                         }
                     }
                 }

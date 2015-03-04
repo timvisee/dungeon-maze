@@ -79,7 +79,7 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 		return LAYER_MAX;
 	}
 
-	// Depricated, might use later again to rotate pumpkins correctly
+	// Deprecated, might use later again to rotate pumpkins correctly
 	/*private byte getData(int x, int z, int x2, int z2, Material type) {
 		if (x == x2) {
 			if (z < z2)

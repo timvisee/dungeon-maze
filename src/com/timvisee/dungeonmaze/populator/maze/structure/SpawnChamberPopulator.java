@@ -25,94 +25,94 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final World world = args.getWorld();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
 		
 		// Make sure this is the chunk at (0, 0)
-		if(c.getX() != 0 || c.getZ() != 0 || x != 0 || z != 0)
+		if(chunk.getX() != 0 || chunk.getZ() != 0 || x != 0 || z != 0)
 			return;
 							
 		// Register the current room as constant room
-		DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
+		DungeonMaze.instance.registerConstantRoom(world.getName(), chunk.getX(), chunk.getZ(), x, y, z);
 		
 		// Break out the original walls
 		for (int xx = 0; xx < 8; xx++)
 			for (int yy = y + 2; yy < 30+(7*6); yy++)
 				for(int zz = 0; zz < 8; zz++)
-					c.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+					chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
 		
 		// Generate corners
 		for (int yy = y + 2; yy < 30+(7*6); yy++) {
-			c.getBlock(x + 0, yy, z + 0).setType(Material.SMOOTH_BRICK);
-			c.getBlock(x + 7, yy, z + 0).setType(Material.SMOOTH_BRICK);
-			c.getBlock(x + 0, yy, z + 7).setType(Material.SMOOTH_BRICK);
-			c.getBlock(x + 7, yy, z + 7).setType(Material.SMOOTH_BRICK);
+			chunk.getBlock(x, yy, z).setType(Material.SMOOTH_BRICK);
+			chunk.getBlock(x + 7, yy, z).setType(Material.SMOOTH_BRICK);
+			chunk.getBlock(x, yy, z + 7).setType(Material.SMOOTH_BRICK);
+			chunk.getBlock(x + 7, yy, z + 7).setType(Material.SMOOTH_BRICK);
 		}
 		
 		//floor
 		for (int xx=x; xx <= x + 7; xx++)
 		    for (int zz=z; zz <= z + 7; zz++)
-		        c.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
+		        chunk.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
 		        
 		// Change the layer underneath the stone floor to cobblestone
 		for (int xx=x; xx <= x + 8; xx++)
-		    for (int zz=z; zz <= z + 0; zz++)
-		        c.getBlock(xx, y + 1, zz).setType(Material.COBBLESTONE);
+		    for (int zz=z; zz <= z; zz++)
+                chunk.getBlock(xx, y + 1, zz).setType(Material.COBBLESTONE);
 		        
 		//Ceiling
 		for (int xx=x; xx <= x + 8; xx++)
 		    for (int zz=z; zz <= z + 8; zz++)
-		        c.getBlock(xx, y + 6, zz).setType(Material.SMOOTH_BRICK);
+		        chunk.getBlock(xx, y + 6, zz).setType(Material.SMOOTH_BRICK);
 		
 		// Generate 4 circular blocks in the middle of the floor
 		for (int xx=x + 3; xx <= x + 4; xx++) {
 		    for (int zz=z + 3; zz <= z + 4; zz++) {
-		        c.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
-		        c.getBlock(xx, y + 1, zz).setData((byte) 3);
+		        chunk.getBlock(xx, y + 1, zz).setType(Material.SMOOTH_BRICK);
+		        chunk.getBlock(xx, y + 1, zz).setData((byte) 3);
 		    }
 		}
 		
 		// Create walls
 		for (int xx=x + 1; xx <= x + 6; xx++) {
             for (int yy=y + 2; yy <= y + 5; yy++) {
-                c.getBlock(xx, yy, z).setType(Material.IRON_FENCE);
-                c.getBlock(xx, yy, z + 7).setType(Material.IRON_FENCE);
+                chunk.getBlock(xx, yy, z).setType(Material.IRON_FENCE);
+                chunk.getBlock(xx, yy, z + 7).setType(Material.IRON_FENCE);
             }
         }
 		for (int zz=z + 1; zz <= z + 6; zz++) {
             for (int yy=y + 2; yy <= y + 5; yy++) {
-                c.getBlock(x, yy, zz).setType(Material.IRON_FENCE);
-                c.getBlock(x + 7, yy, zz).setType(Material.IRON_FENCE);
+                chunk.getBlock(x, yy, zz).setType(Material.IRON_FENCE);
+                chunk.getBlock(x + 7, yy, zz).setType(Material.IRON_FENCE);
             }
         }
 		
 		// Create gates
 		for (int xx=x + 2; xx <= x + 5; xx++) {
             for (int yy=y + 2; yy <= y + 4; yy++) {
-                c.getBlock(xx, yy, z).setType(Material.SMOOTH_BRICK);
-                c.getBlock(xx, yy, z + 7).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(xx, yy, z).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(xx, yy, z + 7).setType(Material.SMOOTH_BRICK);
             }
         }
 		for (int zz=z + 2; zz <= z + 5; zz++) {
             for (int yy=y + 2; yy <= y + 4; yy++) {
-                c.getBlock(x, yy, zz).setType(Material.SMOOTH_BRICK);
-                c.getBlock(x + 7, yy, zz).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x, yy, zz).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x + 7, yy, zz).setType(Material.SMOOTH_BRICK);
             }
         }
 		for (int xx=x + 3; xx <= x + 4; xx++) {
             for (int yy=y + 2; yy <= y + 3; yy++) {
-                c.getBlock(xx, yy, z).setType(Material.AIR);
-                c.getBlock(xx, yy, z + 7).setType(Material.AIR);
+                chunk.getBlock(xx, yy, z).setType(Material.AIR);
+                chunk.getBlock(xx, yy, z + 7).setType(Material.AIR);
             }
         }
 		for (int zz=z + 3; zz <= z + 4; zz++) {
             for (int yy=y + 2; yy <= y + 3; yy++) {
-                c.getBlock(x, yy, zz).setType(Material.AIR);
-                c.getBlock(x + 7, yy, zz).setType(Material.AIR);
+                chunk.getBlock(x, yy, zz).setType(Material.AIR);
+                chunk.getBlock(x + 7, yy, zz).setType(Material.AIR);
             }
         }
 
@@ -120,75 +120,75 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 		List<ItemStack> emptyList = new ArrayList<ItemStack>();
 
 		// Create chests
-		c.getBlock(x + 1, y + 2, z + 1).setType(Material.CHEST);
-		c.getBlock(x + 1, y + 2, z + 1).setData((byte) 3);
+		chunk.getBlock(x + 1, y + 2, z + 1).setType(Material.CHEST);
+		chunk.getBlock(x + 1, y + 2, z + 1).setData((byte) 3);
 		
 		// Call the Chest generation event
-		GenerationChestEvent event = new GenerationChestEvent(c.getBlock(x + 1, y + 2, z + 1), rand, emptyList, MazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event = new GenerationChestEvent(chunk.getBlock(x + 1, y + 2, z + 1), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event);
 
 		// Do the event
 		if(!event.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event.getBlock().getType() == Material.CHEST)
-			// Add the contents to the chest
-			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                // Add the contents to the chest
+                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
-		c.getBlock(x + 1, y + 2, z + 6).setType(Material.CHEST);
-		c.getBlock(x + 1, y + 2, z + 6).setData((byte) 2);
+		chunk.getBlock(x + 1, y + 2, z + 6).setType(Material.CHEST);
+		chunk.getBlock(x + 1, y + 2, z + 6).setData((byte) 2);
 
 		// Call the Chest generation event
-		GenerationChestEvent event2 = new GenerationChestEvent(c.getBlock(x + 1, y + 2, z + 6), rand, emptyList, MazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event2 = new GenerationChestEvent(chunk.getBlock(x + 1, y + 2, z + 6), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event2);
 
 		// Do the event
 		if(!event2.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event2.getBlock().getType() == Material.CHEST)
-			// Add the contents to the chest
-			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                // Add the contents to the chest
+                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
-		c.getBlock(x + 6, y + 2, z + 1).setType(Material.CHEST);
-		c.getBlock(x + 6, y + 2, z + 1).setData((byte) 3);
+		chunk.getBlock(x + 6, y + 2, z + 1).setType(Material.CHEST);
+		chunk.getBlock(x + 6, y + 2, z + 1).setData((byte) 3);
 
 		// Call the Chest generation event
-		GenerationChestEvent event3 = new GenerationChestEvent(c.getBlock(x + 6, y + 2, z + 1), rand, emptyList, MazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event3 = new GenerationChestEvent(chunk.getBlock(x + 6, y + 2, z + 1), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event3);
 
 		// Do the event
 		if(!event3.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event3.getBlock().getType() == Material.CHEST)
-			// Add the contents to the chest
-			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                // Add the contents to the chest
+                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
-		c.getBlock(x + 6, y + 2, z + 6).setType(Material.CHEST);
-		c.getBlock(x + 6, y + 2, z + 6).setData((byte) 2);
+		chunk.getBlock(x + 6, y + 2, z + 6).setType(Material.CHEST);
+		chunk.getBlock(x + 6, y + 2, z + 6).setData((byte) 2);
 
 		// Call the Chest generation event
-		GenerationChestEvent event4 = new GenerationChestEvent(c.getBlock(x + 6, y + 2, z + 6), rand, emptyList, MazeStructureType.SPAWN_ROOM);
+		GenerationChestEvent event4 = new GenerationChestEvent(chunk.getBlock(x + 6, y + 2, z + 6), rand, emptyList, MazeStructureType.SPAWN_ROOM);
 		Bukkit.getServer().getPluginManager().callEvent(event4);
 
 		// Do the event
 		if(!event4.isCancelled()) {
 			// Make sure the chest is still there, a developer could change the chest through the event!
 			if(event4.getBlock().getType() == Material.CHEST)
-			// Add the contents to the chest
-			ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                // Add the contents to the chest
+                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
 		}
 
 		// Create torches
-		c.getBlock(x + 1, y + 3, z + 2).setType(Material.TORCH);
-		c.getBlock(x + 1, y + 3, z + 5).setType(Material.TORCH);
-		c.getBlock(x + 6, y + 3, z + 2).setType(Material.TORCH);
-		c.getBlock(x + 6, y + 3, z + 5).setType(Material.TORCH);
-		c.getBlock(x + 2, y + 3, z + 1).setType(Material.TORCH);
-		c.getBlock(x + 2, y + 3, z + 6).setType(Material.TORCH);
-		c.getBlock(x + 5, y + 3, z + 1).setType(Material.TORCH);
-		c.getBlock(x + 5, y + 3, z + 6).setType(Material.TORCH);
+		chunk.getBlock(x + 1, y + 3, z + 2).setType(Material.TORCH);
+		chunk.getBlock(x + 1, y + 3, z + 5).setType(Material.TORCH);
+		chunk.getBlock(x + 6, y + 3, z + 2).setType(Material.TORCH);
+		chunk.getBlock(x + 6, y + 3, z + 5).setType(Material.TORCH);
+		chunk.getBlock(x + 2, y + 3, z + 1).setType(Material.TORCH);
+		chunk.getBlock(x + 2, y + 3, z + 6).setType(Material.TORCH);
+		chunk.getBlock(x + 5, y + 3, z + 1).setType(Material.TORCH);
+		chunk.getBlock(x + 5, y + 3, z + 6).setType(Material.TORCH);
 	}
 	
 	/* We actually do not use that for spawn (empty chests)

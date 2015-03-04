@@ -26,11 +26,10 @@ public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
 		final int floorOffset = args.getFloorOffset();
-        int lanternX = x + rand.nextInt(8);
-        int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
-        int lanternZ = z + rand.nextInt(8);
-
-        Block b = c.getBlock(lanternX, lanternY, lanternZ);
+        final int lanternX = x + rand.nextInt(8);
+        final int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
+        final int lanternZ = z + rand.nextInt(8);
+        final Block b = c.getBlock(lanternX, lanternY, lanternZ);
 
         if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
             b.setType(Material.WATER);

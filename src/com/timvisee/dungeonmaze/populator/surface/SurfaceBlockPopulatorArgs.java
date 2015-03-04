@@ -9,9 +9,9 @@ import org.bukkit.block.Block;
 
 public class SurfaceBlockPopulatorArgs {
 
-	World w;
-	Random rand;
-	Chunk chunkSrc;
+	private World w;
+    private Random rand;
+    private Chunk chunkSrc;
 	
 	/**
 	 * Constructor

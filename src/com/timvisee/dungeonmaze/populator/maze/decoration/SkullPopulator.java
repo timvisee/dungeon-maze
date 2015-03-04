@@ -24,23 +24,25 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 	public static final float ROOM_CHANCE = .001f;
 	public static final int ROOM_ITERATIONS = 5;
 
-	public static final int CHANCE_WITH_POLE = 80;
+	public static final float POLE_GRAVE_CHANCE = .8f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final Chunk c = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
-				
-        boolean withPole = false;
-        if(rand.nextInt(100) < CHANCE_WITH_POLE)
-            withPole = true;
 
         int skullX = x + rand.nextInt(6) + 1;
         int skullY = args.getFloorY() + 1;
         int skullZ = z + rand.nextInt(6) + 1;
 
+        // Decide whether it's a grave on a pole
+        boolean withPole = false;
+        if(rand.nextFloat() < POLE_GRAVE_CHANCE)
+            withPole = true;
+
+        // Move the stull one up if it's on a pole
         if(withPole)
             skullY++;
 
@@ -53,7 +55,7 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
         skullBlock.setType(Material.SKULL);
         skullBlock.setData((byte) 1);
 
-        BlockState bs = (BlockState) skullBlock.getState();
+        BlockState bs = skullBlock.getState();
         Skull s = (Skull) bs;
 
         s.setSkullType(getRandomSkullType(rand));

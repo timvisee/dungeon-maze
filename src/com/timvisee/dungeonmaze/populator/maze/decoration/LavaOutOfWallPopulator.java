@@ -20,18 +20,17 @@ public class LavaOutOfWallPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int z = args.getChunkZ();
-		int floorOffset = args.getFloorOffset();
+		final Chunk c = args.getSourceChunk();
+		final Random rand = args.getRandom();
+		final int x = args.getChunkX();
+		final int y = args.getChunkY();
+		final int z = args.getChunkZ();
+		final int floorOffset = args.getFloorOffset();
+        final int lanternX  = x + rand.nextInt(8);
+        final int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
+        final int lanternZ = z + rand.nextInt(8);
+        final Block b = c.getBlock(lanternX, lanternY, lanternZ);
 
-        int lanternX = x + rand.nextInt(8);
-        int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
-        int lanternZ = z + rand.nextInt(8);
-
-        Block b = c.getBlock(lanternX, lanternY, lanternZ);
         if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
             b.setType(Material.LAVA);
 	}

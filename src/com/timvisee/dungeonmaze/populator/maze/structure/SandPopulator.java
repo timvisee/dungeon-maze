@@ -13,18 +13,18 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
+
 	public static final int RUINS_MAX = 2;
 	public static final int RUINS_CHANCE = 5;
-
 	public static final BlockFace[] DIRECTIONS = new BlockFace[] {
 			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int z = args.getChunkZ();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
+		final int x = args.getChunkX();
+		final int z = args.getChunkZ();
 		
 		// Count the ruins being generated
 		int ruins = 0;
@@ -45,8 +45,8 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 			int z2 = startZ;
 			while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 				for (int y2 = startY; y2 < startY + height; y2++)
-					if(c.getBlock(x2, y2, z2).getType() == Material.AIR)
-						c.getBlock(x2, y2, z2).setType(Material.SAND);
+					if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
+						chunk.getBlock(x2, y2, z2).setType(Material.SAND);
 	
 				height -= rand.nextInt(1);
 	
@@ -60,8 +60,8 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 				z2 = startZ;
 				while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 					for (int y2 = startY; y2 < startY + height; y2++)
-						if(c.getBlock(x2, y2, z2).getType() == Material.AIR)
-							c.getBlock(x2, y2, z2).setType(Material.SAND);
+						if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
+							chunk.getBlock(x2, y2, z2).setType(Material.SAND);
 	
 					height -= rand.nextInt(1);
 	

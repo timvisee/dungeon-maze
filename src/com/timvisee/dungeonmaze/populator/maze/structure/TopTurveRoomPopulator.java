@@ -25,27 +25,27 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final World world = args.getWorld();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getX();
 		final int y = args.getY();
 		final int yCeiling = args.getCeilingY();
 		final int z = args.getZ();
 			
         // Register the current room as constant room
-        DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
+        DungeonMaze.instance.registerConstantRoom(world.getName(), chunk.getX(), chunk.getZ(), x, y, z);
 
         // Hull
-        c.getBlock(x + 3, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
-        c.getBlock(x + 3, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
-        c.getBlock(x + 4, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
-        c.getBlock(x + 4, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
-        c.getBlock(x + 2, yCeiling - 1, z + 3).setType(Material.NETHERRACK);
-        c.getBlock(x + 2, yCeiling - 1, z + 4).setType(Material.GLASS);
-        c.getBlock(x + 3, yCeiling - 1, z + 2).setType(Material.GLASS);
+        chunk.getBlock(x + 3, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
+        chunk.getBlock(x + 3, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
+        chunk.getBlock(x + 4, yCeiling - 2, z + 3).setType(Material.MOSSY_COBBLESTONE);
+        chunk.getBlock(x + 4, yCeiling - 2, z + 4).setType(Material.MOSSY_COBBLESTONE);
+        chunk.getBlock(x + 2, yCeiling - 1, z + 3).setType(Material.NETHERRACK);
+        chunk.getBlock(x + 2, yCeiling - 1, z + 4).setType(Material.GLASS);
+        chunk.getBlock(x + 3, yCeiling - 1, z + 2).setType(Material.GLASS);
 
-        Block ore1 = c.getBlock(x + 3, yCeiling - 1, z + 3);
+        Block ore1 = chunk.getBlock(x + 3, yCeiling - 1, z + 3);
         switch(rand.nextInt(5)) {
         case 0:
             ore1.setType(Material.GOLD_ORE);
@@ -66,10 +66,10 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
             ore1.setType(Material.COAL_ORE);
         }
 
-        c.getBlock(x + 3, yCeiling - 1, z + 5).setType(Material.NETHERRACK);
-        c.getBlock(x + 4, yCeiling - 1, z + 2).setType(Material.NETHERRACK);
+        chunk.getBlock(x + 3, yCeiling - 1, z + 5).setType(Material.NETHERRACK);
+        chunk.getBlock(x + 4, yCeiling - 1, z + 2).setType(Material.NETHERRACK);
 
-        Block ore2 = c.getBlock(x + 4, yCeiling - 1, z + 4);
+        Block ore2 = chunk.getBlock(x + 4, yCeiling - 1, z + 4);
         switch(rand.nextInt(5)) {
         case 0:
             ore2.setType(Material.GOLD_ORE);
@@ -90,20 +90,20 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
             ore2.setType(Material.COAL_ORE);
         }
 
-        c.getBlock(x + 4, yCeiling - 1, z + 5).setType(Material.GLASS);
-        c.getBlock(x + 5, yCeiling - 1, z + 3).setType(Material.GLASS);
-        c.getBlock(x + 5, yCeiling - 1, z + 4).setType(Material.NETHERRACK);
+        chunk.getBlock(x + 4, yCeiling - 1, z + 5).setType(Material.GLASS);
+        chunk.getBlock(x + 5, yCeiling - 1, z + 3).setType(Material.GLASS);
+        chunk.getBlock(x + 5, yCeiling - 1, z + 4).setType(Material.NETHERRACK);
 
         // Spawners
         if(Core.getConfigHandler().isMobSpawnerAllowed("Pig")) {
-            c.getBlock(x + 3, yCeiling - 1, z + 4).setType(Material.MOB_SPAWNER);
-            CreatureSpawner PigSpawner = (CreatureSpawner) c.getBlock(x + 3, yCeiling - 1, z + 4).getState();
+            chunk.getBlock(x + 3, yCeiling - 1, z + 4).setType(Material.MOB_SPAWNER);
+            CreatureSpawner PigSpawner = (CreatureSpawner) chunk.getBlock(x + 3, yCeiling - 1, z + 4).getState();
             PigSpawner.setSpawnedType(EntityType.PIG);
         }
 
         if(Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
-            c.getBlock(x + 4, yCeiling - 1, z + 3).setType(Material.MOB_SPAWNER);
-            CreatureSpawner PigSpawner2 = (CreatureSpawner) c.getBlock(x + 4, yCeiling - 1, z + 3).getState();
+            chunk.getBlock(x + 4, yCeiling - 1, z + 3).setType(Material.MOB_SPAWNER);
+            CreatureSpawner PigSpawner2 = (CreatureSpawner) chunk.getBlock(x + 4, yCeiling - 1, z + 3).getState();
             PigSpawner2.setSpawnedType(EntityType.SKELETON);
         }
 	}

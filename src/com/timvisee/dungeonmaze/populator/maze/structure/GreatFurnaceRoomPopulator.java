@@ -22,78 +22,78 @@ public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final World world = args.getWorld();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
 
         // Register the room as constant room
-        DungeonMaze.instance.registerConstantRoom(w.getName(), c, x, y, z);
+        DungeonMaze.instance.registerConstantRoom(world.getName(), chunk, x, y, z);
 
         // Floor
         for (int x2=x; x2 <= x + 8; x2+=1)
             for (int z2=z; z2 <= z + 8; z2+=1)
-                c.getBlock(x2, y + 1, z2).setType(Material.STONE);
+                chunk.getBlock(x2, y + 1, z2).setType(Material.STONE);
 
         // Change the layer below the stone floor to cobblestone
         for (int x2=x; x2 <= x + 8; x2++)
             for (int z2=z; z2 <= z + 8; z2++)
-                    c.getBlock(x2, y, z2).setType(Material.COBBLESTONE);
+                    chunk.getBlock(x2, y, z2).setType(Material.COBBLESTONE);
 
         // Pillar1
         for (int y2=y + 1; y2 <= y + 5; y2+=1)
-            c.getBlock(x + 1, y2, z + 1).setType(Material.COBBLESTONE);
+            chunk.getBlock(x + 1, y2, z + 1).setType(Material.COBBLESTONE);
 
         // Pillar2
         for (int y2=y + 1; y2 <= y + 5; y2+=1)
-            c.getBlock(x + 7, y2, z + 1).setType(Material.COBBLESTONE);
+            chunk.getBlock(x + 7, y2, z + 1).setType(Material.COBBLESTONE);
 
         // Pillar3
         for (int y2=y + 1; y2 <= y + 5; y2+=1)
-            c.getBlock(x + 1, y2, z + 7).setType(Material.COBBLESTONE);
+            chunk.getBlock(x + 1, y2, z + 7).setType(Material.COBBLESTONE);
 
         // Pillar4
         for (int y2=y + 1; y2 <= y + 5; y2+=1)
-            c.getBlock(x + 7, y2, z + 7).setType(Material.COBBLESTONE);
+            chunk.getBlock(x + 7, y2, z + 7).setType(Material.COBBLESTONE);
 
         // Furnace base
-        c.getBlock(x + 2, y + 2, z + 2).setType(Material.FURNACE);
-        c.getBlock(x + 2, y + 2, z + 2).setData((byte) 2);
-        addItemsToFurnace(rand, (Furnace) c.getBlock(x + 2, y + 2, z + 2).getState());
-        c.getBlock(x + 3, y + 2, z + 2).setType(Material.GLASS);
-        c.getBlock(x + 4, y + 2, z + 2).setType(Material.GLASS);
-        c.getBlock(x + 5, y + 2, z + 2).setType(Material.FURNACE);
-        c.getBlock(x + 5, y + 2, z + 2).setData((byte) 2);
-        addItemsToFurnace(rand, (Furnace) c.getBlock(x + 5, y + 2, z + 2).getState());
-        c.getBlock(x + 2, y + 2, z + 3).setType(Material.GLASS);
-        c.getBlock(x + 3, y + 2, z + 3).setType(Material.STATIONARY_LAVA);
-        c.getBlock(x + 4, y + 2, z + 3).setType(Material.STATIONARY_LAVA);
-        c.getBlock(x + 5, y + 2, z + 3).setType(Material.GLASS);
-        c.getBlock(x + 2, y + 2, z + 4).setType(Material.GLASS);
-        c.getBlock(x + 3, y + 2, z + 4).setType(Material.STATIONARY_LAVA);
-        c.getBlock(x + 4, y + 2, z + 4).setType(Material.STATIONARY_LAVA);
-        c.getBlock(x + 5, y + 2, z + 4).setType(Material.GLASS);
-        c.getBlock(x + 2, y + 2, z + 5).setType(Material.FURNACE);
-        c.getBlock(x + 2, y + 2, z + 5).setData((byte) 3);
-        addItemsToFurnace(rand, (Furnace) c.getBlock(x + 2, y + 2, z + 5).getState());
-        c.getBlock(x + 3, y + 2, z + 5).setType(Material.GLASS);
-        c.getBlock(x + 4, y + 2, z + 5).setType(Material.GLASS);
-        c.getBlock(x + 5, y + 2, z + 5).setType(Material.FURNACE);
-        c.getBlock(x + 5, y + 2, z + 5).setData((byte) 3);
-        addItemsToFurnace(rand, (Furnace) c.getBlock(x + 5, y + 2, z + 5).getState());
+        chunk.getBlock(x + 2, y + 2, z + 2).setType(Material.FURNACE);
+        chunk.getBlock(x + 2, y + 2, z + 2).setData((byte) 2);
+        addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 2, y + 2, z + 2).getState());
+        chunk.getBlock(x + 3, y + 2, z + 2).setType(Material.GLASS);
+        chunk.getBlock(x + 4, y + 2, z + 2).setType(Material.GLASS);
+        chunk.getBlock(x + 5, y + 2, z + 2).setType(Material.FURNACE);
+        chunk.getBlock(x + 5, y + 2, z + 2).setData((byte) 2);
+        addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 5, y + 2, z + 2).getState());
+        chunk.getBlock(x + 2, y + 2, z + 3).setType(Material.GLASS);
+        chunk.getBlock(x + 3, y + 2, z + 3).setType(Material.STATIONARY_LAVA);
+        chunk.getBlock(x + 4, y + 2, z + 3).setType(Material.STATIONARY_LAVA);
+        chunk.getBlock(x + 5, y + 2, z + 3).setType(Material.GLASS);
+        chunk.getBlock(x + 2, y + 2, z + 4).setType(Material.GLASS);
+        chunk.getBlock(x + 3, y + 2, z + 4).setType(Material.STATIONARY_LAVA);
+        chunk.getBlock(x + 4, y + 2, z + 4).setType(Material.STATIONARY_LAVA);
+        chunk.getBlock(x + 5, y + 2, z + 4).setType(Material.GLASS);
+        chunk.getBlock(x + 2, y + 2, z + 5).setType(Material.FURNACE);
+        chunk.getBlock(x + 2, y + 2, z + 5).setData((byte) 3);
+        addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 2, y + 2, z + 5).getState());
+        chunk.getBlock(x + 3, y + 2, z + 5).setType(Material.GLASS);
+        chunk.getBlock(x + 4, y + 2, z + 5).setType(Material.GLASS);
+        chunk.getBlock(x + 5, y + 2, z + 5).setType(Material.FURNACE);
+        chunk.getBlock(x + 5, y + 2, z + 5).setData((byte) 3);
+        addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 5, y + 2, z + 5).getState());
 
         // Furnace pipe
-        for (int x2=x + 3; x2 <= x + 4; x2+=1)
-            for (int y2=y + 3; y2 <= y + 5; y2+=1)
-                    for (int z2=z + 3; z2 <= z + 4; z2+=1)
-                    c.getBlock(x2, y2, z2).setType(Material.BRICK);
-        if(c.getBlock(x+3, y+6, z+3).getType() == Material.AIR)
-            for (int x2=x + 3; x2 <= x + 4; x2+=1)
-                for (int z2=z + 3; z2 <= z + 4; z2+=1)
-                    c.getBlock(x2, y + 6, z2).setType(Material.BRICK);
-	}
+        for(int x2 = x + 3; x2 <= x + 4; x2 += 1)
+            for(int y2 = y + 3; y2 <= y + 5; y2 += 1)
+                for(int z2 = z + 3; z2 <= z + 4; z2 += 1)
+                    chunk.getBlock(x2, y2, z2).setType(Material.BRICK);
+        if(chunk.getBlock(x + 3, y + 6, z + 3).getType() == Material.AIR)
+            for(int x2 = x + 3; x2 <= x + 4; x2 += 1)
+                for(int z2 = z + 3; z2 <= z + 4; z2 += 1)
+                    chunk.getBlock(x2, y + 6, z2).setType(Material.BRICK);
+    }
 	
 	public void addItemsToFurnace(Random random, Furnace furnace) {
 		List<ItemStack> items = new ArrayList<ItemStack>();

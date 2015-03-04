@@ -19,20 +19,20 @@ public class WebPopulator extends MazeRoomBlockPopulator {
     // TODO: Implement this!
 	public static final double CHANCE_WEB_ADDITION_EACH_LEVEL = -1.667; /* to 30 */
 
-	public static final int CHANCE_CORNER = 40;
+	public static final float CORNER_CHANCE = .4f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final Chunk c = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
-        int webX = x + rand.nextInt(6) + 1;
-        int webY = args.getFloorY() + 1;
-        int webCeilingY = args.getCeilingY() - 1;
-        int webZ = z + rand.nextInt(6) + 1;
+        final int webX = x + rand.nextInt(6) + 1;
+        final int webY = args.getFloorY() + 1;
+        final int webCeilingY = args.getCeilingY() - 1;
+        final int webZ = z + rand.nextInt(6) + 1;
 
-        if(rand.nextInt(100) < CHANCE_CORNER)
+        if(rand.nextFloat() < CORNER_CHANCE)
             if(c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).getType() == Material.AIR)
                 c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).setType(Material.WEB);
         else

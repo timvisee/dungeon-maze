@@ -28,69 +28,69 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int y = args.getChunkY();
-		int yFloor = args.getFloorY();
-		int yCeiling = args.getCeilingY();
-		int z = args.getChunkZ();
+		final World world = args.getWorld();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
+		final int x = args.getChunkX();
+		final int y = args.getChunkY();
+		final int yFloor = args.getFloorY();
+		final int yCeiling = args.getCeilingY();
+		final int z = args.getChunkZ();
 
         // Register the current room als constant room
-        DungeonMaze.instance.registerConstantRoom(w.getName(), c, x, y, z);
+        DungeonMaze.instance.registerConstantRoom(world.getName(), chunk, x, y, z);
 
         //stone floor in the bottom of the room
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1)
             for(int z2 = z + 1; z2 <= z + 6; z2 += 1)
-                c.getBlock(x2, yFloor, z2).setType(Material.STONE);
+                chunk.getBlock(x2, yFloor, z2).setType(Material.STONE);
 
         // Cobblestone layer underneath the stone floor
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1)
             for(int z2 = z + 1; z2 <= z + 6; z2 += 1)
-                c.getBlock(x2, yFloor - 1, z2).setType(Material.COBBLESTONE);
+                chunk.getBlock(x2, yFloor - 1, z2).setType(Material.COBBLESTONE);
 
         // Make stone walls on each side of the room
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1)
             for(int y2 = yFloor; y2 <= yCeiling + 5; y2 += 1)
-                c.getBlock(x2, y2, z).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x2, y2, z).setType(Material.SMOOTH_BRICK);
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1)
             for(int y2 = yFloor; y2 <= yCeiling + 5; y2 += 1)
-                c.getBlock(x2, y2, z + 7).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x2, y2, z + 7).setType(Material.SMOOTH_BRICK);
         for(int z2 = z + 1; z2 <= z + 6; z2 += 1)
             for(int y2 = yFloor; y2 <= yCeiling + 5; y2 += 1)
-                c.getBlock(x, y2, z2).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x, y2, z2).setType(Material.SMOOTH_BRICK);
         for(int z2 = z + 1; z2 <= z + 6; z2 += 1)
             for(int y2 = yFloor; y2 <= yCeiling + 5; y2 += 1)
-                c.getBlock(x + 7, y2, z2).setType(Material.SMOOTH_BRICK);
+                chunk.getBlock(x + 7, y2, z2).setType(Material.SMOOTH_BRICK);
 
         // Generate some holes in the wall to make some kind of doors
         for(int x2 = x + 3; x2 <= x + 4; x2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x2, y2, z).setType(Material.AIR);
+                chunk.getBlock(x2, y2, z).setType(Material.AIR);
         for(int x2 = x + 3; x2 <= x + 4; x2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x2, y2, z + 7).setType(Material.AIR);
+                chunk.getBlock(x2, y2, z + 7).setType(Material.AIR);
         for(int z2 = z + 3; z2 <= z + 4; z2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x, y2, z2).setType(Material.AIR);
+                chunk.getBlock(x, y2, z2).setType(Material.AIR);
         for(int z2 = z + 3; z2 <= z + 4; z2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x + 7, y2, z2).setType(Material.AIR);
+                chunk.getBlock(x + 7, y2, z2).setType(Material.AIR);
 
         // Generate the bookshelves, one on each side
         for(int x2 = x + 5; x2 <= x + 6; x2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x2, y2, z + 1).setType(Material.BOOKSHELF);
+                chunk.getBlock(x2, y2, z + 1).setType(Material.BOOKSHELF);
         for(int x2 = x + 1; x2 <= x + 2; x2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x2, y2, z + 6).setType(Material.BOOKSHELF);
+                chunk.getBlock(x2, y2, z + 6).setType(Material.BOOKSHELF);
         for(int z2 = z + 1; z2 <= z + 2; z2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x + 1, y2, z2).setType(Material.BOOKSHELF);
+                chunk.getBlock(x + 1, y2, z2).setType(Material.BOOKSHELF);
         for(int z2 = z + 5; z2 <= z + 6; z2 += 1)
             for(int y2 = yFloor + 1; y2 <= yFloor + 3; y2 += 1)
-                c.getBlock(x + 6, y2, z2).setType(Material.BOOKSHELF);
+                chunk.getBlock(x + 6, y2, z2).setType(Material.BOOKSHELF);
 
         /* // Make the two pilars - Change to enchant table
         for (int y2 = yFloor + 1; y2 <= yFloor + 3; y2+=1) {
@@ -99,49 +99,49 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
         } */
 
         // Add enchant tables supports
-        c.getBlock(x + 3, yFloor +1, z + 4).setType(Material.BOOKSHELF);
-        c.getBlock(x + 4, yFloor +1, z + 3).setType(Material.BOOKSHELF);
+        chunk.getBlock(x + 3, yFloor +1, z + 4).setType(Material.BOOKSHELF);
+        chunk.getBlock(x + 4, yFloor +1, z + 3).setType(Material.BOOKSHELF);
         // Add the two enchant tables
-        c.getBlock(x + 3, yFloor +2, z + 4).setType(Material.ENCHANTMENT_TABLE);
-        c.getBlock(x + 4, yFloor +2, z + 3).setType(Material.ENCHANTMENT_TABLE);
+        chunk.getBlock(x + 3, yFloor +2, z + 4).setType(Material.ENCHANTMENT_TABLE);
+        chunk.getBlock(x + 4, yFloor +2, z + 3).setType(Material.ENCHANTMENT_TABLE);
         // Add the two chests
-        c.getBlock(x + 3, yFloor + 1, z + 3).setType(Material.CHEST);
+        chunk.getBlock(x + 3, yFloor + 1, z + 3).setType(Material.CHEST);
 
         // Call the Chest generation event
-        GenerationChestEvent event = new GenerationChestEvent(c.getBlock(x + 3, yFloor + 1, z + 3), rand, genChestContent(rand), MazeStructureType.LIBRARY_ROOM);
+        GenerationChestEvent event = new GenerationChestEvent(chunk.getBlock(x + 3, yFloor + 1, z + 3), rand, genChestContent(rand), MazeStructureType.LIBRARY_ROOM);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         // Do the event
         if(!event.isCancelled()) {
             // Make sure the chest is still there, a developer could change the chest through the event!
             if(event.getBlock().getType() == Material.CHEST)
-            // Add the contents to the chest
-            ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                // Add the contents to the chest
+                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
         }
 
-        c.getBlock(x + 4, yFloor + 1, z + 4).setType(Material.CHEST);
+        chunk.getBlock(x + 4, yFloor + 1, z + 4).setType(Material.CHEST);
 
         // Call the Chest generation event
-        GenerationChestEvent event2 = new GenerationChestEvent(c.getBlock(x + 4, yFloor + 1, z + 4), rand, genChestContent(rand), MazeStructureType.LIBRARY_ROOM);
+        GenerationChestEvent event2 = new GenerationChestEvent(chunk.getBlock(x + 4, yFloor + 1, z + 4), rand, genChestContent(rand), MazeStructureType.LIBRARY_ROOM);
         Bukkit.getServer().getPluginManager().callEvent(event2);
 
         // Do the event
         if(!event2.isCancelled()) {
             // Make sure the chest is still there, a developer could change the chest through the event!
             if(event2.getBlock().getType() == Material.CHEST)
-            // Add the contents to the chest
-            ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                // Add the contents to the chest
+                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
         }
 
-        // Add 4 lanterns on each side of the room near the book shelfs
-        c.getBlock(x + 2, yFloor + 2, z + 1).setType(Material.TORCH);
-        c.getBlock(x + 2, yFloor + 2, z + 1).setData((byte) 3);
-        c.getBlock(x + 6, yFloor + 2, z + 2).setType(Material.TORCH);
-        c.getBlock(x + 6, yFloor + 2, z + 2).setData((byte) 2);
-        c.getBlock(x + 1, yFloor + 2, z + 5).setType(Material.TORCH);
-        c.getBlock(x + 1, yFloor + 2, z + 5).setData((byte) 1);
-        c.getBlock(x + 5, yFloor + 2, z + 6).setType(Material.TORCH);
-        c.getBlock(x + 5, yFloor + 2, z + 6).setData((byte) 4);
+        // Add 4 lanterns on each side of the room near the book shelves
+        chunk.getBlock(x + 2, yFloor + 2, z + 1).setType(Material.TORCH);
+        chunk.getBlock(x + 2, yFloor + 2, z + 1).setData((byte) 3);
+        chunk.getBlock(x + 6, yFloor + 2, z + 2).setType(Material.TORCH);
+        chunk.getBlock(x + 6, yFloor + 2, z + 2).setData((byte) 2);
+        chunk.getBlock(x + 1, yFloor + 2, z + 5).setType(Material.TORCH);
+        chunk.getBlock(x + 1, yFloor + 2, z + 5).setData((byte) 1);
+        chunk.getBlock(x + 5, yFloor + 2, z + 6).setType(Material.TORCH);
+        chunk.getBlock(x + 5, yFloor + 2, z + 6).setData((byte) 4);
 	}
 	
 	public List<ItemStack> genChestContent(Random random) {
@@ -252,6 +252,7 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 		// Add the selected items randomly
 		for (int i = 0; i < itemCountInChest; i++)
 			result.add(items.get(random.nextInt(items.size())));
+
 		return result;
 	}
 

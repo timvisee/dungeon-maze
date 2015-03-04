@@ -11,9 +11,9 @@ import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 public class MazeLayerBlockPopulatorArgs extends ChunkBlockPopulatorArgs {
 
 	/** Defines the current layer number. */
-	int layer = 1;
+    private int layer = 1;
 	/** Defines the current Y coordinate of the room. */
-	int y = 0;
+    protected int y = 0;
 	
 	/**
 	 * Constructor.

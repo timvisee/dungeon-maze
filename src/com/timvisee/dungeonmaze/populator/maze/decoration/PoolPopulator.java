@@ -15,7 +15,7 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 	public static final float ROOM_CHANCE = .05f; // Includes lava pools
 
 	public static final int NO_LAVA_NEAR_SPAWN_RADIUS = 2; // In chunks
-	public static final int CHANCE_LAVA = 35; // Rest is water
+	public static final int LAVA_CHANCE = 35; // Rest is water
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -30,7 +30,7 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 
         LiquidType liquidType = LiquidType.WATER;
 
-        if(allowLava && rand.nextInt(100) < CHANCE_LAVA)
+        if(allowLava && rand.nextInt(100) < LAVA_CHANCE)
             liquidType = LiquidType.LAVA;
 
         int poolX = x + rand.nextInt(6) + 1;

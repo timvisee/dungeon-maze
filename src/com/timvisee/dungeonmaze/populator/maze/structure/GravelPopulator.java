@@ -22,18 +22,17 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int yFloor = args.getFloorY();
-		int z = args.getChunkZ();
+		final Chunk chunk = args.getSourceChunk();
+		final Random rand = args.getRandom();
+		final int x = args.getChunkX();
+		final int yFloor = args.getFloorY();
+		final int z = args.getChunkZ();
 		
 		int ruins = 0;
 		while (rand.nextInt(100) < RUINS_CHANCE && ruins < RUINS_MAX) {
 			int startX = x + rand.nextInt(6) + 1;
 			int startY = yFloor + 1;
 			int startZ = z + rand.nextInt(6) + 1;
-			
 			int startHeight = rand.nextInt(2) + 1;
 
 			BlockFace dir1 = DIRECTIONS[rand.nextInt(DIRECTIONS.length)];
@@ -44,8 +43,8 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
 			int z2 = startZ;
 			while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 				for (int y2 = startY; y2 < startY + height; y2++)
-					if(c.getBlock(x2, y2, z2).getType() == Material.AIR)
-						c.getBlock(x2, y2, z2).setType(Material.GRAVEL);
+					if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
+						chunk.getBlock(x2, y2, z2).setType(Material.GRAVEL);
 
 				height -= rand.nextInt(1);
 
@@ -59,8 +58,8 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
 				z2 = startZ;
 				while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 					for (int y2 = startY; y2 < startY + height; y2++)
-						if(c.getBlock(x2, y2, z2).getType() == Material.AIR)
-							c.getBlock(x2, y2, z2).setType(Material.GRAVEL);
+						if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
+							chunk.getBlock(x2, y2, z2).setType(Material.GRAVEL);
 
 					height -= rand.nextInt(1);
 

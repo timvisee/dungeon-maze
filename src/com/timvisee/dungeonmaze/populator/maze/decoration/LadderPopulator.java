@@ -16,13 +16,13 @@ public class LadderPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+		final Chunk c = args.getSourceChunk();
+		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
-        int startX = x;
-        int startY = args.getFloorY() + 1;
-        int startZ = z;
+        final int startX;
+        final int startY = args.getFloorY() + 1;
+        final int startZ;
 			
         byte ladderData = (byte) 0;
         switch (rand.nextInt(2)) {

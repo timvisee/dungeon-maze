@@ -15,7 +15,8 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MAX = 2;
 	public static final float ROOM_CHANCE = .05f;
 	public static final int ROOM_ITERATIONS = 15;
-	public static final int CHANCE_BURNING = 20;
+
+	public static final float BURNING_CHANCE = .2f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -30,7 +31,7 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
             b.setType(Material.NETHERRACK);
 
             // Decide if the netherrack should be burning
-            if(rand.nextInt(100) < CHANCE_BURNING) {
+            if(rand.nextFloat() < BURNING_CHANCE) {
                 Block burnBlock = c.getBlock(b.getX(), b.getY() + 1, b.getZ());
                 if (burnBlock.getType() == Material.AIR)
                     burnBlock.setType(Material.FIRE);

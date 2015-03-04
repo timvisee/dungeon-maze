@@ -21,7 +21,7 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {
         final World world = args.getWorld();
-        final Random random = args.getRandom();
+        final Random rand = args.getRandom();
         final Chunk chunk = args.getSourceChunk();
         final DungeonChunk dungeonChunk = args.getDungeonChunk();
 
@@ -32,31 +32,31 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
         dungeonChunk.setCustomChunk(true);
 
         // Generate a dirt layer
-        for (int x = 0; x < 16; x++)
-            for (int z = 0; z < 16; z++)
+        for(int x = 0; x < 16; x++)
+            for(int z = 0; z < 16; z++)
                 chunk.getBlock(x, 29, z).setType(Material.DIRT);
 
         // Generate some clay inside the dirt layer
-        for (int x = 0; x < 16; x++)
-            for (int z = 0; z < 16; z++)
-                if (random.nextInt(100) < CHANCE_CLAYINDIRT)
+        for(int x = 0; x < 16; x++)
+            for(int z = 0; z < 16; z++)
+                if(rand.nextInt(100) < CHANCE_CLAYINDIRT)
                     chunk.getBlock(x, 29, z).setType(Material.CLAY);
 
         // Generate the grass layer
-        for (int x = 0; x < 16; x++)
-            for (int z = 0; z < 16; z++)
+        for(int x = 0; x < 16; x++)
+            for(int z = 0; z < 16; z++)
                 chunk.getBlock(x, 30, z).setType(Material.GRASS);
 
         // Remove all the stone above the grass layer!
-        for (int y = 31; y <= 100; y++)
-            for (int x = 0; x < 16; x++)
-                for (int z = 0; z < 16; z++)
+        for(int y = 31; y <= 100; y++)
+            for(int x = 0; x < 16; x++)
+                for(int z = 0; z < 16; z++)
                     chunk.getBlock(x, y, z).setType(Material.AIR);
 
         // Generate some tall grass on the oasis
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                if (random.nextInt(100) < CHANCE_CLAYINDIRT) {
+        for(int x = 0; x < 16; x++) {
+            for(int z = 0; z < 16; z++) {
+                if(rand.nextInt(100) < CHANCE_CLAYINDIRT) {
                     chunk.getBlock(x, 31, z).setType(Material.LONG_GRASS);
                     chunk.getBlock(x, 31, z).setData((byte) 1);
                 }
@@ -64,17 +64,17 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
         }
 
         // Random tree offset (0 or 1)
-        int treeOffsetX = random.nextInt(2);
-        int treeOffsetZ = random.nextInt(2);
+        int treeOffsetX = rand.nextInt(2);
+        int treeOffsetZ = rand.nextInt(2);
 
         // Generate the water around the tree
-        for (int x = 5; x <= 11; x++)
+        for(int x = 5; x <= 11; x++)
             chunk.getBlock(x + treeOffsetX, 30, 5 + treeOffsetZ).setType(Material.WATER);
-        for (int z = 5; z <= 11; z++)
+        for(int z = 5; z <= 11; z++)
             chunk.getBlock(5 + treeOffsetX, 30, z + treeOffsetZ).setType(Material.WATER);
-        for (int x = 5; x <= 11; x++)
+        for(int x = 5; x <= 11; x++)
             chunk.getBlock(x + treeOffsetX, 30, 11 + treeOffsetZ).setType(Material.WATER);
-        for (int z = 5; z <= 11; z++)
+        for(int z = 5; z <= 11; z++)
             chunk.getBlock(11 + treeOffsetX, 30, z + treeOffsetZ).setType(Material.WATER);
 
         // Generate some sugar canes
@@ -85,7 +85,7 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
 
         // Random tree type and generate the tree
         TreeType treeType;
-        switch (random.nextInt(5)) {
+        switch (rand.nextInt(5)) {
         case 0:
             treeType = TreeType.BIG_TREE;
             break;

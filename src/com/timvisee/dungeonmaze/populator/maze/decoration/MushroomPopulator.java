@@ -13,6 +13,7 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 6;
+
 	public static final int CHANCE_MUSHROOM_BROWN = 1;
 	public static final int CHANCE_MUSHROOM_RED = 1;
 
