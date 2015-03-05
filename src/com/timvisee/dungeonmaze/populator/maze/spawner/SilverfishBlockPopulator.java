@@ -14,8 +14,8 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .75f;
 	public static final int ROOM_ITERATIONS = 8;
+	public static final float ROOM_ITERATIONS_CHANCE = .75f;
 
     // TODO: Implement this feature!
 	public static final double CHANCE_ADDITION_EACH_LEVEL = -4.167; /* to 75 */
@@ -49,13 +49,13 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
+    public int getRoomIterations() {
+        return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterations() {
-        return ROOM_ITERATIONS;
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
     }
 	
 	/**

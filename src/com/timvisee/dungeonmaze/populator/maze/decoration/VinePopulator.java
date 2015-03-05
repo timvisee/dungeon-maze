@@ -12,6 +12,7 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
+
 	public static final int CHANCE_VINE = 30;
 	public static final double CHANCE_TOP_TURVE_ADDITION_EACH_LEVEL = -2.5; /* to 15 */
 	public static final int ITERATIONS = 5;
@@ -99,7 +100,7 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         // TODO: Improve this!
         return 1.0f;
     }

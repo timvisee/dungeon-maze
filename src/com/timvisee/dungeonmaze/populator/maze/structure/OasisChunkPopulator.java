@@ -119,7 +119,7 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
 	}
 
     @Override
-    public float getChunkPopulationChance() {
+    public float getChunkIterationsChance() {
         return CHUNK_CHANCE;
     }
 }

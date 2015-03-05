@@ -38,17 +38,21 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
             return;
         }
 
+        // Check whether this this chunk should be populated based on it's chance
+        if(rand.nextFloat() >= getChunkChance())
+            return;
+
         // Iterate through this chunk
-        final int iterations = getChunkPopulationIterations();
-        final int iterationsMax = getChunkPopulationIterationsMax();
+        final int iterations = getChunkIterations();
+        final int iterationsMax = getChunkIterationsMax();
         int iterationCount = 0;
         for(int i = 0; i < iterations; i++) {
             // Make sure we didn't iterate too many times
             if(iterationCount >= iterationsMax && iterationsMax >= 0)
                 break;
 
-            // Check whether this this chunk should be populated based on it's chance
-            if(rand.nextFloat() >= getChunkPopulationChance())
+            // Check whether this this chunk should be populated in the current iteration based on it's iteration chance
+            if(rand.nextFloat() >= getChunkIterationsChance())
                 continue;
 
             // Increase the iterations counter
@@ -78,7 +82,7 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
      *
      * @return The population chance of the chunk.
      */
-    public float getChunkPopulationChance() {
+    public float getChunkChance() {
         return 1.0f;
     }
 
@@ -87,8 +91,17 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
      *
      * @return The number of iterations.
      */
-    public int getChunkPopulationIterations() {
+    public int getChunkIterations() {
         return 1;
+    }
+
+    /**
+     * Get the chunk population chance for each iteration. This value is between 0.0 and 1.0.
+     *
+     * @return The population chance of the chunk.
+     */
+    public float getChunkIterationsChance() {
+        return 1.0f;
     }
 
     /**
@@ -96,7 +109,7 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
      *
      * @return The maximum number of times to iterate. Return a negative number of ignore the maximum.
      */
-    public int getChunkPopulationIterationsMax() {
+    public int getChunkIterationsMax() {
         return -1;
     }
 }

@@ -14,8 +14,8 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .5f;
 	public static final int ROOM_ITERATIONS = 7;
+	public static final float ROOM_ITERATIONS_CHANCE = .5f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -37,13 +37,13 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
+    public int getRoomIterations() {
+        return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterations() {
-        return ROOM_ITERATIONS;
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
     }
 	
 	/**

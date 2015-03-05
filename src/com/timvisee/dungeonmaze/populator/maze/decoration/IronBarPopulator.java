@@ -14,8 +14,8 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .25f;
     public static final int ROOM_ITERATIONS = 2;
+	public static final float ROOM_ITERATIONS_CHANCE = .25f;
 
     /** Populator constants. */
 	public static final int CHANCE_DOUBLE_HEIGHT = 66;
@@ -43,15 +43,15 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
+    public int getRoomIterations() {
+        return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterations() {
-        return ROOM_ITERATIONS;
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
     }
-	
+
 	/**
 	 * Get the minimum layer
 	 * @return Minimum layer

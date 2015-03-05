@@ -29,14 +29,13 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int z = args.getChunkZ();
-			
-        int chestX = x + rand.nextInt(6) + 1;
-        int chestY = args.getFloorY() + 1;
-        int chestZ = z + rand.nextInt(6) + 1;
+        final Chunk c = args.getSourceChunk();
+        final Random rand = args.getRandom();
+        final int x = args.getChunkX();
+        final int z = args.getChunkZ();
+        final int chestX = x + rand.nextInt(6) + 1;
+        final int chestY = args.getFloorY() + 1;
+        final int chestZ = z + rand.nextInt(6) + 1;
 
         if(!(c.getBlock(chestX, chestY - 1, chestZ).getType() == Material.AIR)) {
             Block chestBlock = c.getBlock(chestX, chestY, chestZ);
@@ -60,7 +59,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
                     ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
                 } else {
                     // The event is cancelled
-                    // Put the chest back to it's orrigional state (air)
+                    // Put the chest back to it's original state (air)
                     chestBlock.setType(Material.AIR);
                 }
 
@@ -219,7 +218,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         return ROOM_CHANCE;
     }
 	

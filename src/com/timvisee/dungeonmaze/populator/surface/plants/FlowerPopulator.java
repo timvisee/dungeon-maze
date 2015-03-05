@@ -11,8 +11,8 @@ import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 public class FlowerPopulator extends SurfaceBlockPopulator {
 
     /** General populator constants. */
-    public static final float CHUNK_CHANCE = .15f;
     public static final int CHUNK_ITERATIONS = 10;
+    public static final float CHUNK_ITERATIONS_CHANCE = .15f;
 
 	@Override
 	public void populateSurface(SurfaceBlockPopulatorArgs args) {
@@ -49,12 +49,12 @@ public class FlowerPopulator extends SurfaceBlockPopulator {
 	}
 
     @Override
-    public float getChunkPopulationChance() {
-        return CHUNK_CHANCE;
+    public int getChunkIterations() {
+        return CHUNK_ITERATIONS;
     }
 
     @Override
-    public int getChunkPopulationIterations() {
-        return CHUNK_ITERATIONS;
+    public float getChunkIterationsChance() {
+        return CHUNK_ITERATIONS_CHANCE;
     }
 }

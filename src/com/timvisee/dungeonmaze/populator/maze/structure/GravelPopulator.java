@@ -15,8 +15,8 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 7;
-    public static final float ROOM_CHANCE = .05f;
     public static final int ROOM_ITERATIONS = 3;
+    public static final float ROOM_ITERATIONS_CHANCE = .05f;
 	public static final int ROOM_ITERATIONS_MAX = 2;
 
     /** Populator constants. */
@@ -93,17 +93,17 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
-    }
-
-    @Override
-    public int getRoomPopulationIterations() {
+    public int getRoomIterations() {
         return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterationsMax() {
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
+    }
+
+    @Override
+    public int getRoomIterationsMax() {
         return ROOM_ITERATIONS_MAX;
     }
 }

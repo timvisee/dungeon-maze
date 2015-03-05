@@ -330,7 +330,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         return ROOM_CHANCE;
     }
 	

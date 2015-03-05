@@ -13,9 +13,9 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
-    public static final float ROOM_CHANCE = .3f;
     public static final int ROOM_ITERATIONS = 3;
-    public static final int ROOM_ITERATIONS_MAX = 3; // Maybe 2?
+    public static final float ROOM_ITERATIONS_CHANCE = .3f;
+    public static final int ROOM_ITERATIONS_MAX = 3;
 
     public static final float BROKEN_CHANCE = .33f;
 
@@ -67,17 +67,17 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
-    }
-
-    @Override
-    public int getRoomPopulationIterations() {
+    public int getRoomIterations() {
         return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterationsMax() {
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
+    }
+
+    @Override
+    public int getRoomIterationsMax() {
         return ROOM_ITERATIONS_MAX;
     }
 

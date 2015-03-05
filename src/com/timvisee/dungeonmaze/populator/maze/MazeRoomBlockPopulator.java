@@ -29,18 +29,21 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
 		// The 4 rooms on each layer
 		for(int chunkX = 0; chunkX < 16; chunkX += 8) {
 			for(int chunkZ = 0; chunkZ < 16; chunkZ += 8) {
+                // Check whether this this room should be populated based on it's chance
+                if(rand.nextFloat() >= getRoomChance())
+                    continue;
 
                 // Iterate through this room
-                final int iterations = getRoomPopulationIterations();
-                final int iterationsMax = getRoomPopulationIterationsMax();
+                final int iterations = getRoomIterations();
+                final int iterationsMax = getRoomIterationsMax();
                 int iterationCount = 0;
                 for(int i = 0; i < iterations; i++) {
                     // Make sure we didn't iterate too many times
                     if(iterationCount >= iterationsMax && iterationsMax >= 0)
                         break;
 
-                    // Check whether this this room should be populated based on it's chance
-                    if(rand.nextFloat() >= getRoomPopulationChance())
+                    // Check whether this this room should be populated in the current iteration based on it's iteration chance
+                    if(rand.nextFloat() >= getRoomIterationsChance())
                         continue;
 
                     // Increase the iterations counter
@@ -124,15 +127,26 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
      *
      * @return The population chance of the room.
      */
-    public abstract float getRoomPopulationChance();
+    public float getRoomChance() {
+        return 1.0f;
+    }
 
     /**
      * Get the number of times to iterate through each room.
      *
      * @return The number of iterations.
      */
-    public int getRoomPopulationIterations() {
+    public int getRoomIterations() {
         return 1;
+    }
+
+    /**
+     * Get the room population chance for each iteration. This value is between 0.0 and 1.0.
+     *
+     * @return The population chance of the room.
+     */
+    public float getRoomIterationsChance() {
+        return 1.0f;
     }
 
     /**
@@ -140,7 +154,7 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
      *
      * @return The maximum number of times to iterate. Return a negative number of ignore the maximum.
      */
-    public int getRoomPopulationIterationsMax() {
+    public int getRoomIterationsMax() {
         return -1;
     }
 }

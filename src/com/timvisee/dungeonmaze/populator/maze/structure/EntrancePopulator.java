@@ -406,7 +406,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         // TODO: Improve this!
         return 1.0f;
     }

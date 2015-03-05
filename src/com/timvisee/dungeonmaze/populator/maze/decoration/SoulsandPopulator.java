@@ -14,8 +14,8 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .2f;
 	public static final int ROOM_ITERATIONS = 15;
+	public static final float ROOM_ITERATIONS_CHANCE = .2f;
 
     // TODO: Implement this!
 	public static final double CHANCE_ADDITION_EACH_LEVEL = -1.667; /* to 10 */
@@ -34,13 +34,13 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
+    public int getRoomIterations() {
+        return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterations() {
-        return ROOM_ITERATIONS;
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
     }
 	
 	/**

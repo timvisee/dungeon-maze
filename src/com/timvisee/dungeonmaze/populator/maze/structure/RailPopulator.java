@@ -17,8 +17,8 @@ public class RailPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 3;
 	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .08f;
     public static final int ROOM_ITERATIONS = 3;
+	public static final float ROOM_ITERATIONS_CHANCE = .08f;
     public static final int ROOM_ITERATIONS_MAX = 2;
 
     /** Populator constants. */
@@ -49,7 +49,7 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 			
 			if(rails <= ROOM_ITERATIONS_MAX) {
 				
-				if (rand.nextInt(100) < ROOM_CHANCE +(RAIL_CHANCE_ADDITION_EACH_LEVEL *(y-30)/6)) {
+				if (rand.nextInt(100) < ROOM_ITERATIONS_CHANCE +(RAIL_CHANCE_ADDITION_EACH_LEVEL *(y-30)/6)) {
 					int startX = x + rand.nextInt(6) + 1;
 					int startZ = z + rand.nextInt(6) + 1;
 
@@ -121,17 +121,17 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
-    }
-
-    @Override
-    public int getRoomPopulationIterations() {
+    public int getRoomIterations() {
         return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterationsMax() {
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
+    }
+
+    @Override
+    public int getRoomIterationsMax() {
         return ROOM_ITERATIONS_MAX;
     }
 }

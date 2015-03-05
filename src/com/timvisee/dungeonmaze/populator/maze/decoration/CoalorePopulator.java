@@ -32,12 +32,12 @@ public class CoalorePopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         return ROOM_CHANCE;
     }
 
     @Override
-    public int getRoomPopulationIterations() {
+    public int getRoomIterations() {
         return ROOM_ITERATIONS;
     }
 

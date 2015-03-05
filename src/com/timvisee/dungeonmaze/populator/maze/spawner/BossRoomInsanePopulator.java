@@ -527,7 +527,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
     }
 
     @Override
-    public float getLayerPopulationChance() {
+    public float getLayerIterationsChance() {
         return LAYER_CHANCE;
     }
 }

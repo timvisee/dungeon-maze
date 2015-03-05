@@ -14,8 +14,8 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 2;
-	public static final float ROOM_CHANCE = .05f;
 	public static final int ROOM_ITERATIONS = 15;
+	public static final float ROOM_ITERATIONS_CHANCE = .05f;
 
     /** Populator constants. */
 	public static final float BURNING_CHANCE = .2f;
@@ -42,13 +42,13 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
-        return ROOM_CHANCE;
+    public int getRoomIterations() {
+        return ROOM_ITERATIONS;
     }
 
     @Override
-    public int getRoomPopulationIterations() {
-        return ROOM_ITERATIONS;
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
     }
 	
 	/**

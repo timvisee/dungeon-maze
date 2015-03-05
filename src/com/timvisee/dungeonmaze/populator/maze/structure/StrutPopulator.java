@@ -13,6 +13,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 7;
 	public static final int CHANCE_STRUT = 2;
+
 	public static final float CHANCE_STRUT_NEAR_SPAWN = .5f;
 	public static final int STRUT_DISTANCE_NEAR_SPAWN_MAX = 4; // Distance in chunks
 
@@ -103,7 +104,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         // TODO: Improve this!
         return 1.0f;
     }

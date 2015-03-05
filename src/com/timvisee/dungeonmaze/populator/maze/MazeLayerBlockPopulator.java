@@ -32,18 +32,21 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 
 		// The layers
 		for(int l = layerMin; l <= layerMax; l++) {
+            // Check whether this this layer should be populated based on it's chance
+            if(rand.nextFloat() >= getLayerChance())
+                continue;
 
             // Iterate through this layer
-            final int iterations = getLayerPopulationIterations();
-            final int iterationsMax = getLayerPopulationIterationsMax();
+            final int iterations = getLayerIterations();
+            final int iterationsMax = getLayerIterationsMax();
             int iterationCount = 0;
             for(int i = 0; i < iterations; i++) {
                 // Make sure we didn't iterate too many times
                 if(iterationCount >= iterationsMax && iterationsMax >= 0)
                     break;
 
-                // Check whether this this layer should be populated based on it's chance
-                if(rand.nextFloat() >= getLayerPopulationChance())
+                // Check whether this this layer should be populated in this iteration based on it's iteration chance
+                if(rand.nextFloat() >= getLayerIterationsChance())
                     continue;
 
                 // Increase the iterations counter
@@ -95,7 +98,7 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
      *
      * @return The population chance of the room.
      */
-    public float getLayerPopulationChance() {
+    public float getLayerChance() {
         return 1.0f;
     }
 
@@ -104,8 +107,17 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
      *
      * @return The number of iterations.
      */
-    public int getLayerPopulationIterations() {
+    public int getLayerIterations() {
         return 1;
+    }
+
+    /**
+     * Get the layer population chance for each iteration. This value is between 0.0 and 1.0.
+     *
+     * @return The population chance of the room.
+     */
+    public float getLayerIterationsChance() {
+        return 1.0f;
     }
 
     /**
@@ -113,7 +125,7 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
      *
      * @return The maximum number of times to iterate. Return a negative number of ignore the maximum.
      */
-    public int getLayerPopulationIterationsMax() {
+    public int getLayerIterationsMax() {
         return -1;
     }
 }

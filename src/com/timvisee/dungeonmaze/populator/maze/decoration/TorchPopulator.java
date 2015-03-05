@@ -39,7 +39,7 @@ public class TorchPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         return ROOM_CHANCE;
     }
 	

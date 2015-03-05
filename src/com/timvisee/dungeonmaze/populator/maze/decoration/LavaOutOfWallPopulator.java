@@ -37,7 +37,7 @@ public class LavaOutOfWallPopulator extends MazeRoomBlockPopulator {
 	}
 
     @Override
-    public float getRoomPopulationChance() {
+    public float getRoomChance() {
         return ROOM_CHANCE;
     }
 	
