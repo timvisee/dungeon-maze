@@ -12,7 +12,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 7;
-	public static final int CHANCE_STRUT = 2;
+	public static final int ROOM_CHANCE = 2;
 
 	public static final float CHANCE_STRUT_NEAR_SPAWN = .5f;
 	public static final int STRUT_DISTANCE_NEAR_SPAWN_MAX = 4; // Distance in chunks
@@ -21,10 +21,10 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int yFloor = args.getFloorY();
-		int yCeiling = args.getCeilingY();
-		int z = args.getChunkZ();
+        final int x = args.getChunkX();
+        final int yFloor = args.getFloorY();
+        final int yCeiling = args.getCeilingY();
+        final int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(distance(chunk.getX(), chunk.getZ(), 0, 0) < STRUT_DISTANCE_NEAR_SPAWN_MAX) {
@@ -49,9 +49,9 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 
 				if(chunk.getBlock(x, yStrutBar, z + 2).getType() == Material.AIR) {
 					// Generate strut bar
-					for(int zz = 1; zz < 7; zz++) {
+					for(int zz = 1; zz < 7; zz++)
 						chunk.getBlock(x, yStrutBar, z + zz).setType(Material.WOOD);
-					}
+
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutBar; yy++) {
 						chunk.getBlock(x, yy, z+1).setType(Material.FENCE);
@@ -62,7 +62,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 			}
 		} else {
 			// Normal strut
-			if(rand.nextInt(100) < CHANCE_STRUT) {
+			if(rand.nextInt(100) < ROOM_CHANCE) {
 				final int yStrutBar = yCeiling - 1;
 				
 				if(chunk.getBlock(x + 2, yStrutBar, z).getType() == Material.AIR) {
@@ -78,18 +78,18 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 				}
 					
 			}
-			if (rand.nextInt(100) < CHANCE_STRUT) {
+			if (rand.nextInt(100) < ROOM_CHANCE) {
 				final int yStrutBar = yCeiling - 1;
 
 				if(chunk.getBlock(x, yStrutBar, z + 2).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int zz = 1; zz < 7; zz++)
-						chunk.getBlock(x + 0, yStrutBar, z + zz).setType(Material.WOOD);
+						chunk.getBlock(x, yStrutBar, z + zz).setType(Material.WOOD);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutBar; yy++) {
-						chunk.getBlock(x+0, yy, z+1).setType(Material.FENCE);
-						chunk.getBlock(x+0, yy, z+6).setType(Material.FENCE);
+						chunk.getBlock(x, yy, z+1).setType(Material.FENCE);
+						chunk.getBlock(x, yy, z+6).setType(Material.FENCE);
 					}
 				}
 					
@@ -99,7 +99,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 	
 	public double distance(int x1, int y1, int x2, int y2) {
 		double dx = x1 - x2; // Horizontal difference
-		double dy = y1 - y2; // vertical difference
+		double dy = y1 - y2; // Vertical difference
         return Math.sqrt(dx*dx + dy*dy);
 	}
 

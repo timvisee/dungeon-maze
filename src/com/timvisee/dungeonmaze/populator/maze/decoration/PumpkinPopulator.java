@@ -14,15 +14,17 @@ public class PumpkinPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
     public static final int LAYER_MIN = 1;
     public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 3;
-    public static final float ROOM_ITERATIONS_CHANCE = .02f;
+    public static final float ROOM_CHANCE = .075f;
+    public static final int ROOM_ITERATIONS = 7;
+    public static final float ROOM_ITERATIONS_CHANCE = .5f;
+    public static final int ROOM_ITERATIONS_MAX = 5;
 
     public static final float JACK_O_LANTERN_CHANCE = .33f;
 
     @Override
     public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-        Chunk c = args.getSourceChunk();
-        Random rand = args.getRandom();
+        final Chunk c = args.getSourceChunk();
+        final Random rand = args.getRandom();
         final int x = args.getChunkX();
         final int z = args.getChunkZ();
         final int xPumpkin = x + rand.nextInt(6) + 1;
@@ -47,16 +49,6 @@ public class PumpkinPopulator extends MazeRoomBlockPopulator {
         }
     }
 
-    @Override
-    public int getRoomIterations() {
-        return ROOM_ITERATIONS;
-    }
-
-    @Override
-    public float getRoomIterationsChance() {
-        return ROOM_ITERATIONS_CHANCE;
-    }
-
     /**
      * Get the minimum layer
      * @return Minimum layer
@@ -73,5 +65,25 @@ public class PumpkinPopulator extends MazeRoomBlockPopulator {
     @Override
     public int getMaximumLayer() {
         return LAYER_MAX;
+    }
+
+    @Override
+    public float getRoomChance() {
+        return ROOM_CHANCE;
+    }
+
+    @Override
+    public int getRoomIterations() {
+        return ROOM_ITERATIONS;
+    }
+
+    @Override
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
+    }
+
+    @Override
+    public int getRoomIterationsMax() {
+        return ROOM_ITERATIONS_MAX;
     }
 }
