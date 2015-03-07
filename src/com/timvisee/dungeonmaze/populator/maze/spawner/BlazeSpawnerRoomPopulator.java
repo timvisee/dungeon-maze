@@ -39,8 +39,8 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		final World w = args.getWorld();
-		final Chunk c = args.getSourceChunk();
+		final World world = args.getWorld();
+		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
@@ -49,86 +49,86 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		final int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
+		if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 
         // Register the current room as constant room
-        DungeonMaze.instance.registerConstantRoom(w.getName(), c, x, y, z);
+        DungeonMaze.instance.registerConstantRoom(world.getName(), chunk, x, y, z);
 
         // Netherbrick floor in the bottom of the room
         for(int xx = x; xx <= x + 7; xx += 1)
             for(int zz = z; zz <= z + 7; zz += 1)
-                c.getBlock(xx, yFloor, zz).setType(Material.NETHER_BRICK);
+                chunk.getBlock(xx, yFloor, zz).setType(Material.NETHER_BRICK);
 
         // Cobblestone layer underneath the stone floor
         for(int xx = x; xx <= x + 7; xx += 1)
             for(int zz = z + 1; zz <= z + 6; zz += 1)
-                c.getBlock(xx, yFloor - 1, zz).setType(Material.COBBLESTONE);
+                chunk.getBlock(xx, yFloor - 1, zz).setType(Material.COBBLESTONE);
 
         // Break out the walls and things inside the room
         for (int xx = 0; xx < 8; xx++)
             for (int yy = yFloor + 1; yy < yCeiling; yy++)
                 for(int zz = 0; zz < 8; zz++)
-                    c.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+                    chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
 
         // Generate corners
         for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-            c.getBlock(x, yy, z).setType(Material.NETHER_BRICK);
-            c.getBlock(x + 7, yy, z).setType(Material.NETHER_BRICK);
-            c.getBlock(x, yy, z + 7).setType(Material.NETHER_BRICK);
-            c.getBlock(x + 7, yy, z + 7).setType(Material.NETHER_BRICK);
+            chunk.getBlock(x, yy, z).setType(Material.NETHER_BRICK);
+            chunk.getBlock(x + 7, yy, z).setType(Material.NETHER_BRICK);
+            chunk.getBlock(x, yy, z + 7).setType(Material.NETHER_BRICK);
+            chunk.getBlock(x + 7, yy, z + 7).setType(Material.NETHER_BRICK);
         }
 
         // Generate fences in the corners
         for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-            c.getBlock(x + 1, yy, z).setType(Material.NETHER_FENCE);
-            c.getBlock(x, yy, z + 1).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 6, yy, z).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 7, yy, z + 1).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 1, yy, z + 7).setType(Material.NETHER_FENCE);
-            c.getBlock(x, yy, z + 6).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 6, yy, z + 7).setType(Material.NETHER_FENCE);
-            c.getBlock(x + 7, yy, z + 6).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x + 1, yy, z).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x, yy, z + 1).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x + 6, yy, z).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x + 7, yy, z + 1).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x + 1, yy, z + 7).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x, yy, z + 6).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x + 6, yy, z + 7).setType(Material.NETHER_FENCE);
+            chunk.getBlock(x + 7, yy, z + 6).setType(Material.NETHER_FENCE);
         }
 
         // Generate platform in the middle
         for (int xx=x + 2; xx <= x + 5; xx+=1)
             for (int zz=z + 2; zz <= z + 5; zz+=1)
-                c.getBlock(xx, yFloor + 1, zz).setType(Material.NETHER_BRICK);
+                chunk.getBlock(xx, yFloor + 1, zz).setType(Material.NETHER_BRICK);
 
         // Generate stairs off the platform
-        c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 3, yFloor + 1, z + 2).setData((byte) 2);
-        c.getBlock(x + 4, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 4, yFloor + 1, z + 2).setData((byte) 2);
+        chunk.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 3, yFloor + 1, z + 2).setData((byte) 2);
+        chunk.getBlock(x + 4, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 4, yFloor + 1, z + 2).setData((byte) 2);
 
-        c.getBlock(x + 3, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 3, yFloor + 1, z + 5).setData((byte) 3);
-        c.getBlock(x + 4, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 4, yFloor + 1, z + 5).setData((byte) 3);
+        chunk.getBlock(x + 3, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 3, yFloor + 1, z + 5).setData((byte) 3);
+        chunk.getBlock(x + 4, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 4, yFloor + 1, z + 5).setData((byte) 3);
 
-        c.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 2, yFloor + 1, z + 3).setData((byte) 0);
-        c.getBlock(x + 2, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 2, yFloor + 1, z + 4).setData((byte) 0);
+        chunk.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 2, yFloor + 1, z + 3).setData((byte) 0);
+        chunk.getBlock(x + 2, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 2, yFloor + 1, z + 4).setData((byte) 0);
 
-        c.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 5, yFloor + 1, z + 3).setData((byte) 1);
-        c.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
-        c.getBlock(x + 5, yFloor + 1, z + 4).setData((byte) 1);
+        chunk.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 5, yFloor + 1, z + 3).setData((byte) 1);
+        chunk.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
+        chunk.getBlock(x + 5, yFloor + 1, z + 4).setData((byte) 1);
 
         // Generate poles on the platform
-        c.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
-        c.getBlock(x + 5, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
-        c.getBlock(x + 2, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
-        c.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
+        chunk.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
+        chunk.getBlock(x + 5, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
+        chunk.getBlock(x + 2, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
+        chunk.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
 
         // Generate the spawner
         if(Core.getConfigHandler().isMobSpawnerAllowed("Blaze")) {
             int spawnerX = x + 3 + rand.nextInt(2);
             int spawnerY = yFloor + 2;
             int spawnerZ = z + 3 + rand.nextInt(2);
-            Block spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
+            Block spawnerBlock = chunk.getBlock(spawnerX, spawnerY, spawnerZ);
 
             // Call the spawner generation event
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.BLAZE, GenerationSpawnerEvent.GenerationSpawnerCause.BLAZE_SPAWNER_ROOM, rand);
@@ -150,7 +150,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
         // Generate hidden content/resources underneath the platform
         // Generate a list of chest contents
         List<ItemStack> contents = generateChestContents(rand);
-        Block chest1 = c.getBlock(x + 3, yFloor, z + 3);
+        Block chest1 = chunk.getBlock(x + 3, yFloor, z + 3);
 
         // Call the chest generation event
         GenerationChestEvent event1 = new GenerationChestEvent(chest1, rand, contents, MazeStructureType.BLAZE_SPAWNER_ROOM);
@@ -168,7 +168,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
         // Generate a list of chest contents
         List<ItemStack> contents2 = generateChestContents(rand);
-        Block chest2 = c.getBlock(x + 4, yFloor, z + 4);
+        Block chest2 = chunk.getBlock(x + 4, yFloor, z + 4);
 
         // Call the chest generation event
         GenerationChestEvent event2 = new GenerationChestEvent(chest2, rand, contents2, MazeStructureType.BLAZE_SPAWNER_ROOM);

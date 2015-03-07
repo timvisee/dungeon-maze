@@ -21,13 +21,13 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
+		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
 		
 		boolean allowLava = true;
-		if(Math.abs(c.getX()) < NO_LAVA_NEAR_SPAWN_RADIUS || Math.abs(c.getZ()) < NO_LAVA_NEAR_SPAWN_RADIUS)
+		if(Math.abs(chunk.getX()) < NO_LAVA_NEAR_SPAWN_RADIUS || Math.abs(chunk.getZ()) < NO_LAVA_NEAR_SPAWN_RADIUS)
 			allowLava = false;
 
         LiquidType liquidType = LiquidType.WATER;
@@ -43,8 +43,8 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 
         for (int i = Math.max(poolX - poolW / 2, 1); i < Math.min(poolX - poolW / 2 + poolW, 6); i++) {
             for (int j = Math.max(poolZ - poolL / 2, 1); j < Math.min(poolZ - poolL / 2 + poolL, 6); j++) {
-                c.getBlock(i, poolY, j).setType(liquidType.getMaterial());
-                c.getBlock(i, poolY - 1, j).setType(Material.MOSSY_COBBLESTONE);
+                chunk.getBlock(i, poolY, j).setType(liquidType.getMaterial());
+                chunk.getBlock(i, poolY - 1, j).setType(Material.MOSSY_COBBLESTONE);
             }
         }
 	}

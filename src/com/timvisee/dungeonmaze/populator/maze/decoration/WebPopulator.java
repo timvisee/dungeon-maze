@@ -26,7 +26,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         final World world = args.getWorld();
-		final Chunk c = args.getSourceChunk();
+		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
         final int x = args.getChunkX();
         final int z = args.getChunkZ();
@@ -54,7 +54,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         // Check whether the web should be placed on the ground
         if(!onCeiling) {
             // Check whether the position is free, if not iterate up
-            while(c.getBlock(xWeb, yWeb, zWeb).getType() != Material.AIR) {
+            while(chunk.getBlock(xWeb, yWeb, zWeb).getType() != Material.AIR) {
                 yWeb++;
 
                 if(yWeb + 1 >= world.getMaxHeight())
@@ -66,7 +66,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
             yWeb = args.getCeilingY();
 
             // Check whether the position is free, if not iterate up
-            while(c.getBlock(xWeb, yWeb, zWeb).getType() != Material.AIR) {
+            while(chunk.getBlock(xWeb, yWeb, zWeb).getType() != Material.AIR) {
                 yWeb--;
 
                 if(yWeb == 1)
@@ -75,7 +75,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         }
 
         // Place the web
-        c.getBlock(xWeb, yWeb, zWeb).setType(Material.WEB);
+        chunk.getBlock(xWeb, yWeb, zWeb).setType(Material.WEB);
 	}
 	
 	/**
@@ -101,6 +101,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
     public int getRoomIterations() {
         return ROOM_ITERATIONS;
     }
+
     @Override
     public float getRoomIterationsChance() {
         return ROOM_ITERATIONS_CHANCE;

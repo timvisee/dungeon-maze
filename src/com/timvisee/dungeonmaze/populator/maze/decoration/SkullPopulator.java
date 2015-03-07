@@ -44,7 +44,7 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
         if(rand.nextFloat() < POLE_GRAVE_CHANCE)
             withPole = true;
 
-        // Move the stull one up if it's on a pole
+        // Move the skull one up if it's on a pole
         if(withPole)
             skullY++;
 

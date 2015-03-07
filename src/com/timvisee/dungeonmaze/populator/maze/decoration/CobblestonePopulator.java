@@ -21,24 +21,23 @@ public class CobblestonePopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
-		int x = args.getChunkX();
-		int z = args.getChunkZ();
-			
-        int webX = x + rand.nextInt(6) + 1;
-        int webY = args.getFloorY();
-        int webCeilingY = args.getCeilingY();
-        int webZ = z + rand.nextInt(6) + 1;
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
+        final int x = args.getChunkX();
+        final int z = args.getChunkZ();
+        final int webX = x + rand.nextInt(6) + 1;
+        final int webY = args.getFloorY();
+        final int webCeilingY = args.getCeilingY();
+        final int webZ = z + rand.nextInt(6) + 1;
 
         if (rand.nextInt(100) < CHANCE_CORNER)
-            if(c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).getType() == Material.AIR)
-                c.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).setType(Material.WEB);
+            if(chunk.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).getType() == Material.AIR)
+                chunk.getBlock(x + (rand.nextInt(2)*5), webCeilingY, z + (rand.nextInt(2)*5)).setType(Material.WEB);
 
         else
-            if(!(c.getBlock(webX, webY - 1, webZ).getType() == Material.AIR))
-                if(c.getBlock(webX, webY, webZ).getType() == Material.AIR)
-                    c.getBlock(webX, webY, webZ).setType(Material.COBBLESTONE);
+            if(!(chunk.getBlock(webX, webY - 1, webZ).getType() == Material.AIR))
+                if(chunk.getBlock(webX, webY, webZ).getType() == Material.AIR)
+                    chunk.getBlock(webX, webY, webZ).setType(Material.COBBLESTONE);
 	}
 
     @Override

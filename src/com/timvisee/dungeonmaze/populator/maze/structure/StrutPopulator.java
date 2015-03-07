@@ -10,10 +10,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class StrutPopulator extends MazeRoomBlockPopulator {
 
+    /** General populator constants. */
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 7;
 	public static final int ROOM_CHANCE = 2;
 
+    /** Populator constants. */
 	public static final float CHANCE_STRUT_NEAR_SPAWN = .5f;
 	public static final int STRUT_DISTANCE_NEAR_SPAWN_MAX = 4; // Distance in chunks
 

@@ -29,8 +29,8 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
+		World world = args.getWorld();
+		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
 		int y = args.getChunkY();
@@ -38,20 +38,20 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and this chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
+		if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 
         // Register the current room as constant room
-        DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
+        DungeonMaze.instance.registerConstantRoom(world.getName(), chunk.getX(), chunk.getZ(), x, y, z);
 
         // Create the floor
         for(int x2 = x; x2 < x + 7; x2 += 1)
             for(int z2 = z; z2 < z + 7; z2 += 1)
-                c.getBlock(x2, yFloor, z2).setType(Material.MOSSY_COBBLESTONE);
+                chunk.getBlock(x2, yFloor, z2).setType(Material.MOSSY_COBBLESTONE);
 
         // Create the spawners
         if(Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
-            Block spawnerBlock = c.getBlock(x + 1, yFloor + 1, z + 1);
+            Block spawnerBlock = chunk.getBlock(x + 1, yFloor + 1, z + 1);
 
             // Call the spawner generation event
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
@@ -70,7 +70,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
             }
         }
         if(Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
-            Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
+            Block spawnerBlock = chunk.getBlock(x + 3, yFloor + 1, z + 3);
 
             // Call the spawner generation event
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
@@ -89,7 +89,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
             }
         }
         if(Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
-            Block spawnerBlock = c.getBlock(x + 5, yFloor + 1, z + 5);
+            Block spawnerBlock = chunk.getBlock(x + 5, yFloor + 1, z + 5);
 
             // Call the spawner generation event
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
@@ -110,8 +110,8 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
         }
 
         // Coal ores
-        c.getBlock(x + 1, yFloor + 1, z + 5).setType(Material.COAL_ORE);
-        c.getBlock(x + 5, yFloor + 1, z + 1).setType(Material.COAL_ORE);
+        chunk.getBlock(x + 1, yFloor + 1, z + 5).setType(Material.COAL_ORE);
+        chunk.getBlock(x + 5, yFloor + 1, z + 1).setType(Material.COAL_ORE);
     }
 	
 	public double distance(int x1, int y1, int x2, int y2) {

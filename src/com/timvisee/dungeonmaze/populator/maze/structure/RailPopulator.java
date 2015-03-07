@@ -33,8 +33,8 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
+		World world = args.getWorld();
+		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
 		int y = args.getChunkY();
@@ -60,9 +60,9 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 					int z2 = startZ;
 					while(0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 						if(rand.nextFloat() > BROKEN_RAIL_CHANCE) {
-							c.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
+							chunk.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
 							if(rand.nextFloat() < MINECART_CHANCE)
-								spawnMinecart(w, (c.getX() * 16) + x + x2, yFloor + 1, (c.getZ() * 16) + z + z2);
+								spawnMinecart(world, (chunk.getX() * 16) + x + x2, yFloor + 1, (chunk.getZ() * 16) + z + z2);
 						}
 
 						x2 += dir1.getModX();
@@ -74,9 +74,9 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 						z2 = startZ;
 						while (0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 							if(rand.nextFloat() > BROKEN_RAIL_CHANCE) {
-								c.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
+								chunk.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
 								if(rand.nextFloat() < MINECART_CHANCE)
-									spawnMinecart(w, (c.getX() * 16) + x + x2, yFloor + 1, (c.getZ() * 16) + z + z2);
+									spawnMinecart(world, (chunk.getX() * 16) + x + x2, yFloor + 1, (chunk.getZ() * 16) + z + z2);
 							}
 
 							x2 += dir2.getModX();

@@ -22,19 +22,19 @@ public class NetherrackPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
 
-        Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt(2)+ y, z + rand.nextInt(8));
+        Block b = chunk.getBlock(x + rand.nextInt(8), rand.nextInt(2)+ y, z + rand.nextInt(8));
         if (b.getType() == Material.COBBLESTONE) {
             b.setType(Material.NETHERRACK);
 
             // Decide if the netherrack should be burning
             if(rand.nextFloat() < BURNING_CHANCE) {
-                Block burnBlock = c.getBlock(b.getX(), b.getY() + 1, b.getZ());
+                Block burnBlock = chunk.getBlock(b.getX(), b.getY() + 1, b.getZ());
                 if (burnBlock.getType() == Material.AIR)
                     burnBlock.setType(Material.FIRE);
             }

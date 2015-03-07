@@ -29,7 +29,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-        final Chunk c = args.getSourceChunk();
+        final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
         final int x = args.getChunkX();
         final int z = args.getChunkZ();
@@ -37,8 +37,8 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
         final int chestY = args.getFloorY() + 1;
         final int chestZ = z + rand.nextInt(6) + 1;
 
-        if(!(c.getBlock(chestX, chestY - 1, chestZ).getType() == Material.AIR)) {
-            Block chestBlock = c.getBlock(chestX, chestY, chestZ);
+        if(!(chunk.getBlock(chestX, chestY - 1, chestZ).getType() == Material.AIR)) {
+            Block chestBlock = chunk.getBlock(chestX, chestY, chestZ);
             if(chestBlock.getType() == Material.AIR) {
 
                 // Generate new inventory contents

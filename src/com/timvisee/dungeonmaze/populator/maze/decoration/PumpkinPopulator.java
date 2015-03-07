@@ -19,11 +19,12 @@ public class PumpkinPopulator extends MazeRoomBlockPopulator {
     public static final float ROOM_ITERATIONS_CHANCE = .5f;
     public static final int ROOM_ITERATIONS_MAX = 5;
 
+    /** Populator constants. */
     public static final float JACK_O_LANTERN_CHANCE = .33f;
 
     @Override
     public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-        final Chunk c = args.getSourceChunk();
+        final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
         final int x = args.getChunkX();
         final int z = args.getChunkZ();
@@ -35,8 +36,8 @@ public class PumpkinPopulator extends MazeRoomBlockPopulator {
         final boolean illuminated = rand.nextFloat() < JACK_O_LANTERN_CHANCE;
 
         // Place the pumpkin if there's any place
-        if(c.getBlock(xPumpkin, yPumpkin - 1, zPumpkin).getType() != Material.AIR) {
-            Block slabBlock = c.getBlock(xPumpkin, yPumpkin, zPumpkin);
+        if(chunk.getBlock(xPumpkin, yPumpkin - 1, zPumpkin).getType() != Material.AIR) {
+            Block slabBlock = chunk.getBlock(xPumpkin, yPumpkin, zPumpkin);
             if(slabBlock.getType() == Material.AIR) {
                 if(!illuminated)
                     slabBlock.setType(Material.PUMPKIN);

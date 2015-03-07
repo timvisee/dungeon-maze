@@ -22,12 +22,12 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		final Chunk c = args.getSourceChunk();
+		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
-        final Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt(2) + y, z + rand.nextInt(8));
+        final Block b = chunk.getBlock(x + rand.nextInt(8), rand.nextInt(2) + y, z + rand.nextInt(8));
 
         if (b.getType() == Material.COBBLESTONE)
             b.setType(Material.SOUL_SAND);

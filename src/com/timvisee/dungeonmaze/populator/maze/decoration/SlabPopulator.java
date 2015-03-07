@@ -16,35 +16,26 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MAX = 7;
 	public static final int ROOM_ITERATIONS = 7;
 	public static final float ROOM_ITERATIONS_CHANCE = .5f;
+    public static final int ROOM_ITERATIONS_MAX = 6;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
         int slabX = x + rand.nextInt(6) + 1;
         int slabY = args.getFloorY() + 1;
         int slabZ = z + rand.nextInt(6) + 1;
 
-        if(c.getBlock(slabX, slabY - 1, slabZ).getType() != Material.AIR) {
-            Block slabBlock = c.getBlock(slabX, slabY, slabZ);
+        if(chunk.getBlock(slabX, slabY - 1, slabZ).getType() != Material.AIR) {
+            Block slabBlock = chunk.getBlock(slabX, slabY, slabZ);
             if(slabBlock.getType() == Material.AIR) {
                 slabBlock.setType(Material.STEP);
                 slabBlock.setData((byte) 3);
             }
         }
 	}
-
-    @Override
-    public int getRoomIterations() {
-        return ROOM_ITERATIONS;
-    }
-
-    @Override
-    public float getRoomIterationsChance() {
-        return ROOM_ITERATIONS_CHANCE;
-    }
 	
 	/**
 	 * Get the minimum layer
@@ -63,4 +54,19 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 	public int getMaximumLayer() {
 		return LAYER_MAX;
 	}
+
+    @Override
+    public int getRoomIterations() {
+        return ROOM_ITERATIONS;
+    }
+
+    @Override
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
+    }
+
+    @Override
+    public int getRoomIterationsMax() {
+        return ROOM_ITERATIONS_MAX;
+    }
 }

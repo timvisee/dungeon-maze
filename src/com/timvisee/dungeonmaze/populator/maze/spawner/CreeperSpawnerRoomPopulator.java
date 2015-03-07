@@ -31,8 +31,8 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		World w = args.getWorld();
-		Chunk c = args.getSourceChunk();
+		World world = args.getWorld();
+		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
 		int x = args.getChunkX();
 		int y = args.getChunkY();
@@ -40,22 +40,22 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
+		if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 
         // Register the current room as constant room
-        DungeonMaze.instance.registerConstantRoom(w.getName(), c.getX(), c.getZ(), x, y, z);
+        DungeonMaze.instance.registerConstantRoom(world.getName(), chunk.getX(), chunk.getZ(), x, y, z);
 
         // Create the core
-        c.getBlock(x + 3, yFloor + 1, z + 4).setType(Material.NETHER_BRICK);
-        c.getBlock(x + 4, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
-        c.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK);
-        c.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
-        c.getBlock(x + 3, yFloor + 2, z + 3).setType(Material.NETHER_BRICK);
+        chunk.getBlock(x + 3, yFloor + 1, z + 4).setType(Material.NETHER_BRICK);
+        chunk.getBlock(x + 4, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
+        chunk.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK);
+        chunk.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
+        chunk.getBlock(x + 3, yFloor + 2, z + 3).setType(Material.NETHER_BRICK);
 
         // Create the spawner
         if(Core.getConfigHandler().isMobSpawnerAllowed("Creeper")) {
-            Block spawnerBlock = c.getBlock(x + 3, yFloor + 1, z + 3);
+            Block spawnerBlock = chunk.getBlock(x + 3, yFloor + 1, z + 3);
 
             // Call the spawner generation event
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.CREEPER, GenerationSpawnerEvent.GenerationSpawnerCause.CREEPER_SPAWNER_ROOM, rand);

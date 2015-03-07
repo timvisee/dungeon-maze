@@ -30,22 +30,22 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
+		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distance(0, 0, c.getX(), c.getZ()) < SPAWN_DISTANCE_MIN)
+		if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 
         int spawnerX = x + rand.nextInt(6) + 1;
         int spawnerY = args.getFloorY() + 1;
         int spawnerZ = z + rand.nextInt(6) + 1;
 
-        if(c.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
-            Block spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
-            spawnerBlock = c.getBlock(spawnerX, spawnerY, spawnerZ);
+        if(chunk.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
+            Block spawnerBlock = chunk.getBlock(spawnerX, spawnerY, spawnerZ);
+            spawnerBlock = chunk.getBlock(spawnerX, spawnerY, spawnerZ);
 
             if(spawnerBlock.getType() == Material.AIR) {
                 // Generate a random spawnedType for the spawner

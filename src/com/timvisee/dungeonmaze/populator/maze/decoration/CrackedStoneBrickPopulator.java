@@ -20,13 +20,13 @@ public class CrackedStoneBrickPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
 
-        Block b = c.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
+        Block b = chunk.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
         if (b.getType() == Material.SMOOTH_BRICK)
             b.setData((byte) 2);
 	}

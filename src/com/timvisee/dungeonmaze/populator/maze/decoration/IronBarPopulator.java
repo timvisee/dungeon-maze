@@ -22,21 +22,21 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
 		final int floorOffset = args.getFloorOffset();
-        int blockX = x + rand.nextInt(8);
-        int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
-        int blockZ = z + rand.nextInt(8);
+        final int blockX = x + rand.nextInt(8);
+        final int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
+        final int blockZ = z + rand.nextInt(8);
 
-        Block b = c.getBlock(blockX, blockY, blockZ);
+        Block b = chunk.getBlock(blockX, blockY, blockZ);
         if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
             b.setType(Material.IRON_FENCE);
             if(rand.nextInt(100) < CHANCE_DOUBLE_HEIGHT) {
-                Block block2 = c.getBlock(blockX, blockY + 1, blockZ);
+                Block block2 = chunk.getBlock(blockX, blockY + 1, blockZ);
                 block2.setType(Material.IRON_FENCE);
             }
         }

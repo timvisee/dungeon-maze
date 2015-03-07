@@ -14,7 +14,7 @@ public class OresInGroundPopulator extends ChunkBlockPopulator {
 
     @Override
     public void populateChunk(ChunkBlockPopulatorArgs args) {
-        final Chunk source = args.getSourceChunk();
+        final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
 
         // The layers for each 4 rooms in the variable y
@@ -25,43 +25,43 @@ public class OresInGroundPopulator extends ChunkBlockPopulator {
                     if (rand.nextFloat() < ORE_CHANCE) {
                         switch (rand.nextInt(9)) {
                         case 0:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.GOLD_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.GOLD_ORE);
                             break;
 
                         case 1:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.IRON_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.IRON_ORE);
                             break;
 
                         case 2:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.COAL_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.COAL_ORE);
                             break;
 
                         case 3:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.LAPIS_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.LAPIS_ORE);
                             break;
 
                         case 4:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.DIAMOND_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.DIAMOND_ORE);
                             break;
 
                         case 5:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.REDSTONE_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.REDSTONE_ORE);
                             break;
 
                         case 6:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.EMERALD_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.EMERALD_ORE);
                             break;
 
                         case 7:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.CLAY);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.CLAY);
                             break;
 
                         case 8:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.COAL_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.COAL_ORE);
                             break;
 
                         default:
-                            source.getBlock((source.getX() * 16) + x, y, (source.getZ() * 16) + z).setType(Material.COAL_ORE);
+                            chunk.getBlock((chunk.getX() * 16) + x, y, (chunk.getZ() * 16) + z).setType(Material.COAL_ORE);
                         }
                     }
                 }

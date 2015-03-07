@@ -22,7 +22,7 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
+		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int y = args.getChunkY();
@@ -32,7 +32,7 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
         int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
         int blockZ = z + rand.nextInt(8);
 
-        Block lanternBlock = c.getBlock(blockX, blockY, blockZ);
+        Block lanternBlock = chunk.getBlock(blockX, blockY, blockZ);
         if(lanternBlock.getType() == Material.STONE) {
             lanternBlock.setType(Material.MONSTER_EGGS);
             lanternBlock.setData((byte) 0);

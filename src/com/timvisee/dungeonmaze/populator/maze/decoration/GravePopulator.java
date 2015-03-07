@@ -24,25 +24,25 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
-        int graveX = x + rand.nextInt(6 - 2) + 1 + 2; // +2 because the grave is 3 long (so you also need to put the random on 4)
-        int graveY = args.getFloorY() + 1;
-        int graveZ = z + rand.nextInt(6) + 1;
+        final int graveX = x + rand.nextInt(6 - 2) + 1 + 2; // +2 because the grave is 3 long (so you also need to put the random on 4)
+        final  int graveY = args.getFloorY() + 1;
+        final int graveZ = z + rand.nextInt(6) + 1;
 
         // The grave
-        c.getBlock(graveX, graveY, graveZ).setType(Material.DOUBLE_STEP);
-        c.getBlock(graveX - 1, graveY, graveZ).setType(Material.STEP);
-        c.getBlock(graveX - 2, graveY, graveZ).setType(Material.STEP);
+        chunk.getBlock(graveX, graveY, graveZ).setType(Material.DOUBLE_STEP);
+        chunk.getBlock(graveX - 1, graveY, graveZ).setType(Material.STEP);
+        chunk.getBlock(graveX - 2, graveY, graveZ).setType(Material.STEP);
 
         // Put a sign on a grave and write some text on it
-        c.getBlock(graveX, graveY + 1, graveZ).setType(Material.SIGN_POST);
-        c.getBlock(graveX, graveY + 1, graveZ).setData((byte) 4);
+        chunk.getBlock(graveX, graveY + 1, graveZ).setType(Material.SIGN_POST);
+        chunk.getBlock(graveX, graveY + 1, graveZ).setData((byte) 4);
 
         // Update the text on the sign
-        Block b = c.getBlock(graveX, graveY + 1, graveZ);
+        Block b = chunk.getBlock(graveX, graveY + 1, graveZ);
         if (b != null) {
             BlockState bState = b.getState();
             if (bState instanceof Sign) {

@@ -21,18 +21,18 @@ public class TorchPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
-        int torchX = x + rand.nextInt(6) + 1;
-        int torchY = args.getFloorY() + 1;
-        int torchZ = z + rand.nextInt(6) + 1;
+        final int torchX = x + rand.nextInt(6) + 1;
+        final int torchY = args.getFloorY() + 1;
+        final int torchZ = z + rand.nextInt(6) + 1;
 								
-        if(c.getBlock(torchX, torchY - 1, torchZ).getType() != Material.AIR) {
-            Block torchBlock = c.getBlock(torchX, torchY, torchZ);
+        if(chunk.getBlock(torchX, torchY - 1, torchZ).getType() != Material.AIR) {
+            Block torchBlock = chunk.getBlock(torchX, torchY, torchZ);
             if(torchBlock.getType() == Material.AIR) {
-                torchBlock = c.getBlock(torchX, torchY, torchZ);
+                torchBlock = chunk.getBlock(torchX, torchY, torchZ);
                 torchBlock.setType(Material.TORCH);
             }
         }

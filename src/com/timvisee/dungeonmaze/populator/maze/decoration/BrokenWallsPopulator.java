@@ -17,8 +17,8 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk c = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
 
@@ -42,8 +42,8 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
             posZ = z + 1 + rand.nextInt(6);
         }
 
-        c.getBlock(posX, posY + 1, posZ).setType(Material.AIR);
-        c.getBlock(posX, posY + 2, posZ).setType(Material.AIR);
+        chunk.getBlock(posX, posY + 1, posZ).setType(Material.AIR);
+        chunk.getBlock(posX, posY + 2, posZ).setType(Material.AIR);
 	}
 
     @Override
