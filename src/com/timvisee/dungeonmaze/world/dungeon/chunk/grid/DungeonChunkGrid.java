@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.world.dungeon.chunk.grid;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.World;
 
@@ -12,10 +13,14 @@ public class DungeonChunkGrid {
     /** Defines the world of the chunk grid. */
     private World world;
     /** Defines the loaded chunks in the grid. */
-    private List<DungeonChunk> chunks = new ArrayList<DungeonChunk>();
+    private List<DungeonChunk> chunks = new ArrayList<>();
 
     /** Defines the name of the dungeon chunk data file. */
-    private final static String CHUNK_DATA_FILE = "data.dmc";
+    private static final String CHUNK_DATA_FILE = "data.dmc";
+    /** Defines the preferred number of loaded dungeon chunks. */
+    private static final int CHUNK_LOADED_PREFERRED = 32;
+    /** Defines the maximum allowed number of loaded dungeon chunks. */
+    private static final int CHUNK_LOADED_MAX = 256;
 
     /**
      * Constructor.
@@ -40,6 +45,7 @@ public class DungeonChunkGrid {
      *
      * @return The list of loaded dungeon chunks.
      */
+    @SuppressWarnings("UnusedDeclaration")
     public List<DungeonChunk> getLoadedChunks() {
         return this.chunks;
     }
@@ -114,8 +120,13 @@ public class DungeonChunkGrid {
         if(dungeonChunk == null)
             return null;
 
-        // Add the chunk to the chunk list, return the result
+        // Add the chunk to the chunk list
         this.chunks.add(dungeonChunk);
+
+        // Unload the excess chunks
+        unloadExcessChunks();
+
+        // Return the new dungeon chunk
         return dungeonChunk;
     }
 
@@ -139,6 +150,9 @@ public class DungeonChunkGrid {
 
         // Add the dungeon chunk to the list
         this.chunks.add(dungeonChunk);
+
+        // Unload the excess chunks
+        unloadExcessChunks();
 
         // Return the new chunk
         return dungeonChunk;
@@ -199,5 +213,103 @@ public class DungeonChunkGrid {
 
         // Return the number of saved chunks
         return saved;
+    }
+
+    /**
+     * Save a loaded dungeon chunk, specified by it's index.
+     *
+     * @param i The index of the loaded dungeon chunk.
+     *
+     * @return True if succeed, false otherwise.
+     */
+    public boolean saveChunk(int i) {
+        return saveChunk(this.chunks.get(i));
+    }
+
+    /**
+     * Save a loaded dungeon chunk.
+     *
+     * @param dungeonChunk The loaded dungeon chunk to save.
+     *
+     * @return True if succeed, false otherwise.
+     */
+    public boolean saveChunk(DungeonChunk dungeonChunk) {
+        // Get the chunk data file
+        File chunkDataFile = dungeonChunk.getChunkDataFile(this);
+
+        // Save the data
+        return dungeonChunk.save(chunkDataFile);
+    }
+
+    /**
+     * Save and unload a dungeon chunk, specified by it's index.
+     *
+     * @param i The index of the loaded dungeon chunk.
+     *
+     * @return True if succeed, false otherwise.
+     */
+    public boolean unloadChunk(int i) {
+        // Save the chunk
+        if(!saveChunk(i))
+            return false;
+
+        // Remove the chunk from the list
+        this.chunks.remove(i);
+        return true;
+    }
+
+    /**
+     * Save and unload a dungeon chunk.
+     *
+     * @param dungeonChunk The dungeon chunk to save and unload.
+     *
+     * @return True if succeed, false otherwise.
+     */
+    public boolean unloadChunk(DungeonChunk dungeonChunk) {
+        // Save the chunk
+        if(!saveChunk(dungeonChunk))
+            return false;
+
+        // Remove the chunk from the list
+        this.chunks.remove(dungeonChunk);
+        return true;
+    }
+
+    /**
+     * Get the maximum number of loaded chunks.
+     *
+     * @return The maximum number of loaded chunks.
+     */
+    public int getMaximumLoadedChunks() {
+        return CHUNK_LOADED_MAX;
+    }
+
+    /**
+     * Unload all the excess chunks if more chunks are loaded than allowed.
+     *
+     * @return The number of unloaded chunks.
+     */
+    public int unloadExcessChunks() {
+        // Get the number of loaded chunks higher than the maximum allowed count
+        final int excessCount = getLoadedChunksCount() - getMaximumLoadedChunks();
+        final int preferredUnload = Math.max(getLoadedChunksCount() - CHUNK_LOADED_PREFERRED, 0);
+
+        // Make sure the maximum count of loaded chunks is reached, before unloading
+        if(excessCount <= 0)
+            return 0;
+
+        // Show a debug message in the console
+        Core.getLogger().debug("Unloading all excess dungeon chunks for '" + getWorld().getName() + "'...");
+
+        // Count the number of unloaded chunks
+        int unloaded = 0;
+
+        // Unload the excess chunk
+        for(int i = 0; i < preferredUnload; i++)
+            if(unloadChunk(0))
+                unloaded++;
+
+        // Return the number of unloaded chunks
+        return unloaded;
     }
 }
