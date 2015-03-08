@@ -32,7 +32,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         final int z = args.getChunkZ();
 
         // Decide whether the web should be on the ground
-        final boolean onCeiling = rand.nextFloat() < CEILING_CHANCE;
+        final boolean ceiling = rand.nextFloat() < CEILING_CHANCE;
 
         // Choose a x,z position in the room to spawn the web
         int xWeb;
@@ -52,7 +52,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         }
 
         // Check whether the web should be placed on the ground
-        if(!onCeiling) {
+        if(!ceiling) {
             // Check whether the position is free, if not iterate up
             while(chunk.getBlock(xWeb, yWeb, zWeb).getType() != Material.AIR) {
                 yWeb++;

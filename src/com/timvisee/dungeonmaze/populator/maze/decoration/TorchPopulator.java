@@ -11,6 +11,8 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class TorchPopulator extends MazeRoomBlockPopulator {
 
+    // TODO: Torches on the walls!
+
     /** General populator constants. */
 	public static final int LAYER_MIN = 2;
 	public static final int LAYER_MAX = 7;

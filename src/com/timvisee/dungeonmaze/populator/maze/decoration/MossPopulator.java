@@ -15,7 +15,7 @@ public class MossPopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
 	public static final int ROOM_ITERATIONS = 80;
-    public static final float ROOM_ITERATIONS_CHANCE = .7f;
+    public static final float ROOM_ITERATIONS_CHANCE = .75f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

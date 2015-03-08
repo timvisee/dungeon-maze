@@ -10,13 +10,13 @@ import org.bukkit.block.Block;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
-public class CoalorePopulator extends MazeRoomBlockPopulator {
+public class CoalOrePopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 6;
-	public static final float ROOM_CHANCE = .02f;
     public static final int ROOM_ITERATIONS = 5;
+	public static final float ROOM_ITERATIONS_CHANCE = .02f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -26,19 +26,22 @@ public class CoalorePopulator extends MazeRoomBlockPopulator {
         final int y = args.getChunkY();
         final int z = args.getChunkZ();
 
-        Block block = chunk.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
-        if (block.getType() == Material.COBBLESTONE)
-            block.setType(Material.COAL_ORE);
-	}
+        // Specify the coal ore block
+        final Block coalOreBlock = chunk.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
 
-    @Override
-    public float getRoomChance() {
-        return ROOM_CHANCE;
-    }
+        // Change the block to coal if it's a cobblestone or mossy cobble stone block
+        if(coalOreBlock.getType() == Material.COBBLESTONE || coalOreBlock.getType() == Material.MOSSY_COBBLESTONE)
+            coalOreBlock.setType(Material.COAL_ORE);
+	}
 
     @Override
     public int getRoomIterations() {
         return ROOM_ITERATIONS;
+    }
+
+    @Override
+    public float getRoomIterationsChance() {
+        return ROOM_ITERATIONS_CHANCE;
     }
 
     @Override

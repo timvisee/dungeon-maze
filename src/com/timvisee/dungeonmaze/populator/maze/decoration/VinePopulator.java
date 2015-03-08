@@ -14,7 +14,7 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 	public static final int LAYER_MAX = 7;
 
 	public static final int CHANCE_VINE = 30;
-	public static final double CHANCE_TOP_TURVE_ADDITION_EACH_LEVEL = -2.5; /* to 15 */
+	public static final double CHANCE_VINE_ADDITION_EACH_LEVEL = -2.5; /* to 15 */
 	public static final int ITERATIONS = 5;
 	public static final int CHANCE_CEILING_VINE = 5;
 	public static final int ITERATIONS_CEILING_VINE = 5;
@@ -29,7 +29,7 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 		
 		// Iterate
 		for(int i = 0; i < ITERATIONS; i++) {
-			if (rand.nextInt(100) < CHANCE_VINE +(CHANCE_TOP_TURVE_ADDITION_EACH_LEVEL *(y-30)/6)) {
+			if (rand.nextInt(100) < CHANCE_VINE +(CHANCE_VINE_ADDITION_EACH_LEVEL *(y-30)/6)) {
 				
 				int vineX;
 				int vineY;

@@ -21,44 +21,58 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
-		Chunk chunk = args.getSourceChunk();
-		Random rand = args.getRandom();
+        final Chunk chunk = args.getSourceChunk();
+        final Random rand = args.getRandom();
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
-		
+
+        // Determine whether the lava liquid type is allowed
 		boolean allowLava = true;
 		if(Math.abs(chunk.getX()) < NO_LAVA_NEAR_SPAWN_RADIUS || Math.abs(chunk.getZ()) < NO_LAVA_NEAR_SPAWN_RADIUS)
 			allowLava = false;
 
+        // Determine the liquid type of the pool
         LiquidType liquidType = LiquidType.WATER;
-
         if(allowLava && rand.nextInt(100) < LAVA_CHANCE)
             liquidType = LiquidType.LAVA;
 
-        int poolX = x + rand.nextInt(6) + 1;
-        int poolY = args.getFloorY();
-        int poolZ = z + rand.nextInt(6) + 1;
-        int poolW = rand.nextInt(5);
-        int poolL = rand.nextInt(5);
+        // Specify the pool location and size
+        final int xPool = x + rand.nextInt(6) + 1;
+        final int yPool = args.getFloorY();
+        final int zPool = z + rand.nextInt(6) + 1;
+        final int poolWidth = rand.nextInt(5);
+        final int poolLength = rand.nextInt(5);
 
-        for (int i = Math.max(poolX - poolW / 2, 1); i < Math.min(poolX - poolW / 2 + poolW, 6); i++) {
-            for (int j = Math.max(poolZ - poolL / 2, 1); j < Math.min(poolZ - poolL / 2 + poolL, 6); j++) {
-                chunk.getBlock(i, poolY, j).setType(liquidType.getMaterial());
-                chunk.getBlock(i, poolY - 1, j).setType(Material.MOSSY_COBBLESTONE);
+        // Create/spawn the pool with the specified liquid
+        for(int i = Math.max(xPool - poolWidth / 2, 1); i < Math.min(xPool - poolWidth / 2 + poolWidth, 6); i++) {
+            for(int j = Math.max(zPool - poolLength / 2, 1); j < Math.min(zPool - poolLength / 2 + poolLength, 6); j++) {
+                chunk.getBlock(i, yPool, j).setType(liquidType.getMaterial());
+                chunk.getBlock(i, yPool - 1, j).setType(Material.MOSSY_COBBLESTONE);
             }
         }
-	}
+    }
 	
 	public enum LiquidType {
 		WATER(Material.STATIONARY_WATER),
 		LAVA(Material.STATIONARY_LAVA);
-		
+
+        /** The liquid type as a Bukkit material. */
 		private final Material mat;
-		
+
+        /**
+         * Constructor.
+         *
+         * @param mat The material type of the liquid.
+         */
 		LiquidType(Material mat) {
 			this.mat = mat;
 		}
-		
+
+        /**
+         * Get the Bukkit material type of the liquid.
+         *
+         * @return The material type of the liquid.
+         */
 		public Material getMaterial() {
 			return mat;
 		}

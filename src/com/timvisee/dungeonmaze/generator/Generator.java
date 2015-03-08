@@ -92,7 +92,7 @@ public class Generator extends ChunkGenerator {
 				new CrackedStoneBrickPopulator(),
 				new NetherrackPopulator(),
 				new SoulsandPopulator(),
-				new CoalorePopulator(),
+				new CoalOrePopulator(),
 				new StrutPopulator(),
 				new StairsPopulator(),
 				new LadderPopulator(),

@@ -14,11 +14,11 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 2;
-	public static final float ROOM_ITERATIONS_CHANCE = .25f;
+    public static final int ROOM_ITERATIONS = 4;
+	public static final float ROOM_ITERATIONS_CHANCE = .20f;
 
     /** Populator constants. */
-	public static final int CHANCE_DOUBLE_HEIGHT = 66;
+	public static final float CHANCE_DOUBLE_HEIGHT = .66f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -32,10 +32,14 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
         final int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
         final int blockZ = z + rand.nextInt(8);
 
-        Block b = chunk.getBlock(blockX, blockY, blockZ);
-        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
-            b.setType(Material.IRON_FENCE);
-            if(rand.nextInt(100) < CHANCE_DOUBLE_HEIGHT) {
+        // Specify the bars base block
+        Block barsBase = chunk.getBlock(blockX, blockY, blockZ);
+        if(barsBase.getType() == Material.COBBLESTONE || barsBase.getType() == Material.MOSSY_COBBLESTONE || barsBase.getType() == Material.SMOOTH_BRICK) {
+            // Set the block type to the iron bars
+            barsBase.setType(Material.IRON_FENCE);
+
+            // Check whether bars of two blocks height should be spawned
+            if(rand.nextFloat() < CHANCE_DOUBLE_HEIGHT) {
                 Block block2 = chunk.getBlock(blockX, blockY + 1, blockZ);
                 block2.setType(Material.IRON_FENCE);
             }
