@@ -40,9 +40,21 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
         final Block b = chunk.getBlock(lanternX, lanternY, lanternZ);
 
         if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
-            if(!broken)
-                b.setType(Material.SEA_LANTERN);
-
+            if(!broken){
+            	String MCversion;
+                String raw = Bukkit.getVersion();
+                int start = raw.indexOf("MC:");
+                if (start == -1)
+                	 MCversion = raw;
+                start += 4;
+                int end = raw.indexOf(')', start);
+                MCversion = raw.substring(start, end);
+            	boolean compatible = MCversion.startsWith("1.8");
+                if (compatible)
+                	b.setType(Material.SEA_LANTERN);
+                else
+                	b.setType(Material.GLOWSTONE);
+            }
             else
                 b.setType(Material.REDSTONE_LAMP_OFF);
         }
