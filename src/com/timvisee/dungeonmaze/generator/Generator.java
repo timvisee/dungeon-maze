@@ -67,7 +67,7 @@ public class Generator extends ChunkGenerator {
 	public List<BlockPopulator> getDefaultPopulators(World world) {
         //noinspection unchecked
         return (List<BlockPopulator>)(List<?>) Arrays.asList(
-				//new BrokenWallsPopulator(),
+				new BrokenWallsPopulator(),
 				new SpawnChamberPopulator(),
 				new OresInGroundPopulator(),
 				new OasisChunkPopulator(),
