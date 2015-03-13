@@ -401,10 +401,6 @@ public class PermissionsManager {
 			// Vault
 			return Arrays.asList(vaultPerms.getPlayerGroups(p));
 			
-		case PERMISSIONS:
-			// Permissions by nijiko
-			return new ArrayList(this.defaultPerms.getGroups(p.getName()));
-			
 		case NONE:
 			// Not hooked into any permissions system, return an empty list
 			return new ArrayList<String>();
