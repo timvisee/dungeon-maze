@@ -265,7 +265,6 @@ public class DungeonChunkGrid {
      *
      * @return True if succeed, false otherwise.
      */
-    @SuppressWarnings("UnusedDeclaration")
     public boolean unloadChunk(DungeonChunk dungeonChunk) {
         // Save the chunk
         if(!saveChunk(dungeonChunk))

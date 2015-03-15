@@ -1,7 +1,6 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.world.WorldManager;
@@ -10,8 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.Random;
 
 public class TeleportCommand extends ExecutableCommand {
 
@@ -67,9 +64,13 @@ public class TeleportCommand extends ExecutableCommand {
         // Get the spawn location to teleport the player to
         Location spawn = world.getSpawnLocation();
 
-        // Force-set the location on Dungeon Maze worlds (hot fix for Bukkit generator bug)
-        if(worldManager.isDungeonMazeWorld(worldName))
-            spawn = DungeonMaze.instance.getDungeonMazeGenerator().getFixedSpawnLocation(world, new Random());
+        // Force-set the location on Dungeon Maze worlds
+        // TODO: Fix this!
+        if(worldManager.isDungeonMazeWorld(worldName)) {
+            spawn.setX(4);
+            spawn.setY(68);
+            spawn.setZ(4);
+        }
 
         // Teleport the player, show a status message and return true
         player.teleport(spawn);
