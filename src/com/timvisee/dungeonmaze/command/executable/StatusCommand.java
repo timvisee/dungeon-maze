@@ -5,6 +5,7 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
+import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import org.bukkit.Bukkit;
@@ -146,6 +147,7 @@ public class StatusCommand extends ExecutableCommand {
         // Print the server status
         sender.sendMessage(ChatColor.GOLD + "Server Version: " + ChatColor.WHITE + Bukkit.getVersion());
         sender.sendMessage(ChatColor.GOLD + "Bukkit Version: " + ChatColor.WHITE + Bukkit.getBukkitVersion());
+        sender.sendMessage(ChatColor.GOLD + "Detected Minecraft Version: " + ChatColor.WHITE + MinecraftUtils.getMinecraftVersion());
         sender.sendMessage(ChatColor.GOLD + "Running Plugins: " + ChatColor.WHITE + Bukkit.getPluginManager().getPlugins().length);
 
         // Get the world manager
