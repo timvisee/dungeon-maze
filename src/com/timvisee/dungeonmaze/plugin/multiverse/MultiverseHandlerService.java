@@ -31,6 +31,7 @@ public class MultiverseHandlerService extends Service {
      */
     @Override
     public boolean isInit() {
+        // TODO: Better check!
         return this.multiverseHandler != null;
     }
 

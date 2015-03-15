@@ -12,12 +12,9 @@ import java.io.IOException;
 
 public class DungeonChunk {
 
-    /** Chunk size constant. */
-    public static final int CHUNK_SIZE = 16;
-
     /** Defines the world the chunks is in. */
     private World world;
-    /** Defines the X and Z position of the chunk in the world. */
+    /** Defines the X and Z coordinate of the chunk in the world. */
     private int x, z;
 
     /** Defines whether this chunk is a custom chunk. */
@@ -30,8 +27,8 @@ public class DungeonChunk {
      * Constructor.
      *
      * @param world The world the chunks is in.
-     * @param x The X position of the chunk.
-     * @param z The Z position of the chunk.
+     * @param x The X coordinate of the chunk.
+     * @param z The Z coordinate of the chunk.
      */
     public DungeonChunk(World world, int x, int z) {
         this.world = world;
@@ -49,46 +46,28 @@ public class DungeonChunk {
     }
 
     /**
-     * Get the X position of the chunk.
+     * Get the X coordinate of the chunk.
      *
-     * @return The X position of the chunk.
+     * @return The X coordinate of the chunk.
      */
     public int getX() {
         return this.x;
     }
 
     /**
-     * Get the X position of the chunk in the world space.
+     * Get the Z coordinate of the chunk.
      *
-     * @return The X position of the chunk in the world space.
-     */
-    public int getWorldX() {
-        return this.x * CHUNK_SIZE;
-    }
-
-    /**
-     * Get the Z position of the chunk.
-     *
-     * @return The Z position of the chunk.
+     * @return The Z coordinate of the chunk.
      */
     public int getZ() {
         return this.z;
     }
 
     /**
-     * Get the Z position of the chunk in the world space.
-     *
-     * @return The Z position of the chunk in the world space.
-     */
-    public int getWorldZ() {
-        return this.z * CHUNK_SIZE;
-    }
-
-    /**
      * Check whether this chunk is at a specific position.
      *
-     * @param chunkX The X position of the chunk.
-     * @param chunkZ The Z position of the chunk.
+     * @param chunkX The X coordinate of the chunk.
+     * @param chunkZ The Z coordinate of the chunk.
      *
      * @return True if the chunk is at this position, false otherwise.
      */

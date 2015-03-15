@@ -29,6 +29,7 @@ public class EventListenerManager {
      */
     public EventListenerManager(boolean init) {
         // Initialize the event listener manager
+        // TODO: Do some error handling
         if(init)
             init(false);
     }
