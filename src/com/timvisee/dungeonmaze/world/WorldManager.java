@@ -31,11 +31,11 @@ public class WorldManager {
 	private boolean init = false;
 
 	/** Defines the Dungeon Maze worlds. */
-	private List<String> dungeonMazeWorlds = new ArrayList<String>();
+	private List<String> dungeonMazeWorlds = new ArrayList<>();
 	/** Defines the Dungeon Maze worlds that need to be preloaded. */
-	private List<String> dungeonMazeWorldsPreload = new ArrayList<String>();
+	private List<String> dungeonMazeWorldsPreload = new ArrayList<>();
 	/** Defines all the worlds in the server. (Including the Dungeon Maze worlds) */
-	private List<String> worlds = new ArrayList<String>();
+	private List<String> worlds = new ArrayList<>();
 
 	/**
 	 * Constructor. This won't initialize the manager immediately.
@@ -530,6 +530,26 @@ public class WorldManager {
 		});
 		return true;
 	}
+
+    /**
+     * Create a new Dungeon Maze world.
+     *
+     * @param worldName The name of the world to create.
+     *
+     * @return The world instance if succeed, false otherwise. The world instance will also be returned if the world was created already.
+     */
+    public World createDungeonMazeWorld(String worldName) {
+        // Load the world if it was created before
+        if(isWorld(worldName))
+            return loadWorld(worldName);
+
+        // Instantiate a world creator to generate the new world, and set the proper generator
+        WorldCreator worldCreator = new WorldCreator(worldName);
+        worldCreator.generator(DungeonMaze.instance.getDungeonMazeGenerator());
+
+        // Create the world, return the instance
+        return worldCreator.createWorld();
+    }
 
 	/**
 	 * Prepare the server and Dungeon Maze for a new Dungeon Maze world. This will automatically edit the proper

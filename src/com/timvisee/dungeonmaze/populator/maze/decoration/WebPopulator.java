@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 
 public class WebPopulator extends MazeRoomBlockPopulator {
 

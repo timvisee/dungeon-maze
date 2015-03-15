@@ -31,7 +31,7 @@ public class MazeUtils {
 	 * @return Dungeon Maze level, 0 if there's no level at the param location
 	 */
 	public static int getDMLevel(String w, int y) {
-		// TODO: Make sure to update this if any modifications are going to be made (possible using config files, optionally)
+		// TODO: Retrieve this option from the world configuration
 		
 		// Make sure the world name isn't an empty string
 		if(w.equals(""))

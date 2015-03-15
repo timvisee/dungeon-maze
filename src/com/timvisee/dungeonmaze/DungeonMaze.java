@@ -66,7 +66,7 @@ public class DungeonMaze extends JavaPlugin {
 		// Profile the shutdown
 		Profiler p = new Profiler(true);
 
-		// Show an disbling message
+		// Show an disabling message
 		Core.getLogger().info("Disabling Dungeon Maze...");
 
 		// Destroy the core

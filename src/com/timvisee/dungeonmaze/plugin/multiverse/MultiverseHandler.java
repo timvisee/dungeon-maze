@@ -19,7 +19,6 @@ public class MultiverseHandler {
      */
     public MultiverseHandler(boolean hook) {
         // Should the handler hook immediately
-        // TODO: Do some error handling
         if(hook)
             hook();
     }
@@ -31,7 +30,9 @@ public class MultiverseHandler {
      * True will also be returned if the handler didn't hook because Multiverse wasn't found.
      */
     public boolean hook() {
-        // TODO: Re-hook if we're already hooked?
+        // Make sure the handler isn't hooked already
+        if(isHooked())
+            return true;
 
         // Try to get the multiverse plugin instance
         Plugin multiversePlugin = Bukkit.getPluginManager().getPlugin("Multiverse-Core");
@@ -92,8 +93,6 @@ public class MultiverseHandler {
         // Make sure the handler is hooked
         if(!isHooked())
             return true;
-
-        // TODO: Unhook properly!
 
         // Unhook from the multiverse core
         this.multiverseCore = null;

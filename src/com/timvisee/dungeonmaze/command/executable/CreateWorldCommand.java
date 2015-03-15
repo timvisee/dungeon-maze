@@ -97,10 +97,15 @@ public class CreateWorldCommand extends ExecutableCommand {
         Profiler p = new Profiler(true);
 
         // Create the world
-        // TODO: Put this in a separate function!
-        WorldCreator newWorld = new WorldCreator(worldName);
-        newWorld.generator(DungeonMaze.instance.getDungeonMazeGenerator());
-        World world = newWorld.createWorld();
+        World world = worldManager.createDungeonMazeWorld(worldName);
+
+        // Make sure the world instance is valid
+        if(world == null) {
+            Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World generation failed after " + p.getTimeFormatted() + "!");
+            sender.sendMessage(ChatColor.DARK_RED + "The DungeonMaze " + ChatColor.GOLD + worldName + ChatColor.GREEN +
+                    " failed to generate after " + p.getTimeFormatted() + "!");
+            return true;
+        }
 
         // Force-save the level.dat file for the world, profile the process
         Profiler pWorldSave = new Profiler(true);
@@ -112,14 +117,6 @@ public class CreateWorldCommand extends ExecutableCommand {
 
         } catch(Exception ex) {
             Core.getLogger().error("Failed to save the world after " + pWorldSave.getTimeFormatted() + "!");
-        }
-
-        // Make sure the world instance is valid
-        if(world == null) {
-            Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World generation failed after " + p.getTimeFormatted() + "!");
-            sender.sendMessage(ChatColor.DARK_RED + "The DungeonMaze " + ChatColor.GOLD + worldName + ChatColor.GREEN +
-                    " failed to geenrate after " + p.getTimeFormatted() + "!");
-            return true;
         }
 
         // Show a status message

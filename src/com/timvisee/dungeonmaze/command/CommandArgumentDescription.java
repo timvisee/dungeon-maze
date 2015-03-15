@@ -2,8 +2,6 @@ package com.timvisee.dungeonmaze.command;
 
 public class CommandArgumentDescription {
 
-    // TODO: Allow argument to consist of infinite parts. <label ...>
-
     /** Argument label. */
     private String label;
     /** Argument description. */
