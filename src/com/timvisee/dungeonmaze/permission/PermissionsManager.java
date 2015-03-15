@@ -368,7 +368,7 @@ public class PermissionsManager {
 	public List<String> getGroups(Player p) {
 		if(!isEnabled()) {
 			// No permissions system is used, return an empty list
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 		
 		switch (this.permsType) {
@@ -380,7 +380,7 @@ public class PermissionsManager {
 		case PERMISSIONS_BUKKIT:
 			// Permissions Bukkit
 			// Permissions Bukkit doesn't support group, return an empty list
-			return new ArrayList<String>();
+			return new ArrayList<>();
 			
 		case B_PERMISSIONS:
 			// bPermissions
@@ -400,14 +400,14 @@ public class PermissionsManager {
 		case VAULT:
 			// Vault
 			return Arrays.asList(vaultPerms.getPlayerGroups(p));
-			
+
 		case NONE:
 			// Not hooked into any permissions system, return an empty list
-			return new ArrayList<String>();
+			return new ArrayList<>();
 			
 		default:
 			// Something went wrong, return an empty list to prevent problems
-			return new ArrayList<String>();
+			return new ArrayList<>();
 		}
 	}
 	

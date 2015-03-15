@@ -22,6 +22,8 @@ public class DungeonChunk {
 
     /** Defines the dungeon chunk data section name. */
     private final static String CONFIG_DUNGEON_CHUNK_SECTION = "dungeonChunk";
+    /** Defines the size of a chunk. */
+    private final static int CHUNK_SIZE = 16;
 
     /**
      * Constructor.
@@ -55,12 +57,30 @@ public class DungeonChunk {
     }
 
     /**
+     * Get the X coordinate of the chunk in the world space.
+     *
+     * @return The X coordinate of the chunk in the world space.
+     */
+    public int getWorldX() {
+        return this.x * CHUNK_SIZE;
+    }
+
+    /**
      * Get the Z coordinate of the chunk.
      *
      * @return The Z coordinate of the chunk.
      */
     public int getZ() {
         return this.z;
+    }
+
+    /**
+     * Get the Z coordinate of the chunk in the world space.
+     *
+     * @return The Z coordinate of the chunk in the world space.
+     */
+    public int getWorldZ() {
+        return this.z * CHUNK_SIZE;
     }
 
     /**

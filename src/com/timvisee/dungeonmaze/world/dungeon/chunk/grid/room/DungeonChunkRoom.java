@@ -46,6 +46,7 @@ public class DungeonChunkRoom {
      *
      * @param chunk The dungeon chunk the room is in.
      */
+    @SuppressWarnings("UnusedDeclaration")
     private void setChunk(DungeonChunk chunk) {
         this.chunk = chunk;
     }
@@ -64,6 +65,7 @@ public class DungeonChunkRoom {
      *
      * @param x The X position of the room.
      */
+    @SuppressWarnings("UnusedDeclaration")
     private void setX(int x) {
         this.x = x;
     }
@@ -82,6 +84,7 @@ public class DungeonChunkRoom {
      *
      * @param z The Z position of the room.
      */
+    @SuppressWarnings("UnusedDeclaration")
     private void setZ(int z) {
         this.z = z;
     }
@@ -100,6 +103,7 @@ public class DungeonChunkRoom {
      *
      * @param layer The layer position of the room.
      */
+    @SuppressWarnings("UnusedDeclaration")
     private void setLayer(int layer) {
         this.layer = layer;
     }
@@ -109,6 +113,7 @@ public class DungeonChunkRoom {
      *
      * @return The X coordinate of the room in the world space.
      */
+    @SuppressWarnings("UnusedDeclaration")
     public int getWorldX() {
         // Make sure the room is valid
         if(!isValid())
@@ -128,6 +133,7 @@ public class DungeonChunkRoom {
      *
      * @return The Z coordinate of the room in the world space.
      */
+    @SuppressWarnings("UnusedDeclaration")
     public int getWorldZ() {
         // Make sure the room is valid
         if(!isValid())
