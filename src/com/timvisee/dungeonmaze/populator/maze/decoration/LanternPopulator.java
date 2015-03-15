@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -33,32 +34,29 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
         final int z = args.getChunkZ();
         final int floorOffset = args.getFloorOffset();
 
+        // Decide whether the lantern is broken or not
         final boolean broken = rand.nextFloat() < BROKEN_CHANCE;
 
+        // Choose the lantern position
         final int lanternX = x + rand.nextInt(8);
         final int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;
         final int lanternZ = z + rand.nextInt(8);
         final Block b = chunk.getBlock(lanternX, lanternY, lanternZ);
 
-        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK) {
-            if(!broken){
-            	String MCversion;
-                String raw = Bukkit.getVersion();
-                int start = raw.indexOf("MC:");
-                if (start == -1)
-                	 MCversion = raw;
-                start += 4;
-                int end = raw.indexOf(')', start);
-                MCversion = raw.substring(start, end);
-            	boolean compatible = MCversion.startsWith("1.8");
-                if (compatible)
-                	b.setType(Material.SEA_LANTERN);
-                else
-                	b.setType(Material.GLOWSTONE);
-            }
+        // Make sure the lantern can be placed
+        if(b.getType() != Material.COBBLESTONE && b.getType() != Material.MOSSY_COBBLESTONE && b.getType() != Material.SMOOTH_BRICK)
+            return;
+
+        // Place the actual lantern
+        if(!broken) {
+            // Use the sea lantern if the current version is compatible, use glowstone otherwise
+            if(MinecraftUtils.getMinecraftVersion().startsWith("1.8"))
+                b.setType(Material.SEA_LANTERN);
             else
-                b.setType(Material.REDSTONE_LAMP_OFF);
-        }
+                b.setType(Material.GLOWSTONE);
+
+        } else
+            b.setType(Material.REDSTONE_LAMP_OFF);
 	}
 
     /**

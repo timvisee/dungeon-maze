@@ -10,6 +10,8 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
 
+    // TODO: 'Finish' this populator!
+
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;

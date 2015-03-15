@@ -4,6 +4,7 @@ import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
 import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.generator.Generator;
+import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.Profiler;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Chunk;
@@ -50,6 +51,7 @@ public class DungeonMaze extends JavaPlugin {
 
 		// Show a status message
 		Core.getLogger().info("Starting Dungeon Maze v" + getVersionName() + "...");
+        Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (BUKKIT)");
 
 		// Initialize the core
 		initCore();
