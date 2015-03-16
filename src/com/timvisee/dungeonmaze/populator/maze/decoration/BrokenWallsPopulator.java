@@ -15,7 +15,7 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	public static final int LAYER_MIN = 1;
 	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .5f;
+	public static final float ROOM_CHANCE = .33f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -24,28 +24,25 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
 
-        // Define the positions var
+        // Define the position variables
         int posX, posY, posZ;
 
-        switch (rand.nextInt(2)) {
-        case 0:
-            posX = x + (rand.nextInt(2) * 7);
-            posY = args.getFloorY();
-            posZ = z + 1 + rand.nextInt(6);
-            break;
-        case 1:
-            posX = x + 1 + rand.nextInt(6);
-            posY = args.getFloorY();
-            posZ = z + (rand.nextInt(2) * 7);
-            break;
-        default:
-            posX = x + (rand.nextInt(2) * 7);
-            posY = args.getFloorY();
-            posZ = z + 1 + rand.nextInt(6);
+        // Determine the y position of the gap
+        posY = args.getFloorY() + 1 + rand.nextInt(2);
+
+        // Define the x and z position of the broken wall
+        if(rand.nextBoolean()) {
+            posX = x + (rand.nextBoolean() ? 0 : 7);
+            posZ = z + rand.nextInt(6) + 1;
+
+        } else {
+            posX = z + rand.nextInt(6) + 1;
+            posZ = x + (rand.nextBoolean() ? 0 : 7);
         }
 
+        // Make a gap in the wall
+        chunk.getBlock(posX, posY, posZ).setType(Material.AIR);
         chunk.getBlock(posX, posY + 1, posZ).setType(Material.AIR);
-        chunk.getBlock(posX, posY + 2, posZ).setType(Material.AIR);
 	}
 
     @Override

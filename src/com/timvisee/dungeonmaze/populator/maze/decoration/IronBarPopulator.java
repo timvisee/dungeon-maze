@@ -28,9 +28,22 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
 		final int y = args.getChunkY();
 		final int z = args.getChunkZ();
 		final int floorOffset = args.getFloorOffset();
-        final int blockX = x + rand.nextInt(8);
-        final int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
-        final int blockZ = z + rand.nextInt(8);
+
+        // Define the position variables
+        int blockX, blockY, blockZ;
+
+        // Determine the y position of the gap
+        blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
+
+        // Define the x and z position of the broken wall
+        if(rand.nextBoolean()) {
+            blockX = x + (rand.nextBoolean() ? 0 : 7);
+            blockZ = z + rand.nextInt(6) + 1;
+
+        } else {
+            blockX = z + rand.nextInt(6) + 1;
+            blockZ = x + (rand.nextBoolean() ? 0 : 7);
+        }
 
         // Specify the bars base block
         Block barsBase = chunk.getBlock(blockX, blockY, blockZ);
