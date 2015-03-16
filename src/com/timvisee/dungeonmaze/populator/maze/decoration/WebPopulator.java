@@ -57,7 +57,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
             while(chunk.getBlock(xWeb, yWeb, zWeb).getType() != Material.AIR) {
                 yWeb++;
 
-                if(yWeb + 1 >= world.getMaxHeight())
+                if(yWeb >= args.getCeilingY() - 1 || yWeb + 1 >= world.getMaxHeight())
                     return;
             }
 
@@ -69,7 +69,7 @@ public class WebPopulator extends MazeRoomBlockPopulator {
             while(chunk.getBlock(xWeb, yWeb, zWeb).getType() != Material.AIR) {
                 yWeb--;
 
-                if(yWeb == 1)
+                if(yWeb <= args.getFloorY() + 1 || yWeb <= 1)
                     return;
             }
         }
