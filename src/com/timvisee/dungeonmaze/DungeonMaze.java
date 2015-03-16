@@ -24,7 +24,7 @@ public class DungeonMaze extends JavaPlugin {
 	public static DungeonMaze instance;
 
 	/** Defines the current Dungeon Maze version name. */
-	private static final String VERSION_NAME = "0.2";
+	private static final String VERSION_NAME = "0.2-SNAPSHOT";
 	/** Defines the current Dungeon Maze version code. */
 	private static final int VERSION_CODE = 15;
 
