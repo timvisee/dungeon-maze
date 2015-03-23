@@ -31,6 +31,9 @@
                     <include>plugin.yml</include>
                 </includes>
             </resource>
+            <resource>
+                <directory>${basedir}/src/</directory>
+            </resource>
         </resources>
     </build>
     <repositories>
