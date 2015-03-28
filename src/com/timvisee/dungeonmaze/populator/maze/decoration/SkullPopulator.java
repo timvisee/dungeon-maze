@@ -35,6 +35,7 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 		final int x = args.getChunkX();
 		final int z = args.getChunkZ();
 
+        // Determine the position of the skull
         int skullX = x + rand.nextInt(6) + 1;
         int skullY = args.getFloorY() + 1;
         int skullZ = z + rand.nextInt(6) + 1;
@@ -48,28 +49,37 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
         if(withPole)
             skullY++;
 
+        // Define the blocks
         Block poleBlock = c.getBlock(skullX, skullY - 1, skullZ);
         Block skullBlock = c.getBlock(skullX, skullY, skullZ);
 
         if(withPole)
             poleBlock.setType(Material.FENCE);
 
+        // Get and create the skull block
         skullBlock.setType(Material.SKULL);
         skullBlock.setData((byte) 1);
+        BlockState blockState = skullBlock.getState();
+        Skull skull = (Skull) blockState;
 
-        BlockState bs = skullBlock.getState();
-        Skull s = (Skull) bs;
+        // Get a random name for the skull, and make sure the name is valid
+        final String skullOwner = getRandomOwner(rand);
+        if(skullOwner.trim().length() == 0)
+            return;
 
-        s.setSkullType(getRandomSkullType(rand));
-        s.setRotation(getRandomSkullRotation(rand));
-        s.setOwner(getRandomOwner(rand));
-        s.update(true, false);
+        // Set the skull type, rotation and owner
+        skull.setSkullType(getRandomSkullType(rand));
+        skull.setRotation(getRandomSkullRotation(rand));
+        skull.setOwner(skullOwner);
+
+        // Force update the skull
+        skull.update(true, false);
 	}
 	
 	private String getRandomOwner(Random rand) {
-		String name = "";
+		String name = "timvisee";
 		if(Bukkit.getOnlinePlayers().size() > 0) {
-			List<Player> onlinePlayers = new ArrayList<Player>(Bukkit.getOnlinePlayers());
+			List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
 			name = onlinePlayers.get(rand.nextInt(onlinePlayers.size())).getName();
 		}
 		return name;
