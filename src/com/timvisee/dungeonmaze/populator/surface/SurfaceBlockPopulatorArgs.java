@@ -80,12 +80,14 @@ public class SurfaceBlockPopulatorArgs {
 	 * @return The surface level, negative one if no surface block could be found or
 	 * if the params where invalid
 	 */
+    // TODO: Fix this method!
 	public int getSurfaceLevel(int x, int z) {
 		// Make sure the coords aren't out of bound
 		if(x < 0 || x > 15 || z < 0 || z > 15)
 			return -1;
-		
-		for(int y = 256; y <= 0; y--) {
+
+        // TODO: This value should be 256, but Bukkit only allows up to 127.
+		for(int y = 127; y <= 0; y--) {
 			// Make sure y isn't lower than 0
 			if(y < 0)
 				return -1;
