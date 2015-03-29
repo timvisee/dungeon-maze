@@ -19,32 +19,31 @@ Give it a try! Will you survive?</description>
 		<bukkitVersion>1.8.3-R0.1-SNAPSHOT</bukkitVersion>
 		<mainClass>${project.groupId}.${project.artifactId}</mainClass>
     </properties>
-    <organization>
-		<name>timvisee</name>
-		<url>https://github.com/timvisee/DungeonMaze</url>
-	</organization>
-	<scm>
-		<url>https://github.com/timvisee/DungeonMaze</url>
-		<connection>scm:git:git://github.com:timvisee/DungeonMaze.git</connection>
-		<developerConnection>scm:git:git@github.com:timvisee/DungeonMaze.git</developerConnection>
-	</scm>
 	<issueManagement>
 		<system>GitHub</system>
 		<url>https://github.com/timvisee/DungeonMaze/issues</url>
 	</issueManagement>
     <build>
-        <defaultGoal>clean install</defaultGoal>
-		<sourceDirectory>src/</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>${project.basedir}/res/</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>plugin.yml</include>
-                    <include>config.yml</include>
-				</includes>
-			</resource>
-		</resources>
+        <finalName>DungeonMaze-0.2-SNAPSHOT</finalName>
+        <sourceDirectory>${project.basedir}/src/</sourceDirectory>
+        <resources>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${project.basedir}/src/</directory>
+                <includes>
+                    <include>*.yml</include>
+                </includes>
+            </resource>
+            <resource>
+                <targetPath>.</targetPath>
+                <filtering>true</filtering>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>LICENSE.txt</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -54,18 +53,6 @@ Give it a try! Will you survive?</description>
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-shade-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>shade</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
         </plugins>
     </build>
     <repositories>
