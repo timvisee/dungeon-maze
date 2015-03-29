@@ -4,13 +4,47 @@
     <groupId>com.timvisee</groupId>
     <artifactId>DungeonMaze</artifactId>
     <version>0.2-SNAPSHOT</version>
-    <packaging>jar</packaging>
+	<name>DungeonMaze</name>
+	<url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
+	<description>Dungeon Maze is a world generator for Minecraft, it's a CraftBukkit plugin.
+Dungeon Maze generates an infinite world with a lot of cool and strange stuff in it.
+The world contains 7 layers of epicness, each layer does have different content.
+All the layers contains a lot of Monsters, but also a lot of treasures.
+It's a very cool map to explore with some friends.
+Give it a try! Will you survive?</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+		<bukkitVersion>1.8.3-R0.1-SNAPSHOT</bukkitVersion>
+		<mainClass>${project.groupId}.${project.artifactId}</mainClass>
     </properties>
+    <organization>
+		<name>timvisee</name>
+		<url>https://github.com/timvisee/DungeonMaze</url>
+	</organization>
+	<scm>
+		<url>https://github.com/timvisee/DungeonMaze</url>
+		<connection>scm:git:git://github.com:timvisee/DungeonMaze.git</connection>
+		<developerConnection>scm:git:git@github.com:timvisee/DungeonMaze.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/timvisee/DungeonMaze/issues</url>
+	</issueManagement>
     <build>
+        <defaultGoal>clean install</defaultGoal>
+		<sourceDirectory>src/</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/res/</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>plugin.yml</include>
+                    <include>config.yml</include>
+				</includes>
+			</resource>
+		</resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -20,21 +54,19 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
         </plugins>
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${basedir}/res/</directory>
-                <includes>
-                    <include>config.yml</include>
-                    <include>plugin.yml</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${basedir}/src/</directory>
-            </resource>
-        </resources>
     </build>
     <repositories>
         <repository>
@@ -62,9 +94,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>${bukkitVersion}</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -78,42 +110,48 @@
       		<artifactId>com.onarandombox</artifactId>
      		<version>2.5</version>
      		<scope>system</scope>
-      		<systemPath>${basedir}/dependencies/Multiverse-Core-2.5.jar</systemPath>
+            <optional>true</optional>
+      		<systemPath>${project.basedir}/dependencies/Multiverse-Core-2.5.jar</systemPath>
     	</dependency>
     	<dependency>
       		<groupId>bPermissions</groupId>
       		<artifactId>de.bananaco</artifactId>
       		<version>2.10.9m</version>
       		<scope>system</scope>
-      		<systemPath>${basedir}/dependencies/bPermissions-2.10.9m.jar</systemPath>
+            <optional>true</optional>
+      		<systemPath>${project.basedir}/dependencies/bPermissions-2.10.9m.jar</systemPath>
     	</dependency>
     	<dependency>
       		<groupId>Permissions</groupId>
       		<artifactId>com.nijikokun</artifactId>
       		<version>0.0.1-SNAPSHOT</version>
       		<scope>system</scope>
-      		<systemPath>${basedir}/dependencies/Permissions-0.0.1-SNAPSHOT.jar</systemPath>
+            <optional>true</optional>
+      		<systemPath>${project.basedir}/dependencies/Permissions-0.0.1-SNAPSHOT.jar</systemPath>
     	</dependency>
     	<dependency>
       		<groupId>PermissionsBukkit</groupId>
       		<artifactId>com.platymuus</artifactId>
       		<version>2.3</version>
       		<scope>system</scope>
-      		<systemPath>${basedir}/dependencies/PermissionsBukkit-2.3.jar</systemPath>
+            <optional>true</optional>
+      		<systemPath>${project.basedir}/dependencies/PermissionsBukkit-2.3.jar</systemPath>
     	</dependency>
     	<dependency>
       		<groupId>PermissionsEx</groupId>
       		<artifactId>ru.tehkode</artifactId>
       		<version>1.23.1</version>
       		<scope>system</scope>
-      		<systemPath>${basedir}/dependencies/PermissionsEx-1.23.1.jar</systemPath>
+            <optional>true</optional>
+      		<systemPath>${project.basedir}/dependencies/PermissionsEx-1.23.1.jar</systemPath>
     	</dependency>
     	<dependency>
       		<groupId>zPermissions</groupId>
       		<artifactId>org.tyrannyofheaven</artifactId>
       		<version>1.2a</version>
       		<scope>system</scope>
-      		<systemPath>${basedir}/dependencies/zPermissions-1.2a.jar</systemPath>
+            <optional>true</optional>
+      		<systemPath>${project.basedir}/dependencies/zPermissions-1.2a.jar</systemPath>
     	</dependency>
     </dependencies>
 </project>
