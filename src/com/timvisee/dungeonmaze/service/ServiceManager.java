@@ -9,7 +9,7 @@ import java.util.List;
 public class ServiceManager {
 
     /** The list of services. */
-    private List<Service> services = new ArrayList<Service>();
+    private List<Service> services = new ArrayList<>();
 
     /**
      * Constructor.

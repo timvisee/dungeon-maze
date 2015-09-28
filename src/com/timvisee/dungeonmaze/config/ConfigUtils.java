@@ -16,7 +16,7 @@ public class ConfigUtils {
      */
     public static FileConfiguration getConfigFromPath(File file) {
         // The file param may not be null
-        if (file == null)
+        if(file == null)
             return null;
 
         // Get and return the config from an external file

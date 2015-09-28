@@ -205,7 +205,7 @@ public class DungeonMazeApi {
 			return "";
 
 		// Get and return the Dungeon Maze version number
-		return this.dungeonMaze.getVersionName();
+		return DungeonMaze.getVersionName();
 	}
 	
 	/**

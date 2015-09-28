@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WorldManagerService extends Service {
 
@@ -75,11 +75,8 @@ public class WorldManagerService extends Service {
                 // Dungeon Maze does have some worlds
                 Core.getLogger().info("Unloading Dungeon Maze worlds...");
 
-                // Unload the Dungeon Maze worlds
-                List<String> worlds = new ArrayList<String>();
-                for(World w : Bukkit.getWorlds())
-                    if(c.getStringList("worlds").contains(w.getName()))
-                        worlds.add(w.getName());
+                // Select the Dungeon Maze worlds to unload
+                List<String> worlds = Bukkit.getWorlds().stream().filter(w -> c.getStringList("worlds").contains(w.getName())).map(World::getName).collect(Collectors.toList());
 
                 // Unload each world
                 for(String w : worlds)

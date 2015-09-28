@@ -20,7 +20,7 @@ public class DungeonMazeCommand extends ExecutableCommand {
     @Override
     public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Show some version info
-        sender.sendMessage(ChatColor.GREEN + "This server is running Dungeon Maze v" + DungeonMaze.instance.getVersionName() + "! " + ChatColor.RED + "<3");
+        sender.sendMessage(ChatColor.GREEN + "This server is running Dungeon Maze v" + DungeonMaze.getVersionName() + "! " + ChatColor.RED + "<3");
         sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " help" + ChatColor.YELLOW + " to view help.");
         sender.sendMessage(ChatColor.YELLOW + "Use the command " + ChatColor.GOLD + "/" + commandReference.get(0) + " about" + ChatColor.YELLOW + " to view about.");
         return true;

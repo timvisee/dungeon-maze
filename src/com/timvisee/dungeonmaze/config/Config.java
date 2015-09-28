@@ -43,7 +43,7 @@ public class Config extends CustomConfig {
 		if(!contains("useBypassPermissions"))
 			set("useBypassPermissions", true);
 		if(!contains("mobs")) {
-			List<String> mobs = new ArrayList<String>();
+			List<String> mobs = new ArrayList<>();
 			mobs.add("Blaze");
 			mobs.add("Creeper");
 			mobs.add("Enderman");

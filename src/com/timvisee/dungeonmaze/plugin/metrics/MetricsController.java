@@ -46,12 +46,11 @@ public class MetricsController {
             graph.addPlotter(new Metrics.Plotter("Players") {
                 @Override
                 public int getValue() {
-                    List<Player> players = new ArrayList<Player>(Bukkit.getOnlinePlayers());
+                    List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
                     int count = 0;
-                    for(Player p : players) {
+                    for(Player p : players)
                         if(Core.getWorldManager().isDungeonMazeWorld(p.getWorld().getName()))
                             count++;
-                    }
                     return count;
                 }
             });

@@ -146,7 +146,7 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 	}
 	
 	public List<ItemStack> genChestContent(Random random) {
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new ArrayList<>();
 		
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(50, 16, (short) 0));
@@ -217,7 +217,7 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(357, 8, (short) 0));
 		
-		int itemCountInChest = 4;
+		int itemCountInChest;
 		switch (random.nextInt(8)) {
 		case 0:
 			itemCountInChest = 2;
@@ -248,7 +248,7 @@ public class LibraryRoomPopulator extends MazeRoomBlockPopulator {
 			break;
 		}
 		
-		List<ItemStack> result = new ArrayList<ItemStack>();
+		List<ItemStack> result = new ArrayList<>();
 		
 		// Add the selected items randomly
 		for (int i = 0; i < itemCountInChest; i++)

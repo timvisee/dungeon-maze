@@ -109,6 +109,6 @@ public class HelpProvider {
         if(showAlternatives)
             HelpPrinter.printAlternatives(sender, command, commandReference);
         if(showCommands)
-            HelpPrinter.printChilds(sender, command, commandReference);
+            HelpPrinter.printChildren(sender, command, commandReference);
     }
 }

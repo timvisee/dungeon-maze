@@ -9,7 +9,7 @@ import java.util.*;
 public class CommandDescription {
 
     /** Defines the acceptable labels. */
-    private List<String> labels = new ArrayList<String>();
+    private List<String> labels = new ArrayList<>();
     /** Command description. */
     private String description = "";
     /** Detailed description. */
@@ -19,9 +19,9 @@ public class CommandDescription {
     /** The parent command. */
     private CommandDescription parent = null;
     /** The child labels. */
-    private List<CommandDescription> childs = new ArrayList<CommandDescription>();
+    private List<CommandDescription> childs = new ArrayList<>();
     /** The command arguments. */
-    private List<CommandArgumentDescription> arguments = new ArrayList<CommandArgumentDescription>();
+    private List<CommandArgumentDescription> arguments = new ArrayList<>();
     /** Defines whether there is an argument maximum or not. */
     private boolean noArgumentMaximum = false;
     /** Defines the command permissions. */
@@ -340,7 +340,7 @@ public class CommandDescription {
      */
     public CommandParts getCommandReference(CommandParts reference) {
         // Build the reference
-        List<String> referenceList = new ArrayList<String>();
+        List<String> referenceList = new ArrayList<>();
 
         // Check whether this command has a parent, if so, add the absolute parent command
         if(getParent() != null)
@@ -765,15 +765,10 @@ public class CommandDescription {
         // Handle the child's, if this command has any
         if(getChilds().size() > 0) {
             // Get a new instance of the child's list, and sort them by their difference in comparison to the query reference
-            List<CommandDescription> commandChilds = new ArrayList<CommandDescription>(getChilds());
-            Collections.sort(commandChilds, new Comparator<CommandDescription>() {
-                @Override
-                public int compare(CommandDescription o1, CommandDescription o2) {
-                    return Double.compare(
-                            o1.getCommandDifference(queryReference),
-                            o2.getCommandDifference(queryReference));
-                }
-            });
+            List<CommandDescription> commandChilds = new ArrayList<>(getChilds());
+            Collections.sort(commandChilds, (o1, o2) -> Double.compare(
+                    o1.getCommandDifference(queryReference),
+                    o2.getCommandDifference(queryReference)));
 
             // Get the difference of the first child in the list
             double firstChildDifference = commandChilds.get(0).getCommandDifference(queryReference, true);

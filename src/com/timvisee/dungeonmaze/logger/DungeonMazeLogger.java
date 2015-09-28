@@ -1,9 +1,8 @@
 package com.timvisee.dungeonmaze.logger;
 
-import org.bukkit.ChatColor;
-
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class DungeonMazeLogger {
 
     /** The logger instance. */

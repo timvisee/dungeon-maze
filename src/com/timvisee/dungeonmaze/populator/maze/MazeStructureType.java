@@ -47,7 +47,7 @@ public enum MazeStructureType {
 	
 	/**
 	 * Get the structure type ID
-	 * @return Strucutre type ID
+	 * @return Structure type ID
 	 */
 	public int getId() {
 		return this.id;

@@ -55,7 +55,7 @@ public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
                     chunk.getBlock(x2, y2 + floorOffset, z2).setType(Material.AIR);
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1)
             for(int y2 = y + 1; y2 <= y + 5; y2++)
-                chunk.getBlock(x2, y2 + floorOffset, z + 0).setType(Material.AIR);
+                chunk.getBlock(x2, y2 + floorOffset, z).setType(Material.AIR);
 
         // Pumpkins
         chunk.getBlock(x + 2, yFloor + 1, z + 2).setType(Material.JACK_O_LANTERN);
@@ -91,7 +91,7 @@ public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
 	}
 	
 	public void addItemsToChest(Random random, Chest chest) {
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new ArrayList<>();
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(50, 16, (short) 0));
 		if(random.nextInt(100) < 40)
@@ -139,7 +139,7 @@ public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(357, 8, (short) 0));
 		
-		int itemCountInChest = 4;
+		int itemCountInChest;
 		switch (random.nextInt(8)) {
 		case 0:
 			itemCountInChest = 2;

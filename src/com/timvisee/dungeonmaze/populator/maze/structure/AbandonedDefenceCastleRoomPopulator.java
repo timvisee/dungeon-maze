@@ -52,9 +52,9 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
         // Break out the original walls
         for(int xx = 1; xx < 7; xx++) {
             for(int yy = yFloor + 1; yy <= yCeiling - 1; yy++) {
-                chunk.getBlock(x + xx, yy, z + 0).setType(Material.AIR);
+                chunk.getBlock(x + xx, yy, z).setType(Material.AIR);
                 chunk.getBlock(x + xx, yy, z + 7).setType(Material.AIR);
-                chunk.getBlock(x + 0, yy, z + xx).setType(Material.AIR);
+                chunk.getBlock(x, yy, z + xx).setType(Material.AIR);
                 chunk.getBlock(x + 7, yy, z + xx).setType(Material.AIR);
             }
         }
@@ -71,30 +71,30 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 
         // Generate merlons
         for(int xx = 0; xx < 7; xx++) {
-            chunk.getBlock(x + xx, yFloor + 3, z + 0).setType(Material.SMOOTH_BRICK);
+            chunk.getBlock(x + xx, yFloor + 3, z).setType(Material.SMOOTH_BRICK);
             chunk.getBlock(x + xx, yFloor + 3, z + 7).setType(Material.SMOOTH_BRICK);
-            chunk.getBlock(x + 0, yFloor + 3, z + xx).setType(Material.SMOOTH_BRICK);
+            chunk.getBlock(x, yFloor + 3, z + xx).setType(Material.SMOOTH_BRICK);
             chunk.getBlock(x + 7, yFloor + 3, z + xx).setType(Material.SMOOTH_BRICK);
         }
 
-        chunk.getBlock(x + 0, yFloor + 4, z + 1).setType(Material.STEP);
-        chunk.getBlock(x + 0, yFloor + 4, z + 1).setData((byte) 5);
-        chunk.getBlock(x + 0, yFloor + 4, z + 3).setType(Material.STEP);
-        chunk.getBlock(x + 0, yFloor + 4, z + 3).setData((byte) 5);
-        chunk.getBlock(x + 0, yFloor + 4, z + 5).setType(Material.STEP);
-        chunk.getBlock(x + 0, yFloor + 4, z + 5).setData((byte) 5);
+        chunk.getBlock(x, yFloor + 4, z + 1).setType(Material.STEP);
+        chunk.getBlock(x, yFloor + 4, z + 1).setData((byte) 5);
+        chunk.getBlock(x, yFloor + 4, z + 3).setType(Material.STEP);
+        chunk.getBlock(x, yFloor + 4, z + 3).setData((byte) 5);
+        chunk.getBlock(x, yFloor + 4, z + 5).setType(Material.STEP);
+        chunk.getBlock(x, yFloor + 4, z + 5).setData((byte) 5);
         chunk.getBlock(x + 7, yFloor + 4, z + 2).setType(Material.STEP);
         chunk.getBlock(x + 7, yFloor + 4, z + 2).setData((byte) 5);
         chunk.getBlock(x + 7, yFloor + 4, z + 4).setType(Material.STEP);
         chunk.getBlock(x + 7, yFloor + 4, z + 4).setData((byte) 5);
         chunk.getBlock(x + 7, yFloor + 4, z + 6).setType(Material.STEP);
         chunk.getBlock(x + 7, yFloor + 4, z + 6).setData((byte) 5);
-        chunk.getBlock(x + 1, yFloor + 4, z + 0).setType(Material.STEP);
-        chunk.getBlock(x + 1, yFloor + 4, z + 0).setData((byte) 5);
-        chunk.getBlock(x + 3, yFloor + 4, z + 0).setType(Material.STEP);
-        chunk.getBlock(x + 3, yFloor + 4, z + 0).setData((byte) 5);
-        chunk.getBlock(x + 5, yFloor + 4, z + 0).setType(Material.STEP);
-        chunk.getBlock(x + 5, yFloor + 4, z + 0).setData((byte) 5);
+        chunk.getBlock(x + 1, yFloor + 4, z).setType(Material.STEP);
+        chunk.getBlock(x + 1, yFloor + 4, z).setData((byte) 5);
+        chunk.getBlock(x + 3, yFloor + 4, z).setType(Material.STEP);
+        chunk.getBlock(x + 3, yFloor + 4, z).setData((byte) 5);
+        chunk.getBlock(x + 5, yFloor + 4, z).setType(Material.STEP);
+        chunk.getBlock(x + 5, yFloor + 4, z).setData((byte) 5);
         chunk.getBlock(x + 2, yFloor + 4, z + 7).setType(Material.STEP);
         chunk.getBlock(x + 2, yFloor + 4, z + 7).setData((byte) 5);
         chunk.getBlock(x + 4, yFloor + 4, z + 7).setType(Material.STEP);
@@ -170,7 +170,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
         chunk.getBlock(x + 6, yFloor + 4, z + 6).setType(Material.WEB);
         chunk.getBlock(x + 5, yFloor + 3, z + 6).setType(Material.WEB);
         chunk.getBlock(x + 6, yFloor + 3, z + 5).setType(Material.WEB);
-        chunk.getBlock(x + 0, yFloor + 4, z + 6).setType(Material.WEB);
+        chunk.getBlock(x, yFloor + 4, z + 6).setType(Material.WEB);
 
         // Add some moss and cracked stone bricks
         for (int i = 0; i < MOSS_ITERATIONS; i++) {
@@ -196,7 +196,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 	}
 	
 	public void addItemsToFurnace(Random random, Furnace furnace) {
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new ArrayList<>();
 		
 		if(random.nextInt(100) < 5)
 			items.add(new ItemStack(41, 1, (short) 0));
@@ -286,7 +286,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 	}
 	
 	public List<ItemStack> genChestContent(Random random) {
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new ArrayList<>();
 		
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(50, 4, (short) 0));
@@ -423,7 +423,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(357, 5, (short) 0));
 		
-		int itemCountInChest = 3;
+		int itemCountInChest;
 		switch (random.nextInt(8)) {
 		case 0:
 			itemCountInChest = 2;
@@ -454,7 +454,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 			break;
 		}
 		
-		List<ItemStack> result = new ArrayList<ItemStack>();
+		List<ItemStack> result = new ArrayList<>();
 		
 		// Add the selected items randomly
 		for (int i = 0; i < itemCountInChest; i++)

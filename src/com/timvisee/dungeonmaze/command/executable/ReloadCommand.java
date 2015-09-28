@@ -1,11 +1,9 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
-import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.util.Profiler;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;

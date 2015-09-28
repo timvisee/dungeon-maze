@@ -9,7 +9,7 @@ import java.util.List;
 public class CommandManager {
 
     /** The list of commandDescriptions. */
-    private List<CommandDescription> commandDescriptions = new ArrayList<CommandDescription>();
+    private List<CommandDescription> commandDescriptions = new ArrayList<>();
 
     /**
      * Constructor.

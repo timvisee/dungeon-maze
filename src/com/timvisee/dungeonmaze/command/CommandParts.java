@@ -9,7 +9,7 @@ import java.util.List;
 public class CommandParts {
 
     /** The list of parts for this command. */
-    private List<String> parts = new ArrayList<String>();
+    private List<String> parts = new ArrayList<>();
 
     /**
      * Constructor.
@@ -47,7 +47,7 @@ public class CommandParts {
      * Constructor.
      *
      * @param base The base part.
-     * @param parts The list of aditional parts.
+     * @param parts The list of additional parts.
      */
     public CommandParts(String base, List<String> parts) {
         this.parts.add(base);
@@ -144,7 +144,7 @@ public class CommandParts {
      */
     public List<String> getRange(int start, int count) {
         // Create a new list to put the range into
-        List<String> elements = new ArrayList<String>();
+        List<String> elements = new ArrayList<>();
 
         // Get the range
         for(int i = start; i < start + count; i++) {

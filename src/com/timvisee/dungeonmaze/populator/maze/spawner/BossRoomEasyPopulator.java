@@ -62,7 +62,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 // Change the block into a creature spawner
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
-                // Cast the created s pawner into a CreatureSpawner object
+                // Cast the created spawner into a CreatureSpawner object
                 CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
 
                 // Set the spawned type of the spawner
@@ -81,7 +81,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 // Change the block into a creature spawner
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
-                // Cast the created s pawner into a CreatureSpawner object
+                // Cast the created spawner into a CreatureSpawner object
                 CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
 
                 // Set the spawned type of the spawner
@@ -100,7 +100,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 // Change the block into a creature spawner
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
-                // Cast the created s pawner into a CreatureSpawner object
+                // Cast the created spawner into a CreatureSpawner object
                 BlockState bs = spawnerBlock.getState();
                 CreatureSpawner s = (CreatureSpawner) bs;
 
@@ -115,10 +115,9 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
     }
 	
 	public double distance(int x1, int y1, int x2, int y2) {
-		double dx   = x1 - x2;         //horizontal difference 
-		double dy   = y1 - y2;         //vertical difference 
-		double dist = Math.sqrt( dx*dx + dy*dy ); //distance using Pythagoras theorem
-		return dist;
+		double dx = x1 - x2;
+		double dy = y1 - y2;
+        return Math.sqrt(dx * dx + dy * dy);
 	}
 
     @Override

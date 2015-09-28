@@ -12,7 +12,7 @@ import java.util.List;
 public class CommandPermissions {
 
     /** Defines the permission nodes required to have permission to execute this command. */
-    private List<String> permissionNodes = new ArrayList<String>();
+    private List<String> permissionNodes = new ArrayList<>();
     /** Defines the default permission if the permission nodes couldn't be used. */
     private DefaultPermission defaultPermission = DefaultPermission.NOT_ALLOWED;
 

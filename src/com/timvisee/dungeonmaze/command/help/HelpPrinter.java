@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class HelpPrinter {
@@ -152,7 +151,7 @@ public class HelpPrinter {
         final String usedLabel = commandReference.get(command.getParentCount());
 
         // Create a list of alternatives
-        List<String> alternatives = new ArrayList<String>();
+        List<String> alternatives = new ArrayList<>();
         for(String entry : command.getLabels()) {
             // Exclude the proper argument
             if(entry.equalsIgnoreCase(usedLabel))
@@ -161,12 +160,7 @@ public class HelpPrinter {
         }
 
         // Sort the alternatives
-        Collections.sort(alternatives, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return Double.compare(StringUtils.getDifference(usedLabel, o1), StringUtils.getDifference(usedLabel, o2));
-            }
-        });
+        Collections.sort(alternatives, (o1, o2) -> Double.compare(StringUtils.getDifference(usedLabel, o1), StringUtils.getDifference(usedLabel, o2)));
 
         // Print each alternative with proper syntax
         for(String alternative : alternatives)
@@ -180,7 +174,7 @@ public class HelpPrinter {
      * @param command The command to print the help for.
      * @param commandReference The original command reference used for this command.
      */
-    public static void printChilds(CommandSender sender, CommandDescription command, CommandParts commandReference) {
+    public static void printChildren(CommandSender sender, CommandDescription command, CommandParts commandReference) {
         // Make sure there are child's
         if(command.getChilds().size() <= 0)
             return;

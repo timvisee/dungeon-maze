@@ -70,12 +70,12 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 				if(chunk.getBlock(x + 2, yStrutBar, z).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int xx = 1; xx < 7; xx++)
-						chunk.getBlock(x + xx, yStrutBar, z+0).setType(Material.WOOD);
+						chunk.getBlock(x + xx, yStrutBar, z).setType(Material.WOOD);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutBar; yy++) {
-						chunk.getBlock(x+1, yy, z+0).setType(Material.FENCE);
-						chunk.getBlock(x+6, yy, z+0).setType(Material.FENCE);
+						chunk.getBlock(x+1, yy, z).setType(Material.FENCE);
+						chunk.getBlock(x+6, yy, z).setType(Material.FENCE);
 					}
 				}
 					

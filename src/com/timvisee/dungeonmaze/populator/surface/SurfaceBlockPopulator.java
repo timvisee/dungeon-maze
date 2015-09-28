@@ -1,14 +1,11 @@
 package com.timvisee.dungeonmaze.populator.surface;
 
-import java.util.Random;
-
 import com.timvisee.dungeonmaze.populator.ChunkBlockPopulator;
 import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import org.bukkit.generator.BlockPopulator;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
+import java.util.Random;
 
 public abstract class SurfaceBlockPopulator extends ChunkBlockPopulator {
 	

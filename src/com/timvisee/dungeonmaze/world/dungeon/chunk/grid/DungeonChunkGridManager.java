@@ -9,6 +9,7 @@ import org.bukkit.World;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DungeonChunkGridManager {
 
@@ -16,7 +17,7 @@ public class DungeonChunkGridManager {
     boolean init = false;
 
     /** The list of loaded chunk grids. */
-    private List<DungeonChunkGrid> grids = new ArrayList<DungeonChunkGrid>();
+    private List<DungeonChunkGrid> grids = new ArrayList<>();
 
     /** Defines the Dungeon Maze data directory name. */
     private static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
@@ -153,7 +154,7 @@ public class DungeonChunkGridManager {
      */
     public List<DungeonChunkGrid> loadChunkGrids(List<World> worlds) {
         // Create a list of chunk grids
-        List<DungeonChunkGrid> grids = new ArrayList<DungeonChunkGrid>();
+        List<DungeonChunkGrid> grids = new ArrayList<>();
 
         // Load the chunk grid for each world
         for(World world : worlds) {
@@ -183,11 +184,10 @@ public class DungeonChunkGridManager {
             return null;
 
         // Create a list of worlds
-        List<World> worlds = new ArrayList<World>();
+        List<World> worlds = new ArrayList<>();
 
         // Fill the worlds list with world instances
-        for(String worldName : worldNames)
-            worlds.add(Bukkit.getWorld(worldName));
+        worlds.addAll(worldNames.stream().map(Bukkit::getWorld).collect(Collectors.toList()));
 
         // Load the chunk grids for the worlds, return the result
         return loadChunkGrids(worlds);

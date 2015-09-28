@@ -90,7 +90,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 
 	public List<ItemStack> generateChestContents(Random random) {
 		// TODO: Use class for this, to also add feature to re loot chests
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new ArrayList<>();
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(50, 4, (short) 0));
 		if(random.nextInt(100) < 40)
@@ -180,7 +180,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(357, 5, (short) 0));
 		
-		int itemCountInChest = 3;
+		int itemCountInChest;
 		switch (random.nextInt(8)) {
 		case 0:
 			itemCountInChest = 2;
@@ -211,7 +211,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 		}
 		
 		// Create a list of item contents with the right amount of items
-		List<ItemStack> newContents = new ArrayList<ItemStack>();
+		List<ItemStack> newContents = new ArrayList<>();
 		for (int i = 0; i < itemCountInChest; i++)
 			newContents.add(items.get(random.nextInt(items.size())));
 		return newContents;

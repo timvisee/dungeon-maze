@@ -67,7 +67,7 @@ public class DungeonMaze extends JavaPlugin {
 		// Profile the shutdown
 		Profiler p = new Profiler(true);
 
-		// Show an disbling message
+		// Show an disabling message
 		Core.getLogger().info("Disabling Dungeon Maze...");
 
 		// Destroy the core
@@ -90,14 +90,13 @@ public class DungeonMaze extends JavaPlugin {
 		// Show a status message
 		Core.getLogger().info("Starting core...");
 
-		// Initialize the core, show the result status
+		// Initialize the core, show the result status, show a status message if it failed to initialize
 		if(!this.core.init()) {
-			// Core failed to initialize, show a status message
 			Core.getLogger().info("[ERROR] Failed to start the core, after " + p.getTimeFormatted() + "!");
 			return false;
 		}
 
-		// Core initialized, show a status message
+		// Core initialized successfully, show a status message
 		Core.getLogger().info("Core started successfully, took " + p.getTimeFormatted() + "!");
 		return true;
 	}
@@ -170,7 +169,6 @@ public class DungeonMaze extends JavaPlugin {
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
 		// Get the world manager, and make sure it's initialized
 		WorldManager worldManager = Core.getWorldManager();
-
 		if(worldManager == null)
 			return getDungeonMazeGenerator();
 
@@ -218,7 +216,6 @@ public class DungeonMaze extends JavaPlugin {
 	 * @return The version name of the currently installed Dungeon Maze instance.
 	 */
 	public static String getVersionName() {
-		//return getDescription().getVersion();
 		return VERSION_NAME;
 	}
 
@@ -246,8 +243,7 @@ public class DungeonMaze extends JavaPlugin {
 
 	// Worlds
 	public String lastWorld = "";
-	public List<String> constantRooms = new ArrayList<String>(); // x;y;z
-	//public List<String> constantChunks = new ArrayList<String>(); // x;
+	public List<String> constantRooms = new ArrayList<>(); // x;y;z
 
 	public void registerConstantRoom(String world, Chunk chunk, int roomX, int roomY, int roomZ) {
 		registerConstantRoom(world, chunk.getX(), chunk.getZ(), roomX, roomY, roomZ);
@@ -262,6 +258,7 @@ public class DungeonMaze extends JavaPlugin {
 			lastWorld = world;
 			constantRooms.clear();
 		}
+
 		constantRooms.add(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
 

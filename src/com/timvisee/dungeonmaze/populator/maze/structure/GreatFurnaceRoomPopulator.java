@@ -97,7 +97,7 @@ public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
     }
 	
 	public void addItemsToFurnace(Random random, Furnace furnace) {
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new ArrayList<>();
 		if(random.nextInt(100) < 5)
 			items.add(new ItemStack(41, 1, (short) 0));
 		if(random.nextInt(100) < 5)

@@ -162,7 +162,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					}
 				}
 
-				// Generate ladders in the hole with some noice for ladders which looks like broken & old ladders
+				// Generate ladders in the hole with some noise for ladders which looks like broken & old ladders
 				for(int yy = y; yy < yGround + 1; yy++) {
 					if(rand.nextInt(100) < 80) {
 						chunk.getBlock(x + 3, yy, z + 6).setType(Material.LADDER);
@@ -252,7 +252,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					}
 				}
 
-				// Generate ladders in the hole with some noice for ladders which looks like broken & old ladders
+				// Generate ladders in the hole with some noise for ladders which looks like broken & old ladders
 				for(int yy = y; yy < yGround + 1; yy++) {
 					if(rand.nextInt(100) < 80) {
 						chunk.getBlock(x + 1, yy, z + 3).setType(Material.LADDER);
@@ -320,7 +320,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					}
 				}
 
-				// Generate ladders/VINES! in the hole with some noice for ladders which looks like broken & old ladders
+				// Generate ladders/VINES! in the hole with some noise for ladders which looks like broken & old ladders
 				if(rand.nextInt(2) == 0) {
 					for(int yy = y; yy < yGround + 1; yy++) {
 						if(rand.nextInt(100) < 80) {
@@ -354,9 +354,9 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 
 				// Generate torches on the corners
 				//   corners
-				chunk.getBlock(x + 0, yGround + 1, z + 0).setType(Material.TORCH);
-				chunk.getBlock(x + 0, yGround + 1, z + 7).setType(Material.TORCH);
-				chunk.getBlock(x + 7, yGround + 1, z + 0).setType(Material.TORCH);
+				chunk.getBlock(x, yGround + 1, z).setType(Material.TORCH);
+				chunk.getBlock(x, yGround + 1, z + 7).setType(Material.TORCH);
+				chunk.getBlock(x + 7, yGround + 1, z).setType(Material.TORCH);
 				chunk.getBlock(x + 7, yGround + 1, z + 7).setType(Material.TORCH);
 				break;
 
@@ -377,7 +377,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					}
 				}
 
-				// Generate ladders in the hole with some noice for ladders which looks like broken & old ladders
+				// Generate ladders in the hole with some noise for ladders which looks like broken & old ladders
 				for(int yy = y; yy < yGround + 1; yy++) {
 					if(rand.nextInt(100) < 80) {
 						chunk.getBlock(x + 3, yy, z + 6).setType(Material.LADDER);

@@ -3,8 +3,6 @@ package com.timvisee.dungeonmaze.logger;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.service.Service;
 
-import java.util.logging.Logger;
-
 public class LoggerService extends Service {
 
     /** Service name. */

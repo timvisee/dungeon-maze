@@ -1,19 +1,13 @@
 package com.timvisee.dungeonmaze.populator.surface.plants;
 
-import java.util.Random;
-
-import com.timvisee.dungeonmaze.Core;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.TreeType;
-import org.bukkit.World;
-import org.bukkit.block.Biome;
-
 import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulator;
 import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
+import org.bukkit.*;
+import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+
+import java.util.Random;
 
 public class TreePopulator extends SurfaceBlockPopulator {
 

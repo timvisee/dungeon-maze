@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
@@ -31,11 +32,11 @@ public class WorldManager {
 	private boolean init = false;
 
 	/** Defines the Dungeon Maze worlds. */
-	private List<String> dungeonMazeWorlds = new ArrayList<String>();
+	private List<String> dungeonMazeWorlds = new ArrayList<>();
 	/** Defines the Dungeon Maze worlds that need to be preloaded. */
-	private List<String> dungeonMazeWorldsPreload = new ArrayList<String>();
+	private List<String> dungeonMazeWorldsPreload = new ArrayList<>();
 	/** Defines all the worlds in the server. (Including the Dungeon Maze worlds) */
-	private List<String> worlds = new ArrayList<String>();
+	private List<String> worlds = new ArrayList<>();
 
 	/**
 	 * Constructor. This won't initialize the manager immediately.
@@ -51,7 +52,6 @@ public class WorldManager {
 	 *             preload any world.
 	 */
 	public WorldManager(boolean init) {
-		// Initialize
 		if(init)
 			init();
 	}
@@ -220,12 +220,10 @@ public class WorldManager {
 			return this.worlds;
 
 		// Create a list to put all the worlds in
-		List<String> otherWorlds = new ArrayList<String>();
+		List<String> otherWorlds = new ArrayList<>();
 
 		// Loop through all the worlds, add it to the list if it isn't a Dungeon Maze world
-		for(String worldName : this.worlds)
-			if(!isDungeonMazeWorld(worldName))
-				otherWorlds.add(worldName);
+		otherWorlds.addAll(this.worlds.stream().filter(worldName -> !isDungeonMazeWorld(worldName)).collect(Collectors.toList()));
 
 		// Return the list of other worlds
 		return otherWorlds;
@@ -276,7 +274,7 @@ public class WorldManager {
 	 */
 	public List<String> getLoadedDungeonMazeWorlds(boolean refreshWorlds) {
 		// Create a list to put all worlds in
-		List<String> worlds = new ArrayList<String>();
+		List<String> worlds = new ArrayList<>();
 
 		// Refresh the world lists
 		if(refreshWorlds)
@@ -522,12 +520,7 @@ public class WorldManager {
 		Core.getLogger().info("Scheduled to preload all Dungeon Maze worlds!");
 
 		// Schedule the task
-		scheduler.scheduleSyncDelayedTask(DungeonMaze.instance, new Runnable() {
-			@Override
-			public void run() {
-				preloadDungeonMazeWorlds();
-			}
-		});
+		scheduler.scheduleSyncDelayedTask(DungeonMaze.instance, this::preloadDungeonMazeWorlds);
 		return true;
 	}
 
@@ -596,7 +589,7 @@ public class WorldManager {
 	 * @return True on success, false on failure.
 	 */
 	public boolean setBukkitConfigWorldGenerator(String worldName) {
-		List<String> worlds = new ArrayList<String>();
+		List<String> worlds = new ArrayList<>();
 		worlds.add(worldName);
 		return setBukkitConfigWorldGenerator(worlds);
 	}

@@ -1,12 +1,11 @@
 package com.timvisee.dungeonmaze.logger;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.config.ConfigHandler;
-import de.bananaco.bpermissions.imp.YamlConfiguration;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class LoggerManager {
 
     /** Dungeon Maze logger instance. */

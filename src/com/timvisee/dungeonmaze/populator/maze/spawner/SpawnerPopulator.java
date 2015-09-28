@@ -45,11 +45,10 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
 
         if(chunk.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
             Block spawnerBlock = chunk.getBlock(spawnerX, spawnerY, spawnerZ);
-            spawnerBlock = chunk.getBlock(spawnerX, spawnerY, spawnerZ);
 
             if(spawnerBlock.getType() == Material.AIR) {
                 // Generate a random spawnedType for the spawner
-                EntityType spawnedType = null;
+                EntityType spawnedType;
                 int i = rand.nextInt(25) + 1;
                 if(i >= 1 && i <= 10 && Core.getConfigHandler().isMobSpawnerAllowed("Zombie"))
                     spawnedType = EntityType.ZOMBIE;

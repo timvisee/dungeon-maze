@@ -301,9 +301,9 @@ public class Updater {
      * @param link the url of the file.
      */
     private void saveFile(File folder, String file, String link) {
-        if (!folder.exists()) {
+        if (!folder.exists())
             folder.mkdir();
-        }
+
         BufferedInputStream in = null;
         FileOutputStream fout = null;
         try {

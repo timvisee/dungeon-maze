@@ -118,7 +118,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
         }
 
 		// Empty ItemStack list for events
-		List<ItemStack> emptyList = new ArrayList<ItemStack>();
+		List<ItemStack> emptyList = new ArrayList<>();
 
 		// Create chests
 		chunk.getBlock(x + 1, y + 2, z + 1).setType(Material.CHEST);

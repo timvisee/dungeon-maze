@@ -1,15 +1,13 @@
 package com.timvisee.dungeonmaze.populator.maze.decoration;
 
-import java.util.Random;
-
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
+import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import java.util.Random;
 
 public class LanternPopulator extends MazeRoomBlockPopulator {
 

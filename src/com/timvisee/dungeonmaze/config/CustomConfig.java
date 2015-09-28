@@ -14,7 +14,6 @@ public class CustomConfig extends YamlConfiguration{
 
 	public CustomConfig(File file) {
 		this.configFile = file;
-
 		load();
 	}
 
@@ -25,16 +24,15 @@ public class CustomConfig extends YamlConfiguration{
 		} catch (FileNotFoundException e) {
 			reload();
 			
-		} catch (IOException ignored) {
-		} catch (InvalidConfigurationException ignored) { }
+		} catch (IOException | InvalidConfigurationException ignored) { }
 	}
 
 	public boolean reload() {
 		boolean out = true;
-		if (!configFile.exists())
+		if(!configFile.exists())
 			out = loadResource(configFile);
 			
-		if (out)
+		if(out)
 			load();
 		
 		return out;
@@ -44,33 +42,33 @@ public class CustomConfig extends YamlConfiguration{
 	    try {
 	        super.save(configFile);
 	        
-	    } catch (IOException ignored) { }
+	    } catch(IOException ignored) { }
 	}
 
 	public boolean loadResource(File file) {
 		boolean out = true;
-		if (!file.exists()) {
+		if(!file.exists()) {
 			InputStream fis = getClass().getResourceAsStream("/" + file.getName());
 			FileOutputStream fos = null;
 			try {
 				fos = new FileOutputStream(file);
 				byte[] buf = new byte[1024];
 				int i;
-				while ((i = fis.read(buf)) != -1)
+				while((i = fis.read(buf)) != -1)
 					fos.write(buf, 0, i);
 				
-			} catch (Exception e) {
+			} catch(Exception e) {
 				out = false;
 				
 			} finally {
 				try {
-					if (fis != null)
+					if(fis != null)
 						fis.close();
 						
-					if (fos != null)
+					if(fos != null)
 						fos.close();
 						
-				} catch (Exception ignored) { }
+				} catch(Exception ignored) { }
 			}
 		}
 		return out;

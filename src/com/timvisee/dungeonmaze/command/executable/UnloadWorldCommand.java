@@ -1,17 +1,19 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.util.Profiler;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UnloadWorldCommand extends ExecutableCommand {
 
@@ -70,10 +72,7 @@ public class UnloadWorldCommand extends ExecutableCommand {
         }
 
         // Get all players in the world
-        List<Player> players = new ArrayList<Player>();
-        for(Player player : Bukkit.getOnlinePlayers())
-            if(player.getWorld().getName().equals(worldName))
-                players.add(player);
+        List<Player> players = Bukkit.getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equals(worldName)).collect(Collectors.toList());
         int playerCount = players.size();
 
         // Teleport all players away

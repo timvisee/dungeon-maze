@@ -182,7 +182,7 @@ public class CommandHandler {
      */
     private List<String> processArguments(String[] args) {
         // Convert the array into a list of arguments
-        List<String> arguments = new ArrayList<String>(Arrays.asList(args));
+        List<String> arguments = new ArrayList<>(Arrays.asList(args));
 
         /// Remove all empty arguments
         for(int i = 0; i < arguments.size(); i++) {

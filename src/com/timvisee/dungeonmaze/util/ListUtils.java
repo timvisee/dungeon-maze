@@ -46,7 +46,7 @@ public class ListUtils {
      */
     public static String implode(List<String> elements, List<String> otherElements, String separator) {
         // Combine the lists
-        List<String> combined = new ArrayList<String>();
+        List<String> combined = new ArrayList<>();
         combined.addAll(elements);
         combined.addAll(otherElements);
 
@@ -65,7 +65,7 @@ public class ListUtils {
      */
     public static String implode(String element, String otherElement, String separator) {
         // Combine the lists
-        List<String> combined = new ArrayList<String>();
+        List<String> combined = new ArrayList<>();
         combined.add(element);
         combined.add(otherElement);
 

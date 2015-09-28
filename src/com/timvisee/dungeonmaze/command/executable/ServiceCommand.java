@@ -1,22 +1,13 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
-import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.service.Service;
 import com.timvisee.dungeonmaze.service.ServiceManager;
-import com.timvisee.dungeonmaze.world.WorldManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class ServiceCommand extends ExecutableCommand {

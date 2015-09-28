@@ -333,7 +333,7 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 	}
 	
 	public void addItemsToChest(Random random, Chest chest) {
-		List<ItemStack> items = new ArrayList<ItemStack>();
+		List<ItemStack> items = new ArrayList<>();
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(50, 16, (short) 0));
 		if(random.nextInt(100) < 40)
@@ -381,7 +381,7 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 		if(random.nextInt(100) < 80)
 			items.add(new ItemStack(357, 8, (short) 0));
 		
-		int itemCountInChest = 4;
+		int itemCountInChest;
 		switch (random.nextInt(8)) {
 		case 0:
 			itemCountInChest = 2;

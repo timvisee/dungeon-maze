@@ -38,11 +38,8 @@ public class PermissionsManager {
 	
 	// Current permissions system that is used
 	private PermissionsSystemType permsType = PermissionsSystemType.NONE;
-	
-	// Permissions Ex
-	private PermissionManager pexPerms;
-	
-	// Group manager essentials
+
+    // Group manager essentials
 	private GroupManager groupManagerPerms;
 	
 	// Permissions (the default old permissions system by nijiko)
@@ -98,7 +95,7 @@ public class PermissionsManager {
 		try {
 			Plugin pex = pm.getPlugin("PermissionsEx");
 			if(pex != null) {
-				pexPerms = PermissionsEx.getPermissionManager();
+                PermissionManager pexPerms = PermissionsEx.getPermissionManager();
 				if(pexPerms != null) {
 					permsType = PermissionsSystemType.PERMISSIONS_EX;
 					
@@ -319,48 +316,48 @@ public class PermissionsManager {
 		}
 		
 		switch (this.permsType) {
-		case PERMISSIONS_EX:
-			// Permissions Ex
-			PermissionUser user  = PermissionsEx.getUser(p);
-			return user.has(permsNode);
-			
-		case PERMISSIONS_BUKKIT:
-			// Permissions Bukkit
-			return p.hasPermission(permsNode);
-			
-		case B_PERMISSIONS:
-			// bPermissions
-			return ApiLayer.hasPermission(p.getWorld().getName(), CalculableType.USER, p.getName(), permsNode);
-			
-		case ESSENTIALS_GROUP_MANAGER:
-			// Essentials Group Manager
-			final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(p);
-			if (handler == null)
-				return false;
-			return handler.has(p, permsNode);
-		case Z_PERMISSIONS:
-			// zPermissions
-			Map<String, Boolean> perms = zPermissionsService.getPlayerPermissions(p.getWorld().getName(), null, p.getName());
-			if(perms.containsKey(permsNode)){
-				return perms.get(permsNode);
-			} else {
+			case PERMISSIONS_EX:
+				// Permissions Ex
+				PermissionUser user = PermissionsEx.getUser(p);
+				return user.has(permsNode);
+
+			case PERMISSIONS_BUKKIT:
+				// Permissions Bukkit
+				return p.hasPermission(permsNode);
+
+			case B_PERMISSIONS:
+				// bPermissions
+				return ApiLayer.hasPermission(p.getWorld().getName(), CalculableType.USER, p.getName(), permsNode);
+
+			case ESSENTIALS_GROUP_MANAGER:
+				// Essentials Group Manager
+				final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(p);
+				return handler != null && handler.has(p, permsNode);
+
+			case Z_PERMISSIONS:
+				// zPermissions
+				Map<String, Boolean> perms = zPermissionsService.getPlayerPermissions(p.getWorld().getName(), null, p.getName());
+				if(perms.containsKey(permsNode)) {
+					return perms.get(permsNode);
+				} else {
+					return def;
+				}
+
+			case VAULT:
+				// Vault
+				return vaultPerms.has(p, permsNode);
+
+			case PERMISSIONS:
+				// Permissions by nijiko
+				return this.defaultPerms.has(p, permsNode);
+
+			case NONE:
+				// Not hooked into any permissions system, return default
 				return def;
-			}
-		case VAULT:
-			// Vault
-			return vaultPerms.has(p, permsNode);
-			
-		case PERMISSIONS:
-			// Permissions by nijiko
-			return this.defaultPerms.has(p, permsNode);
-			
-		case NONE:
-			// Not hooked into any permissions system, return default
-			return def;
-			
-		default:
-			// Something went wrong, return false to prevent problems
-			return false;
+
+			default:
+				// Something went wrong, return false to prevent problems
+				return false;
 		}
 	}
 
@@ -390,7 +387,7 @@ public class PermissionsManager {
 			// Essentials Group Manager
 			final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(p);
 			if (handler == null)
-				return new ArrayList<String>();
+				return new ArrayList<>();
 			return Arrays.asList(handler.getGroups(p.getName()));
 			
 		case Z_PERMISSIONS:

@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.timvisee.dungeonmaze.Core;
 import org.bukkit.plugin.Plugin;
@@ -12,7 +13,7 @@ public class ApiController {
 	/** Defines whether the API is enabled. */
 	boolean apiEnabled = false;
 	/** Holds a list of currently active API sessions. */
-	List<DungeonMazeApi> apiSessions = new ArrayList<DungeonMazeApi>();
+	List<DungeonMazeApi> apiSessions = new ArrayList<>();
 	
 	/**
 	 * Constructor. This will automatically enable the Dungeon Maze API.
@@ -145,13 +146,8 @@ public class ApiController {
 	 * @param p Plugin to unhook.
 	 */
 	public void unhookPlugin(Plugin p) {
-		List<DungeonMazeApi> unregister = new ArrayList<DungeonMazeApi>();
-		for(DungeonMazeApi entry : this.apiSessions)
-			if(entry.getPlugin().equals(p))
-				unregister.add(entry);
-		
-		for(DungeonMazeApi entry : unregister)
-			unregisterApiSession(entry);
+		List<DungeonMazeApi> unregister = this.apiSessions.stream().filter(entry -> entry.getPlugin().equals(p)).collect(Collectors.toList());
+		unregister.forEach(this::unregisterApiSession);
 	}
 	
 	/**

@@ -1,14 +1,11 @@
 package com.timvisee.dungeonmaze.populator.maze.structure;
 
-import java.util.Random;
-
-import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.World;
-
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import org.bukkit.Chunk;
+import org.bukkit.Material;
+import org.bukkit.World;
 
 public class HighRoomPopulator extends MazeRoomBlockPopulator {
 

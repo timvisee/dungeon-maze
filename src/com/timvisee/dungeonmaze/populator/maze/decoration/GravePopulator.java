@@ -88,7 +88,7 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 					{"Joined the","bad side!"}
 			};
 			
-			String graveUsername = "Notch";
+			String graveUsername;
 			String[] selectedText = new String[]{"", ""};
 			int selectedGraveTextIndex = random.nextInt(graveText.length);
 			selectedText[0] = graveText[selectedGraveTextIndex][0];
@@ -97,7 +97,7 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 			if(!isAnyPlayerOnline())
 				graveUsername = graveUsernames[random.nextInt(graveUsernames.length)];
 			else {
-				List<Player> onlinePlayers = new ArrayList<Player>(Bukkit.getOnlinePlayers());
+				List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
 				graveUsername = onlinePlayers.get(random.nextInt(onlinePlayers.size())).getName();
 			}
 			
