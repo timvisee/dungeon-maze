@@ -1,4 +1,4 @@
-DungeonMaze
+DungeonMaze [![Circle CI](https://circleci.com/gh/sgdc3/DungeonMaze.svg?style=svg)](https://circleci.com/gh/sgdc3/DungeonMaze)
 ===========
 
 Dungeon Maze is a world generator for Minecraft, it's a CraftBukkit plugin.<br />

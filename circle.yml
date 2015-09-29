@@ -1,0 +1,9 @@
+machine:
+  java:
+    version: oraclejdk8
+general:
+  artifacts:
+    - "target/DungeonMaze-0.2-SNAPSHOT.jar"
+test:
+  override:
+    - mvn install

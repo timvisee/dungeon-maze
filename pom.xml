@@ -68,10 +68,6 @@ Give it a try! Will you survive?</description>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
-        <repository>
-            <id>ess-repo</id>
-            <url>http://repo.ess3.net:8071/content/groups/public/</url>
-        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -89,9 +85,11 @@ Give it a try! Will you survive?</description>
         <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsGroupManager</artifactId>
-            <version>Pre2.14.1.3</version>
-            <type>jar</type>
-        </dependency>
+     		<version>Pre2.14.1.3</version>
+     		<scope>system</scope>
+            <optional>true</optional>
+      		<systemPath>${project.basedir}/dependencies/EssentialsGroupManager-Pre2.14.1.3.jar</systemPath>
+    	</dependency>
     	<dependency>
       		<groupId>MultiverseCore</groupId>
       		<artifactId>com.onarandombox</artifactId>
