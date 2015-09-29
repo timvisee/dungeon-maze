@@ -3,7 +3,7 @@ package com.timvisee.dungeonmaze.permission;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 import de.bananaco.bpermissions.api.ApiLayer;
-import de.bananaco.bpermissions.api.util.CalculableType;
+import de.bananaco.bpermissions.api.CalculableType;
 import net.milkbowl.vault.permission.Permission;
 import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
@@ -386,7 +386,7 @@ public class PermissionsManager {
             case PERMISSIONS_EX:
                 // Permissions Ex
                 PermissionUser user = PermissionsEx.getUser(player);
-                return Arrays.asList(user.getGroupsNames());
+                return user.getParentIdentifiers(null);
 
             case PERMISSIONS_BUKKIT:
                 // Permissions Bukkit
