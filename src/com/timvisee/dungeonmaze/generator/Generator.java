@@ -240,8 +240,14 @@ public class Generator extends ChunkGenerator {
 	 */
 	@Override
 	public Location getFixedSpawnLocation(World world, Random random) {
-		// TODO: Make sure the world is a Dungeon Maze world?
+		// Get the world name
+		String worldName = world.getName();
 
+		// Return the world's default spawn location if it isn't a Dungeon Maze world
+		if(!Core.getWorldManager().isDungeonMazeWorld(worldName))
+			return world.getSpawnLocation();
+
+		// Return the spawn location of the Dungeon Maze world
 		return new Location(world, 4, 68, 4);
 	}
 }
