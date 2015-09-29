@@ -102,7 +102,7 @@ public class Generator extends ChunkGenerator {
 
     @SuppressWarnings({"ConstantConditions", "deprecation"})
     @Override
-    public short[][] generateExtBlockSections(World world, Random rand, int chunkX, int chunkZ, BiomeGrid biomes) {
+    public short[][] generateExtBlockSections(World world, Random randSrc, int chunkX, int chunkZ, BiomeGrid biomes) {
         // Get or create the dungeon chunk data
         DungeonChunk dungeonChunk;
 
@@ -129,23 +129,25 @@ public class Generator extends ChunkGenerator {
         // TODO: Clear the data on the current dungeon chunk?
 
         // Create a chunk
-        BukkitChunk chunk = dungeonChunk.createBukkitChunk();
+        BukkitChunk bukkitChunk = dungeonChunk.createBukkitChunk();
 
         // This will set the whole floor to stone (the floor of each chunk)
-        chunk.setLayers(0, 30 + 3, Material.STONE);
+        bukkitChunk.setLayers(0, 30 + 3, Material.STONE);
 
         // The layers for each 5 rooms in the variable y
         for(int y = 30; y < 30 + (7 * 6); y += 6) {
             // The 4 rooms on each layer saved in the variables x and z
             for(int x = 0; x < 16; x += 8) {
                 for(int z = 0; z < 16; z += 8) {
-                    int xr = (rand.nextInt(3) - 1) * (x + 7);
-                    int zr = (rand.nextInt(3) - 1) * (z + 7);
+                    // Generate a rand x and y coordinate in the room
+                    int randX = (randSrc.nextInt(3) - 1) * (x + 7);
+                    int randZ = (randSrc.nextInt(3) - 1) * (z + 7);
 
-                    int yFloor = rand.nextInt(2);
+                    // Get the floor coordinate of this x and y position
+                    int floorY = randSrc.nextInt(2);
 
                     // All the y of the room in the variable y2
-                    for(int y2 = y + yFloor; y2 < y + 8; y2++) {
+                    for(int y2 = y + floorY; y2 < y + 8; y2++) {
 
                         // All the x of the room in the variable x2
                         for(int x2 = x; x2 < x + 8; x2++) {
@@ -154,20 +156,16 @@ public class Generator extends ChunkGenerator {
                             for(int z2 = z; z2 < z + 8; z2++) {
 
                                 // Make the bottom of the room
-                                if(y2 == y + yFloor)
+                                if(y2 == y + floorY)
                                     for(int xb = x; xb < x + 8; xb++)
                                         for(int zb = z; zb < z + 8; zb++)
-                                            chunk.setBlock(xb, y2, zb, Material.COBBLESTONE);
+                                            bukkitChunk.setBlock(xb, y2, zb, Material.COBBLESTONE);
 
                                 // Fill the walls of the place with cobblestone
-                                if((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7))
-                                    chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stone brick
-                                else if(xr == x2)
-                                    chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stone brick
-                                else if(zr == z2)
-                                    chunk.setBlock(x2, y2, z2, (short) 98); // 98 = Stone brick
+                                if(((x2 == x || x2 == x + 7) && (z2 == z || z2 == z + 7)) || randX == x2 || randZ == z2)
+                                    bukkitChunk.setBlock(x2, y2, z2, Material.SMOOTH_BRICK);
                                 else
-                                    chunk.clearBlock(x2, y2, z2);
+                                    bukkitChunk.clearBlock(x2, y2, z2);
                             }
                         }
                     }
@@ -176,44 +174,44 @@ public class Generator extends ChunkGenerator {
         }
 
         // Create the nose generator which generates wave forms to use for the surface.
-        Random random = new Random(world.getSeed());
-        SimplexOctaveGenerator octave = new SimplexOctaveGenerator(random, 8);
-        octave.setScale(1 / 48.0);
+        Random rand = new Random(world.getSeed());
+        SimplexOctaveGenerator octave = new SimplexOctaveGenerator(rand, 8);
+        octave.setScale(1.0 / 48.0);
 
         // Generate the ceiling and the grass land
         for(int x = 0; x < 16; x++) {
             for(int z = 0; z < 16; z++) {
                 double height = octave.noise(x + chunkX * 16, z + chunkZ * 16, 0.5, 0.5) * 4 + 9;
 
-                chunk.setBlock(x, 30 + (7 * 6), z, Material.COBBLESTONE);
+                bukkitChunk.setBlock(x, 30 + (7 * 6), z, Material.COBBLESTONE);
                 for(int y = 30 + (7 * 6) + 1; y < 30 + (7 * 6) + 4; y++)
-                    chunk.setBlock(x, y, z, Material.STONE);
+                    bukkitChunk.setBlock(x, y, z, Material.STONE);
 
                 // Get the current biome
                 Biome biome = world.getBiome((chunkX * 16) + x, (chunkZ * 16) + z);
 
                 if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
                     for(int y = 30 + (7 * 6) + 4; y < 30 + (7 * 6) + 2 + height; y++)
-                        chunk.setBlock(x, y, z, Material.SAND);
+                        bukkitChunk.setBlock(x, y, z, Material.SAND);
 
                 } else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_ISLAND)) {
                     for(int y = 30 + (7 * 6) + 4; y < 30 + (7 * 6) + 2 + height; y++)
-                        chunk.setBlock(x, y, z, Material.DIRT);
-                    chunk.setBlock(x, (int) (30 + (7 * 6) + 2 + height), z, Material.MYCEL);
+                        bukkitChunk.setBlock(x, y, z, Material.DIRT);
+                    bukkitChunk.setBlock(x, (int) (30 + (7 * 6) + 2 + height), z, Material.MYCEL);
 
                 } else {
                     for(int y = 30 + (7 * 6) + 4; y < 30 + (7 * 6) + 2 + height; y++)
-                        chunk.setBlock(x, y, z, Material.DIRT);
-                    chunk.setBlock(x, (int) (30 + (7 * 6) + 2 + height), z, Material.GRASS);
+                        bukkitChunk.setBlock(x, y, z, Material.DIRT);
+                    bukkitChunk.setBlock(x, (int) (30 + (7 * 6) + 2 + height), z, Material.GRASS);
                 }
             }
         }
 
         // Set the bottom layer to bedrock
-        chunk.setLayer(0, Material.BEDROCK);
+        bukkitChunk.setLayer(0, Material.BEDROCK);
 
         // Return the chunk data
-        return chunk.getChunkData();
+        return bukkitChunk.getChunkData();
     }
 
     /**
@@ -243,12 +241,12 @@ public class Generator extends ChunkGenerator {
      * Get the spawn location of a Dungeon Maze world.
      *
      * @param world  The world.
-     * @param random The random seed.
+     * @param rand The rand seed.
      *
      * @return The spawn location for the player.
      */
     @Override
-    public Location getFixedSpawnLocation(World world, Random random) {
+    public Location getFixedSpawnLocation(World world, Random rand) {
         // Get the world name
         String worldName = world.getName();
 
