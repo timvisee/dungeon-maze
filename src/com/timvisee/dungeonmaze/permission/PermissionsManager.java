@@ -224,14 +224,11 @@ public class PermissionsManager {
      * Break the hook with all permission systems.
      */
     public void unhook() {
-        // Break the WorldGuard hook
+        // Reset the current used permissions system
         this.permsType = PermissionsSystemType.NONE;
 
-        // TODO: Fix the code bellow!
-        if(!permsType.equals(PermissionsSystemType.NONE))
-            System.out.println();
-        else
-            this.log.info("Unhooked from Permissions!");
+        // Print a status message to the console
+        this.log.info("Unhooked from Permissions!");
     }
 
     /**
