@@ -12,6 +12,7 @@ import com.timvisee.dungeonmaze.populator.surface.plants.TreePopulator;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGrid;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -225,9 +226,16 @@ public class Generator extends ChunkGenerator {
 	 */
 	@Override
 	public boolean canSpawn(World world, int x, int z) {
-		// TODO: Make sure the world is a Dungeon Maze world, return the setting from the config.
+        // Get the world name
+        String worldName = world.getName();
 
-		return true;
+        // Return the default value if the world isn't a Dungeon Maze world
+        if(!Core.getWorldManager().isDungeonMazeWorld(worldName))
+            return true;
+
+        // Return whether monsters can spawn in this Dungeon Maze world
+        // TODO: Add some fancy code here that determines whether a monster can spawn!
+        return true;
 	}
 
 	/**
