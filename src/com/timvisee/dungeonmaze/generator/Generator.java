@@ -1,13 +1,14 @@
 package com.timvisee.dungeonmaze.generator;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
 import com.timvisee.dungeonmaze.populator.maze.decoration.*;
+import com.timvisee.dungeonmaze.populator.maze.spawner.*;
+import com.timvisee.dungeonmaze.populator.maze.structure.*;
+import com.timvisee.dungeonmaze.populator.surface.plants.FlowerPopulator;
+import com.timvisee.dungeonmaze.populator.surface.plants.TallGrassPopulator;
+import com.timvisee.dungeonmaze.populator.surface.plants.TreePopulator;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGrid;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
@@ -19,34 +20,9 @@ import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 
-import com.timvisee.dungeonmaze.populator.maze.spawner.BlazeSpawnerRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.spawner.BossRoomEasyPopulator;
-import com.timvisee.dungeonmaze.populator.maze.spawner.BossRoomHardPopulator;
-import com.timvisee.dungeonmaze.populator.maze.spawner.BossRoomInsanePopulator;
-import com.timvisee.dungeonmaze.populator.maze.spawner.CreeperSpawnerRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.spawner.SilverfishBlockPopulator;
-import com.timvisee.dungeonmaze.populator.maze.spawner.SpawnerPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.AbandonedDefenceCastleRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.EntrancePopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.FloodedRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.GravelPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.GreatFurnaceRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.HighRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.LibraryRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.MassiveRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.OasisChunkPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.RailPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.RuinsPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.SanctuaryPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.SandPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.SpawnChamberPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.StairsPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.StrutPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.TopTurveRoomPopulator;
-import com.timvisee.dungeonmaze.populator.maze.structure.WaterWellRoomPopulator;
-import com.timvisee.dungeonmaze.populator.surface.plants.FlowerPopulator;
-import com.timvisee.dungeonmaze.populator.surface.plants.TallGrassPopulator;
-import com.timvisee.dungeonmaze.populator.surface.plants.TreePopulator;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class Generator extends ChunkGenerator {
 
@@ -59,14 +35,13 @@ public class Generator extends ChunkGenerator {
 	 * @param instance The Dungeon Maze instance.
 	 */
 	public Generator(DungeonMaze instance) {
-		// Set the Dungeon Maze instance
 		plugin = instance;
 	}
 
 	@Override
 	public List<BlockPopulator> getDefaultPopulators(World world) {
-        //noinspection unchecked
-        return (List<BlockPopulator>)(List<?>) Arrays.asList(
+		//noinspection unchecked
+		return (List<BlockPopulator>)(List<?>) Arrays.asList(
 				new BrokenWallsPopulator(),
 				new SpawnChamberPopulator(),
 				new OresInGroundPopulator(),
@@ -159,11 +134,9 @@ public class Generator extends ChunkGenerator {
 
 		// The layers for each 5 rooms in the variable y
         for(int y = 30; y < 30 + (7 * 6); y += 6) {
-
 			// The 4 rooms on each layer saved in the variables x and z
             for(int x = 0; x < 16; x += 8) {
                 for(int z = 0; z < 16; z += 8) {
-
 					int xr = (rand.nextInt(3) - 1) * (x + 7);
 					int zr = (rand.nextInt(3) - 1) * (z + 7);
 

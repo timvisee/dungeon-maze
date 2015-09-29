@@ -29,11 +29,11 @@ public class PlayerListener implements Listener {
 		// Get the player, location, world name and position
 		Player player = event.getPlayer();
 		Location location = player.getLocation();
-		double yLocation = location.getY();
+		double locationY = location.getY();
 		String worldName = location.getWorld().getName();
 
 		// Make sure the player is above the surface
-		if(yLocation < 75)
+		if(locationY < 75)
 			return;
 
 		// Get the world manager, config handler and permissions manager, and make sure it's valid
@@ -56,18 +56,18 @@ public class PlayerListener implements Listener {
 			return;
 
 		// Get the x and z location of the player
-		double xLocation = location.getX();
-		double zLocation = location.getZ();
+		double locationX = location.getX();
+		double locationZ = location.getZ();
 
 		// Check if there's a new available player location
 		for(int newY = 74; newY > 1; newY--) {
-            if(location.getWorld().getBlockAt((int) xLocation, newY, (int) zLocation).getType() != Material.AIR) {
+            if(location.getWorld().getBlockAt((int) locationX, newY, (int) locationZ).getType() != Material.AIR) {
                 // This block is a non-air block
                 // Check if the two above blocks are air, so the player could be teleported to this place
-                if(location.getWorld().getBlockAt((int) xLocation, newY + 1, (int) zLocation).getType() == Material.AIR &&
-                        location.getWorld().getBlockAt((int) xLocation, newY + 2, (int) zLocation).getType() == Material.AIR) {
+                if(location.getWorld().getBlockAt((int) locationX, newY + 1, (int) locationZ).getType() == Material.AIR &&
+                        location.getWorld().getBlockAt((int) locationX, newY + 2, (int) locationZ).getType() == Material.AIR) {
                     player.sendMessage(ChatColor.DARK_RED + "You're not allowed on the surface!");
-                    Location newPLoc = new Location(location.getWorld(), xLocation, newY + 1, zLocation);
+                    Location newPLoc = new Location(location.getWorld(), locationX, newY + 1, locationZ);
                     player.teleport(newPLoc);
                     break;
                 }
@@ -125,6 +125,7 @@ public class PlayerListener implements Listener {
 		} else {
 			if(uc.getResult() == UpdateResult.SUCCESS)
 				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
+
 			else {
 				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVer));
 				player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
