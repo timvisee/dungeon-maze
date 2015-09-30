@@ -1,5 +1,7 @@
 package com.timvisee.dungeonmaze.update;
 
+// FIXME: This updater is highly unstable, create a new update system!
+
 /*
  * Updater for Bukkit.
  *
@@ -15,6 +17,8 @@ import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.json.simple.JSONArray;
@@ -63,7 +67,7 @@ public class Updater {
     private static final String HOST = "https://api.curseforge.com"; // Slugs will be appended to this to get to the project's RSS feed
 
     private static final String USER_AGENT = "Updater (by Gravity)";
-    private static final String delimiter = "^v|[\\s_-]v"; // Used for locating version numbers in file names
+    private static final String delimiter = " "; // Used for locating version numbers in file names (old: ^v|[\s_-]v)
     private static final String[] NO_UPDATE_TAG = { "-DEV", "-PRE", "-SNAPSHOT" }; // If the version number contains one of these, don't update.
     private static final int BYTE_SIZE = 1024; // Used for downloading files
     private String updateFolder;// The folder that downloads will be placed in
@@ -460,9 +464,8 @@ public class Updater {
     private boolean versionCheck(String title) {
         if (this.type != UpdateType.NO_VERSION_CHECK) {
             final String localVersion = this.plugin.getDescription().getVersion();
-            if (title.split(delimiter).length == 2) {
-                final String remoteVersion = title.split(delimiter)[1].split(" ")[0]; // Get the newest file's version number
-
+            if (title.split(delimiter).length >= 2) {
+                final String remoteVersion = title.split(delimiter)[title.split(delimiter).length - 1].split(" ")[0]; // Get the newest file's version number
                 if (this.hasTag(localVersion) || !this.shouldUpdate(localVersion, remoteVersion)) {
                     // We already have the latest version, or this build is tagged for no-update
                     this.result = Updater.UpdateResult.NO_UPDATE;

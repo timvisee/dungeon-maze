@@ -27,6 +27,7 @@ public class VersionCommand extends ExecutableCommand {
         sender.sendMessage(ChatColor.GOLD + "Developers:");
         printDeveloper(sender, "Tim Visee", "timvisee", "Lead Developer");
         printDeveloper(sender, "Xephi", "xephi", "Code Contributor");
+        printDeveloper(sender, "sgdc3", "sgdc3", "Code Contributor");
         printDeveloper(sender, "Metonymia", "Metonymia", "Design Contributor");
         sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.WHITE + "http://timvisee.com/projects/bukkit/dungeon-maze/");
         sender.sendMessage(ChatColor.GOLD + "License: " + ChatColor.WHITE + "GNU GPL v2.0" + ChatColor.GRAY + ChatColor.ITALIC + " (See LICENSE.txt)");

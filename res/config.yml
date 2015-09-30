@@ -15,15 +15,15 @@ updateChecker:
     enabled: true
     notifyInGame: true
 
-# Permission Support
-usePermissions : true
-useBypassPermissions : true
+# Permission support
+usePermissions: true
+useBypassPermissions: true
 
 # Dungeon Maze API settings
 api:
     enabled: true
 
-# Mob Spawner Populator
+# Mob spawner populators
 mobs:
 - Blaze
 - Creeper

@@ -1,8 +1,9 @@
 package com.timvisee.dungeonmaze.api;
 
-import java.util.List;
-import java.util.Random;
-
+import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.util.ChestUtils;
+import com.timvisee.dungeonmaze.util.MazeUtils;
+import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -11,10 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.world.WorldManager;
-import com.timvisee.dungeonmaze.util.ChestUtils;
-import com.timvisee.dungeonmaze.util.MazeUtils;
+import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("UnusedDeclaration")
 @Deprecated

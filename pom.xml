@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.timvisee</groupId>
     <artifactId>DungeonMaze</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
 	<name>DungeonMaze</name>
 	<url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
 	<description>Dungeon Maze is a world generator for Minecraft, it's a CraftBukkit plugin.
@@ -107,14 +107,6 @@ Give it a try! Will you survive?</description>
       		<scope>system</scope>
             <optional>true</optional>
       		<systemPath>${project.basedir}/dependencies/bPermissions-2.10.9m.jar</systemPath>
-    	</dependency>
-    	<dependency>
-      		<groupId>Permissions</groupId>
-      		<artifactId>com.nijikokun</artifactId>
-      		<version>0.0.1-SNAPSHOT</version>
-      		<scope>system</scope>
-            <optional>true</optional>
-      		<systemPath>${project.basedir}/dependencies/Permissions-0.0.1-SNAPSHOT.jar</systemPath>
     	</dependency>
     	<dependency>
       		<groupId>PermissionsBukkit</groupId>
