@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.timvisee</groupId>
     <artifactId>DungeonMaze</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
 	<name>DungeonMaze</name>
 	<url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
 	<description>Dungeon Maze is a world generator for Minecraft, it's a CraftBukkit plugin.

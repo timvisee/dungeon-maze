@@ -21,9 +21,9 @@ public class DungeonMaze extends JavaPlugin {
 	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
 
 	/** Defines the current Dungeon Maze version name. */
-	private static final String VERSION_NAME = "0.2-SNAPSHOT";
+	private static final String VERSION_NAME = "0.2";
 	/** Defines the current Dungeon Maze version code. */
-	private static final int VERSION_CODE = 15;
+	private static final int VERSION_CODE = 16;
 
 	/** Dungeon Maze instance. */
 	public static DungeonMaze instance;
