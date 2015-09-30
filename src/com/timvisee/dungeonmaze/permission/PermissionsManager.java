@@ -421,7 +421,7 @@ public class PermissionsManager {
 
     public enum PermissionsSystemType {
         NONE("None"),
-        PERMISSIONS_EX("Permissions Ex"),
+        PERMISSIONS_EX("PermissionsEx"),
         PERMISSIONS_BUKKIT("Permissions Bukkit"),
         B_PERMISSIONS("bPermissions"),
         ESSENTIALS_GROUP_MANAGER("Essentials Group Manager"),
