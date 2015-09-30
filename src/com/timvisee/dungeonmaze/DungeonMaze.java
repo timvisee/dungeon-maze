@@ -35,14 +35,14 @@ public class DungeonMaze extends JavaPlugin {
 	private final Generator generator = new Generator(this);
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public DungeonMaze() {
 		instance = this;
 	}
 
 	/**
-	 * On enable method, called when plugin is being enabled
+	 * On enable method, called when plugin is being enabled.
 	 */
 	public void onEnable() {
 		// Profile the start up
@@ -61,7 +61,7 @@ public class DungeonMaze extends JavaPlugin {
 	}
 
 	/**
-	 * On enable method, called when plugin is being disabled
+	 * On enable method, called when plugin is being disabled.
 	 */
 	public void onDisable() {
 		// Profile the shutdown
