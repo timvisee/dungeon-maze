@@ -80,7 +80,7 @@
 					<relocations>
 						<relocation>
 							<pattern>org.mcstats</pattern>
-							<shadedPattern>fr.xephi.authme</shadedPattern>
+							<shadedPattern>com.timvisee.dungeonmaze</shadedPattern>
 						</relocation>
 					</relocations>
 				</configuration>
