@@ -1,5 +1,7 @@
 package com.timvisee.dungeonmaze.update;
 
+// FIXME: This updater is highly unstable, create a new update system!
+
 /*
  * Updater for Bukkit.
  *

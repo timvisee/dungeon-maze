@@ -1,5 +1,7 @@
 package com.timvisee.dungeonmaze.update;
 
+// FIXME: The updater is highly unstable, create a new update system!
+
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.service.Service;
@@ -9,7 +11,7 @@ import java.io.File;
 public class UpdateCheckerService extends Service {
 
     /** Service name. */
-    private static final String SERVICE_NAME = "Update Checker";
+    private static final String SERVICE_NAME = "Updater";
 
     /** Initialization flag. */
     private boolean init = false;
