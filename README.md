@@ -8,6 +8,6 @@ All the layers contains a lot of Monsters, but also a lot of treasures.<br />
 It's a very cool map to explore with some friends.<br />
 Give it a try! Will you survive?<br />
 
-License: GNU GPL v2.0
+License: GNU GPL v3.0
 
 More Information? See: http://dev.bukkit.org/bukkit-plugins/dungeon-maze/

@@ -1,136 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.timvisee</groupId>
-    <artifactId>DungeonMaze</artifactId>
-    <version>0.2</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.timvisee</groupId>
+	<artifactId>dungeonmaze</artifactId>
+	<version>0.3-SNAPSHOT</version>
+
 	<name>DungeonMaze</name>
+	<description>Dungeon Maze is a maze world generator for the Bukkit/Spigot API. Give it a try! Will you survive?</description>
+	<inceptionYear>2012</inceptionYear>
 	<url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
-	<description>Dungeon Maze is a world generator for Minecraft, it's a CraftBukkit plugin.
-Dungeon Maze generates an infinite world with a lot of cool and strange stuff in it.
-The world contains 7 layers of epicness, each layer does have different content.
-All the layers contains a lot of Monsters, but also a lot of treasures.
-It's a very cool map to explore with some friends.
-Give it a try! Will you survive?</description>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-		<bukkitVersion>1.8.3-R0.1-SNAPSHOT</bukkitVersion>
-		<mainClass>${project.groupId}.${project.artifactId}</mainClass>
-    </properties>
+
+	<scm>
+		<connection>scm:git:https://github.com/timvisee/DungeonMaze.git</connection>
+		<developerConnection>scm:git:git@github.com:timvisee/DungeonMaze.git</developerConnection>
+		<url>https://github.com/timvisee/DungeonMaze</url>
+	</scm>
+
+	<!-- Official Build Server (coming soon)
+	<ciManagement>
+		<system>jenkins</system>
+		<url>http://ci.xephi.fr/job/DungeonMaze/</url>
+	</ciManagement> -->
+
 	<issueManagement>
 		<system>GitHub</system>
 		<url>https://github.com/timvisee/DungeonMaze/issues</url>
 	</issueManagement>
-    <build>
-        <finalName>DungeonMaze-0.2-SNAPSHOT</finalName>
-        <sourceDirectory>${project.basedir}/src/</sourceDirectory>
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${project.basedir}/src/</directory>
-                <includes>
-                    <include>*.yml</include>
-                </includes>
-            </resource>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${project.basedir}</directory>
-                <includes>
-                    <include>LICENSE.txt</include>
-                </includes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    <repositories>
+
+	<licenses>
+		<license>
+			<name>The GNU General Public Licence version 3 (GPLv3)</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+		</license>
+	</licenses>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- Change Compiler Version (JDK) HERE! -->
+		<javaVersion>1.8</javaVersion>
+		<!-- Change MC Version HERE! -->
+		<bukkitVersion>1.8.8-R0.1-SNAPSHOT</bukkitVersion>
+	</properties>
+
+	<build>
+		<finalName>${project.name}-${project.version}</finalName>
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources/</directory>
+				<includes>
+					<include>*.yml</include>
+				</includes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>${javaVersion}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<artifactSet>
+						<includes>
+							<include>org.mcstats.bukkit:metrics</include>
+							<include>net.ricecode:similarity</include>
+						</includes>
+					</artifactSet>
+					<relocations>
+						<relocation>
+							<pattern>org.mcstats</pattern>
+							<shadedPattern>fr.xephi.authme</shadedPattern>
+						</relocation>
+					</relocations>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+
+		<!-- SpigotMC Repo (Bukkit and SpigotAPI) -->
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/groups/public</url>
+		</repository>
+
+		<!-- EssentialsX Repo -->
+		<repository>
+			<id>ess-repo</id>
+			<url>http://ci.drtshock.net/plugin/repository/everything</url>
+		</repository>
+
+		<!-- Multiverse Repo -->
+		<repository>
+			<id>onarandombox</id>
+			<url>http://repo.onarandombox.com/content/groups/public</url>
+		</repository>
+
+		<!-- Vault Repo -->
+		<repository>
+			<id>vault-repo</id>
+			<url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
+		</repository>
+
+		<!-- Metrics Snapshots Repo -->
+		<repository>
+			<id>mcstats-snapshots</id>
+			<url>http://repo.mcstats.org/content/repositories/snapshots/</url>
+		</repository>
+
+        <!-- PermissionsEx Repo -->
         <repository>
-            <id>bukkit-repo</id>
-            <url>http://repo.bukkit.org/content/groups/public/</url>
+            <id>pex-repo</id>
+            <url>http://pex-repo.aoeu.xyz</url>
         </repository>
-        <repository>
-            <id>vault-repo</id>
-            <url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
-        </repository>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>ess-repo</id>
-            <url>http://repo.ess3.net:8071/content/groups/public/</url>
-        </repository>
-    </repositories>
-    <dependencies>
+
+	</repositories>
+
+	<dependencies>
+		
+		<!-- Maven Dependencies -->
+		
+		<!-- Metrics API -->
+		<dependency>
+			<groupId>org.mcstats.bukkit</groupId>
+			<artifactId>metrics</artifactId>
+			<version>R8-SNAPSHOT</version>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>bukkit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project,
+			http://bukkit.org/ -->
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>${bukkitVersion}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Vault, http://dev.bukkit.org/bukkit-plugins/vault/ -->
+		<dependency>
+			<groupId>net.milkbowl.vault</groupId>
+			<artifactId>VaultAPI</artifactId>
+			<version>1.5</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>bukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Multi World plugin, http://www.spigotmc.org/resources/multiverse-core.390/ -->
+		<dependency>
+			<groupId>com.onarandombox.multiversecore</groupId>
+			<artifactId>Multiverse-Core</artifactId>
+			<version>2.5</version>
+			<type>jar</type>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>bukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>AllPay</artifactId>
+					<groupId>com.fernferret.allpay</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>Vault</artifactId>
+					<groupId>net.milkbowl.vault</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>CommandHandler</artifactId>
+					<groupId>com.pneumaticraft.commandhandler</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- Essentials plugin -->
+		<dependency>
+			<groupId>net.ess3</groupId>
+			<artifactId>EssentialsX</artifactId>
+			<version>2.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.spigotmc</groupId>
+					<artifactId>spigot-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+        <!-- PermissionsEx plugin-->
         <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.5</version>
-            <scope>provided</scope>
+            <groupId>ru.tehkode</groupId>
+            <artifactId>PermissionsEx</artifactId>
+            <version>1.23.2-SNAPSHOT</version>
         </dependency>
+
+        <!-- bPermissions plugin-->
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>${bukkitVersion}</version>
-            <type>jar</type>
+            <groupId>de.bananaco</groupId>
+            <artifactId>bpermissions</artifactId>
+            <version>1.12-DEV</version>
+            <scope>system<scope>
+            <systemPath>${basedir}/libs/bPermissions-2.12-DEV.jar</systemPath>
         </dependency>
+
+        <!-- PermissionsBukkit plugin-->
         <dependency>
-            <groupId>net.ess3</groupId>
-            <artifactId>EssentialsGroupManager</artifactId>
-            <version>Pre2.14.1.3</version>
-            <type>jar</type>
+            <groupId>com.platymuus.bukkit</groupId>
+            <artifactId>permissions</artifactId>
+            <version>2.4</version>
+            <scope>system<scope>
+            <systemPath>${basedir}/libs/PermissionsBukkit-2.4.jar</systemPath>
         </dependency>
-    	<dependency>
-      		<groupId>MultiverseCore</groupId>
-      		<artifactId>com.onarandombox</artifactId>
-     		<version>2.5</version>
-     		<scope>system</scope>
-            <optional>true</optional>
-      		<systemPath>${project.basedir}/dependencies/Multiverse-Core-2.5.jar</systemPath>
-    	</dependency>
-    	<dependency>
-      		<groupId>bPermissions</groupId>
-      		<artifactId>de.bananaco</artifactId>
-      		<version>2.10.9m</version>
-      		<scope>system</scope>
-            <optional>true</optional>
-      		<systemPath>${project.basedir}/dependencies/bPermissions-2.10.9m.jar</systemPath>
-    	</dependency>
-    	<dependency>
-      		<groupId>PermissionsBukkit</groupId>
-      		<artifactId>com.platymuus</artifactId>
-      		<version>2.3</version>
-      		<scope>system</scope>
-            <optional>true</optional>
-      		<systemPath>${project.basedir}/dependencies/PermissionsBukkit-2.3.jar</systemPath>
-    	</dependency>
-    	<dependency>
-      		<groupId>PermissionsEx</groupId>
-      		<artifactId>ru.tehkode</artifactId>
-      		<version>1.23.1</version>
-      		<scope>system</scope>
-            <optional>true</optional>
-      		<systemPath>${project.basedir}/dependencies/PermissionsEx-1.23.1.jar</systemPath>
-    	</dependency>
-    	<dependency>
-      		<groupId>zPermissions</groupId>
-      		<artifactId>org.tyrannyofheaven</artifactId>
-      		<version>1.2a</version>
-      		<scope>system</scope>
-            <optional>true</optional>
-      		<systemPath>${project.basedir}/dependencies/zPermissions-1.2a.jar</systemPath>
-    	</dependency>
-    </dependencies>
+
+        <!-- PermissionsBukkit plugin-->
+        <dependency>
+            <groupId>org.tyrannyofheaven.bukkit</groupId>
+            <artifactId>zPermissions</artifactId>
+            <version>1.3-SNAPSHOT</version>
+            <scope>system<scope>
+            <systemPath>${basedir}/libs/zPermissions-1.3beta1.jar</systemPath>
+        </dependency>
+
+	</dependencies>
 </project>
