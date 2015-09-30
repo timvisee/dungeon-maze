@@ -11,6 +11,9 @@ public class UpdateCheckerService extends Service {
     /** Service name. */
     private static final String SERVICE_NAME = "Update Checker";
 
+    /** Initialization flag. */
+    private boolean init = false;
+
     /** Update checker instance. */
     private Updater updateChecker;
 
@@ -21,16 +24,12 @@ public class UpdateCheckerService extends Service {
      */
     @Override
     public boolean init() {
-        // Get the plugin JAR
-        File pluginJar = new File(DungeonMaze.instance.getDataFolder().getParentFile(), "DungeonMaze.jar");
-
         // Check whether the update checker should be enabled on startup
         if(Core.getConfigHandler().enableUpdateCheckerOnStartup)
-            // Initialize the update checker
-            this.updateChecker = new Updater(DungeonMaze.instance, 45175, pluginJar, Updater.UpdateType.DEFAULT, true);
+            setupUpdateChecker();
 
-        // TODO: Do some error checking!
-
+        // Set the initialization flag
+        this.init = true;
         return true;
     }
 
@@ -41,7 +40,7 @@ public class UpdateCheckerService extends Service {
      */
     @Override
     public boolean isInit() {
-        return this.updateChecker != null;
+        return this.init;
     }
 
     /**
@@ -56,8 +55,11 @@ public class UpdateCheckerService extends Service {
      */
     @Override
     public boolean destroy(boolean force) {
-        // TODO: Unload the update checker?
-        this.updateChecker = null;
+        // Reset the initialization flag
+        this.init = false;
+
+        // Shutdown the update checker
+        shutdownUpdateChecker();
         return true;
     }
 
@@ -72,11 +74,48 @@ public class UpdateCheckerService extends Service {
     }
 
     /**
+     * Set up the update checker.
+     */
+    public void setupUpdateChecker() {
+        // Make sure the updater isn't initialized already
+        if(isUpdateCheckerSetup())
+            return;
+
+        // Get the plugin JAR
+        File pluginJar = new File(DungeonMaze.instance.getDataFolder().getParentFile(), "DungeonMaze.jar");
+
+        // Set up the update checker
+        this.updateChecker = new Updater(DungeonMaze.instance, 45175, pluginJar, Updater.UpdateType.DEFAULT, true);
+
+        // TODO: Do some error checking on the updater!
+    }
+
+    /**
+     * Check whether the update checker has been set up.
+     *
+     * @return True if the update checker has been set up, false if not.
+     */
+    public boolean isUpdateCheckerSetup() {
+        return this.updateChecker != null;
+    }
+
+    /**
+     * Shutdown the update checker if it has been set up.
+     */
+    public void shutdownUpdateChecker() {
+        this.updateChecker = null;
+    }
+
+    /**
      * Get the update checker.
      *
      * @return Update checker instance.
      */
     public Updater getUpdateChecker() {
+        // Initialize the update checker if it hasn't been initialized yet
+        setupUpdateChecker();
+
+        // Return the update checker instance
         return this.updateChecker;
     }
 }

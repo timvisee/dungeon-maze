@@ -322,6 +322,24 @@ public class Core {
     }
 
     /**
+     * Get the update checker service, if started.
+     *
+     * @return Update checker service instance, or null.
+     */
+    public static UpdateCheckerService getUpdateCheckerService() {
+        return Core.instance._getUpdateCheckerService();
+    }
+
+    /**
+     * Get the update checker service, if started.
+     *
+     * @return Update checker service instance, or null.
+     */
+    public UpdateCheckerService _getUpdateCheckerService() {
+        return this.updateCheckerService;
+    }
+
+    /**
      * Get the permissions manager.
      *
      * @return Permissions manager instance.

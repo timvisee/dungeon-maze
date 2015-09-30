@@ -3,8 +3,10 @@ package com.timvisee.dungeonmaze.command.executable;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
+import com.timvisee.dungeonmaze.update.UpdateCheckerService;
 import com.timvisee.dungeonmaze.update.Updater;
 import com.timvisee.dungeonmaze.util.Profiler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -27,34 +29,42 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         // Show a status message
         sender.sendMessage(ChatColor.YELLOW + "Checking for Dungeon Maze updates...");
 
-        // Get the update checker and refresh the updates data
-        // TODO: Force check for an update!
-        Updater uc = Core.getUpdateChecker();
+        // Get the update checker service, shut it down and start it again to force an update check
+        UpdateCheckerService service = Core.getUpdateCheckerService();
+        service.shutdownUpdateChecker();
+        service.setupUpdateChecker();
 
-        // Make sure any update is available
-        if(uc.getResult() != Updater.UpdateResult.SUCCESS && uc.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
-            sender.sendMessage(ChatColor.GREEN + "You are running the latest Dungeon Maze version!");
-            return true;
-        }
+        // Get the update checker instance
+        Updater uc = service.getUpdateChecker();
+
+        // Show a status message
+        sender.sendMessage(ChatColor.YELLOW + "Update checking succeed, took " + p.getTimeFormatted() + "!");
 
         // Get the version number of the new update
         String newVer = uc.getLatestName();
 
-        // Show a status message
-        sender.sendMessage(ChatColor.GREEN + "Update checking succeed, took " + p.getTimeFormatted() + "!");
+        // Make sure any update is available
+        if(uc.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
+            sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVer));
+            return true;
+
+        } else if(uc.getResult() == Updater.UpdateResult.NO_UPDATE) {
+            sender.sendMessage(ChatColor.GREEN + "You are running the latest Dungeon Maze version!");
+            return true;
+        }
 
         // Make sure the new version is compatible with the current bukkit version
         if(uc.getResult() == Updater.UpdateResult.FAIL_NOVERSION) {
             // Show a message
             sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVer));
-            sender.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-            sender.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  uc.getLatestGameVersion() + " or higher!");
+            sender.sendMessage(ChatColor.DARK_RED + "The new version is not compatible with your Bukkit version!");
+            sender.sendMessage(ChatColor.DARK_RED + "Please update your Bukkit to " +  uc.getLatestGameVersion() + " or higher!");
             return true;
         }
 
         // Check whether the update was installed or not
         if(uc.getResult() == Updater.UpdateResult.SUCCESS)
-            sender.sendMessage(ChatColor.GREEN + "New version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
+            sender.sendMessage(ChatColor.GREEN + "New version installed (" + String.valueOf(newVer) + "). Server reboot required!");
 
         else {
             sender.sendMessage(ChatColor.GREEN + "New version found: " + String.valueOf(newVer));
