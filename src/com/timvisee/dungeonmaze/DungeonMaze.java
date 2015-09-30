@@ -232,12 +232,6 @@ public class DungeonMaze extends JavaPlugin {
 
 
 
-
-
-
-
-
-
 	// TODO: Put all this code bellow in a manager class to handle all the hard stuff, and to clean up the code.
 	// TODO: Also save this data into the data folder of the world files so it can be read if needed
 
