@@ -12,6 +12,8 @@ import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 
 public class ExplosionPopulator extends ChunkBlockPopulator {
 
+    // FIXME: This populator has some terrible performance issues, fix this!
+
     /** General populator constants. */
 	public static final float CHUNK_CHANCE = .8f;
 
