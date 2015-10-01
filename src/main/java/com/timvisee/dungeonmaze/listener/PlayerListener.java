@@ -124,7 +124,7 @@ public class PlayerListener implements Listener {
 			player.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  uc.getLatestGameVersion() + " or higher!");
 		} else {
 			if(uc.getResult() == UpdateResult.SUCCESS)
-				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (v" + String.valueOf(newVer) + "). Server reboot required!");
+				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (" + String.valueOf(newVer) + "). Server reboot required!");
 
 			else {
 				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVer));

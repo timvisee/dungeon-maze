@@ -5,7 +5,7 @@
 
 	<groupId>com.timvisee</groupId>
 	<artifactId>dungeonmaze</artifactId>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 
 	<name>DungeonMaze</name>
 	<description>Dungeon Maze is a maze world generator for the Bukkit/Spigot API. Give it a try! Will you survive?</description>

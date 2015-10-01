@@ -8,6 +8,13 @@ package com.timvisee.dungeonmaze.update;
  * This class provides the means to safely and easily update a plugin, or check to see if it is updated using dev.bukkit.org
  */
 
+import com.timvisee.dungeonmaze.util.Version;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,12 +23,6 @@ import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 /**
  * Check dev.bukkit.org to find updates for a given plugin, and download the updates if needed.
@@ -510,7 +511,12 @@ public class Updater {
      * @return true if Updater should consider the remote version an update, false if not.
      */
     public boolean shouldUpdate(String localVersion, String remoteVersion) {
-        return !localVersion.equalsIgnoreCase(remoteVersion);
+        // Construct the version objects
+        Version local = new Version(localVersion);
+        Version remote = new Version(remoteVersion);
+
+        // Compare the versions, return the result
+        return local.compareTo(remote) < 0;
     }
 
     /**
