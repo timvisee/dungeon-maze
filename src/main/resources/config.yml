@@ -1,0 +1,43 @@
+# Dungeon Maze worlds
+worlds: []
+preloadWorlds: []
+
+# World mangement
+unloadWorldsOnPluginDisable: true
+
+# Gameplay settings
+allowSurface: true
+worldProtection: false
+blockWhiteList: []
+
+# Update checker
+updateChecker:
+    enabled: true
+    notifyInGame: true
+
+# Permission Support
+usePermissions : true
+useBypassPermissions : true
+
+# Dungeon Maze API settings
+api:
+    enabled: true
+
+# Mob Spawner Populator
+mobs:
+- Blaze
+- Creeper
+- Enderman
+- Ghast
+- MagmaCube
+- Pig
+- PigZombie
+- Silverfish
+- Skeleton
+- Spider
+- Zombie
+
+# Logging settings
+logging:
+    debug: false
+    error: true
