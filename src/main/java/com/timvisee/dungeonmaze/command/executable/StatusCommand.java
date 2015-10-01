@@ -6,6 +6,7 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
+import com.timvisee.dungeonmaze.util.SystemUtils;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import org.bukkit.Bukkit;
@@ -171,7 +172,8 @@ public class StatusCommand extends ExecutableCommand {
 
         // Return the machine status
         sender.sendMessage(ChatColor.GOLD + "OS Name: " + ChatColor.WHITE + System.getProperty("os.name"));
+        sender.sendMessage(ChatColor.GOLD + "OS Architecture: " + ChatColor.WHITE + SystemUtils.getSystemArchNumber() + "-bit" + ChatColor.GRAY + " (" + SystemUtils.getSystemArchFull() + ")");
         sender.sendMessage(ChatColor.GOLD + "OS Version: " + ChatColor.WHITE + System.getProperty("os.version"));
-        sender.sendMessage(ChatColor.GOLD + "Java Version: " + ChatColor.WHITE + System.getProperty("java.version"));
+        sender.sendMessage(ChatColor.GOLD + "Java Version: " + ChatColor.WHITE + System.getProperty("java.version") + ChatColor.GRAY + " (" + System.getProperty("sun.arch.data.model") + "-bit)");
     }
 }
