@@ -96,7 +96,7 @@ public class Generator extends ChunkGenerator {
                 new VinePopulator(),
                 new CobblestonePopulator(),
                 new MushroomPopulator()
-                //new ExplosionPopulator()
+                //new ExplosionPopulator() // Temporarily disabled for performance issues
         );
     }
 

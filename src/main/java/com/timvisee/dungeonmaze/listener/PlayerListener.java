@@ -1,8 +1,11 @@
 package com.timvisee.dungeonmaze.listener;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
+import com.timvisee.dungeonmaze.update.Updater;
+import com.timvisee.dungeonmaze.update.Updater.UpdateResult;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,11 +14,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
-
-import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.update.Updater;
-import com.timvisee.dungeonmaze.update.Updater.UpdateResult;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 public class PlayerListener implements Listener {
 
@@ -109,8 +109,8 @@ public class PlayerListener implements Listener {
 			return;
 
 		// No new version found
-		if(uc.getResult() != UpdateResult.SUCCESS && uc.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-            player.sendMessage(ChatColor.GREEN + "No new DungeonMaze version found!");
+		if(uc.getResult() == UpdateResult.NO_UPDATE) {
+            player.sendMessage(ChatColor.GREEN + "Dungeon Maze is up to date!");
 			return;
         }
 
