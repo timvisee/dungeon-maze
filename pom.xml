@@ -38,9 +38,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- Change Compiler Version (JDK) HERE! -->
+		<!-- Compiler Version (JDK)! -->
 		<javaVersion>1.8</javaVersion>
-		<!-- Change MC Version HERE! -->
+		<!-- Minecraft Version! -->
 		<bukkitVersion>1.8.8-R0.1-SNAPSHOT</bukkitVersion>
 	</properties>
 
