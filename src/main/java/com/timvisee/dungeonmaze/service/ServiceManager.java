@@ -128,6 +128,9 @@ public class ServiceManager {
             // Get the current service
             Service m = this.get(i);
 
+            // Show a debug message
+            Core.getLogger().debug("Service " + m.getName() + " loading...");
+
             // Initialize the service
             if(!m.init()) {
                 // Show an error message
