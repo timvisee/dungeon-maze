@@ -1,7 +1,6 @@
 package com.timvisee.dungeonmaze.plugin.multiverse;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
-import com.sun.xml.internal.ws.util.VersionUtil;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.util.Version;
 import org.bukkit.Bukkit;
