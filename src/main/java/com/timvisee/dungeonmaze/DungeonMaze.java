@@ -159,15 +159,20 @@ public class DungeonMaze extends JavaPlugin {
 	}
 
 	/**
-	 * Get the default world generator for a world. Inject the Dungeon Maze generator for Dungeon Maze worlds.
+	 * Return the Dungeon Maze world generator.
 	 *
-	 * @param worldName The name of the world to get the generator for.
-	 * @param id Unique ID, if any, that was specified to indicate which generator was requested
+	 * @param worldName The name of the world. (Currently not used)
+	 * @param id Unique ID, if any, that was specified to indicate which generator was requested.
 	 *
-	 * @return The world generator for the specified world.
+	 * @return The Dungeon Maze world generator.
 	 */
 	@Override
 	public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        // Always return the DungeonMaze generator
+		return getDungeonMazeGenerator();
+
+        /*
+        // NOTE: This seems to be obsolete, and causes various problems. For example, Multiverse doesn't detect the generator anymore
 		// Get the world manager, and make sure it's initialized
 		WorldManager worldManager = Core.getWorldManager();
 		if(worldManager == null)
@@ -177,6 +182,7 @@ public class DungeonMaze extends JavaPlugin {
 		if(worldManager.isDungeonMazeWorld(worldName))
 			return getDungeonMazeGenerator();
 		return null;
+        */
 	}
 
 	/**
