@@ -53,13 +53,10 @@ public class MultiverseHandler {
             this.multiverseCore = null;
 
             // Start a scheduled task to re-hook Multiverse after start
-            Bukkit.getScheduler().scheduleSyncDelayedTask(DungeonMaze.instance, new Runnable() {
-                @Override
-                public void run() {
-                    // Try to hook Multiverse again and show a status message
-                    Core.getLogger().debug("Trying to hook into Multiverse-Core again...");
-                    hook();
-                }
+            Bukkit.getScheduler().scheduleSyncDelayedTask(DungeonMaze.instance, () -> {
+                // Try to hook Multiverse again and show a status message
+                Core.getLogger().debug("Trying to hook into Multiverse-Core again...");
+                hook();
             });
 
             // Return the result
