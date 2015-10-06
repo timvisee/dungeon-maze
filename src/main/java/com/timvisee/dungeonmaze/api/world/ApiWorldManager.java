@@ -100,6 +100,7 @@ public class ApiWorldManager {
 			return false;
 
 		// Refresh the world manager
+		//noinspection ConstantConditions
 		return getWorldManager().refresh();
 	}
 
@@ -114,6 +115,7 @@ public class ApiWorldManager {
 			return null;
 
 		// Get the list of Dungeon Maze worlds
+		//noinspection ConstantConditions
 		return getWorldManager().getDungeonMazeWorlds();
 	}
 
@@ -130,6 +132,7 @@ public class ApiWorldManager {
 			return null;
 
 		// Get the list of Dungeon Maze worlds
+		//noinspection ConstantConditions
 		return getWorldManager().getDungeonMazeWorlds(preloadWorlds);
 	}
 
@@ -144,6 +147,7 @@ public class ApiWorldManager {
 			return null;
 
 		// Get the list of loaded Dungeon Maze worlds
+		//noinspection ConstantConditions
 		return getWorldManager().getLoadedDungeonMazeWorlds();
 	}
 
@@ -160,6 +164,7 @@ public class ApiWorldManager {
 			return false;
 
 		// Check whether the world exists
+		//noinspection ConstantConditions
 		return getWorldManager().isWorld(worldName);
 	}
 	
@@ -176,6 +181,7 @@ public class ApiWorldManager {
 			return false;
 
 		// Check whether a world is a Dungeon Maze world
+		//noinspection ConstantConditions
 		return getWorldManager().isDungeonMazeWorld(w);
 	}
 
@@ -192,6 +198,7 @@ public class ApiWorldManager {
 			return false;
 
 		// Check whether a world is loaded
+		//noinspection ConstantConditions
 		return getWorldManager().isWorldLoaded(worldName);
 	}
 	
@@ -208,6 +215,7 @@ public class ApiWorldManager {
 			return false;
 
 		// Check whether a world is a loaded Dungeon Maze world
+		//noinspection ConstantConditions
 		return getWorldManager().isDungeonMazeWorldLoaded(w);
 	}
 
@@ -225,6 +233,7 @@ public class ApiWorldManager {
 			return null;
 
 		// Load a world, return the result
+		//noinspection ConstantConditions
 		return getWorldManager().loadWorld(worldName);
 	}
 
@@ -239,6 +248,7 @@ public class ApiWorldManager {
 			return -1;
 
 		// Preload the Dungeon Maze worlds
+		//noinspection ConstantConditions
 		return getWorldManager().preloadDungeonMazeWorlds();
 	}
 
@@ -257,6 +267,7 @@ public class ApiWorldManager {
 			return false;
 
 		// Prepare a Dungeon Maze world
+		//noinspection ConstantConditions
 		return getWorldManager().prepareDungeonMazeWorld(worldName, preload);
 	}
 
