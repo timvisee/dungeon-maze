@@ -50,8 +50,7 @@ public class DungeonMaze extends JavaPlugin {
 
 		// Show a status message
 		Core.getLogger().info("Starting Dungeon Maze v" + getVersionName() + "...");
-		// TODO: Show proper detected Minecraft server name here, instead of just BUKKIT
-        Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (BUKKIT)");
+        Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (" + MinecraftUtils.getMinecraftServerName() + ")");
 
 		// Initialize the core
 		initCore();

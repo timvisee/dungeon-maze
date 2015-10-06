@@ -27,4 +27,29 @@ public class MinecraftUtils {
         // Get and return the Minecraft version number
         return rawVersion.substring(start, end);
     }
+
+    /**
+     * Get the name of the current running Minecraft server system, such as CraftBukkit or Spigot.
+     *
+     * @return The current Minecraft server name.
+     */
+    public static String getMinecraftServerName() {
+        // Get the raw version
+        final String rawVersion = Bukkit.getVersion();
+
+        // Check whether this is a CraftBukkit or Bukkit server
+        if(rawVersion.toLowerCase().contains("bukkit"))
+            return "CraftBukkit";
+
+        // Check whether this is a PaperSpigot server
+        if(rawVersion.toLowerCase().contains("paperspigot"))
+            return "PaperSpigot";
+
+        // Check whether this is a Spigot server
+        if(rawVersion.toLowerCase().contains("spigot"))
+            return "Spigot";
+
+        // Return unknown
+        return "Unknown";
+    }
 }
