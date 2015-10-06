@@ -6,7 +6,6 @@ import com.timvisee.dungeonmaze.command.CommandHandler;
 import com.timvisee.dungeonmaze.generator.Generator;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.Profiler;
-import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
