@@ -30,8 +30,8 @@ McStats: http://mcstats.org/plugin/DungeonMaze
 >- Execute command "mvn clean install -B"
 
 #####Running Requirements:
->- Java 1.8 (should work also with Java 1.8)
->- Spigot or CraftBukkit (1.5 - 1.8.X)
+>- Java 1.8 or higher
+>- CraftBukkit or Spigot (for Minecraft 1.8.1 or higher)
 
 #####License: 
 GNU GPL v3.0
