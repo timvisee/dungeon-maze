@@ -1,7 +1,9 @@
 package com.timvisee.dungeonmaze.plugin.multiverse;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
+import com.sun.xml.internal.ws.util.VersionUtil;
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -49,8 +51,12 @@ public class MultiverseHandler {
             // Get the multiverse core instance
             MultiverseCore multiverseCore = (MultiverseCore) multiversePlugin;
 
+            // Get  the multiverse plugin and required version number
+            Version multiverseVersion = new Version(multiverseCore.getDescription().getVersion());
+            Version requiredVersion = new Version(MultiverseHandler.REQUIRED_MULTIVERSE_VERSION);
+
             // Make sure the multiverse core version is acceptable, if not, return false
-            if(!multiverseCore.getDescription().getVersion().contains(MultiverseHandler.REQUIRED_MULTIVERSE_VERSION)) {
+            if(multiverseVersion.compareTo(requiredVersion) > 0) {
                 // Show an error message
                 Core.getLogger().info("Failed to hook into Multiverse, version not compatible!");
                 return false;
