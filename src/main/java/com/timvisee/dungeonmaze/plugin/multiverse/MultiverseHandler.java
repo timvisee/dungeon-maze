@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.plugin.multiverse;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -32,7 +33,7 @@ public class MultiverseHandler {
      * True will also be returned if the handler didn't hook because Multiverse wasn't found.
      */
     public boolean hook() {
-        // TODO: Re-hook if we're already hooked?
+        // TODO: Try to re-hook if we're already hooked?
 
         // Try to get the multiverse plugin instance
         Plugin multiversePlugin = Bukkit.getPluginManager().getPlugin("Multiverse-Core");
@@ -40,8 +41,28 @@ public class MultiverseHandler {
         // Make sure any plugin instance was found
         if(multiversePlugin == null) {
             // Show a status message
-            Core.getLogger().info("Multiverse not detected! Disabling Multiverse usage!");
+            Core.getLogger().info("Multiverse-Core not detected! Disabling Multiverse usage!");
             this.multiverseCore = null;
+            return true;
+        }
+
+        // Make sure the plugin is loaded/enabled before hooking
+        if(!multiversePlugin.isEnabled()) {
+            // Show a status message
+            Core.getLogger().info("Multiverse-Core isn't loaded yet! Waiting for Multiverse...");
+            this.multiverseCore = null;
+
+            // Start a scheduled task to re-hook Multiverse after start
+            Bukkit.getScheduler().scheduleSyncDelayedTask(DungeonMaze.instance, new Runnable() {
+                @Override
+                public void run() {
+                    // Try to hook Multiverse again and show a status message
+                    Core.getLogger().debug("Trying to hook into Multiverse-Core again...");
+                    hook();
+                }
+            });
+
+            // Return the result
             return true;
         }
 
@@ -57,7 +78,7 @@ public class MultiverseHandler {
             // Make sure the multiverse core version is acceptable, if not, return false
             if(multiverseVersion.compareTo(requiredVersion) > 0) {
                 // Show an error message
-                Core.getLogger().info("Failed to hook into Multiverse, version not compatible!");
+                Core.getLogger().info("Failed to hook into Multiverse-Core, version not compatible!");
                 return false;
             }
 
@@ -69,12 +90,12 @@ public class MultiverseHandler {
             this.multiverseCore = null;
 
             // Show an error message
-            Core.getLogger().info("Failed to hook into Multiverse!");
+            Core.getLogger().info("Failed to hook into Multiverse-Core!");
             return false;
         }
 
         // Show an status message
-        Core.getLogger().info("Hooked into Multiverse");
+        Core.getLogger().info("Hooked into Multiverse-Core");
         return true;
     }
 
