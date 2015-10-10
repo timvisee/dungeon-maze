@@ -49,7 +49,7 @@ public class DungeonMaze extends JavaPlugin {
 
 		// Show a status message
 		Core.getLogger().info("Starting Dungeon Maze v" + getVersionName() + "...");
-        Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (" + MinecraftUtils.getMinecraftServerName() + ")");
+        Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (" + MinecraftUtils.getServerType().getName() + ")");
 
 		// Initialize the core
 		initCore();
