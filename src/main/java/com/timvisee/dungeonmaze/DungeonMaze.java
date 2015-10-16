@@ -21,9 +21,9 @@ public class DungeonMaze extends JavaPlugin {
     // TODO: Create a getter method for this constant, and make it private
 	public static final String PLUGIN_NAME = "Dungeon Maze";
 	/** Defines the current Dungeon Maze version name. */
-	private static final String PLUGIN_VERSION_NAME = "0.2.1";
+	private static final String PLUGIN_VERSION_NAME = "0.2.2";
 	/** Defines the current Dungeon Maze version code. */
-	private static final int PLUGIN_VERSION_CODE = 17;
+	private static final int PLUGIN_VERSION_CODE = 18;
 
 	/** Dungeon Maze instance. */
 	public static DungeonMaze instance;
