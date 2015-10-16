@@ -87,22 +87,14 @@ public class TreePopulator extends SurfaceBlockPopulator {
                 world.generateTree(new Location(world, (chunk.getX() * 16) + xTree, yTree, (chunk.getZ() * 16) + zTree), TreeType.TREE);
 
         } else if(surfaceBlock.getType() == Material.SAND)
-            if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS))
-            {
-            	chunk.getBlock(xTree, yTree, zTree).setType(Material.CACTUS);
-            	switch (rand.nextInt(3)) {
-            	case 0:
-            		chunk.getBlock(xTree, yTree + 1, zTree).setType(Material.CACTUS);
-            		break;
-            	case 1:
-            		chunk.getBlock(xTree, yTree + 1, zTree).setType(Material.CACTUS);
-            		chunk.getBlock(xTree, yTree + 2, zTree).setType(Material.CACTUS);
-            		break;
-            	default:
-            		break;
-            	}
+            if(biome.equals(Biome.DESERT) || biome.equals(Biome.DESERT_HILLS)) {
+                // Determine the cactus height
+                int cactusHeight = rand.nextInt(3);
+
+                // Place the cactus
+                for(int i = 0; i < cactusHeight; i++)
+                    chunk.getBlock(xTree, yTree + i, zTree).setType(Material.CACTUS);
             }
-                
 	}
 
     @Override
