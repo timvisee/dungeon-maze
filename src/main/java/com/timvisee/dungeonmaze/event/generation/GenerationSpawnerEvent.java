@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.event.EventHandler;
 import com.timvisee.dungeonmaze.util.MazeUtils;
 
@@ -60,7 +61,7 @@ public class GenerationSpawnerEvent extends EventHandler {
 	 * @param spawnedType spawned entity type
 	 */
 	public void setSpawnedType(EntityType spawnedType) {
-		if(spawnedType != null)
+		if(spawnedType != null && Core.getConfigHandler().isMobSpawnerAllowed(spawnedType.name()))
 			this.spawnedType = spawnedType;
 	}
 	
