@@ -17,8 +17,6 @@ import java.util.List;
 
 public class DungeonMaze extends JavaPlugin {
 
-	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
-
 	/** Defines the current Dungeon Maze version name. */
 	private static final String VERSION_NAME = "0.2.1";
 	/** Defines the current Dungeon Maze version code. */
@@ -257,7 +255,6 @@ public class DungeonMaze extends JavaPlugin {
 			lastWorld = world;
 			constantRooms.clear();
 		}
-
 		constantRooms.add(Integer.toString(roomX) + ";" + Integer.toString(roomY) + ";" + Integer.toString(roomZ));
 	}
 
