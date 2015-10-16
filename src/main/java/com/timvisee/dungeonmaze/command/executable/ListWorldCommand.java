@@ -1,6 +1,7 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.world.WorldManager;
@@ -34,8 +35,8 @@ public class ListWorldCommand extends ExecutableCommand {
         List<String> otherWorlds = worldManager.getWorlds(true);
 
         // Show the list of Dungeon Maze worlds
-        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE WORLDS ]==========");
-        sender.sendMessage(ChatColor.GOLD + "Dungeon Maze worlds:");
+        sender.sendMessage(ChatColor.GOLD + "==========[ \" + DungeonMaze.PLUGIN_NAME.toUpperCase() + \" WORLDS ]==========");
+        sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " worlds:");
         if(dungeonMazeWorlds.size() > 0) {
             for(String worldName : dungeonMazeWorlds) {
                 if(worldManager.isDungeonMazeWorldLoaded(worldName))

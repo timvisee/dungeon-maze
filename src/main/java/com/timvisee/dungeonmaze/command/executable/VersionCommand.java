@@ -22,8 +22,8 @@ public class VersionCommand extends ExecutableCommand {
     @Override
     public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Show some version info
-        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE ABOUT ]==========");
-        sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.WHITE + "Dungeon Maze v" + DungeonMaze.getVersionName() + ChatColor.GRAY + " (code: " + DungeonMaze.getVersionCode() + ")");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " ABOUT ]==========");
+        sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.WHITE + DungeonMaze.PLUGIN_NAME + " v" + DungeonMaze.getVersionName() + ChatColor.GRAY + " (code: " + DungeonMaze.getVersionCode() + ")");
         sender.sendMessage(ChatColor.GOLD + "Developers:");
         printDeveloper(sender, "Tim Visee", "timvisee", "Lead Developer");
         printDeveloper(sender, "Xephi", "xephi", "Code Contributor");

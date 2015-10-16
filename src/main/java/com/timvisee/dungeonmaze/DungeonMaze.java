@@ -17,10 +17,13 @@ import java.util.List;
 
 public class DungeonMaze extends JavaPlugin {
 
+	/** Defines the name of the plugin. */
+    // TODO: Create a getter method for this constant, and make it private
+	public static final String PLUGIN_NAME = "Dungeon Maze";
 	/** Defines the current Dungeon Maze version name. */
-	private static final String VERSION_NAME = "0.2.1";
+	private static final String PLUGIN_VERSION_NAME = "0.2.1";
 	/** Defines the current Dungeon Maze version code. */
-	private static final int VERSION_CODE = 17;
+	private static final int PLUGIN_VERSION_CODE = 17;
 
 	/** Dungeon Maze instance. */
 	public static DungeonMaze instance;
@@ -46,15 +49,16 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler profiler = new Profiler(true);
 
 		// Show a status message
-		Core.getLogger().info("Starting Dungeon Maze v" + getVersionName() + "...");
+		// TODO: Should we use a method for the plugin name constant?
+		Core.getLogger().info("Starting " + PLUGIN_NAME + " v" + getVersionName() + "...");
         Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (" + MinecraftUtils.getServerType().getName() + ")");
 
 		// Initialize the core
 		initCore();
 
 		// Show a startup message
-		Core.getLogger().info("Dungeon Maze v" + getVersionName() + " started, took " + profiler.getTimeFormatted() + "!");
-		Core.getLogger().info("Dungeon Maze developed by Tim Visee - timvisee.com");
+		Core.getLogger().info(PLUGIN_NAME + " v" + getVersionName() + " started, took " + profiler.getTimeFormatted() + "!");
+		Core.getLogger().info(PLUGIN_NAME + " developed by Tim Visee - timvisee.com");
 	}
 
 	/**
@@ -65,13 +69,13 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler profiler = new Profiler(true);
 
 		// Show an disabling message
-		Core.getLogger().info("Disabling Dungeon Maze...");
+		Core.getLogger().info("Disabling " + PLUGIN_NAME + "...");
 
 		// Destroy the core
 		destroyCore(true);
 
 		// Show an disabled message
-		Core.getLogger().info("Dungeon Maze Disabled, took " + profiler.getTimeFormatted() + "!");
+		Core.getLogger().info(PLUGIN_NAME + " disabled, took " + profiler.getTimeFormatted() + "!");
 	}
 
 	/**
@@ -219,7 +223,7 @@ public class DungeonMaze extends JavaPlugin {
 	 * @return The version name of the currently installed Dungeon Maze instance.
 	 */
 	public static String getVersionName() {
-		return VERSION_NAME;
+		return PLUGIN_VERSION_NAME;
 	}
 
 	/**
@@ -228,7 +232,7 @@ public class DungeonMaze extends JavaPlugin {
 	 * @return The version code of the currently installed Dungeon Maze instance.
 	 */
 	public static int getVersionCode() {
-		return VERSION_CODE;
+		return PLUGIN_VERSION_CODE;
 	}
 
 

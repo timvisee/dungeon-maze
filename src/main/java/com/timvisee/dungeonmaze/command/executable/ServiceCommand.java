@@ -1,6 +1,7 @@
 package com.timvisee.dungeonmaze.command.executable;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.service.Service;
@@ -24,7 +25,7 @@ public class ServiceCommand extends ExecutableCommand {
     @Override
     public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Print the status info header
-        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE SERVICES ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " SERVICES ]==========");
 
         // Get the service manager and make sure it's valid
         ServiceManager serviceManager = Core.instance.getServiceManager();
