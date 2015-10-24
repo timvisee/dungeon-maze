@@ -24,7 +24,7 @@ import com.timvisee.dungeonmaze.permission.PermissionsManagerService;
 import com.timvisee.dungeonmaze.update.UpdateCheckerService;
 import com.timvisee.dungeonmaze.world.WorldManagerService;
 import com.timvisee.dungeonmaze.structure.CustomStructureManager;
-import com.timvisee.dungeonmaze.update.Updater;
+import com.timvisee.dungeonmaze.update.bukkit.Updater;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManagerService;

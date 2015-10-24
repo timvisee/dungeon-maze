@@ -1,12 +1,9 @@
 package com.timvisee.dungeonmaze.update;
 
-// FIXME: The updater is highly unstable, create a new update system!
-
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.server.ServerType;
 import com.timvisee.dungeonmaze.service.Service;
-
-import java.io.File;
+import com.timvisee.dungeonmaze.util.MinecraftUtils;
 
 public class UpdateCheckerService extends Service {
 
@@ -17,7 +14,7 @@ public class UpdateCheckerService extends Service {
     private boolean init = false;
 
     /** Update checker instance. */
-    private Updater updateChecker;
+    private UpdateChecker updateChecker;
 
     /**
      * Initialize the service.
@@ -26,6 +23,8 @@ public class UpdateCheckerService extends Service {
      */
     @Override
     public boolean init() {
+        // TODO: Always start the updater, handle this option later?
+
         // Check whether the update checker should be enabled on startup
         if(Core.getConfigHandler().enableUpdateCheckerOnStartup)
             setupUpdateChecker();
@@ -83,13 +82,25 @@ public class UpdateCheckerService extends Service {
         if(isUpdateCheckerSetup())
             return;
 
-        // Get the plugin JAR
-        File pluginJar = new File(DungeonMaze.instance.getDataFolder().getParentFile(), "DungeonMaze.jar");
+        // Get the server type this plugin is running on
+        ServerType serverType = MinecraftUtils.getServerType();
+
+        // Determine the update checker type to use
+        UpdateCheckerType updateCheckerType;
+        switch(serverType) {
+        case BUKKIT:
+            updateCheckerType = UpdateCheckerType.BUKKIT;
+            break;
+
+        default:
+            updateCheckerType = UpdateCheckerType.UNIVERSAL;
+        }
 
         // Set up the update checker
-        this.updateChecker = new Updater(DungeonMaze.instance, 45175, pluginJar, Updater.UpdateType.DEFAULT, true);
+        this.updateChecker = new UpdateChecker();
 
-        // TODO: Do some error checking on the updater!
+        // Start the update checker
+        this.updateChecker.start(updateCheckerType);
     }
 
     /**
@@ -105,6 +116,8 @@ public class UpdateCheckerService extends Service {
      * Shutdown the update checker if it has been set up.
      */
     public void shutdownUpdateChecker() {
+        // TODO: Properly shut down the update checker!
+
         this.updateChecker = null;
     }
 
@@ -113,7 +126,7 @@ public class UpdateCheckerService extends Service {
      *
      * @return Update checker instance.
      */
-    public Updater getUpdateChecker() {
+    public UpdateChecker getUpdateChecker() {
         // Initialize the update checker if it hasn't been initialized yet
         setupUpdateChecker();
 

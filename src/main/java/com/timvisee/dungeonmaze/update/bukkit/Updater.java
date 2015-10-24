@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze.update;
+package com.timvisee.dungeonmaze.update.bukkit;
 
 // FIXME: This updater is highly unstable, create a new update system!
 
