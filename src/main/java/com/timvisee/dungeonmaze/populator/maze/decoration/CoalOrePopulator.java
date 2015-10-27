@@ -2,7 +2,6 @@ package com.timvisee.dungeonmaze.populator.maze.decoration;
 
 import java.util.Random;
 
-
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

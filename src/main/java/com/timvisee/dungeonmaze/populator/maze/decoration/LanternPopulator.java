@@ -89,16 +89,4 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
     public int getRoomIterationsMax() {
         return ROOM_ITERATIONS_MAX;
     }
-
-	// Deprecated, might use later again to rotate pumpkins correctly
-	/*private byte getData(int x, int z, int x2, int z2, Material type) {
-		if (x == x2) {
-			if (z < z2)
-				return (byte) (type == Material.JACK_O_LANTERN ? 0 : 2);
-			return (byte) (type == Material.JACK_O_LANTERN ? 2 : 0);
-		}
-		if (x < x2)
-			return (byte) (type == Material.JACK_O_LANTERN ? 3 : 1);
-		return (byte) (type == Material.JACK_O_LANTERN ? 1 : 3);
-	}*/
 }
