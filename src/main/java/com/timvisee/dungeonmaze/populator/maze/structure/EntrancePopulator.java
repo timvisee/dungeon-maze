@@ -181,7 +181,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 							chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
 
 				// Generate the house on the hole
-				//   corners
+				// Corners
 				for(int yy = yGround + 1; yy < yGround + 4; yy++) {
 					chunk.getBlock(x, yy, z).setType(Material.SMOOTH_BRICK);
 					chunk.getBlock(x, yy, z + 7).setType(Material.SMOOTH_BRICK);
@@ -189,7 +189,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					chunk.getBlock(x + 7, yy, z + 7).setType(Material.SMOOTH_BRICK);
 				}
 
-				//   walls
+				// Walls
 				for(int xx = 1; xx < 7; xx++) {
 					for(int yy = yGround + 1; yy < yGround + 4; yy++) {
 						chunk.getBlock(x + xx, yy, z).setType(Material.COBBLESTONE);
@@ -209,22 +209,14 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					}
 				}
 
-				//   struct bars
+				// Struct bars
 				for(int xx = 1; xx < 7; xx++) {
 					int yy = yGround + 3;
 					chunk.getBlock(x + xx, yy, z + 2).setType(Material.WOOD);
 					chunk.getBlock(x + xx, yy, z + 5).setType(Material.WOOD);
 				}
 
-				//   doors
-				/*c.getBlock(x + 3, y + 10, z + 7).setTypeId(64);
-				c.getBlock(x + 3, y + 10, z + 7).setData((byte) 3);
-				c.getBlock(x + 4, y + 10, z + 7).setTypeId(64);
-				c.getBlock(x + 4, y + 10, z + 7).setData((byte) 3);
-				c.getBlock(x + 3, y + 11, z + 7).setTypeId(64);
-				c.getBlock(x + 3, y + 11, z + 7).setData((byte) 8);
-				c.getBlock(x + 4, y + 11, z + 7).setTypeId(64);
-				c.getBlock(x + 4, y + 11, z + 7).setData((byte) 9);*/
+				// Doors
 				chunk.getBlock(x + 3, yGround + 1, z + 7).setType(Material.AIR);
 				chunk.getBlock(x + 4, yGround + 1, z + 7).setType(Material.AIR);
 				chunk.getBlock(x + 3, yGround + 2, z + 7).setType(Material.AIR);
