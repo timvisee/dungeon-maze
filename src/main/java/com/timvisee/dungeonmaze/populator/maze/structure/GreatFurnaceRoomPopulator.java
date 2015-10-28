@@ -97,66 +97,70 @@ public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
     }
 	
 	public void addItemsToFurnace(Random random, Furnace furnace) {
+		// Create a list to put the furnace items in
 		List<ItemStack> items = new ArrayList<>();
+
+		// Add the items to the list
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(41, 1, (short) 0));
+			items.add(new ItemStack(Material.GOLD_BLOCK, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(42, 1, (short) 0));
+			items.add(new ItemStack(Material.IRON_BLOCK, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(45, 1, (short) 0));
+			items.add(new ItemStack(Material.BRICK, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(263, 1, (short) 0));
+			items.add(new ItemStack(Material.COAL, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(263, 1, (short) 1));
+			items.add(new ItemStack(Material.COAL, 1, (short) 1));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(265, 2, (short) 0));
+			items.add(new ItemStack(Material.IRON_INGOT, 2, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(265, 4, (short) 0));
+			items.add(new ItemStack(Material.IRON_INGOT, 4, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(266, 2, (short) 0));
+			items.add(new ItemStack(Material.GOLD_INGOT, 2, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(266, 4, (short) 0));
+			items.add(new ItemStack(Material.GOLD_INGOT, 4, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(297, 1, (short) 0));
+			items.add(new ItemStack(Material.BREAD, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(325, 1, (short) 0));
+			items.add(new ItemStack(Material.BUCKET, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(366, 2, (short) 0));
+			items.add(new ItemStack(Material.COOKED_CHICKEN, 2, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(366, 4, (short) 0));
+			items.add(new ItemStack(Material.COOKED_CHICKEN, 4, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(318, 3, (short) 0));
+			items.add(new ItemStack(Material.FLINT, 3, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(318, 5, (short) 0));
+			items.add(new ItemStack(Material.FLINT, 5, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(320, 1, (short) 0));
+			items.add(new ItemStack(Material.GRILLED_PORK, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(350, 1, (short) 0));
+			items.add(new ItemStack(Material.COOKED_FISH, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(368, 1, (short) 0));
+			items.add(new ItemStack(Material.ENDER_PEARL, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(369, 1, (short) 0));
+			items.add(new ItemStack(Material.BLAZE_ROD, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(370, 1, (short) 0));
+			items.add(new ItemStack(Material.GHAST_TEAR, 1, (short) 0));
 		if(random.nextInt(100) < 45)
-			items.add(new ItemStack(371, 1, (short) 0));
+			items.add(new ItemStack(Material.GOLD_NUGGET, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(372, 1, (short) 0));
+			items.add(new ItemStack(Material.NETHER_STALK, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(375, 1, (short) 0));
+			items.add(new ItemStack(Material.SPIDER_EYE, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(377, 1, (short) 0));
+			items.add(new ItemStack(Material.BLAZE_POWDER, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(378, 1, (short) 0));
+			items.add(new ItemStack(Material.MAGMA_CREAM, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(381, 1, (short) 0));
+			items.add(new ItemStack(Material.EYE_OF_ENDER, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(382, 1, (short) 0));
+			items.add(new ItemStack(Material.SPECKLED_MELON, 1, (short) 0));
 		
 		// Add the selected items into the furnace
 		if(random.nextInt(100) < 60)
 			furnace.getInventory().setResult(items.get(random.nextInt(items.size())));
-		
+
+		// Update the furnace
 		furnace.update();
 	}
 
