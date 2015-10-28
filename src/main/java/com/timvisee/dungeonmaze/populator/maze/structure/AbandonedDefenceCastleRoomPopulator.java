@@ -262,145 +262,104 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
         // Update the furnace
 		furnace.update();
 	}
-	
+
 	public List<ItemStack> genChestContent(Random random) {
+        // Create a list to put the chest items in
 		List<ItemStack> items = new ArrayList<>();
-		
+
+        // Put the items in the list
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(50, 4, (short) 0));
-		
+			items.add(new ItemStack(Material.TORCH, 4, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(50, 8, (short) 0));
-		
+			items.add(new ItemStack(Material.TORCH, 8, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(50, 12, (short) 0));
-		
+			items.add(new ItemStack(Material.TORCH, 12, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(260, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.APPLE, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(262, 16, (short) 0));
-		
+			items.add(new ItemStack(Material.ARROW, 16, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(262, 24, (short) 0));
-		
+			items.add(new ItemStack(Material.ARROW, 24, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(264, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.DIAMOND, 1, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(265, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.IRON_INGOT, 1, (short) 0));
 		if(random.nextInt(100) < 60)
-			items.add(new ItemStack(266, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.GOLD_INGOT, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(267, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.IRON_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(268, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.WOOD_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(272, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.STONE_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(296, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.WHEAT, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(296, 2, (short) 0));
-		
+			items.add(new ItemStack(Material.WHEAT, 2, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(296, 3, (short) 0));
-		
+			items.add(new ItemStack(Material.WHEAT, 3, (short) 0))
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(297, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.BREAD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(298, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.LEATHER_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(299, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.LEATHER_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(300, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.LEATHER_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(301, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.LEATHER_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(302, 1, (short) 0)); 
-		
+			items.add(new ItemStack(Material.CHAINMAIL_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(303, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(304, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(305, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.CHAINMAIL_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(306, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.IRON_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(307, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(308, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(309, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.IRON_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(318, 3, (short) 0));
-		
+			items.add(new ItemStack(Material.FLINT, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(318, 5, (short) 0));
-		
+			items.add(new ItemStack(Material.FLINT, 5, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(318, 7, (short) 0));
-		
+			items.add(new ItemStack(Material.FLINT, 7, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(319, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.PORK, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(320, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.GRILLED_PORK, 1, (short) 0));
 		if(random.nextInt(100) < 15)
-			items.add(new ItemStack(331, 5, (short) 0));
-		
+			items.add(new ItemStack(Material.REDSTONE, 5, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(331, 8, (short) 0));
-		
+			items.add(new ItemStack(Material.REDSTONE, 8, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(331, 13, (short) 0));
-		
+			items.add(new ItemStack(Material.REDSTONE, 13, (short) 0));
 		if(random.nextInt(100) < 3)
-			items.add(new ItemStack(331, 21, (short) 0));
-		
+			items.add(new ItemStack(Material.REDSTONE, 21, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(345, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.COMPASS, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(349, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.RAW_FISH, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(350, 1, (short) 0));
-		
-		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(350, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.COOKED_FISH, 1, (short) 0));
+        if(random.nextInt(100) < 20)
+            items.add(new ItemStack(Material.COOKED_FISH, 1, (short) 0));
 		if(random.nextInt(100) < 20) 			
-			items.add(new ItemStack(351, 1, (short) 3));
-		
+			items.add(new ItemStack(Material.INK_SACK, 1, (short) 3));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(354, 1, (short) 0));
-		
+			items.add(new ItemStack(Material.CAKE, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(357, 3, (short) 0));
-		
+			items.add(new ItemStack(Material.COOKIE, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(357, 5, (short) 0));
-		
+			items.add(new ItemStack(Material.COOKIE, 5, (short) 0));
+
+        // Determine how many items to put in the chest
 		int itemCountInChest;
 		switch (random.nextInt(8)) {
 		case 0:
@@ -431,13 +390,15 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 			itemCountInChest = 3;
 			break;
 		}
-		
+
+        // Create a list of results
 		List<ItemStack> result = new ArrayList<>();
 		
 		// Add the selected items randomly
 		for (int i = 0; i < itemCountInChest; i++)
 			result.add(items.get(random.nextInt(items.size())));
 
+        // Return the list of results
 		return result;
 	}
 
