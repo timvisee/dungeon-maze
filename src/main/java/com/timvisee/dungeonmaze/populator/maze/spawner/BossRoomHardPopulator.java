@@ -333,53 +333,56 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 	}
 	
 	public void addItemsToChest(Random random, Chest chest) {
+        // Create a list to put the chest items in
 		List<ItemStack> items = new ArrayList<>();
+
+        // Put the items in the list
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(50, 16, (short) 0));
+			items.add(new ItemStack(Material.TORCH, 16, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(50, 20, (short) 0));
+			items.add(new ItemStack(Material.TORCH, 20, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(262, 24, (short) 0));
+			items.add(new ItemStack(Material.ARROW, 24, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(262, 1, (short) 0));
+			items.add(new ItemStack(Material.ARROW, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(264, 3, (short) 0));
+			items.add(new ItemStack(Material.DIAMOND, 3, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(265, 3, (short) 0));
+			items.add(new ItemStack(Material.IRON_INGOT, 3, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(266, 3, (short) 0));
+			items.add(new ItemStack(Material.GOLD_INGOT, 3, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(267, 1, (short) 0));
+			items.add(new ItemStack(Material.IRON_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(282, 1, (short) 0));
+			items.add(new ItemStack(Material.MUSHROOM_SOUP, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(306, 1, (short) 0));
+			items.add(new ItemStack(Material.IRON_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(307, 1, (short) 0));
+			items.add(new ItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(308, 1, (short) 0));
+			items.add(new ItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(309, 1, (short) 0));
+			items.add(new ItemStack(Material.IRON_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(310, 1, (short) 0));
+			items.add(new ItemStack(Material.DIAMOND_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(311, 1, (short) 0));
+			items.add(new ItemStack(Material.DIAMOND_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(312, 1, (short) 0));
+			items.add(new ItemStack(Material.DIAMOND_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(313, 1, (short) 0));
+			items.add(new ItemStack(Material.DIAMOND_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(318, 1, (short) 0));
+			items.add(new ItemStack(Material.FLINT, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(320, 1, (short) 0));
+			items.add(new ItemStack(Material.GRILLED_PORK, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(322, 1, (short) 0));
+			items.add(new ItemStack(Material.GOLDEN_APPLE, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(331, 7, (short) 0));
+			items.add(new ItemStack(Material.REDSTONE, 7, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(354, 1, (short) 0));
+			items.add(new ItemStack(Material.CAKE, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(357, 8, (short) 0));
+			items.add(new ItemStack(Material.COOKIE, 8, (short) 0));
 		
 		int itemCountInChest;
 		switch (random.nextInt(8)) {
