@@ -297,7 +297,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 		if(random.nextInt(100) < 10)
 			items.add(new ItemStack(Material.WHEAT, 2, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.WHEAT, 3, (short) 0))
+			items.add(new ItemStack(Material.WHEAT, 3, (short) 0));
 		if(random.nextInt(100) < 20)
 			items.add(new ItemStack(Material.BREAD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
