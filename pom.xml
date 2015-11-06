@@ -18,11 +18,10 @@
 		<url>https://github.com/timvisee/DungeonMaze</url>
 	</scm>
 
-	<!-- Official Build Server (coming soon)
 	<ciManagement>
 		<system>jenkins</system>
 		<url>http://ci.xephi.fr/job/DungeonMaze/</url>
-	</ciManagement> -->
+	</ciManagement>
 
 	<issueManagement>
 		<system>GitHub</system>
