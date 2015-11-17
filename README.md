@@ -27,7 +27,7 @@ McStats: http://mcstats.org/plugin/DungeonMaze
 
 #####How to compile the project:
 >- Clone the project with Git/GitHub
->- Execute command "mvn clean install -B"
+>- Execute command `mvn clean install -B`
 
 #####Running Requirements:
 >- Java 1.8 or higher
