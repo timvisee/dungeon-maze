@@ -135,20 +135,6 @@
 	</repositories>
 
 	<dependencies>
-	
-		<!-- Metrics API -->
-		<dependency>
-			<groupId>org.mcstats.bukkit</groupId>
-			<artifactId>metrics</artifactId>
-			<version>R8-SNAPSHOT</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.bukkit</groupId>
-					<artifactId>bukkit</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 
 		<!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project, http://bukkit.org/ -->
 		<dependency>
@@ -180,24 +166,6 @@
 				<exclusion>
 					<artifactId>snakeyaml</artifactId>
 					<groupId>org.yaml</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<!-- Vault, http://dev.bukkit.org/bukkit-plugins/vault/ -->
-		<dependency>
-			<groupId>net.milkbowl.vault</groupId>
-			<artifactId>VaultAPI</artifactId>
-			<version>1.5</version>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.bukkit</groupId>
-					<artifactId>bukkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.bukkit</groupId>
-					<artifactId>craftbukkit</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -324,6 +292,24 @@
             <systemPath>${basedir}/libs/Permission-3.1.6.jar</systemPath>
         </dependency>
 
+        <!-- Vault, http://dev.bukkit.org/bukkit-plugins/vault/ -->
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.5</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>craftbukkit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
 		<!-- String comparison library. Used for dynamic help system. -->
 		<dependency>
 			<groupId>net.ricecode</groupId>
@@ -332,6 +318,20 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
+
+        <!-- Metrics API -->
+        <dependency>
+            <groupId>org.mcstats.bukkit</groupId>
+            <artifactId>metrics</artifactId>
+            <version>R8-SNAPSHOT</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bukkit</groupId>
+                    <artifactId>bukkit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
 	</dependencies>
 </project>
