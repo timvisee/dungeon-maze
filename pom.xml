@@ -5,6 +5,8 @@
 
 	<groupId>com.timvisee</groupId>
 	<artifactId>dungeonmaze</artifactId>
+
+	<!-- Plugin version name -->
 	<version>0.2.2</version>
 
 	<name>DungeonMaze</name>
@@ -37,10 +39,13 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- Compiler Version (JDK)! -->
+
+		<!-- Compiler Version (JDK) -->
 		<javaVersion>1.8</javaVersion>
-		<!-- Minecraft Version! -->
+
+		<!-- Minecraft Version -->
 		<bukkitVersion>1.8.8-R0.1-SNAPSHOT</bukkitVersion>
+
 	</properties>
 
 	<build>
@@ -97,31 +102,31 @@
 
 	<repositories>
 
-		<!-- SpigotMC Repo (Bukkit and SpigotAPI) -->
+		<!-- SpigotMC repository (Bukkit and SpigotAPI) -->
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public</url>
 		</repository>
 
-		<!-- Multiverse Repo -->
+		<!-- Multiverse repository -->
 		<repository>
 			<id>onarandombox</id>
 			<url>http://repo.onarandombox.com/content/groups/public</url>
 		</repository>
 
-		<!-- Vault Repo -->
+		<!-- Vault repository -->
 		<repository>
 			<id>vault-repo</id>
 			<url>http://nexus.theyeticave.net/content/repositories/pub_releases</url>
 		</repository>
 
-		<!-- Metrics Snapshots Repo -->
+		<!-- Metrics Snapshots repository -->
 		<repository>
 			<id>mcstats-snapshots</id>
 			<url>http://repo.mcstats.org/content/repositories/snapshots/</url>
 		</repository>
 
-        <!-- PermissionsEx Repo -->
+        <!-- PermissionsEx repository -->
         <repository>
             <id>pex-repo</id>
             <url>http://pex-repo.aoeu.xyz/</url>
@@ -130,8 +135,6 @@
 	</repositories>
 
 	<dependencies>
-		
-		<!-- Maven Dependencies -->
 	
 		<!-- Metrics API -->
 		<dependency>
@@ -147,8 +150,7 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project,
-			http://bukkit.org/ -->
+		<!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project, http://bukkit.org/ -->
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
