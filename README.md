@@ -23,15 +23,15 @@ McStats: http://mcstats.org/plugin/DungeonMaze
 #####Compiling Requirements:
 >- JDK 1.8
 >- Maven
->- Git/Github (Optional)
+>- Git/GitHub (Optional)
 
 #####How to compile the project:
->- Clone the project with Git/Github
+>- Clone the project with Git/GitHub
 >- Execute command "mvn clean install -B"
 
 #####Running Requirements:
 >- Java 1.8 or higher
->- CraftBukkit or Spigot (for Minecraft 1.8.1 or higher)
+>- CraftBukkit or Spigot (for Minecraft 1.8.8 or higher)
 
 #####License: 
 GNU GPL v3.0
