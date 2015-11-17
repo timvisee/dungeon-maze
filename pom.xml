@@ -322,5 +322,14 @@
             <systemPath>${basedir}/libs/Permission-3.1.6.jar</systemPath>
         </dependency>
 
+		<!-- String comparison library. Used for dynamic help system. -->
+		<dependency>
+			<groupId>net.ricecode</groupId>
+			<artifactId>string-similarity</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
+
 	</dependencies>
 </project>
