@@ -132,12 +132,6 @@
             <url>http://pex-repo.aoeu.xyz/</url>
         </repository>
 
-		<!-- Xephi repository (used for string-similarity) -->
-		<repository>
-			<id>xephi-repo</id>
-			<url>http://ci.xephi.fr/plugin/repository/everything/</url>
-		</repository>
-
 	</repositories>
 
 	<dependencies>
