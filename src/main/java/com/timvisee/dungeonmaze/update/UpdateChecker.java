@@ -100,6 +100,7 @@ public class UpdateChecker {
      * @return True if an update check is happening, false if not.
      */
     public boolean isChecking() {
+        // TODO: Implement this!
         return false;
     }
 
@@ -109,6 +110,7 @@ public class UpdateChecker {
      * @return True if an update check has been done, false if not.
      */
     public boolean hasChecked() {
+        // TODO: Implement this!
         return false;
     }
 
@@ -118,6 +120,7 @@ public class UpdateChecker {
      * @return True if failed, false if not.
      */
     public boolean hasFailed() {
+        // TODO: Implement this!
         return false;
     }
 
@@ -173,12 +176,35 @@ public class UpdateChecker {
     }
 
     /**
-     * Check whether the update is compatible with the current running server.
+     * Check whether the update is compatible with the current running server and installed Java version.
      * If there's no update available, true will be returned.
      *
      * @return True if the update is compatible, or if no update is available. False otherwise.
      */
     public boolean isUpdateCompatible() {
+        // TODO: Implement this!
+        return isUpdateMinecraftCompatible() && isUpdateJavaCompatible();
+    }
+
+    /**
+     * Check whether the update is compatible with the current running server.
+     * If there's no update available, true will be returned.
+     *
+     * @return true if the update is compatible, or if no update is available. False otherwise
+     */
+    public boolean isUpdateMinecraftCompatible() {
+        // TODO: Implement this!
+        return true;
+    }
+
+    /**
+     * Check whether the update is compatible with the current installed Java version.
+     * If there's no update available, true will be returned.
+     *
+     * @return true if the update is compatible, or if no update is available. False otherwise
+     */
+    public boolean isUpdateJavaCompatible() {
+        // TODO: Implement this!
         return true;
     }
 
@@ -189,6 +215,7 @@ public class UpdateChecker {
      * @return True if an update is downloaded, false otherwise.
      */
     public boolean isUpdateDownloaded() {
+        // TODO: Implement this!
         return false;
     }
 
@@ -199,6 +226,7 @@ public class UpdateChecker {
      * @return True if an update is downloaded and installed, false otherwise.
      */
     public boolean isUpdateInstalled() {
+        // TODO: Implement this!
         return true;
     }
 }
