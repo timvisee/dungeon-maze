@@ -86,6 +86,10 @@
 							<pattern>org.mcstats</pattern>
 							<shadedPattern>com.timvisee.dungeonmaze</shadedPattern>
 						</relocation>
+						<relocation>
+							<pattern>net.ricecode.similarity</pattern>
+							<shadedPattern>fr.xephi.authme.libs.similarity</shadedPattern>
+						</relocation>
 					</relocations>
 				</configuration>
 				<executions>
@@ -131,6 +135,12 @@
             <id>pex-repo</id>
             <url>http://pex-repo.aoeu.xyz/</url>
         </repository>
+
+		<!-- Xephi repository (used for string-similarity) -->
+		<repository>
+			<id>xephi-repo</id>
+			<url>http://ci.xephi.fr/plugin/repository/everything/</url>
+		</repository>
 
 	</repositories>
 
@@ -310,15 +320,6 @@
             </exclusions>
         </dependency>
 
-		<!-- String comparison library. Used for dynamic help system. -->
-		<dependency>
-			<groupId>net.ricecode</groupId>
-			<artifactId>string-similarity</artifactId>
-			<version>1.0.0</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
-
         <!-- Metrics API -->
         <dependency>
             <groupId>org.mcstats.bukkit</groupId>
@@ -332,6 +333,15 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+		<!-- String comparison library. Used for dynamic help system. -->
+		<dependency>
+			<groupId>net.ricecode</groupId>
+			<artifactId>string-similarity</artifactId>
+			<version>1.0.0</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
 
 	</dependencies>
 </project>
