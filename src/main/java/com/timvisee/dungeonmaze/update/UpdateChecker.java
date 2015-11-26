@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.update;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.update.universal.Updater;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
@@ -50,14 +51,23 @@ public class UpdateChecker {
      * Start the universal updater.
      */
     private void startUniversal() {
+        // Show a status message
+        Core.getLogger().info("Using universal updater. Starting...");
+
         // Set up the universal updater
         this.updaterUniversal = new Updater();
+
+        // Show a status message
+        Core.getLogger().info("Universal updater has been started!");
     }
 
     /**
      * Start the Bukkit updater.
      */
     private void startBukkit() {
+        // Show a status message
+        Core.getLogger().info("Using Bukkit updater. Starting...");
+
         // TODO: Implement this code!
 
         // Get the plugin JAR file
@@ -67,6 +77,9 @@ public class UpdateChecker {
         this.updaterBukkit = new com.timvisee.dungeonmaze.update.bukkit.Updater(DungeonMaze.instance, 45175, pluginJar, com.timvisee.dungeonmaze.update.bukkit.Updater.UpdateType.DEFAULT, true);
 
         // TODO: Do some error checking on the updater!
+
+        // Show a status message
+        Core.getLogger().info("Bukkit updater has been started!");
     }
 
     /**
