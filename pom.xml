@@ -86,10 +86,6 @@
 							<pattern>org.mcstats</pattern>
 							<shadedPattern>com.timvisee.dungeonmaze</shadedPattern>
 						</relocation>
-						<relocation>
-							<pattern>net.ricecode.similarity</pattern>
-							<shadedPattern>fr.xephi.authme.libs.similarity</shadedPattern>
-						</relocation>
 					</relocations>
 				</configuration>
 				<executions>
@@ -324,15 +320,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-		<!-- String comparison library. Used for dynamic help system. -->
-		<dependency>
-			<groupId>net.ricecode</groupId>
-			<artifactId>string-similarity</artifactId>
-			<version>1.0.0</version>
-			<scope>compile</scope>
-			<optional>true</optional>
-		</dependency>
 
 	</dependencies>
 </project>
