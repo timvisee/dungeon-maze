@@ -5,7 +5,8 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.update.UpdateChecker;
-import com.timvisee.dungeonmaze.update.bukkit.Updater.UpdateResult;
+import com.timvisee.dungeonmaze.util.MinecraftUtils;
+import com.timvisee.dungeonmaze.util.SystemUtils;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -103,37 +104,82 @@ public class PlayerListener implements Listener {
 			return;
 
 		// Get the update checker and refresh the updates data, and make sure the updater is valid
-		// TODO: Force update!
+		// TODO: Force update?
 		UpdateChecker updateChecker = Core.getUpdateChecker();
 		if(updateChecker == null)
 			return;
 
-		// TODO: Make sure a check is done!
+		// TODO: Make sure a check is done, if not, do a check!
+
+        // Failed to check for updates
+        if(updateChecker.hasFailed()) {
+            player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+            return;
+        }
 
 		// No new version found
 		if(!updateChecker.isUpdateAvailable()) {
-            player.sendMessage(ChatColor.GREEN + "Dungeon Maze is up to date!");
+            player.sendMessage(ChatColor.GREEN + DungeonMaze.PLUGIN_NAME + " is up to date!");
 			return;
         }
 
-		// Get the version number and code of the new update if there is any
-		String newVersionName = updateChecker.getUpdateVersionName();
-		int newVersionCode = updateChecker.getUpdateVersionCode();
+        // Make sure the new version is compatible
+        if(!updateChecker.isUpdateCompatible()) {
+            // Show the new Dungeon Maze version
+            player.sendMessage(ChatColor.GOLD + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, but isn't compatible!");
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
 
-		// Make sure the new version is compatible with the current bukkit version
-		if(updateChecker.getResult() == UpdateResult.FAIL_NOVERSION) {
-			player.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVersionName));
-			player.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-			player.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  updateChecker.getLatestGameVersion() + " or higher!");
-		} else {
-			if(updateChecker.getResult() == UpdateResult.SUCCESS)
-				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (" + String.valueOf(newVer) + "). Server reboot required!");
+            // Show the Minecraft version
+            if(updateChecker.isUpdateMinecraftCompatible())
+                player.sendMessage(ChatColor.GOLD + "Minecraft version: " + ChatColor.GREEN  + "v" + updateChecker.getUpdateMinecraftVersion());
+            else
+                player.sendMessage(ChatColor.GOLD + "Required Minecraft version: " + ChatColor.DARK_RED + "v" + MinecraftUtils.getMinecraftVersion() + " " +
+                        ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + " --> " +
+                        ChatColor.GREEN + " v" + updateChecker.getUpdateMinecraftVersion());
 
-			else {
-				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVersionName));
-				player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
-						ChatColor.GREEN + " to automatically install the new version!");
-			}
-		}
+            // Show the Java version
+            if(updateChecker.isUpdateJavaCompatible())
+                player.sendMessage(ChatColor.GOLD + "Java version: " + ChatColor.GREEN  + "v" + updateChecker.getUpdateJavaVersion());
+            else
+                player.sendMessage(ChatColor.GOLD + "Required Java version: " + ChatColor.DARK_RED + "v" + SystemUtils.getJavaVersion() + " " +
+                        ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + " --> " +
+                        ChatColor.GREEN + " v" + updateChecker.getUpdateJavaVersion());
+            return;
+        }
+
+        // Check whether the update has already been installed
+        if(updateChecker.isUpdateInstalled()) {
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed already!");
+            player.sendMessage(ChatColor.GOLD + "Reload or restart your server to apply this update.");
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            return;
+        }
+
+        // Check whether the update has already been downloaded
+        if(updateChecker.isUpdateDownloaded()) {
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded already!");
+            player.sendMessage(ChatColor.GOLD + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            return;
+        }
+
+        // Check whether an update is available
+        if(updateChecker.isUpdateAvailable()) {
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available!");
+            player.sendMessage(ChatColor.GOLD + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to download and install the update.");
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            return;
+        }
+
+        // An error occurred, show a message
+        player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
 	}
 }
