@@ -171,4 +171,24 @@ public class UpdateChecker {
         // TODO: Return the version code of the new update!
         return DungeonMaze.getVersionCode();
     }
+
+    /**
+     * Check whether the update is downloaded, if there is any available.
+     * If there's no update available, false will be returned.
+     *
+     * @return True if an update is downloaded, false otherwise.
+     */
+    public boolean isUpdateDownloaded() {
+        return false;
+    }
+
+    /**
+     * Check whether the update is downloaded and installed, if there's any available.
+     * If there's no update available, false will be returned.
+     *
+     * @return True if an update is downloaded and installed, false otherwise.
+     */
+    public boolean isUpdateInstalled() {
+        return true;
+    }
 }
