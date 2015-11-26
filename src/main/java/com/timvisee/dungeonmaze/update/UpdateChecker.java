@@ -2,7 +2,9 @@ package com.timvisee.dungeonmaze.update;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.update.universal.Updater;
+import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.PluginUtils;
+import com.timvisee.dungeonmaze.util.SystemUtils;
 
 import java.io.File;
 
@@ -198,6 +200,17 @@ public class UpdateChecker {
     }
 
     /**
+     * Get the required Minecraft version for the update.
+     * If there's no update available the current Minecraft version will be returned.
+     *
+     * @return Required Minecraft version.
+     */
+    public String getUpdateMinecraftVersion() {
+        // TODO: Implement this!
+        return MinecraftUtils.getMinecraftVersion();
+    }
+
+    /**
      * Check whether the update is compatible with the current installed Java version.
      * If there's no update available, true will be returned.
      *
@@ -206,6 +219,17 @@ public class UpdateChecker {
     public boolean isUpdateJavaCompatible() {
         // TODO: Implement this!
         return true;
+    }
+
+    /**
+     * Get the required Java version for the update.
+     * If there's no update available the current Java version will be returned.
+     *
+     * @return Required Java version.
+     */
+    public String getUpdateJavaVersion() {
+        // TODO: Implement this!
+        return SystemUtils.getJavaVersion();
     }
 
     /**
