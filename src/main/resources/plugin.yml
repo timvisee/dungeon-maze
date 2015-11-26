@@ -2,7 +2,13 @@ name: DungeonMaze
 main: com.timvisee.dungeonmaze.DungeonMaze
 version: ${project.version}
 load: startup
-softdepend: [Multiverse-Core, Vault, PermissionsBukkit, Permissions, PermissionsEX, EssentialsGroupManager]
+softdepend:
+    - Multiverse-Core
+    - Vault
+    - PermissionsBukkit
+    - Permissions
+    - PermissionsEX
+    - EssentialsGroupManager
 commands:
   dm:
     description: Dungeon Maze command
