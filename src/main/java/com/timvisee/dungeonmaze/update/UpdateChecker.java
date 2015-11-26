@@ -94,6 +94,15 @@ public class UpdateChecker {
     }
 
     /**
+     * Check whether an update check is currently being done.
+     *
+     * @return True if an update check is happening, false if not.
+     */
+    public boolean isChecking() {
+        return false;
+    }
+
+    /**
      * Check whether an update check has been done recently.
      *
      * @return True if an update check has been done, false if not.
