@@ -86,7 +86,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         // Check whether the update has already been installed
         if(updateChecker.isUpdateInstalled()) {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed already!");
-            sender.sendMessage(ChatColor.GOLD + "Reload or restart your server to apply this update.");
+            sender.sendMessage(ChatColor.GREEN + "Reload or restart your server to apply this update.");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
@@ -96,7 +96,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         // Check whether the update has already been downloaded
         if(updateChecker.isUpdateDownloaded()) {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded already!");
-            sender.sendMessage(ChatColor.GOLD + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
+            sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
@@ -106,7 +106,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         // Check whether an update is available
         if(updateChecker.isUpdateAvailable()) {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available!");
-            sender.sendMessage(ChatColor.GOLD + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to download and install the update.");
+            sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to download and install the update.");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
