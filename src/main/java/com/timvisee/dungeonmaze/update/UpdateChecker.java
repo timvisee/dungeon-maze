@@ -173,6 +173,16 @@ public class UpdateChecker {
     }
 
     /**
+     * Check whether the update is compatible with the current running server.
+     * If there's no update available, true will be returned.
+     *
+     * @return True if the update is compatible, or if no update is available. False otherwise.
+     */
+    public boolean isUpdateCompatible() {
+        return true;
+    }
+
+    /**
      * Check whether the update is downloaded, if there is any available.
      * If there's no update available, false will be returned.
      *
