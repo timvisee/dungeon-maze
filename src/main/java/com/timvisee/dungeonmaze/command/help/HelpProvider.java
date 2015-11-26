@@ -1,6 +1,7 @@
 package com.timvisee.dungeonmaze.command.help;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.*;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -95,7 +96,7 @@ public class HelpProvider {
         }
 
         // Print the help header
-        sender.sendMessage(ChatColor.GOLD + "==========[ DUNGEON MAZE HELP ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " HELP ]==========");
 
         // Print the command help information
         if(showCommand)

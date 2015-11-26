@@ -111,6 +111,9 @@ public class PlayerListener implements Listener {
 
 		// TODO: Make sure a check is done, if not, do a check!
 
+        // Print the update checker header
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " UPDATE CHECKER ]==========");
+
         // Failed to check for updates
         if(updateChecker.hasFailed()) {
             player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");

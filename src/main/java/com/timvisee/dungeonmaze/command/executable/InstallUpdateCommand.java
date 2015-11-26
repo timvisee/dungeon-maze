@@ -47,6 +47,9 @@ public class InstallUpdateCommand extends ExecutableCommand {
 
         // TODO: Make sure some sort of update check has been done, and that the file has been downloaded & installed!
 
+        // Print the update checker header
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " UPDATE CHECKER ]==========");
+
         // Failed to check for updates
         if(updateChecker.hasFailed()) {
             sender.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
