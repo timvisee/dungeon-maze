@@ -14,16 +14,32 @@ public class PluginUtils {
      * @return Plugin file URL.
      */
     public static URL getPluginFileUrl() {
-        return Bukkit.getPluginManager().getPlugin("PluginName").getClass().getProtectionDomain().getCodeSource().getLocation();
+        return Bukkit.getPluginManager().getPlugin("PluginName").getClass().getProtectionDomain().getCodeSource().getLocation().g;
     }
 
     /**
      * Get the JAR file of the plugin.
+     * Null will be returned if the plugin file couldn't be determined.
+     *
      * Note: The use of the getPluginFileUrl method is recommended if possible.
      *
-     * @return Plugin file.
+     * @return Plugin file, or null if it couldn't be determined.
      */
     public static File getPluginFile() {
-        return new File(DungeonMaze.instance.getDataFolder().getParentFile(), "DungeonMaze.jar");
+        // Get the JAR file URL
+        URL pluginFileUrl = getPluginFileUrl();
+
+        // Get the path proportion of the URL as file name
+        String fileName = pluginFileUrl.getPath();
+
+        // Only use the file name, not the whole path
+        if(fileName.contains("/"))
+            fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
+
+        // Dynamically get the file of the plugin
+        final File pluginFile = new File(DungeonMaze.instance.getDataFolder().getParentFile(), fileName);
+
+        // Return the file if it exists, null otherwise
+        return pluginFile.isFile() ? pluginFile : null;
     }
 }
