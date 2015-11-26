@@ -14,7 +14,8 @@ public class PluginUtils {
      * @return Plugin file URL.
      */
     public static URL getPluginFileUrl() {
-        return Bukkit.getPluginManager().getPlugin("PluginName").getClass().getProtectionDomain().getCodeSource().getLocation();
+        // TODO: Dynamically get the plugin name!
+        return Bukkit.getPluginManager().getPlugin("DungeonMaze").getClass().getProtectionDomain().getCodeSource().getLocation();
     }
 
     /**
