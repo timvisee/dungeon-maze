@@ -173,8 +173,16 @@ public class UpdateChecker {
      * @return Version code.
      */
     public int getUpdateVersionCode() {
-        // TODO: Return the version code of the new update!
-        return DungeonMaze.getVersionCode();
+        // Check with the correct updater
+        switch(getType()) {
+            case UNIVERSAL:
+                // TODO: Return the version code of the new update!
+                return DungeonMaze.getVersionCode();
+
+            case BUKKIT:
+            default:
+                return DungeonMaze.getVersionCode() + 1;
+        }
     }
 
     /**
