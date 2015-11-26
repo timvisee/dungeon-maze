@@ -21,10 +21,10 @@ import com.timvisee.dungeonmaze.logger.LoggerService;
 import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandler;
 import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandlerService;
 import com.timvisee.dungeonmaze.permission.PermissionsManagerService;
+import com.timvisee.dungeonmaze.update.UpdateChecker;
 import com.timvisee.dungeonmaze.update.UpdateCheckerService;
 import com.timvisee.dungeonmaze.world.WorldManagerService;
 import com.timvisee.dungeonmaze.structure.CustomStructureManager;
-import com.timvisee.dungeonmaze.update.bukkit.Updater;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManagerService;
@@ -308,7 +308,7 @@ public class Core {
      *
      * @return Update checker instance.
      */
-    public static Updater getUpdateChecker() {
+    public static UpdateChecker getUpdateChecker() {
         return Core.instance._getUpdateChecker();
     }
 
@@ -317,7 +317,7 @@ public class Core {
      *
      * @return Update checker instance.
      */
-    public Updater _getUpdateChecker() {
+    public UpdateChecker _getUpdateChecker() {
         return this.updateCheckerService.getUpdateChecker();
     }
 

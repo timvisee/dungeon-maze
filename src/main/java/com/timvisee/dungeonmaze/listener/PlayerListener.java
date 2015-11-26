@@ -4,7 +4,7 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
-import com.timvisee.dungeonmaze.update.bukkit.Updater;
+import com.timvisee.dungeonmaze.update.UpdateChecker;
 import com.timvisee.dungeonmaze.update.bukkit.Updater.UpdateResult;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.ChatColor;
@@ -104,26 +104,26 @@ public class PlayerListener implements Listener {
 
 		// Get the update checker and refresh the updates data, and make sure the updater is valid
 		// TODO: Force update!
-		Updater uc = Core.getUpdateChecker();
-		if(uc == null)
+		UpdateChecker updateChecker = Core.getUpdateChecker();
+		if(updateChecker == null)
 			return;
 
 		// No new version found
-		if(uc.getResult() == UpdateResult.NO_UPDATE) {
+		if(updateChecker.getResult() == UpdateResult.NO_UPDATE) {
             player.sendMessage(ChatColor.GREEN + "Dungeon Maze is up to date!");
 			return;
         }
 
 		// Get the version number of the new version
-		String newVer = uc.getLatestName();
+		String newVer = updateChecker.getLatestName();
 
 		// Make sure the new version is compatible with the current bukkit version
-		if(uc.getResult() == UpdateResult.FAIL_NOVERSION) {
+		if(updateChecker.getResult() == UpdateResult.FAIL_NOVERSION) {
 			player.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
 			player.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
-			player.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  uc.getLatestGameVersion() + " or higher!");
+			player.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  updateChecker.getLatestGameVersion() + " or higher!");
 		} else {
-			if(uc.getResult() == UpdateResult.SUCCESS)
+			if(updateChecker.getResult() == UpdateResult.SUCCESS)
 				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (" + String.valueOf(newVer) + "). Server reboot required!");
 
 			else {
