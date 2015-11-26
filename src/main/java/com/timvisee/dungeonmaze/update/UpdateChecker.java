@@ -159,7 +159,14 @@ public class UpdateChecker {
                 return DungeonMaze.getVersionName();
 
             case BUKKIT:
-                return getUpdaterBukkit().getLatestName();
+                // Get the update version
+                String version = getUpdaterBukkit().getLatestName();
+
+                // Remove spaces and the plugin name from the version number
+                version = version.toLowerCase().replace(" ", "").replace("dungeon)", "").replace("maze", "").trim();
+
+                // Return the actual version number
+                return version;
 
             default:
                 return DungeonMaze.getVersionName();
