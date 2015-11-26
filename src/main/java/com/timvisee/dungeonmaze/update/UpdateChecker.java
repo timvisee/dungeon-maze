@@ -163,7 +163,7 @@ public class UpdateChecker {
                 String version = getUpdaterBukkit().getLatestName();
 
                 // Remove spaces and the plugin name from the version number
-                version = version.toLowerCase().replace(" ", "").replace("dungeon)", "").replace("maze", "").trim();
+                version = version.toLowerCase().replace(" ", "").replace("dungeon", "").replace("maze", "").trim();
 
                 // Return the actual version number
                 return version;

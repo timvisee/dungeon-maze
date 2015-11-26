@@ -61,25 +61,25 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         if(!updateChecker.isUpdateCompatible()) {
             // Show the new Dungeon Maze version
             sender.sendMessage(ChatColor.GOLD + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, but isn't compatible!");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
-                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
 
             // Show the Minecraft version
             if(updateChecker.isUpdateMinecraftCompatible())
-                sender.sendMessage(ChatColor.GOLD + "Minecraft version: " + ChatColor.GREEN  + "v" + updateChecker.getUpdateMinecraftVersion());
+                sender.sendMessage(ChatColor.GOLD + "Minecraft version: " + ChatColor.GREEN  + updateChecker.getUpdateMinecraftVersion());
             else
-                sender.sendMessage(ChatColor.GOLD + "Required Minecraft version: " + ChatColor.DARK_RED + "v" + MinecraftUtils.getMinecraftVersion() + " " +
+                sender.sendMessage(ChatColor.GOLD + "Required Minecraft version: " + ChatColor.DARK_RED + MinecraftUtils.getMinecraftVersion() + " " +
                         ChatColor.GOLD + ChatColor.STRIKETHROUGH + " --> " +
-                        ChatColor.GREEN + " v" + updateChecker.getUpdateMinecraftVersion());
+                        ChatColor.GREEN + " " + updateChecker.getUpdateMinecraftVersion());
 
             // Show the Java version
             if(updateChecker.isUpdateJavaCompatible())
-                sender.sendMessage(ChatColor.GOLD + "Java version: " + ChatColor.GREEN  + "v" + updateChecker.getUpdateJavaVersion());
+                sender.sendMessage(ChatColor.GOLD + "Java version: " + ChatColor.GREEN + updateChecker.getUpdateJavaVersion());
             else
-                sender.sendMessage(ChatColor.GOLD + "Required Java version: " + ChatColor.DARK_RED + "v" + SystemUtils.getJavaVersion() + " " +
+                sender.sendMessage(ChatColor.GOLD + "Required Java version: " + ChatColor.DARK_RED + SystemUtils.getJavaVersion() + " " +
                         ChatColor.GOLD + ChatColor.STRIKETHROUGH + " --> " +
-                        ChatColor.GREEN + " v" + updateChecker.getUpdateJavaVersion());
+                        ChatColor.GREEN + " " + updateChecker.getUpdateJavaVersion());
             return true;
         }
 
@@ -87,9 +87,9 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         if(updateChecker.isUpdateInstalled()) {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed already!");
             sender.sendMessage(ChatColor.GREEN + "Reload or restart your server to apply this update.");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
-                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             return true;
         }
 
@@ -97,9 +97,9 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         if(updateChecker.isUpdateDownloaded()) {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded already!");
             sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
-                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             return true;
         }
 
@@ -107,9 +107,9 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         if(updateChecker.isUpdateAvailable()) {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available!");
             sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to download and install the update.");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
-                    " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             return true;
         }
 
