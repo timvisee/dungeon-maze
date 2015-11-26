@@ -112,17 +112,20 @@ public class PlayerListener implements Listener {
 		// TODO: Make sure a check is done, if not, do a check!
 
         // Print the update checker header
+        player.sendMessage(" ");
         player.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " UPDATE CHECKER ]==========");
 
         // Failed to check for updates
         if(updateChecker.hasFailed()) {
             player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+            player.sendMessage(" ");
             return;
         }
 
 		// No new version found
 		if(!updateChecker.isUpdateAvailable()) {
             player.sendMessage(ChatColor.GREEN + DungeonMaze.PLUGIN_NAME + " is up to date!");
+            player.sendMessage(" ");
 			return;
         }
 
@@ -145,6 +148,8 @@ public class PlayerListener implements Listener {
                 player.sendMessage(ChatColor.GOLD + "Required Java version: " + ChatColor.DARK_RED + SystemUtils.getJavaVersion() + " " +
                         ChatColor.GOLD + ChatColor.STRIKETHROUGH + " -->" +
                         ChatColor.GREEN + " " + updateChecker.getUpdateJavaVersion());
+
+            player.sendMessage(" ");
             return;
         }
 
@@ -155,6 +160,7 @@ public class PlayerListener implements Listener {
             player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            player.sendMessage(" ");
             return;
         }
 
@@ -165,6 +171,7 @@ public class PlayerListener implements Listener {
             player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            player.sendMessage(" ");
             return;
         }
 
@@ -175,10 +182,12 @@ public class PlayerListener implements Listener {
             player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            player.sendMessage(" ");
             return;
         }
 
         // An error occurred, show a message
         player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+        player.sendMessage(" ");
 	}
 }

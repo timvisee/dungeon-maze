@@ -46,17 +46,20 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         // TODO: Make sure some sort of update check has been done here!
 
         // Print the update checker header
+        sender.sendMessage(" ");
         sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " UPDATE CHECKER ]==========");
 
         // Failed to check for updates
         if(updateChecker.hasFailed()) {
             sender.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+            sender.sendMessage(" ");
             return true;
         }
 
         // No new version found
         if(!updateChecker.isUpdateAvailable()) {
             sender.sendMessage(ChatColor.GREEN + DungeonMaze.PLUGIN_NAME + " is up to date!");
+            sender.sendMessage(" ");
             return true;
         }
 
@@ -79,6 +82,8 @@ public class CheckUpdatesCommand extends ExecutableCommand {
                 sender.sendMessage(ChatColor.GOLD + "Required Java version: " + ChatColor.DARK_RED + SystemUtils.getJavaVersion() + " " +
                         ChatColor.GOLD + ChatColor.STRIKETHROUGH + " -->" +
                         ChatColor.GREEN + " " + updateChecker.getUpdateJavaVersion());
+
+            sender.sendMessage(" ");
             return true;
         }
 
@@ -89,6 +94,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            sender.sendMessage(" ");
             return true;
         }
 
@@ -99,6 +105,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + "" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            sender.sendMessage(" ");
             return true;
         }
 
@@ -109,11 +116,13 @@ public class CheckUpdatesCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            sender.sendMessage(" ");
             return true;
         }
 
         // An error occurred, show a message
         sender.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+        sender.sendMessage(" ");
         return true;
     }
 }
