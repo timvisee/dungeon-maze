@@ -6,7 +6,6 @@ import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
 import com.timvisee.dungeonmaze.update.UpdateChecker;
 import com.timvisee.dungeonmaze.update.UpdateCheckerService;
-import com.timvisee.dungeonmaze.update.bukkit.Updater;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.Profiler;
 import com.timvisee.dungeonmaze.util.SystemUtils;
