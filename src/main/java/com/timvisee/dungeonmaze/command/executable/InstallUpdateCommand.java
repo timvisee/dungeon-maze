@@ -42,12 +42,13 @@ public class InstallUpdateCommand extends ExecutableCommand {
         // Show a status message
         sender.sendMessage(ChatColor.YELLOW + "Update checking succeed, took " + p.getTimeFormatted() + "!");
 
-        // Get the version number of the new update
-        String newVer = updateChecker.getLatestName();
+        // Get the version number and code of the new update if there is any
+        String newVersionName = updateChecker.getUpdateVersionName();
+        int newVersionCode = updateChecker.getUpdateVersionCode();
 
         // Make sure any update is available
         if(updateChecker.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
-            sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVer));
+            sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVersionName));
             return true;
 
         } else if(updateChecker.getResult() == Updater.UpdateResult.NO_UPDATE) {
@@ -58,7 +59,7 @@ public class InstallUpdateCommand extends ExecutableCommand {
         // Make sure the new version is compatible with the current bukkit version
         if(updateChecker.getResult() == Updater.UpdateResult.FAIL_NOVERSION) {
             // Show a message
-            sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVer));
+            sender.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: " + String.valueOf(newVersionName));
             sender.sendMessage(ChatColor.DARK_RED + "The new version is not compatible with your Bukkit version!");
             sender.sendMessage(ChatColor.DARK_RED + "Please update your Bukkit to " +  updateChecker.getLatestGameVersion() + " or higher!");
             return true;
@@ -66,7 +67,7 @@ public class InstallUpdateCommand extends ExecutableCommand {
 
         // Check whether the update was installed or not
         if(updateChecker.getResult() == Updater.UpdateResult.SUCCESS)
-            sender.sendMessage(ChatColor.GREEN + "New version installed (" + String.valueOf(newVer) + "). Server reboot required!");
+            sender.sendMessage(ChatColor.GREEN + "New version installed (" + String.valueOf(newVersionName) + "). Server reboot required!");
         else
             sender.sendMessage(ChatColor.DARK_RED + "Automatic installation failed, please update manually!");
 

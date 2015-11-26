@@ -114,12 +114,13 @@ public class PlayerListener implements Listener {
 			return;
         }
 
-		// Get the version number of the new version
-		String newVer = updateChecker.getLatestName();
+		// Get the version number and code of the new update if there is any
+		String newVersionName = updateChecker.getUpdateVersionName();
+		int newVersionCode = updateChecker.getUpdateVersionCode();
 
 		// Make sure the new version is compatible with the current bukkit version
 		if(updateChecker.getResult() == UpdateResult.FAIL_NOVERSION) {
-			player.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVer));
+			player.sendMessage(ChatColor.GREEN + "New Dungeon Maze version available: v" + String.valueOf(newVersionName));
 			player.sendMessage(ChatColor.GREEN + "The new version is not compatible with your Bukkit version!");
 			player.sendMessage(ChatColor.GREEN + "Please update your Bukkit to " +  updateChecker.getLatestGameVersion() + " or higher!");
 		} else {
@@ -127,7 +128,7 @@ public class PlayerListener implements Listener {
 				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version installed (" + String.valueOf(newVer) + "). Server reboot required!");
 
 			else {
-				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVer));
+				player.sendMessage(ChatColor.GREEN + "New DungeonMaze version found: " + String.valueOf(newVersionName));
 				player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.GOLD + "/dm installupdate" +
 						ChatColor.GREEN + " to automatically install the new version!");
 			}
