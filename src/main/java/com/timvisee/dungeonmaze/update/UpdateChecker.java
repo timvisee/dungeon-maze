@@ -92,4 +92,52 @@ public class UpdateChecker {
     public com.timvisee.dungeonmaze.update.bukkit.Updater getUpdaterBukkit() {
         return this.updaterBukkit;
     }
+
+    /**
+     * Check whether an update check has been done recently.
+     *
+     * @return True if an update check has been done, false if not.
+     */
+    public boolean hasChecked() {
+        return false;
+    }
+
+    /**
+     * Check whether the last update check has failed.
+     *
+     * @return True if failed, false if not.
+     */
+    public boolean hasFailed() {
+        return false;
+    }
+
+    /**
+     * Check whether a new update is available.
+     *
+     * @return True if a new update is available, false otherwise.
+     */
+    public boolean isUpdateAvailable() {
+        return false;
+    }
+
+    /**
+     * Get the version name of the available update. The current version name is returned if no new version is available.
+     *
+     * @return Version name.
+     */
+    public String getUpdateVersionName() {
+        // TODO: Return the version number of the new update!
+        return DungeonMaze.getVersionName();
+    }
+
+    /**
+     * Get the version code of the available update. The current version code is returned if now new version is available.
+     * If the version code is unknown, while a new version is indeed available. The current version number, incremented by one is returned.
+     *
+     * @return Version code.
+     */
+    public int getUpdateVersionCode() {
+        // TODO: Return the version code of the new update!
+        return DungeonMaze.getVersionCode();
+    }
 }
