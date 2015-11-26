@@ -3,6 +3,25 @@ package com.timvisee.dungeonmaze.util;
 public class SystemUtils {
 
     /**
+     * Get the current used Java version.
+     *
+     * @return Java version.
+     */
+    public static String getJavaVersion() {
+        return System.getProperty("java.version");
+    }
+
+    /**
+     * Get the current used Java architect value.
+     * 32 or 64.
+     *
+     * @return Java arch value.
+     */
+    public static String getJavaArchValue() {
+        return System.getProperty("sun.arch.data.model");
+    }
+
+    /**
      * Get the full architecture specification of the current OS.
      *
      * @return System architecture specification.

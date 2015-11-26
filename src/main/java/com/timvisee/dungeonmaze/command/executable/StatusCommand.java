@@ -175,6 +175,6 @@ public class StatusCommand extends ExecutableCommand {
         sender.sendMessage(ChatColor.GOLD + "OS Name: " + ChatColor.WHITE + System.getProperty("os.name"));
         sender.sendMessage(ChatColor.GOLD + "OS Architecture: " + ChatColor.WHITE + SystemUtils.getSystemArchNumber() + "-bit" + ChatColor.GRAY + " (" + SystemUtils.getSystemArchFull() + ")");
         sender.sendMessage(ChatColor.GOLD + "OS Version: " + ChatColor.WHITE + System.getProperty("os.version"));
-        sender.sendMessage(ChatColor.GOLD + "Java Version: " + ChatColor.WHITE + System.getProperty("java.version") + ChatColor.GRAY + " (" + System.getProperty("sun.arch.data.model") + "-bit)");
+        sender.sendMessage(ChatColor.GOLD + "Java Version: " + ChatColor.WHITE + SystemUtils.getJavaVersion() + ChatColor.GRAY + " (" + SystemUtils.getJavaArchValue() + "-bit)");
     }
 }
