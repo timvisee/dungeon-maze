@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.update;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.update.universal.Updater;
+import com.timvisee.dungeonmaze.util.PluginUtils;
 
 import java.io.File;
 
@@ -57,8 +58,8 @@ public class UpdateChecker {
     private void startBukkit() {
         // TODO: Implement this code!
 
-        // Get the plugin JAR
-        File pluginJar = new File(DungeonMaze.instance.getDataFolder().getParentFile(), "DungeonMaze.jar");
+        // Get the plugin JAR file
+        File pluginJar = PluginUtils.getPluginFile();
 
         // Set up the update checker
         this.updaterBukkit = new com.timvisee.dungeonmaze.update.bukkit.Updater(DungeonMaze.instance, 45175, pluginJar, com.timvisee.dungeonmaze.update.bukkit.Updater.UpdateType.DEFAULT, true);
