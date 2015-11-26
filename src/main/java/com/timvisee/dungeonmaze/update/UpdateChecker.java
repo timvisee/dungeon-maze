@@ -127,7 +127,18 @@ public class UpdateChecker {
      * @return True if a new update is available, false otherwise.
      */
     public boolean isUpdateAvailable() {
-        return false;
+        // Check with the correct updater
+        switch(getType()) {
+            case UNIVERSAL:
+                // TODO: Implement this!
+                return false;
+
+            case BUKKIT:
+                return getUpdaterBukkit().getResult() == com.timvisee.dungeonmaze.update.bukkit.Updater.UpdateResult.NO_UPDATE;
+
+            default:
+                return false;
+        }
     }
 
     /**

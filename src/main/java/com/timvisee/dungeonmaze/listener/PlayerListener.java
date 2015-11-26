@@ -108,8 +108,10 @@ public class PlayerListener implements Listener {
 		if(updateChecker == null)
 			return;
 
+		// TODO: Make sure a check is done!
+
 		// No new version found
-		if(updateChecker.getResult() == UpdateResult.NO_UPDATE) {
+		if(!updateChecker.isUpdateAvailable()) {
             player.sendMessage(ChatColor.GREEN + "Dungeon Maze is up to date!");
 			return;
         }
