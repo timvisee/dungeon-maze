@@ -62,7 +62,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
             // Show the new Dungeon Maze version
             sender.sendMessage(ChatColor.GOLD + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, but isn't compatible!");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
-                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
 
             // Show the Minecraft version
@@ -70,7 +70,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
                 sender.sendMessage(ChatColor.GOLD + "Minecraft version: " + ChatColor.GREEN  + "v" + updateChecker.getUpdateMinecraftVersion());
             else
                 sender.sendMessage(ChatColor.GOLD + "Required Minecraft version: " + ChatColor.DARK_RED + "v" + MinecraftUtils.getMinecraftVersion() + " " +
-                        ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + " --> " +
+                        ChatColor.GOLD + ChatColor.STRIKETHROUGH + " --> " +
                         ChatColor.GREEN + " v" + updateChecker.getUpdateMinecraftVersion());
 
             // Show the Java version
@@ -78,7 +78,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
                 sender.sendMessage(ChatColor.GOLD + "Java version: " + ChatColor.GREEN  + "v" + updateChecker.getUpdateJavaVersion());
             else
                 sender.sendMessage(ChatColor.GOLD + "Required Java version: " + ChatColor.DARK_RED + "v" + SystemUtils.getJavaVersion() + " " +
-                        ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + " --> " +
+                        ChatColor.GOLD + ChatColor.STRIKETHROUGH + " --> " +
                         ChatColor.GREEN + " v" + updateChecker.getUpdateJavaVersion());
             return true;
         }
@@ -88,7 +88,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed already!");
             sender.sendMessage(ChatColor.GOLD + "Reload or restart your server to apply this update.");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
-                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             return true;
         }
@@ -98,7 +98,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded already!");
             sender.sendMessage(ChatColor.GOLD + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
-                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             return true;
         }
@@ -108,7 +108,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available!");
             sender.sendMessage(ChatColor.GOLD + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to download and install the update.");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " version: " + ChatColor.WHITE + "v" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
-                    ChatColor.DARK_GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " v" + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             return true;
         }
