@@ -132,19 +132,15 @@ public class PlayerListener implements Listener {
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
 
             // Show the Minecraft version
-            if(updateChecker.isUpdateMinecraftCompatible())
-                player.sendMessage(ChatColor.GOLD + "Minecraft version: " + ChatColor.GREEN + updateChecker.getUpdateMinecraftVersion());
-            else
+            if(!updateChecker.isUpdateMinecraftCompatible())
                 player.sendMessage(ChatColor.GOLD + "Required Minecraft version: " + ChatColor.DARK_RED + MinecraftUtils.getMinecraftVersion() + " " +
-                        ChatColor.GOLD + ChatColor.STRIKETHROUGH + " --> " +
+                        ChatColor.GOLD + ChatColor.STRIKETHROUGH + " -->" +
                         ChatColor.GREEN + " " + updateChecker.getUpdateMinecraftVersion());
 
             // Show the Java version
-            if(updateChecker.isUpdateJavaCompatible())
-                player.sendMessage(ChatColor.GOLD + "Java version: " + ChatColor.GREEN + updateChecker.getUpdateJavaVersion());
-            else
+            if(!updateChecker.isUpdateJavaCompatible())
                 player.sendMessage(ChatColor.GOLD + "Required Java version: " + ChatColor.DARK_RED + SystemUtils.getJavaVersion() + " " +
-                        ChatColor.GOLD + ChatColor.STRIKETHROUGH + " --> " +
+                        ChatColor.GOLD + ChatColor.STRIKETHROUGH + " -->" +
                         ChatColor.GREEN + " " + updateChecker.getUpdateJavaVersion());
             return;
         }

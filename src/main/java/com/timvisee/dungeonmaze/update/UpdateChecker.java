@@ -233,7 +233,7 @@ public class UpdateChecker {
      */
     public boolean isUpdateJavaCompatible() {
         // TODO: Implement this!
-        return true;
+        return false;
     }
 
     /**
