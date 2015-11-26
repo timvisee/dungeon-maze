@@ -87,7 +87,7 @@ public class InstallUpdateCommand extends ExecutableCommand {
 
         // Check whether the update has already been installed
         if(updateChecker.isUpdateInstalled()) {
-            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed already!");
+            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed!");
             sender.sendMessage(ChatColor.GREEN + "Reload or restart your server to apply this update.");
             sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +

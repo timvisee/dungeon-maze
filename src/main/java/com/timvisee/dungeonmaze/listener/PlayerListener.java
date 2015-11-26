@@ -151,7 +151,7 @@ public class PlayerListener implements Listener {
 
         // Check whether the update has already been installed
         if(updateChecker.isUpdateInstalled()) {
-            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed already!");
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed!");
             player.sendMessage(ChatColor.GREEN + "Reload or restart your server to apply this update.");
             player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
@@ -161,7 +161,7 @@ public class PlayerListener implements Listener {
 
         // Check whether the update has already been downloaded
         if(updateChecker.isUpdateDownloaded()) {
-            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded already!");
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded!");
             player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
             player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
