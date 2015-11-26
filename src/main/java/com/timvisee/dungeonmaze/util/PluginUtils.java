@@ -14,7 +14,7 @@ public class PluginUtils {
      * @return Plugin file URL.
      */
     public static URL getPluginFileUrl() {
-        return Bukkit.getPluginManager().getPlugin("PluginName").getClass().getProtectionDomain().getCodeSource().getLocation().g;
+        return Bukkit.getPluginManager().getPlugin("PluginName").getClass().getProtectionDomain().getCodeSource().getLocation();
     }
 
     /**
