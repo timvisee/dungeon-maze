@@ -42,6 +42,8 @@ public class Updater {
         // If there's an update and it should be downloaded automatically, download it
         if(isAutomaticDownload())
             return downloadUpdate();
+
+        return false;
     }
 
     /**
@@ -60,6 +62,8 @@ public class Updater {
         // If an update is downloaded, and it should be installed automatically, install it
         if(isAutomaticInstall())
             return installUpdate();
+
+        return false;
     }
 
     /**
@@ -69,6 +73,8 @@ public class Updater {
      */
     public boolean installUpdate() {
         // TODO: Make sure the file is downloaded, and can be downloaded.
+
+        return false;
     }
 
     /**
