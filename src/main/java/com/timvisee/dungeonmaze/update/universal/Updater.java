@@ -16,6 +16,17 @@ public class Updater {
     /**
      * Constructor.
      *
+     * This automatically checks for updates.
+     * It also automatically downloads and installs a new available version if compatible.
+     */
+    public Updater() {
+        // TODO: Properly configure this, using a configuration file maybe?
+        this(true, true, true);
+    }
+
+    /**
+     * Constructor.
+     *
      * @param check True to do an update check.
      * @param autoDownload True to automatically download a new and compatible update.
      * @param autoInstall True to automatically install a new and compatible update.
