@@ -27,7 +27,7 @@ public class Updater {
 
         // Should we do an update check
         if(check)
-            check();
+            checkUpdates();
     }
 
     /**
