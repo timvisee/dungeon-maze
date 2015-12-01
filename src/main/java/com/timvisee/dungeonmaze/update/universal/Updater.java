@@ -40,7 +40,7 @@ public class Updater {
         // TODO: Do a version check
 
         // If there's an update and it should be downloaded automatically, download it
-        if(isAutoDownload())
+        if(isAutomaticDownload())
             return downloadUpdate();
     }
 
@@ -58,7 +58,7 @@ public class Updater {
         // TODO: Download the file.
 
         // If an update is downloaded, and it should be installed automatically, install it
-        if(isAutoInstall())
+        if(isAutomaticInstall())
             return installUpdate();
     }
 
@@ -85,7 +85,7 @@ public class Updater {
      *
      * @return True if the updater should automatically install updates.
      */
-    public boolean isAutoDownload() {
+    public boolean isAutomaticDownload() {
         return this.autoDownload;
     }
 
@@ -94,7 +94,7 @@ public class Updater {
      *
      * @param autoDownload True to automatically download new and compatible updates.
      */
-    public void setAutoDownload(boolean autoDownload) {
+    public void setAutomaticDownload(boolean autoDownload) {
         this.autoDownload = autoDownload;
     }
 
@@ -103,7 +103,7 @@ public class Updater {
      *
      * @return True if the updater should automatically install updates.
      */
-    public boolean isAutoInstall() {
+    public boolean isAutomaticInstall() {
         return this.autoInstall;
     }
 
@@ -112,7 +112,7 @@ public class Updater {
      *
      * @param autoInstall True if the updater should automatically install new and compatible downloads.
      */
-    public void setAutoInstall(boolean autoInstall) {
+    public void setAutomaticInstall(boolean autoInstall) {
         this.autoInstall = autoInstall;
     }
 }
