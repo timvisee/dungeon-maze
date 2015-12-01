@@ -71,4 +71,40 @@ public class Updater {
     public DungeonMaze getDungeonMaze() {
         return DungeonMaze.instance;
     }
+
+    /**
+     * Check whether the updater should automatically download new and compatible updates.
+     *
+     * @return True if the updater should automatically install updates.
+     */
+    public boolean isAutoDownload() {
+        return this.autoDownload;
+    }
+
+    /**
+     * Set whether the updater should automatically download new and compatible updates.
+     *
+     * @param autoDownload True to automatically download new and compatible updates.
+     */
+    public void setAutoDownload(boolean autoDownload) {
+        this.autoDownload = autoDownload;
+    }
+
+    /**
+     * Check whether the updater should automatically install new and compatible updates.
+     *
+     * @return True if the updater should automatically install updates.
+     */
+    public boolean isAutoInstall() {
+        return this.autoInstall;
+    }
+
+    /**
+     * Set whether the updater should automatically install new and compatible downloaded updates.
+     *
+     * @param autoInstall True if the updater should automatically install new and compatible downloads.
+     */
+    public void setAutoInstall(boolean autoInstall) {
+        this.autoInstall = autoInstall;
+    }
 }
