@@ -74,7 +74,7 @@ public class UnloadWorldCommand extends ExecutableCommand {
         // Get all players in the world
         List<Player> players = new ArrayList<>();
         //noinspection Convert2streamapi
-        for(Player player : Bukkit.getOnlinePlayers())
+        for(Player player : sender.getServer().getOnlinePlayers())
             players.add(player);
         int playerCount = players.size();
 
