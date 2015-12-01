@@ -59,7 +59,7 @@ public class Updater {
 
         // If an update is downloaded, and it should be installed automatically, install it
         if(isAutoInstall())
-            installUpdate();
+            return installUpdate();
     }
 
     /**
