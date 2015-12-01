@@ -12,8 +12,8 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UnloadWorldCommand extends ExecutableCommand {
 
@@ -72,7 +72,10 @@ public class UnloadWorldCommand extends ExecutableCommand {
         }
 
         // Get all players in the world
-        List<Player> players = Bukkit.getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equals(worldName)).collect(Collectors.toList());
+        List<Player> players = new ArrayList<>();
+        //noinspection Convert2streamapi
+        for(Player player : Bukkit.getOnlinePlayers())
+            players.add(player);
         int playerCount = players.size();
 
         // Teleport all players away
