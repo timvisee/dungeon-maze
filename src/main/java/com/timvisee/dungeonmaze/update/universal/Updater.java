@@ -38,6 +38,10 @@ public class Updater {
      */
     public boolean checkUpdates() {
         // TODO: Do a version check
+
+        // If there's an update and it should be downloaded automatically, download it
+        if(isAutoDownload())
+            return downloadUpdate();
     }
 
     /**
@@ -52,6 +56,10 @@ public class Updater {
         // TODO: Make sure we recently checked for an update!
         // TODO: Make sure the file is compatible?
         // TODO: Download the file.
+
+        // If an update is downloaded, and it should be installed automatically, install it
+        if(isAutoInstall())
+            installUpdate();
     }
 
     /**
