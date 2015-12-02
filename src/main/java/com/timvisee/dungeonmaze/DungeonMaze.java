@@ -18,7 +18,6 @@ import java.util.List;
 public class DungeonMaze extends JavaPlugin {
 
 	/** Defines the name of the plugin. */
-    // TODO: Create a getter method for this constant, and make it private
 	public static final String PLUGIN_NAME = "Dungeon Maze";
 	/** Defines the current Dungeon Maze version name. */
 	private static final String PLUGIN_VERSION_NAME = "0.2.2";
@@ -49,16 +48,15 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler profiler = new Profiler(true);
 
 		// Show a status message
-		// TODO: Should we use a method for the plugin name constant?
-		Core.getLogger().info("Starting " + PLUGIN_NAME + " v" + getVersionName() + "...");
+		Core.getLogger().info("Starting " + getPluginName() + " v" + getVersionName() + "...");
         Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (" + MinecraftUtils.getServerType().getName() + ")");
 
 		// Initialize the core
 		initCore();
 
 		// Show a startup message
-		Core.getLogger().info(PLUGIN_NAME + " v" + getVersionName() + " started, took " + profiler.getTimeFormatted() + "!");
-		Core.getLogger().info(PLUGIN_NAME + " developed by Tim Visee - timvisee.com");
+		Core.getLogger().info(getPluginName() + " v" + getVersionName() + " started, took " + profiler.getTimeFormatted() + "!");
+		Core.getLogger().info(getPluginName() + " developed by Tim Visee - timvisee.com");
 	}
 
 	/**
@@ -69,13 +67,13 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler profiler = new Profiler(true);
 
 		// Show an disabling message
-		Core.getLogger().info("Disabling " + PLUGIN_NAME + "...");
+		Core.getLogger().info("Disabling " + getPluginName() + "...");
 
 		// Destroy the core
 		destroyCore(true);
 
 		// Show an disabled message
-		Core.getLogger().info(PLUGIN_NAME + " disabled, took " + profiler.getTimeFormatted() + "!");
+		Core.getLogger().info(getPluginName() + " disabled, took " + profiler.getTimeFormatted() + "!");
 	}
 
 	/**
@@ -215,6 +213,15 @@ public class DungeonMaze extends JavaPlugin {
 	@Deprecated
 	public DungeonMazeApiOld getDmAPI() {
 		return Core.getOldApiController().getApi();
+	}
+
+	/**
+	 * Get the name of the plugin.
+	 *
+	 * @return Plugin name.
+     */
+	private static String getPluginName() {
+		return PLUGIN_NAME;
 	}
 
 	/**
