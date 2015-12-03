@@ -18,7 +18,7 @@ import java.util.List;
 public class DungeonMaze extends JavaPlugin {
 
 	/** Defines the name of the plugin. */
-	public static final String PLUGIN_NAME = "Dungeon Maze";
+	private static final String PLUGIN_NAME = "Dungeon Maze";
 	/** Defines the current Dungeon Maze version name. */
 	private static final String PLUGIN_VERSION_NAME = "0.2.2";
 	/** Defines the current Dungeon Maze version code. */
