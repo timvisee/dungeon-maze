@@ -220,7 +220,7 @@ public class DungeonMaze extends JavaPlugin {
 	 *
 	 * @return Plugin name.
      */
-	private static String getPluginName() {
+	public static String getPluginName() {
 		return PLUGIN_NAME;
 	}
 
