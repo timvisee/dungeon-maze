@@ -47,18 +47,18 @@ public class CheckUpdatesCommand extends ExecutableCommand {
 
         // Print the update checker header
         sender.sendMessage(" ");
-        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " UPDATE CHECKER ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.getPluginName().toUpperCase() + " UPDATE CHECKER ]==========");
 
         // Failed to check for updates
         if(updateChecker.hasFailed()) {
-            sender.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+            sender.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.getPluginName() + " updates!");
             sender.sendMessage(" ");
             return true;
         }
 
         // No new version found
         if(!updateChecker.isUpdateAvailable()) {
-            sender.sendMessage(ChatColor.GREEN + DungeonMaze.PLUGIN_NAME + " is up to date!");
+            sender.sendMessage(ChatColor.GREEN + DungeonMaze.getPluginName() + " is up to date!");
             sender.sendMessage(" ");
             return true;
         }
@@ -66,8 +66,8 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         // Make sure the new version is compatible
         if(!updateChecker.isUpdateCompatible()) {
             // Show the new Dungeon Maze version
-            sender.sendMessage(ChatColor.GOLD + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, but isn't compatible!");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + "A new " + DungeonMaze.getPluginName() + " version is available, but isn't compatible!");
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
 
@@ -89,9 +89,9 @@ public class CheckUpdatesCommand extends ExecutableCommand {
 
         // Check whether the update has already been installed
         if(updateChecker.isUpdateInstalled()) {
-            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed!");
+            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.getPluginName() + " version is available, and has been installed!");
             sender.sendMessage(ChatColor.GREEN + "Reload or restart your server to apply this update.");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             sender.sendMessage(" ");
@@ -100,9 +100,9 @@ public class CheckUpdatesCommand extends ExecutableCommand {
 
         // Check whether the update has already been downloaded
         if(updateChecker.isUpdateDownloaded()) {
-            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded!");
+            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.getPluginName() + " version is available, and has been downloaded!");
             sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + "" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + "" + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             sender.sendMessage(" ");
@@ -111,9 +111,9 @@ public class CheckUpdatesCommand extends ExecutableCommand {
 
         // Check whether an update is available
         if(updateChecker.isUpdateAvailable()) {
-            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available!");
+            sender.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.getPluginName() + " version is available!");
             sender.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to download and install the update.");
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             sender.sendMessage(" ");
@@ -121,7 +121,7 @@ public class CheckUpdatesCommand extends ExecutableCommand {
         }
 
         // An error occurred, show a message
-        sender.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+        sender.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.getPluginName() + " updates!");
         sender.sendMessage(" ");
         return true;
     }
