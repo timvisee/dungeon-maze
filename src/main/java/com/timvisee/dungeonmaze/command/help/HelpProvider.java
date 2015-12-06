@@ -96,7 +96,7 @@ public class HelpProvider {
         }
 
         // Print the help header
-        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " HELP ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.getPluginName().toUpperCase() + " HELP ]==========");
 
         // Print the command help information
         if(showCommand)
