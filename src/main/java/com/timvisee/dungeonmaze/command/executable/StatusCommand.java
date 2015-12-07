@@ -33,16 +33,16 @@ public class StatusCommand extends ExecutableCommand {
     @Override
     public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Print the status info header
-        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " STATUS ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.getPluginName().toUpperCase() + " STATUS ]==========");
 
         // Get the world manager
         WorldManager worldManager = Core.getWorldManager();
 
         // Print the number of Dungeon Maze worlds
         if(worldManager != null)
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " worlds: " + ChatColor.WHITE + worldManager.getDungeonMazeWorlds().size());
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " worlds: " + ChatColor.WHITE + worldManager.getDungeonMazeWorlds().size());
         else
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " worlds: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " worlds: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Print the Dungeon Maze player count
         int playerCount = Bukkit.getOnlinePlayers().size();
@@ -52,10 +52,10 @@ public class StatusCommand extends ExecutableCommand {
                 if(worldManager.isDungeonMazeWorld(player.getWorld().getName()))
                     dungeonMazePlayerCount++;
 
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " players: " + ChatColor.WHITE + dungeonMazePlayerCount + ChatColor.GRAY + " / " + playerCount);
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " players: " + ChatColor.WHITE + dungeonMazePlayerCount + ChatColor.GRAY + " / " + playerCount);
 
         } else
-            sender.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " players: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
+            sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " players: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Get the permissions manager
         PermissionsManager permissionsManager = Core.getPermissionsManager();
