@@ -87,7 +87,7 @@ public class CreateWorldCommand extends ExecutableCommand {
         }
 
         // Show a status message
-        sender.sendMessage(ChatColor.YELLOW + "Generating the " + DungeonMaze.PLUGIN_NAME + " " + ChatColor.GOLD + worldName + ChatColor.YELLOW + "...");
+        sender.sendMessage(ChatColor.YELLOW + "Generating the " + DungeonMaze.getPluginName() + " " + ChatColor.GOLD + worldName + ChatColor.YELLOW + "...");
         Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "Generating a new world, expecting lag for a while...");
 
         // Profile the world generation
@@ -114,14 +114,14 @@ public class CreateWorldCommand extends ExecutableCommand {
         // Make sure the world instance is valid
         if(world == null) {
             Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World generation failed after " + p.getTimeFormatted() + "!");
-            sender.sendMessage(ChatColor.DARK_RED + "The " + DungeonMaze.PLUGIN_NAME + " " + ChatColor.GOLD + worldName + ChatColor.GREEN +
+            sender.sendMessage(ChatColor.DARK_RED + "The " + DungeonMaze.getPluginName() + " " + ChatColor.GOLD + worldName + ChatColor.GREEN +
                     " failed to generate after " + p.getTimeFormatted() + "!");
             return true;
         }
 
         // Show a status message
         Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "World generation finished, took " + p.getTimeFormatted() + "!");
-        sender.sendMessage(ChatColor.GREEN + "The " + DungeonMaze.PLUGIN_NAME + " " + ChatColor.GOLD + worldName + ChatColor.GREEN +
+        sender.sendMessage(ChatColor.GREEN + "The " + DungeonMaze.getPluginName() + " " + ChatColor.GOLD + worldName + ChatColor.GREEN +
                 " has successfully been generated, took " + p.getTimeFormatted() + "!");
 
         // If the command was executed by a player, teleport the player
