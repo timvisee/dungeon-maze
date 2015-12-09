@@ -113,18 +113,18 @@ public class PlayerListener implements Listener {
 
         // Print the update checker header
         player.sendMessage(" ");
-        player.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " UPDATE CHECKER ]==========");
+        player.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.getPluginName().toUpperCase() + " UPDATE CHECKER ]==========");
 
         // Failed to check for updates
         if(updateChecker.hasFailed()) {
-            player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+            player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.getPluginName() + " updates!");
             player.sendMessage(" ");
             return;
         }
 
 		// No new version found
 		if(!updateChecker.isUpdateAvailable()) {
-            player.sendMessage(ChatColor.GREEN + DungeonMaze.PLUGIN_NAME + " is up to date!");
+            player.sendMessage(ChatColor.GREEN + DungeonMaze.getPluginName() + " is up to date!");
             player.sendMessage(" ");
 			return;
         }
@@ -132,8 +132,8 @@ public class PlayerListener implements Listener {
         // Make sure the new version is compatible
         if(!updateChecker.isUpdateCompatible()) {
             // Show the new Dungeon Maze version
-            player.sendMessage(ChatColor.GOLD + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, but isn't compatible!");
-            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            player.sendMessage(ChatColor.GOLD + "A new " + DungeonMaze.getPluginName() + " version is available, but isn't compatible!");
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
 
@@ -155,9 +155,9 @@ public class PlayerListener implements Listener {
 
         // Check whether the update has already been installed
         if(updateChecker.isUpdateInstalled()) {
-            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been installed!");
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.getPluginName() + " version is available, and has been installed!");
             player.sendMessage(ChatColor.GREEN + "Reload or restart your server to apply this update.");
-            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             player.sendMessage(" ");
@@ -166,9 +166,9 @@ public class PlayerListener implements Listener {
 
         // Check whether the update has already been downloaded
         if(updateChecker.isUpdateDownloaded()) {
-            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available, and has been downloaded!");
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.getPluginName() + " version is available, and has been downloaded!");
             player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to install the update.");
-            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             player.sendMessage(" ");
@@ -177,9 +177,9 @@ public class PlayerListener implements Listener {
 
         // Check whether an update is available
         if(updateChecker.isUpdateAvailable()) {
-            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.PLUGIN_NAME + " version is available!");
+            player.sendMessage(ChatColor.GREEN + "A new " + DungeonMaze.getPluginName() + " version is available!");
             player.sendMessage(ChatColor.GREEN + "Use " + ChatColor.WHITE + "/dm installupdate" + ChatColor.GOLD + " to download and install the update.");
-            player.sendMessage(ChatColor.GOLD + DungeonMaze.PLUGIN_NAME + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+            player.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " update: " + ChatColor.WHITE + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
                     ChatColor.GOLD + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
                     " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
             player.sendMessage(" ");
@@ -187,7 +187,7 @@ public class PlayerListener implements Listener {
         }
 
         // An error occurred, show a message
-        player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.PLUGIN_NAME + " updates!");
+        player.sendMessage(ChatColor.DARK_RED + "Failed to check for " + DungeonMaze.getPluginName() + " updates!");
         player.sendMessage(" ");
 	}
 }
