@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.util.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -49,7 +50,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		final int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
+		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 
         // Register the current room as constant room
@@ -314,37 +315,6 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		for (int i = 0; i < itemCountInChest; i++)
 			newContents.add(items.get(random.nextInt(items.size())));
 		return newContents;
-	}
-
-	/**
-	 * Calculate the distance between two 2D points.
-	 * Note: For the x and y coordinate of the first point, zero is used.
-	 *
-	 * @param x X coordinate of second point.
-	 * @param y Y coordinate of second point.
-	 *
-	 * @return Distance between the two points.
-	 */
-	public static double distanceFromZero(int x, int y) {
-		double dx = 0 - x; // Horizontal difference
-		double dy = 0 - y; // Vertical difference
-		return Math.sqrt(dx * dx + dy * dy);
-	}
-
-	/**
-	 * Calculate the distance between two 2D points.
-	 *
-	 * @param x1 X coordinate of first point.
-	 * @param y1 Y coordinate of first point.
-	 * @param x2 X coordinate of second point.
-	 * @param y2 Y coordinate of second point.
-	 *
-	 * @return Distance between the two points.
-	 */
-	public static double distance(int x1, int y1, int x2, int y2) {
-		double dx = x1 - x2; // Horizontal difference
-		double dy = y1 - y2; // Vertical difference
-		return Math.sqrt(dx * dx + dy * dy);
 	}
 
     @Override
