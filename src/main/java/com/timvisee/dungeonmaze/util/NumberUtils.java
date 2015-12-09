@@ -12,9 +12,7 @@ public class NumberUtils {
      * @return Distance between the two points.
      */
     public static double distanceFromZero(int x, int y) {
-        double dx = 0 - x; // Horizontal difference
-        double dy = 0 - y; // Vertical difference
-        return Math.sqrt(dx * dx + dy * dy);
+        return distance(0, 0, x, y);
     }
 
     /**
