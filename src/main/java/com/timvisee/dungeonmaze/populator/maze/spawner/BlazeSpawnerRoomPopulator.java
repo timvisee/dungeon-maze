@@ -325,7 +325,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	 *
 	 * @return Distance between the two points.
 	 */
-	public double distanceFromZero(int x, int y) {
+	public static double distanceFromZero(int x, int y) {
 		double dx = 0 - x; // Horizontal difference
 		double dy = 0 - y; // Vertical difference
 		return Math.sqrt(dx * dx + dy * dy);
@@ -341,7 +341,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	 *
 	 * @return Distance between the two points.
 	 */
-	public double distance(int x1, int y1, int x2, int y2) {
+	public static double distance(int x1, int y1, int x2, int y2) {
 		double dx = x1 - x2; // Horizontal difference
 		double dy = y1 - y2; // Vertical difference
 		return Math.sqrt(dx * dx + dy * dy);
