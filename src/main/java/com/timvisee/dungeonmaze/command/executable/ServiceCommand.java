@@ -25,7 +25,7 @@ public class ServiceCommand extends ExecutableCommand {
     @Override
     public boolean executeCommand(CommandSender sender, CommandParts commandReference, CommandParts commandArguments) {
         // Print the status info header
-        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.PLUGIN_NAME.toUpperCase() + " SERVICES ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.getPluginName().toUpperCase() + " SERVICES ]==========");
 
         // Get the service manager and make sure it's valid
         ServiceManager serviceManager = Core.instance.getServiceManager();
