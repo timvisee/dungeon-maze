@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.populator.maze.spawner;
 import java.util.Random;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.util.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -38,7 +39,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 		int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and this chunk is allowed
-		if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
+		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 
         // Register the current room as constant room
@@ -113,12 +114,6 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
         chunk.getBlock(x + 1, yFloor + 1, z + 5).setType(Material.COAL_ORE);
         chunk.getBlock(x + 5, yFloor + 1, z + 1).setType(Material.COAL_ORE);
     }
-	
-	public double distance(int x1, int y1, int x2, int y2) {
-		double dx = x1 - x2;
-		double dy = y1 - y2;
-        return Math.sqrt(dx * dx + dy * dy);
-	}
 
     @Override
     public float getRoomChance() {

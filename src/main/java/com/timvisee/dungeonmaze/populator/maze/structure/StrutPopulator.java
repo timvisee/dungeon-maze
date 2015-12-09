@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.util.NumberUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 
@@ -29,7 +30,7 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
         final int z = args.getChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
-		if(distance(chunk.getX(), chunk.getZ(), 0, 0) < STRUT_DISTANCE_NEAR_SPAWN_MAX) {
+		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < STRUT_DISTANCE_NEAR_SPAWN_MAX) {
 			// Strut near spawn
 			if (rand.nextFloat() < CHANCE_STRUT_NEAR_SPAWN) {
 				final int yStrutBar = yCeiling - 1;
@@ -97,12 +98,6 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 					
 			}
 		}
-	}
-	
-	public double distance(int x1, int y1, int x2, int y2) {
-		double dx = x1 - x2; // Horizontal difference
-		double dy = y1 - y2; // Vertical difference
-        return Math.sqrt(dx*dx + dy*dy);
 	}
 
     @Override

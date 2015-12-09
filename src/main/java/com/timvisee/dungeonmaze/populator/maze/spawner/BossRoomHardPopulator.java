@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.util.NumberUtils;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -39,7 +40,7 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
         final int z = 0;
 
 		// Make sure the distance between the spawn chunk and the current chunk is allowed
-		if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
+		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
 			return;
 
         // Set this chunk as custom
@@ -324,12 +325,6 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 	@Override
 	public int getMaximumLayer() {
 		return LAYER_MAX;
-	}
-	
-	public double distance(int x1, int y1, int x2, int y2) {
-		double dx   = x1 - x2;         //horizontal difference 
-		double dy   = y1 - y2;         //vertical difference 
-        return Math.sqrt( dx*dx + dy*dy );
 	}
 	
 	public void addItemsToChest(Random random, Chest chest) {

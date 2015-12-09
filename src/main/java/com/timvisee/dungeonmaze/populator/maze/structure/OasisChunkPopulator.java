@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.timvisee.dungeonmaze.populator.ChunkBlockPopulator;
 import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.util.NumberUtils;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -27,7 +28,7 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
         final Chunk chunk = args.getSourceChunk();
         final DungeonChunk dungeonChunk = args.getDungeonChunk();
 
-        if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
+        if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
             return;
 
         // Set this chunk as custom
@@ -110,12 +111,6 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
         // Tree generation currently not working :@
         Location treeLocation = new Location(world, (chunk.getX()*16) + (8 + treeOffsetX), 31, (chunk.getZ()*16) + (8 + treeOffsetZ));
         world.generateTree(treeLocation, treeType);
-	}
-
-	public double distance(int x1, int y1, int x2, int y2) {
-		double dx = x1 - x2; // Horizontal difference
-		double dy = y1 - y2; // Vertical difference
-        return Math.sqrt(dx*dx + dy*dy);
 	}
 
     @Override

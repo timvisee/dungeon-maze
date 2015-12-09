@@ -4,6 +4,7 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.event.generation.GenerationSpawnerEvent;
 import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeLayerBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.util.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -36,7 +37,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
         final int z = 0;
 
         // Make sure the distance between the spawn chunk and the current chunk is allowed
-        if(distance(0, 0, chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
+        if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
             return;
 
         // Set this chunk as custom chunk
@@ -407,12 +408,6 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
     @Override
     public int getMaximumLayer() {
         return LAYER_MAX;
-    }
-
-    public double distance(int x1, int y1, int x2, int y2) {
-        final double dx = x1 - x2; // Horizontal difference
-        final double dy = y1 - y2; // Vertical difference
-        return Math.sqrt(dx * dx + dy * dy);
     }
 
     public void addItemsToChest(Random random, Chest chest) {
