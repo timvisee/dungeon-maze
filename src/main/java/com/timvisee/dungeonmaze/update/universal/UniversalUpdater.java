@@ -2,7 +2,7 @@ package com.timvisee.dungeonmaze.update.universal;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 
-public class Updater {
+public class UniversalUpdater {
 
     /**
      * True to automatically download the update, if there's one available that is compatible.
@@ -19,7 +19,7 @@ public class Updater {
      * This automatically checks for updates.
      * It also automatically downloads and installs a new available version if compatible.
      */
-    public Updater() {
+    public UniversalUpdater() {
         // TODO: Properly configure this, using a configuration file maybe?
         this(true, true, true);
     }
@@ -31,7 +31,7 @@ public class Updater {
      * @param autoDownload True to automatically download a new and compatible update.
      * @param autoInstall True to automatically install a new and compatible update.
      */
-    public Updater(boolean check, boolean autoDownload, boolean autoInstall) {
+    public UniversalUpdater(boolean check, boolean autoDownload, boolean autoInstall) {
         // Store the automatically download and install configuration
         this.autoDownload = autoDownload;
         this.autoInstall = autoInstall;

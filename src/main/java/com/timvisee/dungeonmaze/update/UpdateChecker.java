@@ -2,7 +2,8 @@ package com.timvisee.dungeonmaze.update;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
-import com.timvisee.dungeonmaze.update.universal.Updater;
+import com.timvisee.dungeonmaze.update.bukkit.BukkitUpdater;
+import com.timvisee.dungeonmaze.update.universal.UniversalUpdater;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.PluginUtils;
 import com.timvisee.dungeonmaze.util.SystemUtils;
@@ -15,9 +16,10 @@ public class UpdateChecker {
     private UpdateCheckerType type = null;
 
     /** Universal updater instance if started. */
-    private Updater updaterUniversal = null;
+    private UniversalUpdater universalUpdater = null;
+
     /** Bukkit updater instance if started. */
-    private com.timvisee.dungeonmaze.update.bukkit.Updater updaterBukkit = null;
+    private BukkitUpdater bukkitUpdater = null;
 
     /**
      * Constructor.
@@ -55,7 +57,7 @@ public class UpdateChecker {
         Core.getLogger().info("Using universal updater. Starting...");
 
         // Set up the universal updater
-        this.updaterUniversal = new Updater();
+        this.universalUpdater = new UniversalUpdater();
 
         // Show a status message
         Core.getLogger().info("Universal updater has been started!");
@@ -74,7 +76,7 @@ public class UpdateChecker {
         File pluginJar = PluginUtils.getPluginFile();
 
         // Set up the update checker
-        this.updaterBukkit = new com.timvisee.dungeonmaze.update.bukkit.Updater(DungeonMaze.instance, 45175, pluginJar, com.timvisee.dungeonmaze.update.bukkit.Updater.UpdateType.DEFAULT, true);
+        this.bukkitUpdater = new BukkitUpdater(DungeonMaze.instance, 45175, pluginJar, BukkitUpdater.UpdateType.DEFAULT, true);
 
         // TODO: Do some error checking on the updater!
 
@@ -96,8 +98,8 @@ public class UpdateChecker {
      *
      * @return Universal updater instance.
      */
-    public Updater getUpdaterUniversal() {
-        return this.updaterUniversal;
+    public UniversalUpdater getUniversalUpdater() {
+        return this.universalUpdater;
     }
 
     /**
@@ -105,8 +107,8 @@ public class UpdateChecker {
      *
      * @return Bukkit updater instance.
      */
-    public com.timvisee.dungeonmaze.update.bukkit.Updater getUpdaterBukkit() {
-        return this.updaterBukkit;
+    public BukkitUpdater getBukkitUpdater() {
+        return this.bukkitUpdater;
     }
 
     /**
@@ -152,7 +154,7 @@ public class UpdateChecker {
                 return false;
 
             case BUKKIT:
-                return getUpdaterBukkit().getResult() == com.timvisee.dungeonmaze.update.bukkit.Updater.UpdateResult.NO_UPDATE;
+                return getBukkitUpdater().getResult() == BukkitUpdater.UpdateResult.NO_UPDATE;
 
             default:
                 return false;
@@ -173,7 +175,7 @@ public class UpdateChecker {
 
             case BUKKIT:
                 // Get the update version
-                String version = getUpdaterBukkit().getLatestName();
+                String version = getBukkitUpdater().getLatestName();
 
                 // Remove spaces and the plugin name from the version number
                 version = version.toLowerCase().replace(" ", "").replace("dungeon", "").replace("maze", "").trim();
