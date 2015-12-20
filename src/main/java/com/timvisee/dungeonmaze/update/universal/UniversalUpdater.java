@@ -51,10 +51,7 @@ public class UniversalUpdater {
         // TODO: Do a version check
 
         // If there's an update and it should be downloaded automatically, download it
-        if(isAutomaticDownload())
-            return downloadUpdate();
-
-        return false;
+        return isAutomaticDownload() && downloadUpdate();
     }
 
     /**
@@ -71,10 +68,7 @@ public class UniversalUpdater {
         // TODO: Download the file.
 
         // If an update is downloaded, and it should be installed automatically, install it
-        if(isAutomaticInstall())
-            return installUpdate();
-
-        return false;
+        return isAutomaticInstall() && installUpdate();
     }
 
     /**
