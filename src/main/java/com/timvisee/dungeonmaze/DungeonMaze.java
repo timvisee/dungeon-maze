@@ -26,6 +26,9 @@ public class DungeonMaze extends JavaPlugin {
 	/** Defines the current Dungeon Maze version code. */
 	private static final int PLUGIN_VERSION_CODE = 18;
 
+    /** Defines the application ID used when checking for updates. */
+    private static final int UPDATER_APP_ID = 2;
+
 	/** Dungeon Maze instance. */
 	public static DungeonMaze instance;
 
@@ -137,7 +140,7 @@ public class DungeonMaze extends JavaPlugin {
 		return true;
 	}
 
-	/**
+    /**
 	 * Handle Bukkit commands.
 	 *
 	 * @param sender The command sender (Bukkit).
@@ -153,6 +156,7 @@ public class DungeonMaze extends JavaPlugin {
 		CommandHandler commandHandler = Core.getCommandHandler();
 		if(commandHandler == null)
 			return false;
+
 
 		// Handle the command, return the result
 		return commandHandler.onCommand(sender, cmd, commandLabel, args);
@@ -243,6 +247,15 @@ public class DungeonMaze extends JavaPlugin {
 	public static int getVersionCode() {
 		return PLUGIN_VERSION_CODE;
 	}
+
+    /**
+     * Get the application ID of the plugin to use when checking for updates.
+     *
+     * @return Application ID.
+     */
+    public static int getUpdaterAppId() {
+        return UPDATER_APP_ID;
+    }
 
 
 
