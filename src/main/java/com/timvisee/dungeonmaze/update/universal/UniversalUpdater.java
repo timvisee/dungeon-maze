@@ -14,7 +14,7 @@ public class UniversalUpdater {
     private static final String UPDATER_APP_ID_KEY = "app";
 
     /** The application ID to identify the current application when updating. */
-    private String appId = "0";
+    private String appId;
 
     /** True to automatically download the update, if there's one available that is compatible. */
     private boolean autoDownload = true;
@@ -30,18 +30,20 @@ public class UniversalUpdater {
      */
     public UniversalUpdater() {
         // TODO: Properly configure this, using a configuration file maybe?
-        this(true, true, true);
+        this("0", true, true, true);
     }
 
     /**
      * Constructor.
      *
+     * @param appId Application ID.
      * @param check True to do an update check.
      * @param autoDownload True to automatically download a new and compatible update.
      * @param autoInstall True to automatically install a new and compatible update.
      */
-    public UniversalUpdater(boolean check, boolean autoDownload, boolean autoInstall) {
+    public UniversalUpdater(String appId, boolean check, boolean autoDownload, boolean autoInstall) {
         // Store the automatically download and install configuration
+        this.appId = appId;
         this.autoDownload = autoDownload;
         this.autoInstall = autoInstall;
 
