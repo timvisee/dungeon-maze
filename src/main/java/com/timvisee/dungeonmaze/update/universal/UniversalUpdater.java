@@ -13,15 +13,14 @@ public class UniversalUpdater {
     /** Updater application ID key. */
     private static final String UPDATER_APP_ID_KEY = "app";
 
-    /**
-     * True to automatically download the update, if there's one available that is compatible.
-     */
-    private boolean autoDownload;
+    /** The application ID to identify the current application when updating. */
+    private String appId = "0";
 
-    /**
-     * True to automatically install the update, if there's one available that is compatible.
-     */
-    private boolean autoInstall;
+    /** True to automatically download the update, if there's one available that is compatible. */
+    private boolean autoDownload = true;
+
+    /** True to automatically install the update, if there's one available that is compatible. */
+    private boolean autoInstall = true;
 
     /**
      * Constructor.
@@ -51,10 +50,24 @@ public class UniversalUpdater {
             checkUpdates();
     }
 
+    /**
+     * Get the URL used to check for updates.
+     *
+     * @return Updater URL.
+     */
     public String getUpdateCheckUrl() {
-        // TODO: Build and return the update checker URL.
+        // Build the base updater URL
+        StringBuilder updaterUrl = new StringBuilder();
+        updaterUrl.append(UPDATER_HOST);
+        updaterUrl.append(UPDATER_QUERY);
 
-        return null;
+        // Append the application ID to the URL
+        updaterUrl.append(UPDATER_APP_ID_KEY);
+        updaterUrl.append('=');
+        updaterUrl.append(getApplicationId());
+
+        // Return the URL
+        return updaterUrl.toString();
     }
 
     /**
@@ -105,6 +118,24 @@ public class UniversalUpdater {
      */
     public DungeonMaze getDungeonMaze() {
         return DungeonMaze.instance;
+    }
+
+    /**
+     * Get the application ID.
+     *
+     * @return Application ID.
+     */
+    public String getApplicationId() {
+        return appId;
+    }
+
+    /**
+     * Set the application ID.
+     *
+     * @param appId Application ID.
+     */
+    public void setApplicationId(String appId) {
+        this.appId = appId;
     }
 
     /**
