@@ -4,10 +4,20 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 
 public class UniversalUpdater {
 
+    /** Updater checker host. */
+    private static final String UPDATER_HOST = "http://updates.timvisee.com";
+
+    /** Updater checker query. */
+    private static final String UPDATER_QUERY = "/check.php?";
+
+    /** Updater application ID key. */
+    private static final String UPDATER_APP_ID_KEY = "app";
+
     /**
      * True to automatically download the update, if there's one available that is compatible.
      */
     private boolean autoDownload;
+
     /**
      * True to automatically install the update, if there's one available that is compatible.
      */
