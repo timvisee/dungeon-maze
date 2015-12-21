@@ -27,7 +27,7 @@ public class DungeonMaze extends JavaPlugin {
 	private static final int PLUGIN_VERSION_CODE = 18;
 
     /** Defines the application ID used when checking for updates. */
-    private static final int UPDATER_APP_ID = 2;
+    private static final String UPDATER_APP_ID = "2";
 
 	/** Dungeon Maze instance. */
 	public static DungeonMaze instance;
@@ -253,7 +253,7 @@ public class DungeonMaze extends JavaPlugin {
      *
      * @return Application ID.
      */
-    public static int getUpdaterAppId() {
+    public static String getUpdaterApplicationId() {
         return UPDATER_APP_ID;
     }
 
