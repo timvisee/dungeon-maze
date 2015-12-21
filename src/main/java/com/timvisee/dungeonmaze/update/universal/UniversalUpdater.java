@@ -9,7 +9,7 @@ public class UniversalUpdater {
      */
     private boolean autoDownload;
     /**
-     * True to automatically install the upate, if there's one available that is compatible.
+     * True to automatically install the update, if there's one available that is compatible.
      */
     private boolean autoInstall;
 
@@ -39,6 +39,12 @@ public class UniversalUpdater {
         // Should we do an update check
         if(check)
             checkUpdates();
+    }
+
+    public String getUpdateCheckUrl() {
+        // TODO: Build and return the update checker URL.
+
+        return null;
     }
 
     /**
