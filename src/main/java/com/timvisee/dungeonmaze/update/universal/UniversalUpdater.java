@@ -56,18 +56,12 @@ public class UniversalUpdater {
      * @return Updater URL.
      */
     public String getUpdateCheckUrl() {
-        // Build the base updater URL
-        StringBuilder updaterUrl = new StringBuilder();
-        updaterUrl.append(UPDATER_HOST);
-        updaterUrl.append(UPDATER_QUERY);
-
-        // Append the application ID to the URL
-        updaterUrl.append(UPDATER_APP_ID_KEY);
-        updaterUrl.append('=');
-        updaterUrl.append(getApplicationId());
-
-        // Return the URL
-        return updaterUrl.toString();
+        // Build and return the URL
+        return UPDATER_HOST +
+                UPDATER_QUERY +
+                UPDATER_APP_ID_KEY +
+                '=' +
+                getApplicationId();
     }
 
     /**
