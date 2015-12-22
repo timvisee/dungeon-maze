@@ -2,6 +2,9 @@ package com.timvisee.dungeonmaze.update.universal;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class UniversalUpdater {
 
     /** Updater checker host. */
@@ -53,17 +56,34 @@ public class UniversalUpdater {
     }
 
     /**
-     * Get the URL used to check for updates.
+     * Get the URL used to check for updates as plain text.
      *
-     * @return Updater URL.
+     * @return Updater URL as plain text.
      */
-    public String getUpdateCheckUrl() {
+    public String getUpdateUrlPlain() {
         // Build and return the URL
         return UPDATER_HOST +
                 UPDATER_QUERY +
                 UPDATER_APP_ID_KEY +
                 '=' +
                 getApplicationId();
+    }
+
+    /**
+     * Get the URL used to check for updates.
+     *
+     * @return Updater URL.
+     */
+    public URL getUpdateUrl() {
+        // Get and return the URL
+        try {
+            return new URL(getUpdateUrlPlain());
+        } catch(MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        // Return null on failure
+        return null;
     }
 
     /**
