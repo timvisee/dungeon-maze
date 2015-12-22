@@ -2,8 +2,13 @@ package com.timvisee.dungeonmaze.update.universal;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 public class UniversalUpdater {
 
@@ -93,6 +98,22 @@ public class UniversalUpdater {
      * @return True if succeed, false if failed.
      */
     public boolean checkUpdates() {
+        // Get the updater URL
+        URL updaterUrl = getUpdateUrl();
+
+        try {
+            // Open an input stream to retrieve the update data
+            InputStream inputStream = updaterUrl.openStream();
+
+            // Create a buffered reader to actually retrieve the updates data
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        // TODO: Make sure this URL is available?
+
         // TODO: Do a version check
 
         // If there's an update and it should be downloaded automatically, download it
