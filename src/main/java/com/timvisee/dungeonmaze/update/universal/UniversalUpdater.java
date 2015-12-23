@@ -1,6 +1,8 @@
 package com.timvisee.dungeonmaze.update.universal;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -105,10 +107,13 @@ public class UniversalUpdater {
             // Open an input stream to retrieve the update data
             InputStream inputStream = updaterUrl.openStream();
 
-            // Create a buffered reader to actually retrieve the updates data
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
+            // Create a JSON tokener
+            JSONTokener tokener = new JSONTokener(inputStream);
 
-        } catch(IOException e) {
+            // Get the JSON root object
+            JSONObject root = new JSONObject(tokener);
+
+        } catch(Exception e) {
             e.printStackTrace();
         }
 
