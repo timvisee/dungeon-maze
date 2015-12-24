@@ -113,6 +113,14 @@ public class UniversalUpdater {
             // Get the JSON root object
             JSONObject root = new JSONObject(tokener);
 
+            // Get the app object
+            JSONObject appObj = root.getJSONObject("app");
+
+            // Get a vew parameters
+            String appVersion = appObj.getString("version");
+            String appRequiredJavaVersion = appObj.getString("requiredJavaVersion");
+            String appRequiredBukkitVersion = appObj.getString("requiredBukkitVersion");
+
         } catch(Exception e) {
             e.printStackTrace();
         }
