@@ -120,6 +120,9 @@ public class UniversalUpdater {
             String appVersion = appObj.getString("version");
             String appRequiredJavaVersion = appObj.getString("requiredJavaVersion");
             String appRequiredBukkitVersion = appObj.getString("requiredBukkitVersion");
+            boolean appImportantUpdate = appObj.getBoolean("importantUpdate");
+            String appDownloadUrl = appObj.getString("downloadUrl");
+            String appDate = appObj.getString("date");
 
         } catch(Exception e) {
             e.printStackTrace();
