@@ -117,7 +117,7 @@ public class UniversalUpdater {
             JSONObject root = new JSONObject(tokener);
 
             // Get the app object
-            JSONObject appObj = root.getJSONObject("app");
+//            JSONObject appObj = root.getJSONObject("app");
 
             // Get a vew parameters
 //            String appVersion = appObj.getString("version");
@@ -127,12 +127,11 @@ public class UniversalUpdater {
 //            String appDownloadUrl = appObj.getString("downloadUrl");
 //            String appDate = appObj.getString("date");
 
-            for(Object name : root.names()) {
-                Bukkit.broadcastMessage(ChatColor.GOLD + "JSON NAMES: - " + ((String) name));
-            }
+//            Iterator<String> stringIterator = root.keys();
+//            while(stringIterator.hasNext())
+//                Bukkit.broadcastMessage(ChatColor.GOLD + "JSON KEY: - " + stringIterator.next());
 
-            // TODO: Debug the latest available version
-            //Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
+//            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
 
         } catch(Exception e) {
             e.printStackTrace();
