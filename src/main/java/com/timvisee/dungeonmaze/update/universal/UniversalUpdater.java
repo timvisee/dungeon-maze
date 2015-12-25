@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Iterator;
 
 public class UniversalUpdater {
 
@@ -119,15 +120,19 @@ public class UniversalUpdater {
             JSONObject appObj = root.getJSONObject("app");
 
             // Get a vew parameters
-            String appVersion = appObj.getString("version");
-            String appRequiredJavaVersion = appObj.getString("requiredJavaVersion");
-            String appRequiredBukkitVersion = appObj.getString("requiredBukkitVersion");
-            boolean appImportantUpdate = appObj.getBoolean("importantUpdate");
-            String appDownloadUrl = appObj.getString("downloadUrl");
-            String appDate = appObj.getString("date");
+//            String appVersion = appObj.getString("version");
+//            String appRequiredJavaVersion = appObj.getString("requiredJavaVersion");
+//            String appRequiredBukkitVersion = appObj.getString("requiredBukkitVersion");
+//            boolean appImportantUpdate = appObj.getBoolean("importantUpdate");
+//            String appDownloadUrl = appObj.getString("downloadUrl");
+//            String appDate = appObj.getString("date");
+
+            for(Object name : root.names()) {
+                Bukkit.broadcastMessage(ChatColor.GOLD + "JSON NAMES: - " + ((String) name));
+            }
 
             // TODO: Debug the latest available version
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
+            //Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
 
         } catch(Exception e) {
             e.printStackTrace();
