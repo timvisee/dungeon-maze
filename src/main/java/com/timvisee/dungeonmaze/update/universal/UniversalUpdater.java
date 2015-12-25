@@ -1,6 +1,8 @@
 package com.timvisee.dungeonmaze.update.universal;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -123,6 +125,9 @@ public class UniversalUpdater {
             boolean appImportantUpdate = appObj.getBoolean("importantUpdate");
             String appDownloadUrl = appObj.getString("downloadUrl");
             String appDate = appObj.getString("date");
+
+            // TODO: Debug the latest available version
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
 
         } catch(Exception e) {
             e.printStackTrace();
