@@ -127,10 +127,6 @@ public class UniversalUpdater {
 //            String appDownloadUrl = appObj.getString("downloadUrl");
 //            String appDate = appObj.getString("date");
 
-//            Iterator<String> stringIterator = root.keys();
-//            while(stringIterator.hasNext())
-//                Bukkit.broadcastMessage(ChatColor.GOLD + "JSON KEY: - " + stringIterator.next());
-
 //            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
 
         } catch(Exception e) {
