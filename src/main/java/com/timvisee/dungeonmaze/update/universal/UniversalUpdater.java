@@ -40,10 +40,12 @@ public class UniversalUpdater {
      *
      * This automatically checks for updates.
      * It also automatically downloads and installs a new available version if compatible.
+     *
+     * @param appId Application ID.
      */
-    public UniversalUpdater() {
+    public UniversalUpdater(String appId) {
         // TODO: Properly configure this, using a configuration file maybe?
-        this("0", true, true, true);
+        this(appId, true, true, true);
     }
 
     /**
@@ -103,18 +105,47 @@ public class UniversalUpdater {
      * @return True if succeed, false if failed.
      */
     public boolean checkUpdates() {
-        // Get the updater URL
-        URL updaterUrl = getUpdateUrl();
+        // Create a buffered reader to load the remote page in
+        BufferedReader reader = null;
 
         try {
-            // Open an input stream to retrieve the update data
+            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "DOING JSON TEST NOW:");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Retreiving from: " + getUpdateUrlPlain());
+
+            // Get the updater URL
+            URL updaterUrl = getUpdateUrl();
+
+            // Get the input stream and input stream reader
             InputStream inputStream = updaterUrl.openStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+            // Set up the reader
+            reader = new BufferedReader(inputStreamReader);
+
+            // Create a string buffer to buffer the page that needs to be retrieved and a buffer array to temporarily buffer the page being retrieved
+            StringBuffer buffer = new StringBuffer();
+            int read;
+            char[] chars = new char[1024];
+
+            // Actually retrieve the page using the buffer, and put it into the string buffer
+            while((read = reader.read(chars)) != -1)
+                buffer.append(chars, 0, read);
+
+            // TODO: Should we keep this?
+            // Return the string buffer contents, containing the page
+            //return buffer.toString();
 
             // Create a JSON tokener
-            JSONTokener tokener = new JSONTokener(inputStream);
+            //JSONTokener tokener = new JSONTokener(buffer.toString());
 
             // Get the JSON root object
-            JSONObject root = new JSONObject(tokener);
+            //JSONObject root = new JSONObject(tokener);
+            JSONObject root = new JSONObject(buffer.toString());
 
             // Get the app object
 //            JSONObject appObj = root.getJSONObject("app");
@@ -128,6 +159,11 @@ public class UniversalUpdater {
 //            String appDate = appObj.getString("date");
 
 //            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
+
+            for(int i = 0; i < root.names().length(); i++) {
+                String key = root.names().getString(i);
+                Bukkit.broadcastMessage(ChatColor.GOLD + "KEY: " + key + "; VALUE: " + root.get(key).toString());
+            }
 
         } catch(Exception e) {
             e.printStackTrace();

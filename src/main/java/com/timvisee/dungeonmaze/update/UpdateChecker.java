@@ -58,10 +58,7 @@ public class UpdateChecker {
         Core.getLogger().info("Using universal updater. Starting...");
 
         // Set up the universal updater
-        this.universalUpdater = new UniversalUpdater();
-
-        // Set the application ID
-        this.universalUpdater.setApplicationId(DungeonMaze.getUpdaterApplicationId());
+        this.universalUpdater = new UniversalUpdater(DungeonMaze.getUpdaterApplicationId());
 
         // Show a status message
         Core.getLogger().info("Universal updater has been started!");
