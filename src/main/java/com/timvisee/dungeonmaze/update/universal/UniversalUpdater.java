@@ -105,12 +105,8 @@ public class UniversalUpdater {
         BufferedReader reader = null;
 
         try {
+            // TODO: Print an obvious message to the console, to make the debug part easily visible
             Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "DOING JSON TEST NOW:");
             Bukkit.broadcastMessage(ChatColor.GOLD + "Retreiving from: " + getUpdateUrlPlain());
 
             // Get the updater URL
@@ -141,7 +137,7 @@ public class UniversalUpdater {
 
             // Get the JSON root object
             //JSONObject root = new JSONObject(tokener);
-            JSONObject root = new JSONObject(buffer.toString());
+            JSONObject rootObj = new JSONObject(buffer.toString());
 
             // Get the app object
 //            JSONObject appObj = root.getJSONObject("app");
@@ -156,9 +152,9 @@ public class UniversalUpdater {
 
 //            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
 
-            for(int i = 0; i < root.names().length(); i++) {
-                String key = root.names().getString(i);
-                Bukkit.broadcastMessage(ChatColor.GOLD + "KEY: " + key + "; VALUE: " + root.get(key).toString());
+            for(int i = 0; i < rootObj.names().length(); i++) {
+                String key = rootObj.names().getString(i);
+                Bukkit.broadcastMessage(ChatColor.GOLD + "KEY: " + key + "; VALUE: " + rootObj.get(key).toString());
             }
 
         } catch(Exception e) {
