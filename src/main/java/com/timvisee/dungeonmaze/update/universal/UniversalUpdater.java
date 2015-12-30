@@ -152,11 +152,6 @@ public class UniversalUpdater {
 
 //            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
 
-            for(int i = 0; i < rootObj.names().length(); i++) {
-                String key = rootObj.names().getString(i);
-                Bukkit.broadcastMessage(ChatColor.GOLD + "KEY: " + key + "; VALUE: " + rootObj.get(key).toString());
-            }
-
         } catch(Exception e) {
             e.printStackTrace();
         }
