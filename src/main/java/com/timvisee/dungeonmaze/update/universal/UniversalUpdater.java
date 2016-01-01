@@ -128,15 +128,7 @@ public class UniversalUpdater {
             while((read = reader.read(chars)) != -1)
                 buffer.append(chars, 0, read);
 
-            // TODO: Should we keep this?
-            // Return the string buffer contents, containing the page
-            //return buffer.toString();
-
-            // Create a JSON tokener
-            //JSONTokener tokener = new JSONTokener(buffer.toString());
-
             // Get the JSON root object
-            //JSONObject root = new JSONObject(tokener);
             JSONObject rootObj = new JSONObject(buffer.toString());
 
             // Get the app object
