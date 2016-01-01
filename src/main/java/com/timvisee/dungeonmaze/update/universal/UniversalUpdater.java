@@ -142,7 +142,8 @@ public class UniversalUpdater {
             String appDownloadUrl = appObj.getString("downloadUrl");
             String appDate = appObj.getString("date");
 
-//            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
+            // TODO: Remove this debug message when finished
+            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
 
         } catch(Exception e) {
             e.printStackTrace();
