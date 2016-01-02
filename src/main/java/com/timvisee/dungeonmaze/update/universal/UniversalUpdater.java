@@ -116,7 +116,7 @@ public class UniversalUpdater {
             reader = new BufferedReader(inputStreamReader);
 
             // Create a string buffer to buffer the page that needs to be retrieved and a buffer array to temporarily buffer the page being retrieved
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             int read;
             char[] chars = new char[1024];
 
