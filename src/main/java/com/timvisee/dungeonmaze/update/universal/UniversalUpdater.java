@@ -134,13 +134,15 @@ public class UniversalUpdater {
             // Get the app object
             JSONObject appObj = rootObj.getJSONObject("app");
 
-            // Get a vew parameters
+            // Get a few application update parameters
             String appVersion = appObj.getString("version");
             String appRequiredJavaVersion = appObj.getString("requiredJavaVersion");
             String appRequiredBukkitVersion = appObj.getString("requiredBukkitVersion");
             boolean appImportantUpdate = appObj.getBoolean("importantUpdate");
             String appDownloadUrl = appObj.getString("downloadUrl");
-            String appDate = appObj.getString("date");
+
+            // Get a few request parameters
+            String appDate = rootObj.getString("date");
 
             // TODO: Remove this debug message when finished
             Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
