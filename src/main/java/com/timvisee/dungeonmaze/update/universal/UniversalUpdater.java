@@ -105,10 +105,6 @@ public class UniversalUpdater {
         BufferedReader reader = null;
 
         try {
-            // TODO: Print an obvious message to the console, to make the debug part easily visible
-            Bukkit.broadcastMessage(ChatColor.GOLD + "###################################");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Retreiving from: " + getUpdateUrlPlain());
-
             // Get the updater URL
             URL updaterUrl = getUpdateUrl();
 
