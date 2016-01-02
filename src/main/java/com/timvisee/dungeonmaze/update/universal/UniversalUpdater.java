@@ -140,8 +140,14 @@ public class UniversalUpdater {
             // Get a few request parameters
             String appDate = rootObj.getString("date");
 
-            // TODO: Remove this debug message when finished
-            Bukkit.broadcastMessage(ChatColor.GOLD + "Newest version JSON: " + appVersion + " (date: " + appDate + ")");
+            // TODO: Remove these debug messages when finished
+            Bukkit.broadcastMessage(ChatColor.GOLD + "RETRIEVED JSON VALUES:");
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appVersion: " + appVersion);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appRequiredJavaVersion: " + appRequiredJavaVersion);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appRequiredBukkitVersion: " + appRequiredBukkitVersion);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appImportantUpdate: " + appImportantUpdate);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appDownloadUrl: " + appDownloadUrl);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appDate: " + appDate);
 
         } catch(Exception e) {
             e.printStackTrace();
