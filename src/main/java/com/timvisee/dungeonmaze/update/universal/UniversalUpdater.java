@@ -102,7 +102,7 @@ public class UniversalUpdater {
      */
     public boolean checkUpdates() {
         // Create a buffered reader to load the remote page in
-        BufferedReader reader = null;
+        BufferedReader reader;
 
         try {
             // Get the updater URL

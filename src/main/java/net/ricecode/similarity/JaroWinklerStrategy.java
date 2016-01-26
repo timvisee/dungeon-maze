@@ -71,10 +71,7 @@ public class JaroWinklerStrategy extends JaroStrategy implements SimilarityStrat
 
         // The Jaro–Winkler distance uses a prefix scale which gives more favorable ratings
         // to strings that match from the beginning for a set prefix length.
-        double winkler = jaro + (scalingFactor * cl * (1.0 - jaro));
-
-        return winkler;
-
+        return jaro + (scalingFactor * cl * (1.0 - jaro));
     }
 
     /**
