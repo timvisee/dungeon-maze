@@ -92,6 +92,7 @@ public class ApiPermissionsManager {
 			return null;
 
 		// Get the used permissions system type
+		//noinspection ConstantConditions
 		return getPermissionsManager().getUsedPermissionsSystemType();
 	}
 	
