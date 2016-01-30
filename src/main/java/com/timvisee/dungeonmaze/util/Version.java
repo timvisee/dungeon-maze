@@ -49,9 +49,6 @@ public class Version implements Comparable<Version> {
         if(that == null)
             return false;
 
-        if(this.getClass() != that.getClass())
-            return false;
-
-        return this.compareTo((Version) that) == 0;
+        return this.getClass() == that.getClass() && this.compareTo((Version) that) == 0;
     }
 }
