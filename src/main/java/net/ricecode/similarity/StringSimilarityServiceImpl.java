@@ -55,7 +55,7 @@ public class StringSimilarityServiceImpl implements StringSimilarityService {
      */
     public List<SimilarityScore> scoreAll(List<String> features, String target)
     {
-        ArrayList<SimilarityScore> scores = new ArrayList<SimilarityScore>();
+        ArrayList<SimilarityScore> scores = new ArrayList<>();
         
         for(String feature: features) {
         	double score = strategy.score(feature, target);

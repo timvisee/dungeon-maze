@@ -69,7 +69,7 @@ public class DiceCoefficientStrategy implements SimilarityStrategy {
 
 	
 	private Set<String> splitIntoBigrams(String s) {
-		ArrayList<String> bigrams = new ArrayList<String>();
+		ArrayList<String> bigrams = new ArrayList<>();
 	
 		if (s.length() < 2) {
 			bigrams.add(s);
@@ -82,7 +82,7 @@ public class DiceCoefficientStrategy implements SimilarityStrategy {
 				bigrams.add(sb.toString());
 			}
 		}
-		return new TreeSet<String>(bigrams);
+		return new TreeSet<>(bigrams);
 	}
 	
 	
