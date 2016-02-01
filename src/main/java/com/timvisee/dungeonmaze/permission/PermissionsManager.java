@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * PermissionsManager.
@@ -477,8 +478,7 @@ public class PermissionsManager {
                 List<String> groups = new ArrayList<>();
 
                 // Get the groups and add each to the list
-                for(Group group : this.defaultPerms.getGroups(player.getName()))
-                    groups.add(group.getName());
+                groups.addAll(this.defaultPerms.getGroups(player.getName()).stream().map(Group::getName).collect(Collectors.toList()));
 
                 // Return the groups
                 return groups;
