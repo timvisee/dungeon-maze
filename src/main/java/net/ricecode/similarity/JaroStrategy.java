@@ -83,13 +83,14 @@ public class JaroStrategy implements SimilarityStrategy {
 	
 	/**
 	 * Gets a set of matching characters between two strings.
-	 * 
+	 *
+     * REMARKS: Two characters from the first string and the second string are considered matching if the character's
+     * respective positions are no farther than the limit value.
+     *
 	 * @param first The first string.
 	 * @param second The second string.
 	 * @param limit The maximum distance to consider.
 	 * @return A string contain the set of common characters.
-	 * @remarks Two characters from the first string and the second string are considered matching if the character's
-     * respective positions are no farther than the limit value.
 	 */
 	private String getSetOfMatchingCharacterWithin(String first, String second, int limit)
     {
