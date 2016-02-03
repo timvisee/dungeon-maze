@@ -66,7 +66,11 @@ public class ApiPermissionsManager {
 		// Throw an exception if the core class hasn't been initialized yet
 		Core core = getCore();
 		if(core == null)
-			throw new Exception("Failed to gather the permissions manager, the core hasn't been initalized yet!");
+			try {
+				throw new Exception("Failed to gather the permissions manager, the core hasn't been initalized yet!");
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 
 		// Get and return the world manager
 		return core._getPermissionsManager();
