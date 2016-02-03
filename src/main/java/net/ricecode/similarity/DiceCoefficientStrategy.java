@@ -76,10 +76,8 @@ public class DiceCoefficientStrategy implements SimilarityStrategy {
 		}
 		else {
 			for (int i = 1; i < s.length(); i++) {
-				StringBuilder sb = new StringBuilder();
-				sb.append(s.charAt(i-1));
-				sb.append(s.charAt(i));
-				bigrams.add(sb.toString());
+				String sb = String.valueOf(s.charAt(i - 1)) + s.charAt(i);
+				bigrams.add(sb);
 			}
 		}
 		return new TreeSet<>(bigrams);
