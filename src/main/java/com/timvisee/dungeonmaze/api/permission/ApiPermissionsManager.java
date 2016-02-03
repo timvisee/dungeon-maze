@@ -63,10 +63,10 @@ public class ApiPermissionsManager {
 	 * @return Dungeon Maze permissions manager.
 	 */
 	private PermissionsManager getPermissionsManager() {
-		// Get the Core instance and make sure it's valid
+		// Throw an exception if the core class hasn't been initialized yet
 		Core core = getCore();
 		if(core == null)
-			return null;
+			throw new Exception("Failed to gather the permissions manager, the core hasn't been initalized yet!");
 
 		// Get and return the world manager
 		return core._getPermissionsManager();
@@ -92,7 +92,6 @@ public class ApiPermissionsManager {
 			return null;
 
 		// Get the used permissions system type
-		//noinspection ConstantConditions
 		return getPermissionsManager().getUsedPermissionsSystemType();
 	}
 	
