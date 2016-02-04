@@ -73,6 +73,7 @@ public class ApiPermissionsManager {
 			}
 
 		// Get and return the world manager
+		assert core != null;
 		return core._getPermissionsManager();
 	}
 
