@@ -50,8 +50,11 @@ public class MinecraftUtils {
         if(rawVersion.toLowerCase().contains("spigot"))
             return ServerType.SPIGOT;
 
+        // Check whether this is a KCauldron server
+        if(rawVersion.toLowerCase().contains("kcauldron"))
+            return ServerType.KCAULDRON;
+
         // Return unknown
         return ServerType.UNKNOWN;
     }
-
 }
