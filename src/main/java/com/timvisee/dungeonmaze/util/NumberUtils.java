@@ -26,8 +26,8 @@ public class NumberUtils {
      * @return Distance between the two points.
      */
     public static double distance(int x1, int y1, int x2, int y2) {
-        double dx = x1 - x2; // Horizontal difference
-        double dy = y1 - y2; // Vertical difference
+        double dx = x1 - x2;
+        double dy = y1 - y2;
         return Math.sqrt(dx * dx + dy * dy);
     }
 }

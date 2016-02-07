@@ -18,14 +18,15 @@ public class StringUtils {
      * @return The string difference value.
      */
     public static double getDifference(String first, String second) {
+        // Make sure both strings are equal
         if(first == null || second == null)
             return 1.0;
 
+        // Create a string comparison server
         StringSimilarityService service = new StringSimilarityServiceImpl(new LevenshteinDistanceStrategy());
 
-        double score = service.score(first, second);
-
-        return Math.abs(score - 1.0);
+        // Determine the difference score and return it's absolute value
+        return Math.abs(service.score(first, second) - 1.0);
     }
 
     /**

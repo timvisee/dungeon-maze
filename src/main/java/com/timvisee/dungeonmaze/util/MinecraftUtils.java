@@ -10,6 +10,7 @@ public class MinecraftUtils {
      *
      * @return The current Minecraft version.
      */
+    // TODO: Does this also work for non-bukkit servers?
     public static String getMinecraftVersion() {
         // Get the raw version
         final String rawVersion = Bukkit.getVersion();
