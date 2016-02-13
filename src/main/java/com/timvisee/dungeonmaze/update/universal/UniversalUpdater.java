@@ -156,8 +156,8 @@ public class UniversalUpdater {
 
             // TODO: Determine whether a new update is available
 
-            // Set the last update check date time
-            this.lastUpdateCheck = LocalDateTime.now();
+            // Set the last update check time
+            this.lastUpdateCheck = System.currentTimeMillis();
 
         } catch(Exception e) {
             e.printStackTrace();
