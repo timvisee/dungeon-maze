@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 public class UniversalUpdater {
 
@@ -30,6 +32,9 @@ public class UniversalUpdater {
 
     /** True to automatically install the update, if there's one available that is compatible. */
     private boolean autoInstall = true;
+
+    /** The time in milliseconds (from the last OS start) the latest update check has been made. If no check has been made yet, this will be -1. */
+    private long lastUpdateCheck = -1;
 
     /**
      * Constructor.
@@ -149,6 +154,11 @@ public class UniversalUpdater {
             Bukkit.broadcastMessage(ChatColor.GOLD + "appDownloadUrl: " + appDownloadUrl);
             Bukkit.broadcastMessage(ChatColor.GOLD + "appDate: " + appDate);
 
+            // TODO: Determine whether a new update is available
+
+            // Set the last update check date time
+            this.lastUpdateCheck = LocalDateTime.now();
+
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -170,8 +180,13 @@ public class UniversalUpdater {
      * @return True of succeed, false on failure.
      */
     public boolean downloadUpdate() {
-        // TODO: Make sure we recently checked for an update!
+        // Ensure we recently did an update check
+        // TODO: Make this value customizable, put this in a method, or put it in a constant
+        if(this.lastUpdateCheck == -1 || this.lastUpdateCheck < (System.currentTimeMillis() - 60 * 60 * 100))
+            return false;
+
         // TODO: Make sure the file is compatible?
+
         // TODO: Download the file.
 
         // If an update is downloaded, and it should be installed automatically, install it
