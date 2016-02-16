@@ -7,7 +7,8 @@ public enum ServerType {
     BUKKIT("Bukkit"),
     SPIGOT("Spigot"),
     PAPER_SPIGOT("PaperSpigot"),
-    KCAULDRON("KCauldron");
+    KCAULDRON("KCauldron"),
+    THERMOS("Thermos");
 
     /** Server type name. */
     private final String name;

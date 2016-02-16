@@ -52,7 +52,13 @@ public class MinecraftUtils {
             return ServerType.SPIGOT;
 
         // Check whether this is a KCauldron server
+        // TODO: IMPORTANT: Make sure this is valid!
         if(rawVersion.toLowerCase().contains("kcauldron"))
+            return ServerType.KCAULDRON;
+
+        // Check whether this is a Thermos server
+        // TODO: IMPORTANT: Make sure this is valid!
+        if(rawVersion.toLowerCase().contains("thermos"))
             return ServerType.KCAULDRON;
 
         // Return unknown
