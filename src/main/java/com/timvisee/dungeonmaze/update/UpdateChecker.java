@@ -38,9 +38,8 @@ public class UpdateChecker {
         // Start the proper updater
         switch(type) {
         case BUKKIT:
-            // TODO: Revert this!
             startBukkit();
-//            break;
+            break;
 
         case UNIVERSAL:
         default:
