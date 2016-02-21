@@ -135,6 +135,7 @@ public class UniversalUpdater {
 
             // Get a few application update parameters
             String appVersion = appObj.getString("version");
+            int appVersionCode = appObj.getInt("versionCode");
             String appRequiredJavaVersion = appObj.getString("requiredJavaVersion");
             String appRequiredBukkitVersion = appObj.getString("requiredBukkitVersion");
             boolean appImportantUpdate = appObj.getBoolean("importantUpdate");
@@ -145,7 +146,8 @@ public class UniversalUpdater {
 
             // TODO: Remove these debug messages when finished
             Bukkit.broadcastMessage(ChatColor.GOLD + "RETRIEVED JSON VALUES:");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appVersion: " + appVersion);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appVersion: " + appVersionCode);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "appVersionCode: " + appVersion);
             Bukkit.broadcastMessage(ChatColor.GOLD + "appRequiredJavaVersion: " + appRequiredJavaVersion);
             Bukkit.broadcastMessage(ChatColor.GOLD + "appRequiredBukkitVersion: " + appRequiredBukkitVersion);
             Bukkit.broadcastMessage(ChatColor.GOLD + "appImportantUpdate: " + appImportantUpdate);
