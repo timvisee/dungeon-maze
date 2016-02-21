@@ -39,9 +39,10 @@ public class MinecraftUtils {
         // Get the raw version
         final String rawVersion = Bukkit.getVersion();
 
-        // Check whether this is a CraftBukkit or Bukkit server
+        // TODO: Enable this code, to properly recognise Bukkit servers!
+        /*// Check whether this is a CraftBukkit or Bukkit server
         if(rawVersion.toLowerCase().contains("bukkit"))
-            return ServerType.BUKKIT;
+            return ServerType.BUKKIT;*/
 
         // Check whether this is a PaperSpigot server
         if(rawVersion.toLowerCase().contains("paperspigot"))
