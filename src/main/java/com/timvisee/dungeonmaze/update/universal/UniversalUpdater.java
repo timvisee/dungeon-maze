@@ -13,26 +13,45 @@ import java.net.URL;
 
 public class UniversalUpdater {
 
-    /** Updater checker host. */
+    /**
+     * Updater checker host.
+     */
     private static final String UPDATER_HOST = "http://updates.timvisee.com";
 
-    /** Updater checker query. */
+    /**
+     * Updater checker query.
+     */
     private static final String UPDATER_QUERY = "/check.php?";
 
-    /** Updater application ID key. */
+    /**
+     * Updater application ID key.
+     */
     private static final String UPDATER_APP_ID_KEY = "app";
 
-    /** The application ID to identify the current application when updating. */
+    /**
+     * The application ID to identify the current application when updating.
+     */
     private String appId;
 
-    /** True to automatically download the update, if there's one available that is compatible. */
+    /**
+     * True to automatically download the update, if there's one available that is compatible.
+     */
     private boolean autoDownload = true;
 
-    /** True to automatically install the update, if there's one available that is compatible. */
+    /**
+     * True to automatically install the update, if there's one available that is compatible.
+     */
     private boolean autoInstall = true;
 
-    /** The time in milliseconds (from the last OS start) the latest update check has been made. If no check has been made yet, this will be -1. */
+    /**
+     * The time in milliseconds (from the last OS start) the latest update check has been made. If no check has been made yet, this will be -1.
+     */
     private long lastUpdateCheck = -1;
+
+    /**
+     * The data received with the last update check.
+     */
+    private JSONObject lastUpdateCheckData;
 
     /**
      * Constructor.
@@ -130,29 +149,27 @@ public class UniversalUpdater {
             // Get the JSON root object
             JSONObject rootObj = new JSONObject(buffer.toString());
 
-            // Get the app object
-            JSONObject appObj = rootObj.getJSONObject("app");
+            // Get the update data and store it in the data field
+            lastUpdateCheckData = rootObj.getJSONObject("app");
 
-            // Get a few application update parameters
-            String appVersion = appObj.getString("version");
-            int appVersionCode = appObj.getInt("versionCode");
-            String appRequiredJavaVersion = appObj.getString("requiredJavaVersion");
-            String appRequiredBukkitVersion = appObj.getString("requiredBukkitVersion");
-            boolean appImportantUpdate = appObj.getBoolean("importantUpdate");
-            String appDownloadUrl = appObj.getString("downloadUrl");
-
-            // Get a few request parameters
-            String appDate = rootObj.getString("date");
+            // Get a few application update and request parameters
+            String updateVersion = lastUpdateCheckData.getString("version");
+            int updateVersionCode = lastUpdateCheckData.getInt("versionCode");
+            String updateRequiredJavaVersion = lastUpdateCheckData.getString("requiredJavaVersion");
+            String updateRequiredBukkitVersion = lastUpdateCheckData.getString("requiredBukkitVersion");
+            boolean updateImportantUpdate = lastUpdateCheckData.getBoolean("importantUpdate");
+            String updateDownloadUrl = lastUpdateCheckData.getString("downloadUrl");
+            String requestDate = rootObj.getString("date");
 
             // TODO: Remove these debug messages when finished
             Bukkit.broadcastMessage(ChatColor.GOLD + "RETRIEVED JSON VALUES:");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appVersion: " + appVersionCode);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appVersionCode: " + appVersion);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appRequiredJavaVersion: " + appRequiredJavaVersion);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appRequiredBukkitVersion: " + appRequiredBukkitVersion);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appImportantUpdate: " + appImportantUpdate);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appDownloadUrl: " + appDownloadUrl);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "appDate: " + appDate);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "updateVersion: " + updateVersionCode);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "updateVersionCode: " + updateVersion);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "updateRequiredJavaVersion: " + updateRequiredJavaVersion);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "updateRequiredBukkitVersion: " + updateRequiredBukkitVersion);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "updateImportantUpdate: " + updateImportantUpdate);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "updateDownloadUrl: " + updateDownloadUrl);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "requestDate: " + requestDate);
 
             // TODO: Determine whether a new update is available
 
@@ -161,11 +178,15 @@ public class UniversalUpdater {
 
         } catch(Exception e) {
             e.printStackTrace();
+            return false;
         }
 
-        // TODO: Make sure this URL is available?
+        // Compare the version code of the installed version with the report of the last update check
+        int updateVersionCode = lastUpdateCheckData.getInt("versionCode");
+        if(DungeonMaze.getVersionCode() < updateVersionCode)
+            return false;
 
-        // TODO: Do a version check
+        // TODO: Make sure the download URL is reachable
 
         // If there's an update and it should be downloaded automatically, download it
         return isAutomaticDownload() && downloadUpdate();
