@@ -207,7 +207,7 @@ public class UniversalUpdater {
         if(this.lastUpdateCheck == -1 || this.lastUpdateCheck < (System.currentTimeMillis() - 60 * 60 * 100))
             return false;
 
-        // TODO: Make sure the file is compatible?
+        // TODO: Make sure the file is compatible, by comparing required Bukkit versionAdded update downloading in the universal updater
 
         // Get the download URL of the update file
         String updateDownloadUrl = lastUpdateCheckData.getString("downloadUrl");
