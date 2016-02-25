@@ -243,6 +243,25 @@ public class UniversalUpdater {
     }
 
     /**
+     * Get the directory all update files are placed in.
+     *
+     * @return The update directory.
+     */
+    public File getUpdateDirectory() {
+        // TODO: Do not hardcode this, dynamically get the root path
+        return new File("./plugins/DungeonMaze/update");
+    }
+
+    /**
+     * Get the file location of the update JAR.
+     *
+     * @return Update JAR file location.
+     */
+    public File getUpdateFileLocation() {
+        return new File(getUpdateDirectory(), "DungeonMaze.jar");
+    }
+
+    /**
      * Download and installUpdate the newest version available if compatible.
      *
      * @return True if succeed, false on failure.
