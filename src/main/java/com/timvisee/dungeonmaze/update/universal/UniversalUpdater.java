@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
 
 public class UniversalUpdater {
 
@@ -218,14 +219,16 @@ public class UniversalUpdater {
             System.out.println("The updates directory has been created");
 
         // Get the plugin's update file
-        File pluginFile = getUpdatePluginFile();
+        File pluginUpdateFile = getUpdatePluginFile();
 
         // Try to download the update file
         try {
-            URL website = new URL(updateDownloadUrl);
-            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
-            FileOutputStream fos = new FileOutputStream(pluginFile);
-            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+            // Get an input stream for the update file from the URL
+            final URL website = new URL(updateDownloadUrl);
+            final InputStream in = website.openStream();
+
+            // Try to copy the file
+            Files.copy(in, pluginUpdateFile.toPath());
 
         } catch(MalformedURLException e) {
             System.out.println("Error: The update file URL is invalid.");
