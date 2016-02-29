@@ -59,7 +59,7 @@ public class MinecraftUtils {
         // Check whether this is a Thermos server
         // TODO: IMPORTANT: Make sure this is valid!
         if(rawVersion.toLowerCase().contains("thermos"))
-            return ServerType.KCAULDRON;
+            return ServerType.THERMOS;
 
         // Return unknown
         return ServerType.UNKNOWN;
