@@ -248,8 +248,7 @@ public class UniversalUpdater {
      * @return The update directory.
      */
     public File getUpdateDirectory() {
-        // TODO: Validate the returned path
-        return new File(DungeonMaze.instance.getDataFolder(), "update");
+        return new File(PluginUtils.getPluginDataDirectory(), "update");
     }
 
     /**

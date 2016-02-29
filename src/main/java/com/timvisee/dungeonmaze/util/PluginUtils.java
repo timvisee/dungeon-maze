@@ -42,4 +42,14 @@ public class PluginUtils {
         // Return the file if it exists, null otherwise
         return pluginFile.isFile() ? pluginFile : null;
     }
+
+    /**
+     * Get the directory the Dungeon Maze data is stored in. This is usually in the ./plugins/DungeonMaze directory.
+     *
+     * @return Data directory.
+     */
+    public static File getPluginDataDirectory() {
+        // TODO: Validate the returned path
+        return DungeonMaze.instance.getDataFolder();
+    }
 }
