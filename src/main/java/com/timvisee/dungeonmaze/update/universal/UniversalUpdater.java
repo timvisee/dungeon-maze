@@ -1,15 +1,16 @@
 package com.timvisee.dungeonmaze.update.universal;
 
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.util.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 
 public class UniversalUpdater {
 
@@ -208,7 +209,34 @@ public class UniversalUpdater {
 
         // TODO: Make sure the file is compatible?
 
-        // TODO: Download the file.
+        // Get the download URL of the update file
+        String updateDownloadUrl = lastUpdateCheckData.getString("downloadUrl");
+
+        // Get the plugin file, and make sure it's valid
+        File pluginFile = PluginUtils.getPluginFile();
+        if(pluginFile == null || !pluginFile.exists()) {
+            // Show an error message
+            System.out.println("Error: The plugin file couldn't be determined, unable to download.");
+            return false;
+        }
+
+        // Try to download the update file
+        try {
+            URL website = new URL(updateDownloadUrl);
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream(pluginFile);
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+
+        } catch(MalformedURLException e) {
+            System.out.println("Error: The update file URL is invalid.");
+
+        } catch(FileNotFoundException e) {
+            System.out.println("Error: Could not found the update file.");
+
+        } catch(IOException e) {
+            System.out.println("Error: An error occurred while downloading the update file.");
+            e.printStackTrace();
+        }
 
         // If an update is downloaded, and it should be installed automatically, install it
         return isAutomaticInstall() && installUpdate();
