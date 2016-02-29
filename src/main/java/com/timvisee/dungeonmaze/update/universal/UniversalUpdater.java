@@ -212,13 +212,13 @@ public class UniversalUpdater {
         // Get the download URL of the update file
         String updateDownloadUrl = lastUpdateCheckData.getString("downloadUrl");
 
-        // Get the plugin file, and make sure it's valid
-        File pluginFile = PluginUtils.getPluginFile();
-        if(pluginFile == null || !pluginFile.exists()) {
-            // Show an error message
-            System.out.println("Error: The plugin file couldn't be determined, unable to download.");
-            return false;
-        }
+        // Get the update directory and create it if it doesn't exist
+        File updateDir = getUpdateDirectory();
+        if(updateDir.mkdirs())
+            System.out.println("The updates directory has been created");
+
+        // Get the plugin's update file
+        File pluginFile = getUpdatePluginFile();
 
         // Try to download the update file
         try {
@@ -239,6 +239,7 @@ public class UniversalUpdater {
         }
 
         // If an update is downloaded, and it should be installed automatically, install it
+        // TODO: Check the returned value, is this valid.
         return isAutomaticInstall() && installUpdate();
     }
 
@@ -256,7 +257,7 @@ public class UniversalUpdater {
      *
      * @return Update JAR file location.
      */
-    public File getUpdateFileLocation() {
+    public File getUpdatePluginFile() {
         return new File(getUpdateDirectory(), "DungeonMaze.jar");
     }
 
