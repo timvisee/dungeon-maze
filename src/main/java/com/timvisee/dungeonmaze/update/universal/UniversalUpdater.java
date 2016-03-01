@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.file.Files;
 
 public class UniversalUpdater {
@@ -270,7 +268,41 @@ public class UniversalUpdater {
      * @return True if succeed, false on failure.
      */
     public boolean installUpdate() {
-        // TODO: Make sure the file is downloaded, and can be downloaded.
+        // Get the update file
+        File updatePluginFile = getUpdatePluginFile();
+
+        // Make sure an update plugin file is available
+        if(!updatePluginFile.exists()) {
+            System.out.println("Could not install update, no update has been downloaded.");
+            return false;
+        }
+
+        // Get the plugin file, and make sure it's valid
+        File pluginFile = PluginUtils.getPluginFile();
+        if(pluginFile == null || !pluginFile.exists()) {
+            System.out.println("Unable to determine the location of the Dungeon Maze plugin file, can't install update.");
+            return false;
+        }
+
+        try {
+            // Define the input stream of the update file
+            InputStream in = new FileInputStream(updatePluginFile);
+
+            // Try to copy and replace the plugin file with the update
+            Files.copy(in, pluginFile.toPath());
+
+        } catch(IOException e) {
+            System.out.println("Failed to install the Dungeon Maze update.");
+            e.printStackTrace();
+            return false;
+        }
+
+        // Delete the update file
+        if(!updatePluginFile.delete())
+            System.out.println("Failed to delete the update file, the update has however been installed successfully");
+
+        else
+            System.out.println("The Dungeon Maze has successfully been installed!");
 
         return false;
     }
