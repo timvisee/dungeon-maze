@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.update.universal;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.util.PluginUtils;
 import org.bukkit.Bukkit;
@@ -216,7 +217,7 @@ public class UniversalUpdater {
         // Get the update directory and create it if it doesn't exist
         File updateDir = getUpdateDirectory();
         if(updateDir.mkdirs())
-            System.out.println("The updates directory has been created");
+            Core.getLogger().info("The updates directory has been created");
 
         // Get the plugin's update file
         File pluginUpdateFile = getUpdatePluginFile();
@@ -237,13 +238,13 @@ public class UniversalUpdater {
             Files.copy(in, pluginUpdateFile.toPath(), copyOptions);
 
         } catch(MalformedURLException e) {
-            System.out.println("Error: The update file URL is invalid.");
+            Core.getLogger().error("The update file URL is invalid.");
 
         } catch(FileNotFoundException e) {
-            System.out.println("Error: Could not found the update file.");
+            Core.getLogger().error("Could not found the update file.");
 
         } catch(IOException e) {
-            System.out.println("Error: An error occurred while downloading the update file.");
+            Core.getLogger().error("An error occurred while downloading the update file.");
             e.printStackTrace();
         }
 
@@ -281,14 +282,14 @@ public class UniversalUpdater {
 
         // Make sure an update plugin file is available
         if(!updatePluginFile.exists()) {
-            System.out.println("Could not install update, no update has been downloaded.");
+            Core.getLogger().error("Could not install update, no update has been downloaded."); // TODO: Convert this to a warning!
             return false;
         }
 
         // Get the plugin file, and make sure it's valid
         File pluginFile = PluginUtils.getPluginFile();
         if(pluginFile == null || !pluginFile.exists()) {
-            System.out.println("Unable to determine the location of the Dungeon Maze plugin file, can't install update.");
+            Core.getLogger().error("Unable to determine the location of the Dungeon Maze plugin file, can't install update.");
             return false;
         }
 
@@ -306,17 +307,17 @@ public class UniversalUpdater {
             Files.copy(in, pluginFile.toPath(), copyOptions);
 
         } catch(IOException e) {
-            System.out.println("Failed to install the Dungeon Maze update.");
+            Core.getLogger().error("Failed to install the Dungeon Maze update.");
             e.printStackTrace();
             return false;
         }
 
         // Delete the update file
         if(!updatePluginFile.delete())
-            System.out.println("Failed to delete the update file, the update has however been installed successfully");
+            Core.getLogger().error("Failed to delete the update file, the update has however been installed successfully"); // TODO: Convert this to a warning!
 
         else
-            System.out.println("The Dungeon Maze has successfully been installed!");
+            Core.getLogger().info("The Dungeon Maze has successfully been installed!");
 
         return false;
     }
