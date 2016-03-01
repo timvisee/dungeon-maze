@@ -282,7 +282,7 @@ public class UniversalUpdater {
 
         // Make sure an update plugin file is available
         if(!updatePluginFile.exists()) {
-            Core.getLogger().error("Could not install update, no update has been downloaded."); // TODO: Convert this to a warning!
+            Core.getLogger().warning("Could not install update, no update has been downloaded.");
             return false;
         }
 
@@ -314,7 +314,7 @@ public class UniversalUpdater {
 
         // Delete the update file
         if(!updatePluginFile.delete())
-            Core.getLogger().error("Failed to delete the update file, the update has however been installed successfully"); // TODO: Convert this to a warning!
+            Core.getLogger().warning("Failed to delete the update file, the update has however been installed successfully");
 
         else
             Core.getLogger().info("The Dungeon Maze has successfully been installed!");

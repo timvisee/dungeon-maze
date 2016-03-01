@@ -9,12 +9,16 @@ public class DungeonMazeLogger {
     private Logger log;
     /** Defines whether debug messages are logged. */
     private boolean logDebug = true;
+    /** Defines whether warning messages are logged. */
+    private boolean logWarning= true;
     /** Defines whether error messages are logged. */
     private boolean logError = true;
     /** The prefix to use for info messages. */
     private String infoPrefix = "";
     /** The prefix to use for debug messages. */
     private String debugPrefix = "[DEBUG]";
+    /** The prefix to use for warning messages. */
+    private String warningPrefix = "[WARNING]";
     /** The prefix to use for error messages. */
     private String errorPrefix = "[ERROR]";
 
@@ -61,6 +65,24 @@ public class DungeonMazeLogger {
      */
     public void setLoggingDebug(boolean logDebug) {
         this.logDebug = logDebug;
+    }
+
+    /**
+     * Check whether warning messages are logged.
+     *
+     * @return True if warning messages are logged, false otherwise.
+     */
+    public boolean isLoggingWarning() {
+        return this.logWarning;
+    }
+
+    /**
+     * Set whether warning messages are logged.
+     *
+     * @param logWarning True if warning messages are logged, false otherwise.
+     */
+    public void setLoggingWarning(boolean logWarning) {
+        this.logWarning = logWarning;
     }
 
     /**
@@ -149,6 +171,22 @@ public class DungeonMazeLogger {
     }
 
     /**
+     * Log a warning message.
+     *
+     * @param msg The warning message to log.
+     *
+     * @return True if succeed, false otherwise.
+     */
+    public boolean warning(String msg) {
+        // Make sure the warning message should be shown
+        if(!this.logError)
+            return true;
+
+        // Log the warning message
+        return log(this.warningPrefix, msg);
+    }
+
+    /**
      * Log an error message.
      *
      * @param msg The error message to log.
@@ -198,6 +236,24 @@ public class DungeonMazeLogger {
      */
     public void setDebugPrefix(String debugPrefix) {
         this.debugPrefix = debugPrefix;
+    }
+
+    /**
+     * Get the warning prefix.
+     *
+     * @return Warning prefix.
+     */
+    public String getWarningPrefix() {
+        return warningPrefix;
+    }
+
+    /**
+     * Set the warning prefix.
+     *
+     * @param warningPrefix Warning prefix.
+     */
+    public void setWarningPrefix(String warningPrefix) {
+        this.warningPrefix = warningPrefix;
     }
 
     /**
