@@ -53,14 +53,14 @@ public class DungeonMaze extends JavaPlugin {
 		Profiler profiler = new Profiler(true);
 
 		// Show a status message
-		Core.getLogger().info("Starting " + getPluginName() + " v" + getVersionName() + "...");
+		Core.getLogger().info("Starting " + getVersionComplete(true) + "...");
         Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (" + MinecraftUtils.getServerType().getName() + ")");
 
 		// Initialize the core
 		initCore();
 
 		// Show a startup message
-		Core.getLogger().info(getPluginName() + " v" + getVersionName() + " started, took " + profiler.getTimeFormatted() + "!");
+		Core.getLogger().info(getVersionComplete(true) + " started, took " + profiler.getTimeFormatted() + "!");
 		Core.getLogger().info(getPluginName() + " developed by Tim Visee - timvisee.com");
 	}
 
@@ -78,7 +78,7 @@ public class DungeonMaze extends JavaPlugin {
 		destroyCore(true);
 
 		// Show an disabled message
-		Core.getLogger().info(getPluginName() + " disabled, took " + profiler.getTimeFormatted() + "!");
+		Core.getLogger().info(getVersionComplete(true) + " disabled, took " + profiler.getTimeFormatted() + "!");
 	}
 
 	/**
@@ -246,6 +246,18 @@ public class DungeonMaze extends JavaPlugin {
 	 */
 	public static int getVersionCode() {
 		return PLUGIN_VERSION_CODE;
+	}
+
+	/**
+	 * Get the complete version identifier.
+	 * The includes a prefixed 'v' sign, the version name and the version code between brackets.
+	 *
+	 * @param name True to include the plugin name in front.
+	 *
+	 * @return The complete version string.
+     */
+	public static String getVersionComplete(boolean name) {
+		return (name ? DungeonMaze.PLUGIN_NAME : "") + "v" + getVersionName() + " (" + getVersionCode() + ")";
 	}
 
     /**
