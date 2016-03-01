@@ -5,6 +5,7 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.util.PluginUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
@@ -54,7 +55,7 @@ public class UniversalUpdater {
     /**
      * The data received with the last update check.
      */
-    private JSONObject lastUpdateCheckData;
+    private JSONObject lastUpdateCheckData = null;
 
     /**
      * Constructor.
@@ -184,14 +185,10 @@ public class UniversalUpdater {
             return false;
         }
 
-        // Compare the version code of the installed version with the report of the last update check
-        int updateVersionCode = lastUpdateCheckData.getInt("versionCode");
-        if(DungeonMaze.getVersionCode() < updateVersionCode)
-            return false;
-
         // TODO: Make sure the download URL is reachable
 
         // If there's an update and it should be downloaded automatically, download it
+        // TODO: is this returned value correct?
         return isAutomaticDownload() && downloadUpdate();
     }
 
@@ -251,6 +248,40 @@ public class UniversalUpdater {
         // If an update is downloaded, and it should be installed automatically, install it
         // TODO: Check the returned value, is this valid.
         return isAutomaticInstall() && installUpdate();
+    }
+
+    /**
+     * Check whether an update check has been made.
+     *
+     * @return True if checked, false if not.
+     */
+    public boolean hasChecked() {
+        return lastUpdateCheckData != null;
+    }
+
+    /**
+     * Check whether an update is available.
+     *
+     * @return True if an update is available, false if not.
+     */
+    public boolean isUpdateAvailable() {
+        // Make sure an update check has been done
+        if(!hasChecked())
+            if(!checkUpdates())
+                return false;
+
+        // Compare the version code of the installed version with the report of the last update check
+        int updateVersionCode = -1;
+        try {
+            // Get the version code of the newest update
+            updateVersionCode = lastUpdateCheckData.getInt("versionCode");
+
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Compare the version
+        return DungeonMaze.getVersionCode() < updateVersionCode;
     }
 
     /**

@@ -151,8 +151,7 @@ public class UpdateChecker {
         // Check with the correct updater
         switch(getType()) {
             case UNIVERSAL:
-                // TODO: Implement this!
-                return false;
+                return getUniversalUpdater().isUpdateAvailable();
 
             case BUKKIT:
                 return getBukkitUpdater().getResult() == BukkitUpdater.UpdateResult.NO_UPDATE;
