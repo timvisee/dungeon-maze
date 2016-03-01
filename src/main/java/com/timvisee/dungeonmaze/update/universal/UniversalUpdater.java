@@ -188,8 +188,7 @@ public class UniversalUpdater {
         // TODO: Make sure the download URL is reachable
 
         // If there's an update and it should be downloaded automatically, download it
-        // TODO: is this returned value correct?
-        return isAutomaticDownload() && downloadUpdate();
+        return !isAutomaticDownload() || downloadUpdate();
     }
 
     /**
