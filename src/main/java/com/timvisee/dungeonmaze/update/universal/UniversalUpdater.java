@@ -322,15 +322,6 @@ public class UniversalUpdater {
     }
 
     /**
-     * Get the Dungeon Maze instance.
-     *
-     * @return Dungeon Maze.
-     */
-    public DungeonMaze getDungeonMaze() {
-        return DungeonMaze.instance;
-    }
-
-    /**
      * Get the application ID.
      *
      * @return Application ID.
