@@ -257,7 +257,7 @@ public class DungeonMaze extends JavaPlugin {
 	 * @return The complete version string.
      */
 	public static String getVersionComplete(boolean name) {
-		return (name ? DungeonMaze.PLUGIN_NAME : "") + "v" + getVersionName() + " (" + getVersionCode() + ")";
+		return (name ? DungeonMaze.PLUGIN_NAME : "") + " v" + getVersionName() + " (" + getVersionCode() + ")";
 	}
 
     /**
