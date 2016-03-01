@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class UniversalUpdater {
 
@@ -225,8 +227,14 @@ public class UniversalUpdater {
             final URL website = new URL(updateDownloadUrl);
             final InputStream in = website.openStream();
 
+            // Define the copy options
+            CopyOption[] copyOptions = new CopyOption[]{
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.COPY_ATTRIBUTES,
+            };
+
             // Try to copy the file
-            Files.copy(in, pluginUpdateFile.toPath());
+            Files.copy(in, pluginUpdateFile.toPath(), copyOptions);
 
         } catch(MalformedURLException e) {
             System.out.println("Error: The update file URL is invalid.");
@@ -288,8 +296,14 @@ public class UniversalUpdater {
             // Define the input stream of the update file
             InputStream in = new FileInputStream(updatePluginFile);
 
+            // Define the copy options
+            CopyOption[] copyOptions = new CopyOption[]{
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.COPY_ATTRIBUTES,
+            };
+
             // Try to copy and replace the plugin file with the update
-            Files.copy(in, pluginFile.toPath());
+            Files.copy(in, pluginFile.toPath(), copyOptions);
 
         } catch(IOException e) {
             System.out.println("Failed to install the Dungeon Maze update.");
