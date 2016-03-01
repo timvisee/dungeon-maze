@@ -1,0 +1,13 @@
+{
+  "app": {
+    "version": "0.2.1",
+    "versionCode": "19",
+    "requiredJavaVersion": "1.8",
+    "requiredBukkitVersion": "1.8.1-R0.1",
+    "importantUpdate": true,
+    "fileName": "DungeonMaze.jar",
+    "downloadUrl": "http:\/\/dev.bukkit.org\/media\/files\/899\/899\/DungeonMaze.jar",
+    "manualDownloadUrl": "http:\/\/dev.bukkit.org\/bukkit-plugins\/dungeon-maze\/files\/19-dungeon-maze-0-2-1\/"
+  },
+  "date": "2016-03-02 00:54:52"
+}
