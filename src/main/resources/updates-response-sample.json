@@ -1,13 +1,87 @@
 {
   "app": {
-    "version": "0.2.1",
-    "versionCode": "19",
-    "requiredJavaVersion": "1.8",
-    "requiredBukkitVersion": "1.8.1-R0.1",
-    "importantUpdate": true,
-    "fileName": "DungeonMaze.jar",
-    "downloadUrl": "http:\/\/dev.bukkit.org\/media\/files\/899\/899\/DungeonMaze.jar",
-    "manualDownloadUrl": "http:\/\/dev.bukkit.org\/bukkit-plugins\/dungeon-maze\/files\/19-dungeon-maze-0-2-1\/"
+    "id": 2,
+    "name": "Dungeon Maze"
   },
-  "date": "2016-03-02 00:54:52"
+
+  "versions": [
+    {
+      "version": {
+        "name": "0.2.1",
+        "code": 19,
+        "channels": [
+          "stable",
+          "beta",
+          "alpha"
+        ]
+      },
+      "dependencies": [
+        "AND",
+        [
+          "OR",
+          {
+            "name": "Bukkit",
+            "required": true,
+            "version": {
+              "required": [
+                {
+                  ">=": {
+                    "name": "1.8.1-R0.1"
+                  }
+                }
+              ],
+              "recommended": [ ]
+            }
+          },
+          {
+            "name": "Spigot",
+            "required": true,
+            "version": {
+              "required": [
+                {
+                  ">=": {
+                    "name": "1.8.1-R0.1"
+                  }
+                }
+              ],
+              "recommended": [ ]
+            }
+          }
+        ],
+        {
+          "name": "Java",
+          "required": true,
+          "version": {
+            "required": [
+              {
+                ">=": {
+                  "name": "1.8"
+                }
+              }
+            ],
+            "recommended": [ ]
+          }
+        }
+      ],
+
+
+
+
+      "files": {
+        "DungeonMaze.zip":  "http:\/\/dev.bukkit.org\/media\/files\/899\/899\/DungeonMaze.zip"
+      },
+      "manualDownloadUrl": "http:\/\/dev.bukkit.org\/bukkit-plugins\/dungeon-maze\/files\/19-dungeon-maze-0-2-1\/"
+
+
+
+
+    }
+  ],
+
+  "request": {
+    "date": "2016-03-02 00:54:52"
+  },
+
+  "versionName": "0.1",
+  "versionCode": 1
 }
