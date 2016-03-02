@@ -2,15 +2,34 @@ package com.timvisee.dungeonmaze.update.universalnew;
 
 public class Dependency {
 
+    /**
+     * The ID of the dependency.
+     */
+    private String id;
+
+    /**
+     * The name of the dependency.
+     */
     private String name;
 
     /**
      * Constructor.
      *
-     *@param name The dependency name.
+     * @param id The dependency ID.
+     * @param name The dependency name.
      */
-    public Dependency(String name) {
+    public Dependency(String id, String name) {
+        this.id = id;
         this.name = name;
+    }
+
+    /**
+     * Get the dependency ID.
+     *
+     * @return Dependency ID.
+     */
+    public String getId() {
+        return this.id;
     }
 
     /**

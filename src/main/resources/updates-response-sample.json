@@ -20,6 +20,7 @@
         [
           "OR",
           {
+            "id": "craftbukkit",
             "name": "Bukkit",
             "required": true,
             "version": {
@@ -34,6 +35,7 @@
             }
           },
           {
+            "id": "spigot",
             "name": "Spigot",
             "required": true,
             "version": {
@@ -49,6 +51,7 @@
           }
         ],
         {
+          "id": "java",
           "name": "Java",
           "required": true,
           "version": {
