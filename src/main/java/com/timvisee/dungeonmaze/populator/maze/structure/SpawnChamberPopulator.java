@@ -208,8 +208,8 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
             // Set the material of the block
             b.setType(Material.TORCH);
 
-            // Get the torch instance
-            Torch torch = (Torch) b.getState();
+            // Get the torch data instance
+            Torch torch = new Torch();
 
             // Determine and set the facing of the torch
             BlockFace torchFace = BlockFace.NORTH;
@@ -220,6 +220,10 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
             else if(zTorch == 1)
                 torchFace = BlockFace.SOUTH;
             torch.setFacingDirection(torchFace);
+
+            // Set the data value based on the torch facing, and update the block
+            b.setData(torch.getData());
+            b.getState().update(true);
         }
     }
 
