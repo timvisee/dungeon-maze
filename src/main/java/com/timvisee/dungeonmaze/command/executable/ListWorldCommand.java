@@ -35,7 +35,7 @@ public class ListWorldCommand extends ExecutableCommand {
         List<String> otherWorlds = worldManager.getWorlds(true);
 
         // Show the list of Dungeon Maze worlds
-        sender.sendMessage(ChatColor.GOLD + "==========[ \" + DungeonMaze.PLUGIN_NAME.toUpperCase() + \" WORLDS ]==========");
+        sender.sendMessage(ChatColor.GOLD + "==========[ " + DungeonMaze.getPluginName().toUpperCase() + " WORLDS ]==========");
         sender.sendMessage(ChatColor.GOLD + DungeonMaze.getPluginName() + " worlds:");
         if(dungeonMazeWorlds.size() > 0) {
             for(String worldName : dungeonMazeWorlds) {
