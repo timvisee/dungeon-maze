@@ -91,10 +91,15 @@ public class DungeonMaze extends JavaPlugin {
     public void initLogger() {
         // Determine whether to enable or disable the debug mode and print it's state
         boolean debug = getConfig().getBoolean("logging.debug", true);
-        Core.getLogger().info(getPluginName() + " debugging: " + (debug ? "Enabled" : "Disabled"));
+        Core.getLogger().info(getPluginName() + " debug logging: " + (debug ? "Enabled" : "Disabled"));
 
-        // Set the debug mode of the logger
+        // Determine whether to enable or disable the error mode and print it's state
+        boolean error = getConfig().getBoolean("logging.error", true);
+        Core.getLogger().info(getPluginName() + " error logging: " + (error ? "Enabled" : "Disabled"));
+
+        // Set the debug and error mode of the logger
         Core.getLogger().setLoggingDebug(debug);
+        Core.getLogger().setLoggingError(error);
     }
 
     /**
