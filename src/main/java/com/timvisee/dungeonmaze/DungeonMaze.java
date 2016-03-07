@@ -91,6 +91,12 @@ public class DungeonMaze extends JavaPlugin {
 		// Profile the initialization
 		Profiler profiler = new Profiler(true);
 
+		// Determine whether to enable or disable the debug mode
+		boolean debug = getConfig().getBoolean("logging.debug", true);
+
+		// Set the debug mode of the logger
+		Core.getLogger().setLoggingDebug(debug);
+
 		// Show a status message
 		Core.getLogger().info("Starting core...");
 
