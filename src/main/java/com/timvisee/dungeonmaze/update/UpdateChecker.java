@@ -203,6 +203,7 @@ public class UpdateChecker {
 
             case BUKKIT:
             default:
+                // TODO: Return the correct version code here!
                 return DungeonMaze.getVersionCode() + 1;
         }
     }

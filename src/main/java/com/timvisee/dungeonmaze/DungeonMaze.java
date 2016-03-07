@@ -56,6 +56,9 @@ public class DungeonMaze extends JavaPlugin {
         Core.getLogger().info("Starting " + getVersionComplete(true) + "...");
         Core.getLogger().info("Detected Minecraft version: v" + MinecraftUtils.getMinecraftVersion() + " (" + MinecraftUtils.getServerType().getName() + ")");
 
+        // Initialize the logger
+        initLogger();
+
         // Initialize the core
         initCore();
 
@@ -82,6 +85,19 @@ public class DungeonMaze extends JavaPlugin {
     }
 
     /**
+     * Initialize the logger.
+     * This will enable or disable the debug mode of the logger based on the plugin configuration.
+     */
+    public void initLogger() {
+        // Determine whether to enable or disable the debug mode and print it's state
+        boolean debug = getConfig().getBoolean("logging.debug", true);
+        Core.getLogger().info(getPluginName() + " debugging: " + (debug ? "Enabled" : "Disabled"));
+
+        // Set the debug mode of the logger
+        Core.getLogger().setLoggingDebug(debug);
+    }
+
+    /**
      * Instantiate and set up the core.
      * The Core can only be instantiated once.
      *
@@ -90,12 +106,6 @@ public class DungeonMaze extends JavaPlugin {
     public boolean initCore() {
         // Profile the initialization
         Profiler profiler = new Profiler(true);
-
-        // Determine whether to enable or disable the debug mode
-        boolean debug = getConfig().getBoolean("logging.debug", true);
-
-        // Set the debug mode of the logger
-        Core.getLogger().setLoggingDebug(debug);
 
         // Show a status message
         Core.getLogger().info("Starting core...");
