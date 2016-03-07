@@ -1,5 +1,6 @@
 package com.timvisee.dungeonmaze.logger;
 
+import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -37,13 +38,24 @@ public class LoggerManager {
         this.loggerMinecraft = Logger.getLogger("Minecraft");
         this.dungeonMazeLogger = new DungeonMazeLogger(this.loggerDungeonMaze);
 
+        // Create some variables for the debug and error mode
+        boolean debug = false;
+        boolean error = true;
+
         // Get the Dungeon Maze configuration
         FileConfiguration config = DungeonMaze.instance.getConfig();
         if(config != null) {
-            this.dungeonMazeLogger.setLoggingDebug(config.getBoolean("logging.debug", true));
-            this.dungeonMazeLogger.setLoggingError(config.getBoolean("logging.error", true));
+            debug = config.getBoolean("logging.debug", true);
+            error = config.getBoolean("logging.error", true);
         }
 
+        // Print the debug and error states
+        Core.getLogger().info(DungeonMaze.getPluginName() + " debug logging: " + (debug ? "Enabled" : "Disabled"));
+        Core.getLogger().info(DungeonMaze.getPluginName() + " error logging: " + (error ? "Enabled" : "Disabled"));
+
+        // Set the debug and error modes
+        this.dungeonMazeLogger.setLoggingDebug(debug);
+        this.dungeonMazeLogger.setLoggingError(error);
         return true;
     }
 
