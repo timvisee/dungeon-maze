@@ -41,3 +41,7 @@ mobs:
 logging:
     debug: false
     error: true
+
+# Version information of the Dungeon Maze plugin
+versionName: "0.2.2"
+versionCode: 22
