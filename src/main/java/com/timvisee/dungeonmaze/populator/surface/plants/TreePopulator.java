@@ -58,7 +58,7 @@ public class TreePopulator extends SurfaceBlockPopulator {
                     break;
                 }
 
-            } else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_SHORE)) {
+            } else if(biome.equals(Biome.MUSHROOM_ISLAND) || biome.equals(Biome.MUSHROOM_ISLAND_SHORE)) {
                 switch(rand.nextInt(2)) {
                 case 0:
                     world.generateTree(new Location(world, (chunk.getX() * 16) + xTree, yTree, (chunk.getZ() * 16) + zTree), TreeType.RED_MUSHROOM);
