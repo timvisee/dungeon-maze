@@ -7,3 +7,6 @@ general:
 test:
   override:
     - mvn clean install -B
+  post:
+    - mkdir $CIRCLE_ARTIFACTS/out
+    - mv target/*.jar $CIRCLE_ARTIFACTS/out
