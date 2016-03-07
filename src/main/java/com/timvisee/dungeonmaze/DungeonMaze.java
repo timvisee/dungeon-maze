@@ -21,10 +21,10 @@ public class DungeonMaze extends JavaPlugin {
     private static final String PLUGIN_NAME = "Dungeon Maze";
 
     /** Defines the current Dungeon Maze version name. */
-    private static final String PLUGIN_VERSION_NAME = "0.2.2";
+    private static final String PLUGIN_VERSION_NAME = "0.2.3";
 
     /** Defines the current Dungeon Maze version code. */
-    private static final int PLUGIN_VERSION_CODE = 22;
+    private static final int PLUGIN_VERSION_CODE = 23\;
 
     /** Defines the application ID used when checking for updates. */
     private static final String UPDATER_APP_ID = "2";
