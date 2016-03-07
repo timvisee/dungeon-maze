@@ -44,7 +44,7 @@
         <javaVersion>1.8</javaVersion>
 
         <!-- Minecraft Version -->
-        <bukkitVersion>1.8.8-R0.1-SNAPSHOT</bukkitVersion>
+        <bukkitVersion>1.9-R0.1-SNAPSHOT</bukkitVersion>
 
     </properties>
 
