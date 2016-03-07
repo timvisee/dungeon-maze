@@ -154,7 +154,7 @@ public class UpdateChecker {
                 return getUniversalUpdater().isUpdateAvailable();
 
             case BUKKIT:
-                return getBukkitUpdater().getResult() == BukkitUpdater.UpdateResult.NO_UPDATE;
+                return getBukkitUpdater().getResult() != BukkitUpdater.UpdateResult.NO_UPDATE;
 
             default:
                 return false;
