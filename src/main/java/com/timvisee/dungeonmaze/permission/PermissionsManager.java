@@ -349,7 +349,7 @@ public class PermissionsManager {
 
         // Print a status message to the console
         if (hookedSystem != null)
-            this.log.info("Unhooked from " + hookedSystem + "!");
+            this.log.info("Unhooked from " + hookedSystem.getName() + "!");
 
         // Reset the stored permissions API instances
         groupManagerPerms = null;
@@ -1074,6 +1074,16 @@ public class PermissionsManager {
          */
         public String getPluginName() {
             return this.pluginName;
+        }
+
+        /**
+         * Cast the permissions system type to a string.
+         *
+         * @return The display name of the permissions system.
+         */
+        @Override
+        public String toString() {
+            return getName();
         }
     }
 

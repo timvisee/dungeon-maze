@@ -157,7 +157,6 @@ public class DungeonMaze extends JavaPlugin {
         if(commandHandler == null)
             return false;
 
-
         // Handle the command, return the result
         return commandHandler.onCommand(sender, cmd, commandLabel, args);
     }
