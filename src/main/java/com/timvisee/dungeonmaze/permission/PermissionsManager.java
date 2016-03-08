@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze.pAdded some missing JavaDocs, created method for permissions system types to check whether they are a plugin or notermission;
+package com.timvisee.dungeonmaze.permission;
 
 import com.nijiko.permissions.Group;
 import com.nijiko.permissions.PermissionHandler;
