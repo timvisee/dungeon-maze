@@ -12,17 +12,6 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 public class PluginListener implements Listener {
 
 	/**
-	 * Called when a plugin is enabled.
-	 *
-	 * @param event Event reference.
-	 */
-	@EventHandler
-	public void onPluginEnable(PluginEnableEvent event) {
-		// Call the onPluginEnable method in the permissions manager
-		Core.getPermissionsManager().onPluginEnable(event);
-	}
-
-	/**
 	 * Called when a plugin is disabled.
 	 *
 	 * @param event Event reference.
@@ -39,9 +28,6 @@ public class PluginListener implements Listener {
 		// Make sure it's not Dungeon Maze itself
 		if(plugin.equals(DungeonMaze.instance))
 			return;
-		
-		// Call the onPluginDisable method in the permissions manager
-		Core.getPermissionsManager().onPluginDisable(event);
 		
 		// Check if this plugin is hooked in to Dungeon Maze
 		if(Core.getApiController().isHooked(plugin))
