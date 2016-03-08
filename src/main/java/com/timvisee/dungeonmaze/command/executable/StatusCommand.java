@@ -65,10 +65,10 @@ public class StatusCommand extends ExecutableCommand {
             // Get the used permissions system
             PermissionsManager.PermissionsSystemType type = permissionsManager.getUsedPermissionsSystemType();
 
-            if(!type.equals(PermissionsManager.PermissionsSystemType.NONE))
+            if(type != null)
                 sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.GREEN + permissionsManager.getUsedPermissionsSystemType().getName());
             else
-                sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.GRAY + ChatColor.ITALIC + permissionsManager.getUsedPermissionsSystemType().getName());
+                sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.GRAY + ChatColor.ITALIC + "None");
         } else
             sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 

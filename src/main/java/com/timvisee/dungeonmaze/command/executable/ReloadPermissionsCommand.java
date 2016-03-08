@@ -48,7 +48,9 @@ public class ReloadPermissionsCommand extends ExecutableCommand {
         sender.sendMessage(ChatColor.GREEN + "Permissions reloaded successfully, took " + p.getTimeFormatted() + "!");
 
         // Get and show the permissions system being used
-        String permissionsSystem = ChatColor.GOLD + permissionsManager.getUsedPermissionsSystemType().getName();
+        String permissionsSystem = ChatColor.RED + "None";
+        if(permissionsManager.isHooked())
+            permissionsSystem = ChatColor.GOLD + permissionsManager.getUsedPermissionsSystemType().getName();
         Core.getLogger().info("Used permissions system: " + permissionsSystem);
         sender.sendMessage(ChatColor.GREEN + "Used permissions system: " + permissionsSystem);
         return true;
