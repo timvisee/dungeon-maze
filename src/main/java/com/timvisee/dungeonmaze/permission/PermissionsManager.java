@@ -17,7 +17,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.tyrannyofheaven.bukkit.zPermissions.ZPermissionsService;
-import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
@@ -139,126 +138,101 @@ public class PermissionsManager {
         // Reset used permissions system type flag
         permsType = null;
 
-        // Create a variable to store the permissions system that is currently being checked
-        PermissionsSystemType currentCheck;
+        // Loop through all the available permissions system types
+        for(PermissionsSystemType type : PermissionsSystemType.values()) {
+            // Try to find and hook the current plugin if available, print an error if failed
+            try {
+                // Try to find the plugin for the current permissions system
+                Plugin plugin = pluginManager.getPlugin(type.getPluginName());
 
-        // PermissionsEx, check if it's available
-        currentCheck = PermissionsSystemType.PERMISSIONS_EX;
-        try {
-            Plugin pex = pluginManager.getPlugin(currentCheck.getPluginName());
-            if (pex != null) {
-                PermissionManager pexPerms = PermissionsEx.getPermissionManager();
-                if (pexPerms != null) {
-                    permsType = currentCheck;
-                    System.out.println("[" + plugin.getName() + "] Hooked into " + currentCheck.getName() + "!");
-                    return currentCheck;
+                // Make sure a plugin with this name was found
+                if(plugin == null)
+                    continue;
+
+                // Make sure the plugin is enabled before hooking
+                if(!plugin.isEnabled()) {
+                    System.out.println("[" + plugin.getName() + "] Not hooking into " + type.getName() + " because it's disabled!");
+                    continue;
                 }
-            }
-        } catch (Exception ex) {
-            // An error occurred, show a warning message
-            System.out.println("[" + plugin.getName() + "] Error while hooking into " + currentCheck.getName() + "!");
-        }
 
-        // PermissionsBukkit, check if it's available
-        currentCheck = PermissionsSystemType.PERMISSIONS_BUKKIT;
-        try {
-            Plugin bukkitPerms = pluginManager.getPlugin(currentCheck.getPluginName());
-            if (bukkitPerms != null) {
-                permsType = currentCheck;
-                System.out.println("[" + plugin.getName() + "] Hooked into " + currentCheck.getName() + "!");
-                return currentCheck;
-            }
-        } catch (Exception ex) {
-            // An error occurred, show a warning message
-            System.out.println("[" + plugin.getName() + "] Error while hooking into " + currentCheck.getName() + "!");
-        }
+                // Use the proper method to hook this plugin
+                switch(type) {
+                    case PERMISSIONS_EX:
+                        // Get the permissions manager for PermissionsEx and make sure it isn't null
+                        // TODO: Store this instance for later use!
+                        if(PermissionsEx.getPermissionManager() == null) {
+                            System.out.println("[" + plugin.getName() + "] Failed to hook into " + type.getName() + "!");
+                            continue;
+                        }
 
-        // bPermissions, check if it's available
-        currentCheck = PermissionsSystemType.B_PERMISSIONS;
-        try {
-            Plugin bPerms = pluginManager.getPlugin(currentCheck.getPluginName());
-            if (bPerms != null) {
-                permsType = currentCheck;
-                System.out.println("[" + plugin.getName() + "] Hooked into " + currentCheck.getName() + "!");
-                return currentCheck;
-            }
-        } catch (Exception ex) {
-            // An error occurred, show a warning message
-            System.out.println("[" + plugin.getName() + "] Error while hooking into " + currentCheck.getName() + "!");
-        }
+                        break;
 
-        // Essentials Group Manager, check if it's available
-        currentCheck = PermissionsSystemType.ESSENTIALS_GROUP_MANAGER;
-        try {
-            final Plugin groupManagerPlugin = pluginManager.getPlugin(currentCheck.getPluginName());
-            if (groupManagerPlugin != null && groupManagerPlugin.isEnabled()) {
-                permsType = currentCheck;
-                groupManagerPerms = (GroupManager) groupManagerPlugin;
-                System.out.println("[" + plugin.getName() + "] Hooked into " + currentCheck.getName() + "!");
-                return currentCheck;
-            }
-        } catch (Exception ex) {
-            // An error occurred, show a warning message
-            System.out.println("[" + plugin.getName() + "] Error while hooking into " + currentCheck.getName() + "!");
-        }
+                    case ESSENTIALS_GROUP_MANAGER:
+                        // Set the plugin instance
+                        groupManagerPerms = (GroupManager) plugin;
+                        break;
 
-        // zPermissions, check if it's available
-        currentCheck = PermissionsSystemType.Z_PERMISSIONS;
-        try {
-            Plugin zPerms = pluginManager.getPlugin(currentCheck.getPluginName());
-            if (zPerms != null) {
-                zPermissionsService = Bukkit.getServicesManager().load(ZPermissionsService.class);
-                if (zPermissionsService != null) {
-                    permsType = currentCheck;
-                    System.out.println("[" + plugin.getName() + "] Hooked into " + currentCheck.getName() + "!");
-                    return currentCheck;
+                    case Z_PERMISSIONS:
+                        // Set the zPermissions service and make sure it's valid
+                        zPermissionsService = Bukkit.getServicesManager().load(ZPermissionsService.class);
+                        if(zPermissionsService == null) {
+                            System.out.println("[" + plugin.getName() + "] Failed to hook into " + type.getName() + "!");
+                            continue;
+                        }
+
+                        break;
+
+                    case VAULT:
+                        // Get the permissions provider service
+                        RegisteredServiceProvider<Permission> permissionProvider = this.server.getServicesManager().getRegistration(Permission.class);
+                        if (permissionProvider == null) {
+                            System.out.println("[" + plugin.getName() + "] Failed to hook into " + type.getName() + "!");
+                            continue;
+                        }
+
+                        // Get the Vault provider and make sure it's valid
+                        vaultPerms = permissionProvider.getProvider();
+                        if(vaultPerms == null) {
+                            System.out.println("[" + plugin.getName() + "] Not using " + type.getName() + " because it's disabled!");
+                            continue;
+                        }
+
+                        break;
+
+                    case PERMISSIONS:
+                        // Try to get the permissions instance and make sure it's valid
+                        Permissions permsPlugin = (Permissions) plugin;
+
+                        // Set the handler and make sure it's valid
+                        this.defaultPerms = permsPlugin.getHandler();
+                        if(this.defaultPerms == null) {
+                            System.out.println("[" + plugin.getName() + "] Not using " + type.getName() + " because it's disabled!");
+                            continue;
+                        }
+
+                        break;
+
+                    default:
                 }
+
+                // Set the hooked permissions system type
+                this.permsType = type;
+
+                // Show a success message
+                System.out.println("[" + this.plugin.getName() + "] Hooked into " + type.getName() + "!");
+
+                // Return the used permissions system type
+                return type;
+
+            } catch (Exception ex) {
+                // An error occurred, show a warning message
+                System.out.println("[" + plugin.getName() + "] Error while hooking into " + type.getName() + "!");
             }
-        } catch (Exception ex) {
-            // An error occurred, show a warning message
-            System.out.println("[" + plugin.getName() + "] Error while hooking into " + currentCheck.getName() + "!");
         }
 
-        // Vault, check if it's available
-        currentCheck = PermissionsSystemType.VAULT;
-        try {
-            final Plugin vaultPlugin = pluginManager.getPlugin(currentCheck.getPluginName());
-            if (vaultPlugin != null && vaultPlugin.isEnabled()) {
-                RegisteredServiceProvider<Permission> permissionProvider = this.server.getServicesManager().getRegistration(Permission.class);
-                if (permissionProvider != null) {
-                    vaultPerms = permissionProvider.getProvider();
-                    if (vaultPerms.isEnabled()) {
-                        permsType = currentCheck;
-                        System.out.println("[" + plugin.getName() + "] Hooked into " + currentCheck.getName() + "!");
-                        return currentCheck;
-                    } else
-                        System.out.println("[" + plugin.getName() + "] Not using " + currentCheck.getName() + ", " + currentCheck.getName() + " is disabled!");
-                }
-            }
-        } catch (Exception ex) {
-            // An error occurred, show a warning message
-            System.out.println("[" + plugin.getName() + "] Error while hooking into " + currentCheck.getName() + "!");
-        }
-
-        // Permissions, check if it's available
-        currentCheck = PermissionsSystemType.PERMISSIONS;
-        try {
-            Plugin testPerms = pluginManager.getPlugin(currentCheck.getPluginName());
-            if (testPerms != null) {
-                permsType = currentCheck;
-                this.defaultPerms = ((Permissions) testPerms).getHandler();
-                System.out.println("[" + plugin.getName() + "] Hooked into " + currentCheck.getName() + "!");
-                return currentCheck;
-            }
-        } catch (Exception ex) {
-            // An error occurred, show a warning message
-            System.out.println("[" + plugin.getName() + "] Error while hooking into " + currentCheck.getName() + "!");
-        }
-
-        // No recognized permissions system found
-        permsType = null;
-        System.out.println("[" + plugin.getName() + "] No supported permissions system found! " + currentCheck.getName() + " disabled!");
-        return permsType;
+        // No recognized permissions system found, show a message and return
+        System.out.println("[" + plugin.getName() + "] No supported permissions system found! Permissions are disabled!");
+        return null;
     }
 
     /**
