@@ -1,4 +1,4 @@
-package com.timvisee.dungeonmaze.permission;
+package com.timvisee.dungeonmaze.pAdded some missing JavaDocs, created method for permissions system types to check whether they are a plugin or notermission;
 
 import com.nijiko.permissions.Group;
 import com.nijiko.permissions.PermissionHandler;
@@ -942,6 +942,10 @@ public class PermissionsManager {
         return removeGroups(player, groupNames);
     }
 
+    /**
+     * The various permission system types.
+     * This is used to identify all the permission system types that are supported by the permissions manager.
+     */
     public enum PermissionsSystemType {
 
         /**
@@ -1021,6 +1025,16 @@ public class PermissionsManager {
          */
         public String getPluginName() {
             return this.pluginName;
+        }
+
+        /**
+         * Check whether this type is a real permissions system.
+         * NONE will return false.
+         *
+         * @return True if this is a permissions system.
+         */
+        public boolean isPermissionsSystem() {
+            return this != NONE;
         }
     }
 }
