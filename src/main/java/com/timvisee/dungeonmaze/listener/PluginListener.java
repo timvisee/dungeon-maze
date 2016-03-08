@@ -3,7 +3,6 @@ package com.timvisee.dungeonmaze.listener;
 import com.timvisee.dungeonmaze.Core;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.Plugin;
 
