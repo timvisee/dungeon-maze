@@ -250,11 +250,15 @@ public class PermissionsManager {
      * Break the hook with all permission systems.
      */
     public void unhook() {
+        // Store the permissions system that was hooked
+        PermissionsSystemType hookedSystem = getUsedPermissionsSystemType();
+
         // Reset the current used permissions system
         this.permsType = PermissionsSystemType.NONE;
 
         // Print a status message to the console
-        this.log.info("Unhooked from Permissions!");
+        if(hookedSystem != PermissionsSystemType.NONE)
+            this.log.info("Unhooked from " + hookedSystem + "!");
     }
 
     /**
