@@ -251,7 +251,7 @@ public class PermissionsManager {
 
                 // Make sure the plugin is enabled before hooking
                 if(!plugin.isEnabled()) {
-                    System.out.println("[" + plugin.getName() + "] Not hooking into " + type.getName() + " because it's disabled!");
+                    this.log.info("Not hooking into " + type.getName() + " because it's disabled!");
                     continue;
                 }
 
@@ -261,7 +261,7 @@ public class PermissionsManager {
                         // Get the permissions manager for PermissionsEx and make sure it isn't null
                         // TODO: Store this instance for later use!
                         if(PermissionsEx.getPermissionManager() == null) {
-                            System.out.println("[" + plugin.getName() + "] Failed to hook into " + type.getName() + "!");
+                            this.log.info("Failed to hook into " + type.getName() + "!");
                             continue;
                         }
 
@@ -276,7 +276,7 @@ public class PermissionsManager {
                         // Set the zPermissions service and make sure it's valid
                         zPermissionsService = Bukkit.getServicesManager().load(ZPermissionsService.class);
                         if(zPermissionsService == null) {
-                            System.out.println("[" + plugin.getName() + "] Failed to hook into " + type.getName() + "!");
+                            this.log.info("Failed to hook into " + type.getName() + "!");
                             continue;
                         }
 
@@ -286,14 +286,14 @@ public class PermissionsManager {
                         // Get the permissions provider service
                         RegisteredServiceProvider<Permission> permissionProvider = this.server.getServicesManager().getRegistration(Permission.class);
                         if (permissionProvider == null) {
-                            System.out.println("[" + plugin.getName() + "] Failed to hook into " + type.getName() + "!");
+                            this.log.info("Failed to hook into " + type.getName() + "!");
                             continue;
                         }
 
                         // Get the Vault provider and make sure it's valid
                         vaultPerms = permissionProvider.getProvider();
                         if(vaultPerms == null) {
-                            System.out.println("[" + plugin.getName() + "] Not using " + type.getName() + " because it's disabled!");
+                            this.log.info("Not using " + type.getName() + " because it's disabled!");
                             continue;
                         }
 
@@ -306,7 +306,7 @@ public class PermissionsManager {
                         // Set the handler and make sure it's valid
                         this.defaultPerms = permsPlugin.getHandler();
                         if(this.defaultPerms == null) {
-                            System.out.println("[" + plugin.getName() + "] Not using " + type.getName() + " because it's disabled!");
+                            this.log.info("Not using " + type.getName() + " because it's disabled!");
                             continue;
                         }
 
@@ -319,19 +319,19 @@ public class PermissionsManager {
                 this.permsType = type;
 
                 // Show a success message
-                System.out.println("[" + this.plugin.getName() + "] Hooked into " + type.getName() + "!");
+                this.log.info("Hooked into " + type.getName() + "!");
 
                 // Return the used permissions system type
                 return type;
 
             } catch (Exception ex) {
                 // An error occurred, show a warning message
-                System.out.println("[" + plugin.getName() + "] Error while hooking into " + type.getName() + "!");
+                this.log.info("Error while hooking into " + type.getName() + "!");
             }
         }
 
         // No recognized permissions system found, show a message and return
-        System.out.println("[" + plugin.getName() + "] No supported permissions system found! Permissions are disabled!");
+        this.log.info("No supported permissions system found! Permissions are disabled!");
         return null;
     }
 

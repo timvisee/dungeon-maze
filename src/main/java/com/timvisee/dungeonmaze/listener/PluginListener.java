@@ -20,15 +20,15 @@ public class PluginListener implements Listener {
 	public void onPluginDisable(PluginDisableEvent event) {
 		// Get the plugin instance
 		Plugin plugin = event.getPlugin();
-		
+
 		// Make sure the plugin instance isn't null
 		if(plugin == null)
 			return;
-		
+
 		// Make sure it's not Dungeon Maze itself
 		if(plugin.equals(DungeonMaze.instance))
 			return;
-		
+
 		// Check if this plugin is hooked in to Dungeon Maze
 		if(Core.getApiController().isHooked(plugin))
 			// Unhook the plugin from Dungeon Maze and unregister it's API sessions
