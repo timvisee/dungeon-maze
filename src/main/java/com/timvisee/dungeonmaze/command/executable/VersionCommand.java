@@ -31,7 +31,7 @@ public class VersionCommand extends ExecutableCommand {
         printDeveloper(sender, "Metonymia", "Metonymia", "Design Contributor");
         sender.sendMessage(ChatColor.GOLD + "Website: " + ChatColor.WHITE + "http://timvisee.com/projects/bukkit/dungeon-maze/");
         sender.sendMessage(ChatColor.GOLD + "License: " + ChatColor.WHITE + "GNU GPL v3.0" + ChatColor.GRAY + ChatColor.ITALIC + " (See LICENSE file)");
-        sender.sendMessage(ChatColor.GOLD + "Copyright: " + ChatColor.WHITE + "Copyright (c) Tim Visee 2015. All rights reserved.");
+        sender.sendMessage(ChatColor.GOLD + "Copyright: " + ChatColor.WHITE + "Copyright (c) Tim Visee 2016. All rights reserved.");
         return true;
     }
 
