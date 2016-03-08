@@ -11,6 +11,8 @@ import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
@@ -56,6 +58,16 @@ public class PermissionsManager {
     private Logger log;
 
     /**
+     * The permissions manager Bukkit listener instance.
+     */
+    private PermissionsManagerBukkitListener bukkitListener;
+
+    /**
+     * A flag whether the permissions manager is started or not.
+     */
+    private boolean started = false;
+
+    /**
      * Type of permissions system that is currently used.
      * Null if no permissions system is used.
      */
@@ -87,11 +99,99 @@ public class PermissionsManager {
      * @param server Server instance
      * @param plugin Plugin instance
      * @param log    Logger
+     * @param start True to start the permissions manager immediately.
      */
-    public PermissionsManager(Server server, Plugin plugin, Logger log) {
+    public PermissionsManager(Server server, Plugin plugin, Logger log, boolean start) {
         this.server = server;
         this.plugin = plugin;
         this.log = log;
+
+        // Create and register the Bukkit listener on the server if it's valid
+        if(this.server != null) {
+            // Create the Bukkit listener
+            this.bukkitListener = new PermissionsManagerBukkitListener(this);
+
+            // Get the plugin manager instance
+            PluginManager pluginManager = this.server.getPluginManager();
+
+            // Register the Bukkit listener
+            pluginManager.registerEvents(this.bukkitListener, this.plugin);
+        }
+
+        // Start
+        if(start)
+            start();
+    }
+
+    /**
+     * Constructor.
+     * This will automatically start the permissions manager.
+     *
+     * @param server Server instance
+     * @param plugin Plugin instance
+     * @param log    Logger
+     */
+    public PermissionsManager(Server server, Plugin plugin, Logger log) {
+        this(server, plugin, log, true);
+    }
+
+    /**
+     * Start the permissions manager.
+     * This will automatically set up the manager to hook into available permission systems.
+     */
+    public void start() {
+        // Make sure the permissions manager isn't started already
+        if(isStarted())
+            return;
+
+        // Create and register the Bukkit listener on the server if it's valid
+        if(this.server != null) {
+            // Create the Bukkit listener
+            this.bukkitListener = new PermissionsManagerBukkitListener(this);
+
+            // Get the plugin manager instance
+            PluginManager pluginManager = this.server.getPluginManager();
+
+            // Register the Bukkit listener
+            pluginManager.registerEvents(this.bukkitListener, this.plugin);
+
+            // Show a status message.
+            this.log.info("Started permission plugins state listener!");
+        }
+
+        // Set the started flag
+        this.started = true;
+
+        // Set up the manager
+        setup();
+    }
+
+    /**
+     * Stop the permissions manager.
+     */
+    public void stop() {
+        // Make sure the manager is started
+        if(!isStarted())
+            return;
+
+        // Disable the Bukkit listener if it was initialized and if the server instance is set
+        if(this.server != null && this.bukkitListener != null)
+            this.bukkitListener.setEnabled(false);
+
+        // Unhook
+        unhook();
+
+        // Set the started flag
+        this.started = false;
+    }
+
+    /**
+     * Check whether the permissions manager is started.
+     *
+     * @return True if the permissions manager is started.
+     */
+    public boolean isStarted() {
+        return this.started;
     }
 
     /**
@@ -110,7 +210,7 @@ public class PermissionsManager {
      * @return True if properly hooked into a permissions system plugin, false otherwise.
      */
     public boolean isHooked() {
-        return this.permsType != null;
+        return isStarted() && this.permsType != null;
     }
 
     /**
@@ -969,6 +1069,90 @@ public class PermissionsManager {
          */
         public String getPluginName() {
             return this.pluginName;
+        }
+    }
+
+    /**
+     * Permissions manager Bukkit listener.
+     * This listener is automatically deployed to listen for Bukkit plugin changes so the permissions manager can
+     * react on them accordingly.
+     */
+    public class PermissionsManagerBukkitListener implements Listener {
+
+        /**
+         * The permissions manager instance.
+         */
+        private PermissionsManager permissionsManager;
+
+        /**
+         * Whether the listener is enabled or not.
+         */
+        private boolean enabled = true;
+
+        /**
+         * Constructor.\
+         *
+         * @param permissionsManager Permissions manager instance.
+         */
+        public PermissionsManagerBukkitListener(PermissionsManager permissionsManager) {
+            this.permissionsManager = permissionsManager;
+        }
+
+        /**
+         * Check whether the listener is enabled.
+         *
+         * @return True if the listener is enabled.
+         */
+        public boolean isEnabled() {
+            return this.enabled;
+        }
+
+        /**
+         * Set whether the listener is enabled.
+         * Disabling the listener will stop the event handling until it's enabled again.
+         *
+         * @param enabled True if enabled, false if disabled.
+         */
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
+        }
+
+        /**
+         * Called when a plugin is enabled.
+         *
+         * @param event Event reference.
+         */
+        @EventHandler
+        public void onPluginEnable(PluginEnableEvent event) {
+            // Make sure the listener is enabled
+            if(!isEnabled())
+                return;
+
+            // Make sure the permissions manager is set
+            if(this.permissionsManager == null)
+                return;
+
+            // Call the onPluginEnable method in the permissions manager
+            permissionsManager.onPluginEnable(event);
+        }
+
+        /**
+         * Called when a plugin is disabled.
+         *
+         * @param event Event reference.
+         */
+        @EventHandler
+        public void onPluginDisable(PluginDisableEvent event) {
+            // Make sure the listener is enabled
+            if(!isEnabled())
+                return;
+
+            // Make sure the permissions manager is set
+            if(this.permissionsManager == null)
+                return;
+
+            // Call the onPluginDisable method in the permissions manager
+            permissionsManager.onPluginDisable(event);
         }
     }
 }
