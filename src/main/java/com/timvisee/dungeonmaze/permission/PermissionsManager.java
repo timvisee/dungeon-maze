@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * Written by Tim Visée.
  *
  * @author Tim Visée, http://timvisee.com
- * @version 0.2.2
+ * @version 0.3
  */
 public class PermissionsManager {
 
@@ -101,13 +101,24 @@ public class PermissionsManager {
      * @return False if there isn't any permissions system used.
      */
     public boolean isEnabled() {
-        return !permsType.equals(null);
+        // TODO: Should we deprecate this method?
+        return isHooked();
+    }
+
+    /**
+     * Check whether the permission manager is hooked into any permissions system plugin.
+     *
+     * @return True if properly hooked into a permissions system plugin, false otherwise.
+     */
+    public boolean isHooked() {
+        return this.permsType != null;
     }
 
     /**
      * Return the permissions system where the permissions manager is currently hooked into.
+     * Null is returned if no permissions system is hooked.
      *
-     * @return Permissions system type.
+     * @return Permissions system type or null.
      */
     public PermissionsSystemType getUsedPermissionsSystemType() {
         return this.permsType;
@@ -119,6 +130,9 @@ public class PermissionsManager {
      * @return The detected permissions system.
      */
     public PermissionsSystemType setup() {
+        // Force-unhook from current hooked permissions systems
+        unhook();
+
         // Define the plugin manager
         final PluginManager pluginManager = this.server.getPluginManager();
 
@@ -249,6 +263,7 @@ public class PermissionsManager {
 
     /**
      * Break the hook with all permission systems.
+     * A status message will be print to the log if a permissions system was current hooked.
      */
     public void unhook() {
         // Store the permissions system that was hooked
@@ -260,12 +275,15 @@ public class PermissionsManager {
         // Print a status message to the console
         if (hookedSystem != null)
             this.log.info("Unhooked from " + hookedSystem + "!");
+
+        // TODO: Force-reset the permissions system API instances?
     }
 
     /**
      * Reload the permissions manager, and re-hook all permission plugins.
      *
      * @return True on success, false on failure.
+     * If no permissions system was hooked because none is available, true will be returned too.
      */
     public boolean reload() {
         // Unhook all permission plugins
@@ -384,12 +402,8 @@ public class PermissionsManager {
      * @return True if the player has permission.
      */
     public boolean hasPermission(Player player, String permsNode, boolean def) {
-        // If no permissions system is used, return the default value
-        if (!isEnabled())
-            return def;
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return def;
 
         // Use the proper API
@@ -438,12 +452,8 @@ public class PermissionsManager {
      * @return True if the current permissions system supports groups, false otherwise.
      */
     public boolean hasGroupSupport() {
-        // If no permissions system is used, return false
-        if (!isEnabled())
-            return false;
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Use the proper API
@@ -477,12 +487,8 @@ public class PermissionsManager {
      */
     @SuppressWarnings({"unchecked", "rawtypes", "deprecation"})
     public List<String> getGroups(Player player) {
-        // If no permissions system is used, return an empty list
-        if (!isEnabled())
-            return new ArrayList<>();
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return new ArrayList<>();
 
         // Use the proper API
@@ -540,12 +546,8 @@ public class PermissionsManager {
      */
     @SuppressWarnings({"unchecked", "rawtypes", "deprecation"})
     public String getPrimaryGroup(Player player) {
-        // If no permissions system is used, return an empty list
-        if (!isEnabled())
-            return null;
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return null;
 
         // Use the proper API
@@ -593,12 +595,8 @@ public class PermissionsManager {
      * False is also returned if groups aren't supported by the used permissions system.
      */
     public boolean inGroup(Player player, String groupName) {
-        // If no permissions system is used, return false
-        if (!isEnabled())
-            return false;
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Use the proper API
@@ -650,12 +648,8 @@ public class PermissionsManager {
      * False is also returned if this feature isn't supported for the current permissions system.
      */
     public boolean addGroup(Player player, String groupName) {
-        // If no permissions system is used, return false
-        if (!isEnabled())
-            return false;
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Set the group the proper way
@@ -711,8 +705,8 @@ public class PermissionsManager {
      * False is also returned if this feature isn't supported for the current permissions system.
      */
     public boolean addGroups(Player player, List<String> groupNames) {
-        // If no permissions system is used, return false
-        if (!isEnabled())
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Add each group to the user
@@ -734,12 +728,8 @@ public class PermissionsManager {
      * False is also returned if this feature isn't supported for the current permissions system.
      */
     public boolean removeGroup(Player player, String groupName) {
-        // If no permissions system is used, return false
-        if (!isEnabled())
-            return false;
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Set the group the proper way
@@ -795,8 +785,8 @@ public class PermissionsManager {
      * False is also returned if this feature isn't supported for the current permissions system.
      */
     public boolean removeGroups(Player player, List<String> groupNames) {
-        // If no permissions system is used, return false
-        if (!isEnabled())
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Add each group to the user
@@ -819,17 +809,13 @@ public class PermissionsManager {
      * False is also returned if this feature isn't supported for the current permissions system.
      */
     public boolean setGroup(Player player, String groupName) {
-        // If no permissions system is used, return false
-        if (!isEnabled())
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Create a list of group names
         List<String> groupNames = new ArrayList<>();
         groupNames.add(groupName);
-
-        // Make sure we're hooked into a permissions system
-        if(this.permsType == null)
-            return false;
 
         // Set the group the proper way
         switch (this.permsType) {
@@ -888,8 +874,8 @@ public class PermissionsManager {
      * False is also returned if this feature isn't supported for the current permissions system.
      */
     public boolean setGroups(Player player, List<String> groupNames) {
-        // If no permissions system is used or if there's no group supplied, return false
-        if (!isEnabled() || groupNames.size() <= 0)
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Set the main group
@@ -921,8 +907,8 @@ public class PermissionsManager {
      * False will also be returned if this feature isn't supported for the used permissions system.
      */
     public boolean removeAllGroups(Player player) {
-        // If no permissions system is used, return false
-        if(!isEnabled())
+        // Make sure the manager is enabled and is hooked into a permissions system
+        if(!isEnabled() || !isHooked())
             return false;
 
         // Get a list of current groups
@@ -937,7 +923,6 @@ public class PermissionsManager {
      * This is used to identify all the permission system types that are supported by the permissions manager.
      */
     public enum PermissionsSystemType {
-
         /**
          * Permissions Ex.
          */
