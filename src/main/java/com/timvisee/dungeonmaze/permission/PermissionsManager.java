@@ -198,14 +198,16 @@ public class PermissionsManager {
      * Check if the permissions manager is currently hooked into any of the supported permissions systems.
      *
      * @return False if there isn't any permissions system used.
+     *
+     * @deprecated Replaced with isStarted() and isHooked()
      */
     public boolean isEnabled() {
-        // TODO: Should we deprecate this method?
         return isHooked();
     }
 
     /**
      * Check whether the permission manager is hooked into any permissions system plugin.
+     * False will also be returned if the permissions manager isn't started.
      *
      * @return True if properly hooked into a permissions system plugin, false otherwise.
      */
@@ -259,7 +261,6 @@ public class PermissionsManager {
                 switch(type) {
                     case PERMISSIONS_EX:
                         // Get the permissions manager for PermissionsEx and make sure it isn't null
-                        // TODO: Store this instance for later use!
                         if(PermissionsEx.getPermissionManager() == null) {
                             this.log.info("Failed to hook into " + type.getName() + "!");
                             continue;
@@ -350,7 +351,11 @@ public class PermissionsManager {
         if (hookedSystem != null)
             this.log.info("Unhooked from " + hookedSystem + "!");
 
-        // TODO: Force-reset the permissions system API instances?
+        // Reset the stored permissions API instances
+        groupManagerPerms = null;
+        defaultPerms = null;
+        zPermissionsService = null;
+        vaultPerms = null;
     }
 
     /**
@@ -545,7 +550,7 @@ public class PermissionsManager {
 
             case PERMISSIONS:
                 // Legacy permissions
-                // FIXME: Supported by plugin, but addGroup and removeGroup haven't been implemented correctly yet!
+                // FIXME: Add support for this! (is supported)
                 return false;
         }
 
@@ -629,7 +634,7 @@ public class PermissionsManager {
             case PERMISSIONS_EX:
             case PERMISSIONS_BUKKIT:
             case B_PERMISSIONS:
-            case PERMISSIONS: // FIXME: Is this correct for PERMISSIONS?
+            case PERMISSIONS:
                 // Get the groups of the player
                 List<String> groups = getGroups(player);
 
@@ -761,7 +766,7 @@ public class PermissionsManager {
 
             case PERMISSIONS:
                 // Permissions
-                // FIXME: Add this method!
+                // FIXME: Add support for this!
                 //return this.defaultPerms.group
                 return false;
         }
@@ -841,7 +846,7 @@ public class PermissionsManager {
 
             case PERMISSIONS:
                 // Permissions
-                // FIXME: Add this method!
+                // FIXME: Add support for this!
                 //return this.defaultPerms.group
                 return false;
         }
@@ -929,7 +934,7 @@ public class PermissionsManager {
 
             case PERMISSIONS:
                 // Permissions
-                // FIXME: Add this method!
+                // FIXME: Add support for this!
                 //return this.defaultPerms.group
                 return false;
         }
