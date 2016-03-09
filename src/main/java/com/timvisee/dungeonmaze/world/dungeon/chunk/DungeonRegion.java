@@ -327,7 +327,7 @@ public class DungeonRegion {
         }
 
         // Show a status message, that the region was loaded
-        Core.getLogger().debug("Loaded region at (" + x + ", " + y + ")");
+        Core.getLogger().debug("Loaded region for '" + region.getWorldName() + "' at (, " + x + ", " + y + ")");
 
         // Return the dungeon region
         return region;
@@ -439,7 +439,7 @@ public class DungeonRegion {
         config.set("loc.y", getY());
 
         // Show a status message, that the region was saved
-        Core.getLogger().debug("Saved region at (" + getX() + ", " + getY() + ")");
+        Core.getLogger().debug("Saved region for '" + getWorldName() + "' at (" + getX() + ", " + getY() + ")");
 
         // Return the number of saved chunks
         return saved;
