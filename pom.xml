@@ -80,6 +80,7 @@
                         <includes>
                             <include>org.mcstats.bukkit:metrics</include>
                             <include>net.ricecode:similarity</include>
+                            <include>org.msgpack:msgpack-core</include>
                         </includes>
                     </artifactSet>
                     <relocations>
@@ -318,6 +319,13 @@
 			<version>20151123</version>
 			<scope>compile</scope>
 		</dependency>
+
+        <!-- MessagePack Library -->
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack-core</artifactId>
+            <version>0.8.3</version>
+        </dependency>
 
     </dependencies>
 </project>
