@@ -39,9 +39,9 @@ public class DungeonRegion {
     private static final String REGION_FILE_SUFFIX = ".dmr";
 
     /**
-     * Defines the world the region is in.
+     * Defines the dungeon region grid this region is in.
      */
-    private World world;
+    private DungeonRegionGrid regionGrid;
 
     /**
      * Defines the X and Y coordinate of the region (on a 2D region plane) in the world.
@@ -62,39 +62,23 @@ public class DungeonRegion {
     /**
      * Constructor.
      *
-     * @param world World of the region.
+     * @param regionGrid The region grid this region is in.
      * @param regionX Region X coordinate.
      * @param regionY Region Y coordinate.
      */
-    public DungeonRegion(World world, int regionX, int regionY) {
-        this.world = world;
+    public DungeonRegion(DungeonRegionGrid regionGrid, int regionX, int regionY) {
+        this.regionGrid = regionGrid;
         this.x = regionX;
         this.y = regionY;
     }
 
     /**
-     * Get the file name for this region.
+     * Get the dungeon grid this region is in.
      *
-     * @return Region file name.
+     * @return The grid.
      */
-    public String getRegionFileName() {
-        return getRegionFileName(this.x, this.y);
-    }
-
-    /**
-     * Get the file name for a region at the given coordinates.
-     *
-     * @param x Region X coordinate.
-     * @param y Region Y coordinate.
-     *
-     * @return Region file name.
-     */
-    public static String getRegionFileName(int x, int y) {
-        return REGION_FILE_PREFIX +
-                x +
-                REGION_FILE_SEPARATOR +
-                y +
-                REGION_FILE_SUFFIX;
+    public DungeonRegionGrid getGrid() {
+        return this.regionGrid;
     }
 
     /**
@@ -103,7 +87,7 @@ public class DungeonRegion {
      * @return The world the region is in.
      */
     public World getWorld() {
-        return this.world;
+        return this.regionGrid.getWorld();
     }
 
     /**
@@ -123,7 +107,7 @@ public class DungeonRegion {
      * @return True if the region is in the given world, false if not.
      */
     public boolean isWorld(World world) {
-        return this.world.equals(world);
+        return this.regionGrid.isWorld(world);
     }
 
     /**
@@ -201,7 +185,7 @@ public class DungeonRegion {
      *
      * @return The number of chunks in this grid.
      */
-    public int getLoadedChunksCount() {
+    public int getChunksCount() {
         return REGION_SIZE * REGION_SIZE;
     }
 
@@ -286,6 +270,31 @@ public class DungeonRegion {
     }
 
     /**
+     * Get the file name for this region.
+     *
+     * @return Region file name.
+     */
+    public String getRegionFileName() {
+        return getRegionFileName(this.x, this.y);
+    }
+
+    /**
+     * Get the file name for a region at the given coordinates.
+     *
+     * @param x Region X coordinate.
+     * @param y Region Y coordinate.
+     *
+     * @return Region file name.
+     */
+    public static String getRegionFileName(int x, int y) {
+        return REGION_FILE_PREFIX +
+                x +
+                REGION_FILE_SEPARATOR +
+                y +
+                REGION_FILE_SUFFIX;
+    }
+
+    /**
      * Load the dungeon region at the specified location.
      *
      * @param regionGrid The dungeon region grid of the world.
@@ -327,7 +336,7 @@ public class DungeonRegion {
         int y = regionSection.getInt("loc.y");
 
         // Construct the region instance
-        DungeonRegion region = new DungeonRegion(regionGrid.getWorld(), x, y);
+        DungeonRegion region = new DungeonRegion(regionGrid, x, y);
 
         // Get the region the chunks are stored in
         ConfigurationSection chunksSection = regionSection.getConfigurationSection("chunks");

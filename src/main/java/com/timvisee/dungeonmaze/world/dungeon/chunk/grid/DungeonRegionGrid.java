@@ -223,7 +223,7 @@ public class DungeonRegionGrid {
             return getOrCreateRegion(regionX, regionY);
 
         // Create the region data for this region, save it and return the instance
-        DungeonRegion dungeonRegion = new DungeonRegion(this.world, regionX, regionY);
+        DungeonRegion dungeonRegion = new DungeonRegion(this, regionX, regionY);
 
         // Add the dungeon region to the list
         this.regions.add(dungeonRegion);
