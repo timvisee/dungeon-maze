@@ -155,18 +155,17 @@ public class DungeonRegionGrid {
      *
      * @return The dungeon chunk instance, or null on failure.
      */
+    // TODO: Use some sort of caching here!
     public DungeonChunk getOrCreateChunk(int chunkX, int chunkY) {
-        // TODO: Cache this!
-
         // Get the coordinates of the region
         // TODO: Does this still work fine with big numbers?
         int regionX = (int) Math.floor((float) chunkX / (float) DungeonRegion.REGION_SIZE);
         int regionY = (int) Math.floor((float) chunkY / (float) DungeonRegion.REGION_SIZE);
 
         // Get the local coordinates of the chunk
-        // TODO: Make sure this modulo works correctly for negative values!
-        int localChunkX = Math.floorMod(chunkX, DungeonRegion.REGION_SIZE);
-        int localChunkY = Math.floorMod(chunkY, DungeonRegion.REGION_SIZE);
+        final int localChunkX = Math.floorMod(chunkX, DungeonRegion.REGION_SIZE);
+        //noinspection SuspiciousNameCombination
+        final int localChunkY = Math.floorMod(chunkY, DungeonRegion.REGION_SIZE);
 
         // Get or create the region
         DungeonRegion region = getOrCreateRegion(regionX, regionY);

@@ -7,21 +7,25 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class DungeonChunk {
 
+    /**
+     * The size of a Minecraft chunk.
+     */
     public static final int MINECRAFT_CHUNK_SIZE = 16;
+
     /**
      * Defines the size of a chunk.
      */
-    public final static int CHUNK_SIZE = MINECRAFT_CHUNK_SIZE;
+    public static final int CHUNK_SIZE = MINECRAFT_CHUNK_SIZE;
 
     /**
      * The dungeon region this chunk is in.
      */
-    private DungeonRegion region;
+    private final DungeonRegion region;
 
     /**
      * Defines the X and Y coordinate of the chunk in the world.
      */
-    private int x, y;
+    private final int x, y;
 
     /**
      * Defines whether this chunk is a custom chunk.
@@ -46,7 +50,7 @@ public class DungeonChunk {
      *
      * @return Dungeon region.
      */
-    public DungeonRegion getRegion() {
+    public final DungeonRegion getRegion() {
         return this.region;
     }
 
@@ -55,7 +59,7 @@ public class DungeonChunk {
      *
      * @return The world the chunk is in.
      */
-    public World getWorld() {
+    public final World getWorld() {
         return this.region.getWorld();
     }
 
@@ -71,12 +75,21 @@ public class DungeonChunk {
     }
 
     /**
-     * Get the X coordinate of the chunk.
+     * Get the X coordinate of the chunk in the region space.
      *
-     * @return The X coordinate of the chunk.
+     * @return The X coordinate of the chunk in the region space.
      */
-    public int getX() {
+    public final int getX() {
         return this.x;
+    }
+
+    /**
+     * Get the X coordinate of the chunk in the chunk space.
+     *
+     * @return The X coordinate of the chunk in the chunk space.
+     */
+    public final int getChunkX() {
+        return this.region.getX() * DungeonRegion.REGION_SIZE + this.x;
     }
 
     /**
@@ -84,17 +97,26 @@ public class DungeonChunk {
      *
      * @return The X coordinate of the chunk in the world space.
      */
-    public int getWorldX() {
+    public final int getWorldX() {
         return this.region.getWorldX() + this.x * CHUNK_SIZE;
     }
 
     /**
-     * Get the Y coordinate of the chunk.
+     * Get the Y coordinate of the chunk in the region space.
      *
-     * @return The Y coordinate of the chunk.
+     * @return The Y coordinate of the chunk in the region space.
      */
-    public int getY() {
+    public final int getY() {
         return this.y;
+    }
+
+    /**
+     * Get the Z coordinate of the chunk in the chunk space.
+     *
+     * @return The Z coordinate of the chunk in the chunk space.
+     */
+    public final int getChunkZ() {
+        return this.region.getX() * DungeonRegion.REGION_SIZE + this.y;
     }
 
     /**
@@ -102,7 +124,7 @@ public class DungeonChunk {
      *
      * @return The Z coordinate of the chunk in the world space.
      */
-    public int getWorldZ() {
+    public final int getWorldZ() {
         return this.region.getWorldZ() + this.y * CHUNK_SIZE;
     }
 
@@ -147,7 +169,7 @@ public class DungeonChunk {
      * @return The new Bukkit chunk.
      */
     public BukkitChunk createBukkitChunk() {
-        return new BukkitChunk(this.region.getWorld(), this.x, this.y);
+        return new BukkitChunk(this);
     }
 
     /**
@@ -177,10 +199,6 @@ public class DungeonChunk {
      * @return The dungeon chunk.
      */
     public static DungeonChunk load(DungeonRegion region, ConfigurationSection config) {
-//        // Make sure the configuration contains the proper values
-//        if(!config.isSet("loc.x") || !config.isSet("loc.y"))
-//            return null;
-
         // Get the position
         int x = config.getInt("loc.x", 0);
         int y = config.getInt("loc.y", 0);
