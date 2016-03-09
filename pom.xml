@@ -133,9 +133,9 @@
 
         <!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project, http://bukkit.org/ -->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${spigotVersion}</version>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>${bukkitVersion}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -164,39 +164,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.bukkit</groupId>-->
-            <!--<artifactId>bukkit</artifactId>-->
-            <!--<version>${bukkitVersion}</version>-->
-            <!--<scope>provided</scope>-->
-            <!--<exclusions>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>junit</artifactId>-->
-                    <!--<groupId>junit</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>guava</artifactId>-->
-                    <!--<groupId>com.google.guava</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>gson</artifactId>-->
-                    <!--<groupId>com.google.code.gson</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>commons-lang</artifactId>-->
-                    <!--<groupId>commons-lang</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>persistence-api</artifactId>-->
-                    <!--<groupId>javax.persistence</groupId>-->
-                <!--</exclusion>-->
-                <!--<exclusion>-->
-                    <!--<artifactId>snakeyaml</artifactId>-->
-                    <!--<groupId>org.yaml</groupId>-->
-                <!--</exclusion>-->
-            <!--</exclusions>-->
-        <!--</dependency>-->
 
         <!-- Multi World plugin, http://www.spigotmc.org/resources/multiverse-core.390/ -->
         <dependency>
