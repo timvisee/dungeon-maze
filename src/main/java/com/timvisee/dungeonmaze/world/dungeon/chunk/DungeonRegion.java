@@ -55,6 +55,11 @@ public class DungeonRegion {
     private DungeonChunk[][] chunks = new DungeonChunk[REGION_SIZE][REGION_SIZE];
 
     /**
+     * The last region that has been accessed.
+     */
+    private DungeonChunk lastChunkCache = null;
+
+    /**
      * Constructor.
      *
      * @param world World of the region.
@@ -108,6 +113,17 @@ public class DungeonRegion {
      */
     public String getWorldName() {
         return getWorld().getName();
+    }
+
+    /**
+     * Check whether this region is in the given world.
+     *
+     * @param world The world.
+     *
+     * @return True if the region is in the given world, false if not.
+     */
+    public boolean isWorld(World world) {
+        return this.world.equals(world);
     }
 
     /**
@@ -198,12 +214,14 @@ public class DungeonRegion {
      * @return The dungeon chunk instance, or null on failure.
      */
     public DungeonChunk getOrCreateChunk(int chunkX, int chunkY) {
+        // Compare the requested chunk with the cache
+        if(lastChunkCache != null && lastChunkCache.isAt(chunkX, chunkY))
+            return lastChunkCache;
+
         // Make sure the chunk coordinates are in-bound
-        if(chunkX < 0 || chunkX >= REGION_SIZE || chunkY < 0 || chunkY >= REGION_SIZE) {
+        if(chunkX < 0 || chunkX >= REGION_SIZE || chunkY < 0 || chunkY >= REGION_SIZE)
             // TODO: Add some sort of exception here?
-            System.out.println("INVALID COORDINATE!");
             return null;
-        }
 
         // Check whether this chunk exists, return it if it exists
         DungeonChunk chunk = getChunk(chunkX, chunkY);
@@ -211,7 +229,7 @@ public class DungeonRegion {
             return chunk;
 
         // Create the chunk data, return the result
-        return createChunk(chunkX, chunkY);
+        return (lastChunkCache = createChunk(chunkX, chunkY));
     }
 
     /**
@@ -241,7 +259,7 @@ public class DungeonRegion {
             return getOrCreateChunk(chunkX, chunkY);
 
         // Create the chunk data for this chunk, save it and return the instance
-        DungeonChunk dungeonChunk = new DungeonChunk(this.world, chunkX, chunkY);
+        DungeonChunk dungeonChunk = new DungeonChunk(this, chunkX, chunkY);
 
         // Set the dungeon chunk in the grid
         this.chunks[chunkX][chunkY] = dungeonChunk;
@@ -291,11 +309,8 @@ public class DungeonRegion {
         // Get the configuration section to load the region from
         ConfigurationSection regionSection = config.getConfigurationSection(CONFIG_DUNGEON_REGION_SECTION);
 
-        // Load the region from the given configuration
-        DungeonRegion region = load(regionGrid, regionSection);
-
-        // Return the region
-        return region;
+        // Load the region from the given configuration, return the region afterwards
+        return load(regionGrid, regionSection);
     }
 
     /**
@@ -342,7 +357,7 @@ public class DungeonRegion {
      */
     public DungeonChunk loadChunkFromConfig(ConfigurationSection chunkSection) {
         // Load the dungeon chunk
-        DungeonChunk chunk = DungeonChunk.load(this.getWorld(), chunkSection);
+        DungeonChunk chunk = DungeonChunk.load(this, chunkSection);
 
         // Add the chunk to the grid
         this.chunks[chunk.getX()][chunk.getY()] = chunk;

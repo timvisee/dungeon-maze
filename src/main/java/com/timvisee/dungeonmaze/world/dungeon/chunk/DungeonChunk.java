@@ -1,20 +1,22 @@
 package com.timvisee.dungeonmaze.world.dungeon.chunk;
 
 import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class DungeonChunk {
 
+    public static final int MINECRAFT_CHUNK_SIZE = 16;
     /**
      * Defines the size of a chunk.
      */
-    public final static int CHUNK_SIZE = 16;
+    public final static int CHUNK_SIZE = MINECRAFT_CHUNK_SIZE;
 
     /**
-     * Defines the world the chunks is in.
+     * The dungeon region this chunk is in.
      */
-    private World world;
+    private DungeonRegion region;
 
     /**
      * Defines the X and Y coordinate of the chunk in the world.
@@ -29,14 +31,23 @@ public class DungeonChunk {
     /**
      * Constructor.
      *
-     * @param world The world the chunks is in.
+     * @param region The dungeon region this chunk is in.
      * @param x The X coordinate of the chunk.
      * @param y The Y coordinate of the chunk.
      */
-    public DungeonChunk(World world, int x, int y) {
-        this.world = world;
+    public DungeonChunk(DungeonRegion region, int x, int y) {
+        this.region = region;
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     * Get the dungeon region this world is in.
+     *
+     * @return Dungeon region.
+     */
+    public DungeonRegion getRegion() {
+        return this.region;
     }
 
     /**
@@ -45,7 +56,18 @@ public class DungeonChunk {
      * @return The world the chunk is in.
      */
     public World getWorld() {
-        return this.world;
+        return this.region.getWorld();
+    }
+
+    /**
+     * Check whether this chunk is in the given world.
+     *
+     * @param world The world.
+     *
+     * @return True if this chunk is in the given world, false if not.
+     */
+    public boolean isWorld(World world) {
+        return this.region.isWorld(world);
     }
 
     /**
@@ -63,7 +85,7 @@ public class DungeonChunk {
      * @return The X coordinate of the chunk in the world space.
      */
     public int getWorldX() {
-        return this.x * CHUNK_SIZE;
+        return this.region.getWorldX() + this.x * CHUNK_SIZE;
     }
 
     /**
@@ -81,7 +103,7 @@ public class DungeonChunk {
      * @return The Z coordinate of the chunk in the world space.
      */
     public int getWorldZ() {
-        return this.y * CHUNK_SIZE;
+        return this.region.getWorldZ() + this.y * CHUNK_SIZE;
     }
 
     /**
@@ -97,12 +119,35 @@ public class DungeonChunk {
     }
 
     /**
+     * Check whether this dungeon chunk is for the given chunk.
+     *
+     * @param chunk The chunk.
+     *
+     * @return True if this dungeon chunk is for the given chunk, false if not.
+     */
+    public boolean isAt(Chunk chunk) {
+        return getWorldX() == chunk.getX() * MINECRAFT_CHUNK_SIZE && getWorldZ() == chunk.getZ() * MINECRAFT_CHUNK_SIZE;
+    }
+
+    /**
+     * Check whether this chunk is for the given chunk and position.
+     *
+     * @param world The world.
+     * @param chunk The chunk.
+     *
+     * @return True if the chunk is at this position, false otherwise.
+     */
+    public boolean is(World world, Chunk chunk) {
+        return isWorld(world) && isAt(chunk);
+    }
+
+    /**
      * Get a new Bukkit chunk from this chunk.
      *
      * @return The new Bukkit chunk.
      */
     public BukkitChunk createBukkitChunk() {
-        return new BukkitChunk(this.world, this.x, this.y);
+        return new BukkitChunk(this.region.getWorld(), this.x, this.y);
     }
 
     /**
@@ -126,12 +171,12 @@ public class DungeonChunk {
     /**
      * Load a dungeon chunk from a configuration section.
      *
-     * @param world The world of the chunk.
+     * @param region The dungeon region the world is in.
      * @param config The configuration section the dungeon chunk is in.
      *
      * @return The dungeon chunk.
      */
-    public static DungeonChunk load(World world, ConfigurationSection config) {
+    public static DungeonChunk load(DungeonRegion region, ConfigurationSection config) {
 //        // Make sure the configuration contains the proper values
 //        if(!config.isSet("loc.x") || !config.isSet("loc.y"))
 //            return null;
@@ -141,7 +186,7 @@ public class DungeonChunk {
         int y = config.getInt("loc.y", 0);
 
         // Construct a new dungeon chunk
-        DungeonChunk dungeonChunk = new DungeonChunk(world, x, y);
+        DungeonChunk dungeonChunk = new DungeonChunk(region, x, y);
 
         // Load whether this chunk is a custom chunk
         dungeonChunk.setCustomChunk(config.getBoolean("customChunk.isCustom", false));

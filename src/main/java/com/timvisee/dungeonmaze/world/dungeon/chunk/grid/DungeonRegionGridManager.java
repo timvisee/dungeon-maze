@@ -29,6 +29,11 @@ public class DungeonRegionGridManager {
     public static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
 
     /**
+     * The last accessed dungeon region grid.
+     */
+    private  DungeonRegionGrid lastRegionGridCache = null;
+
+    /**
      * Constructor.
      */
     public DungeonRegionGridManager() { }
@@ -104,6 +109,10 @@ public class DungeonRegionGridManager {
      * @return The dungeon region grid, or null if the grid couldn't be loaded.
      */
     public DungeonRegionGrid getOrCreateRegionGrid(World world) {
+        // Check whether the last cached grid is the correct one
+        if(lastRegionGridCache != null && lastRegionGridCache.isWorld(world))
+            return lastRegionGridCache;
+
         // Check whether the dungeon region grid for this world is already loaded, return it if that's the case
         DungeonRegionGrid dungeonRegionGrid = getLoadedRegionGrid(world);
         if(dungeonRegionGrid != null)
@@ -115,7 +124,7 @@ public class DungeonRegionGridManager {
             return dungeonRegionGrid;
 
         // Create the region grid, return the result
-        return createRegionGridData(world);
+        return (lastRegionGridCache = createRegionGridData(world));
     }
 
     /**

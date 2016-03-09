@@ -11,32 +11,43 @@ import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
 
 public abstract class ChunkBlockPopulator extends BlockPopulator {
-	
+
+    /**
+     * The last accessed dungeon chunk.
+     */
+    // TODO: Should we make this static, because every populator has a different instance?
+    private DungeonChunk lastChunkCache = null;
+
 	@Override
 	public void populate(World world, Random rand, Chunk chunk) {
-        // Store the dungeon chunk instance
-        // TODO: Use some kind of caching, to speed up this process!
-        DungeonChunk dungeonChunk;
+        // Get the dungeon chunk instance
+        DungeonChunk dungeonChunk = lastChunkCache;
 
-        try {
-            // Get the chunk grid manager, and make sure it's valid
-            DungeonRegionGridManager chunkGridManager = Core.getDungeonRegionGridManager();
-            if(chunkGridManager == null) {
+        // Make sure the cached chunk is correct, load the correct chunk if that's not the case
+        if(dungeonChunk == null || !dungeonChunk.is(world, chunk))  {
+            try {
+                // Get the chunk grid manager, and make sure it's valid
+                DungeonRegionGridManager chunkGridManager = Core.getDungeonRegionGridManager();
+                if(chunkGridManager == null) {
+                    Core.getLogger().error("Unable to generate Dungeon Maze chunk, couldn't access the chunk grid manager!");
+                    return;
+                }
+
+                // Create or get the chunk grid for the current world
+                final DungeonRegionGrid dungeonRegionGrid = chunkGridManager.getOrCreateRegionGrid(world);
+
+                // Create or get the chunk data for the current chunk
+                // TODO: Gather the chunk instance from some sort of cache!
+                dungeonChunk = dungeonRegionGrid.getOrCreateChunk(chunk.getX(), chunk.getZ());
+
+                // Set the cached chunk
+                lastChunkCache = dungeonChunk;
+
+            } catch(Exception ex) {
                 Core.getLogger().error("Unable to generate Dungeon Maze chunk, couldn't access the chunk grid manager!");
+                ex.printStackTrace();
                 return;
             }
-
-            // Create or get the chunk grid for the current world
-            final DungeonRegionGrid dungeonRegionGrid = chunkGridManager.getOrCreateRegionGrid(world);
-
-            // Create or get the chunk data for the current chunk
-            // TODO: Gather the chunk instance from some sort of cache!
-            dungeonChunk = dungeonRegionGrid.getOrCreateChunk(chunk.getX(), chunk.getZ());
-
-        } catch(Exception ex) {
-            Core.getLogger().error("Unable to generate Dungeon Maze chunk, couldn't access the chunk grid manager!");
-            ex.printStackTrace();
-            return;
         }
 
         // Check whether this this chunk should be populated based on it's chance
@@ -69,7 +80,7 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
             // Populate the maze
             populateChunk(args);
         }
-	}
+    }
 	
 	/**
 	 * Population method.
