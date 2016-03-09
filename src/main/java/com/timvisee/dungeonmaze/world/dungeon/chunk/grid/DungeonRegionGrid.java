@@ -31,12 +31,12 @@ public class DungeonRegionGrid {
     /**
      * Defines the preferred number of loaded dungeon regions.
      */
-    private static final int REGION_LOADED_PREFERRED = 8;
+    private static final int REGION_LOADED_PREFERRED = 16;
 
     /**
      * Defines the maximum allowed number of loaded dungeon regions.
      */
-    private static final int REGION_LOADED_MAX = 16;
+    private static final int REGION_LOADED_MAX = 64;
 
     /**
      * Constructor.
