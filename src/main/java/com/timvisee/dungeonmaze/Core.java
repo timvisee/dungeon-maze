@@ -26,7 +26,7 @@ import com.timvisee.dungeonmaze.update.UpdateCheckerService;
 import com.timvisee.dungeonmaze.world.WorldManagerService;
 import com.timvisee.dungeonmaze.structure.CustomStructureManager;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManager;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManagerService;
 
 import java.util.Date;
@@ -286,21 +286,21 @@ public class Core {
     }
 
     /**
-     * Get the dungeon chunk grid manager.
+     * Get the dungeon region grid manager.
      *
-     * @return Dungeon chunk grid manager instance.
+     * @return Dungeon region grid manager instance.
      */
-    public static DungeonChunkGridManager getDungeonChunkGridManager() {
-        return Core.instance._getDungeonChunkGridManager();
+    public static DungeonRegionGridManager getDungeonRegionGridManager() {
+        return Core.instance._getDungeonRegionGridManager();
     }
 
     /**
-     * Get the dungeon chunk grid manager.
+     * Get the dungeon region grid manager.
      *
-     * @return Dungeon chunk grid manager instance.
+     * @return Dungeon region grid manager instance.
      */
-    public DungeonChunkGridManager _getDungeonChunkGridManager() {
-        return this.dungeonChunkGridManagerService.getDungeonChunkGridManager();
+    public DungeonRegionGridManager _getDungeonRegionGridManager() {
+        return this.dungeonChunkGridManagerService.getDungeonRegionGridManager();
     }
 
     /**

@@ -8,7 +8,7 @@ import com.timvisee.dungeonmaze.permission.PermissionsManager;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.SystemUtils;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -73,13 +73,14 @@ public class StatusCommand extends ExecutableCommand {
             sender.sendMessage(ChatColor.GOLD + "Permissions System: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Get the dungeon chunk grid manager
-        DungeonChunkGridManager dungeonChunkGridManager = Core.getDungeonChunkGridManager();
-        if(dungeonChunkGridManager != null) {
-            int loadedChunks = dungeonChunkGridManager.getLoadedChunksCount();
-            int loadedGrids = dungeonChunkGridManager.getLoadedGridsCount();
-            sender.sendMessage(ChatColor.GOLD + "Loaded Dungeon Chunks: " + ChatColor.WHITE + loadedChunks + ChatColor.GRAY + " in " + ChatColor.WHITE + loadedGrids + ChatColor.GRAY + " grid" + (loadedGrids != 1 ? "s" : ""));
+        // TODO: Show proper information, show loaded chunks too?
+        DungeonRegionGridManager dungeonRegionGridManager = Core.getDungeonRegionGridManager();
+        if(dungeonRegionGridManager != null) {
+            int loadedChunks = dungeonRegionGridManager.getLoadedRegionCount();
+            int loadedGrids = dungeonRegionGridManager.getLoadedGridCount();
+            sender.sendMessage(ChatColor.GOLD + "Loaded Dungeon Regions: " + ChatColor.WHITE + loadedChunks + ChatColor.GRAY + " in " + ChatColor.WHITE + loadedGrids + ChatColor.GRAY + " grid" + (loadedGrids != 1 ? "s" : ""));
         } else
-            sender.sendMessage(ChatColor.GOLD + "Loaded Dungeon Chunks: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
+            sender.sendMessage(ChatColor.GOLD + "Loaded Dungeon Regions: " + ChatColor.DARK_RED + ChatColor.ITALIC + "Unknown!");
 
         // Print the service count
         sender.sendMessage(ChatColor.GOLD + "Running Services: " + ChatColor.WHITE + Core.instance.getServiceManager().getServiceCount(true) + ChatColor.GRAY + " / " + Core.instance.getServiceManager().getServiceCount());

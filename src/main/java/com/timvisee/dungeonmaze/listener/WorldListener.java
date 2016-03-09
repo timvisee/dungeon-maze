@@ -2,7 +2,7 @@ package com.timvisee.dungeonmaze.listener;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.world.WorldManager;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManager;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,11 +30,11 @@ public class WorldListener implements Listener {
         worldManager.refresh();
 
 		// Get the chunk grid manager
-        DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
+        DungeonRegionGridManager chunkGridManager = Core.getDungeonRegionGridManager();
         if(chunkGridManager != null)
             // Load the chunk grid if the current world is a Dungeon Maze world
             if(worldManager.isDungeonMazeWorld(world.getName()))
-                chunkGridManager.loadChunkGrid(world);
+                chunkGridManager.loadRegionGrid(world);
 	}
 
 	@EventHandler
@@ -45,9 +45,9 @@ public class WorldListener implements Listener {
 			return;
 
 		// Get the dungeon chunk grid manager
-		DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
+		DungeonRegionGridManager chunkGridManager = Core.getDungeonRegionGridManager();
 		if(chunkGridManager != null)
             // Unload the chunk grid for the specified world
-			chunkGridManager.unloadChunkGrid(event.getWorld());
+			chunkGridManager.unloadRegionGrid(event.getWorld());
 	}
 }

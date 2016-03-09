@@ -10,8 +10,8 @@ import com.timvisee.dungeonmaze.populator.surface.plants.FlowerPopulator;
 import com.timvisee.dungeonmaze.populator.surface.plants.TallGrassPopulator;
 import com.timvisee.dungeonmaze.populator.surface.plants.TreePopulator;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGrid;
-import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonChunkGridManager;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGrid;
+import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -108,17 +108,17 @@ public class Generator extends ChunkGenerator {
 
         try {
             // Get the chunk grid manager, and make sure it's valid
-            final DungeonChunkGridManager chunkGridManager = Core.getDungeonChunkGridManager();
+            final DungeonRegionGridManager chunkGridManager = Core.getDungeonRegionGridManager();
             if(chunkGridManager == null) {
                 Core.getLogger().error("Unable to generate Dungeon Maze chunk, couldn't access the chunk grid manager!");
                 return null;
             }
 
             // Create or get the chunk grid for the current world
-            final DungeonChunkGrid dungeonChunkGrid = chunkGridManager.getOrCreateChunkGrid(world);
+            final DungeonRegionGrid dungeonRegionGrid = chunkGridManager.getOrCreateRegionGrid(world);
 
             // Create or get the chunk data for the current chunk
-            dungeonChunk = dungeonChunkGrid.getOrCreateChunk(chunkX, chunkZ);
+            dungeonChunk = dungeonRegionGrid.getOrCreateChunk(chunkX, chunkZ);
 
         } catch(Exception ex) {
             ex.printStackTrace();

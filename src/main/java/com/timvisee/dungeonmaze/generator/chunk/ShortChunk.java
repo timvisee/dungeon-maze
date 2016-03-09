@@ -8,12 +8,19 @@ import java.util.Arrays;
 
 public class ShortChunk extends AbstractChunk {
 
-    /** Defines the chunk data (blocks). */
+    /**
+     * Defines the chunk data (blocks).
+     */
     private short[][] blocks;
 
-    /** Defines the size in bytes of each block section. */
+    /**
+     * Defines the size in bytes of each block section.
+     */
     private final static int BYTES_PER_SECTION = CHUNK_BLOCK_WIDTH * CHUNK_BLOCK_WIDTH * CHUNK_BLOCK_WIDTH;
-    /** Defines the number of block sections per chunk. */
+
+    /**
+     * Defines the number of block sections per chunk.
+     */
     private final static int SECTIONS_PER_CHUNK = 16;
 
     /**

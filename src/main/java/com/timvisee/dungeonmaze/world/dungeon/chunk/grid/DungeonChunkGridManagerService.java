@@ -8,7 +8,7 @@ public class DungeonChunkGridManagerService extends Service {
     private static final String SERVICE_NAME = "Dungeon Chunk Grid Manager";
 
     /** Dungeon chunk grid manager instance. */
-    private DungeonChunkGridManager dungeonChunkGridManager;
+    private DungeonRegionGridManager dungeonRegionGridManager;
 
     /**
      * Initialize the service.
@@ -19,10 +19,10 @@ public class DungeonChunkGridManagerService extends Service {
     @Override
     public boolean init() {
         // Construct the dungeon chunk grid manager
-        this.dungeonChunkGridManager = new DungeonChunkGridManager();
+        this.dungeonRegionGridManager = new DungeonRegionGridManager();
 
         // Initialize the dungeon chunk grid manager, return the result
-        return this.dungeonChunkGridManager.init();
+        return this.dungeonRegionGridManager.init();
     }
 
     /**
@@ -33,11 +33,11 @@ public class DungeonChunkGridManagerService extends Service {
     @Override
     public boolean isInit() {
         // Make sure the dungeon chunk grid manager is set
-        if(this.dungeonChunkGridManager == null)
+        if(this.dungeonRegionGridManager == null)
             return false;
 
         // Check whether the dungeon chunk grid manager is initialized
-        return this.dungeonChunkGridManager.isInit();
+        return this.dungeonRegionGridManager.isInit();
     }
 
     /**
@@ -57,16 +57,16 @@ public class DungeonChunkGridManagerService extends Service {
             return true;
 
         // Destroy the dungeon chunk grid manager
-        if(this.dungeonChunkGridManager != null) {
-            if(!this.dungeonChunkGridManager.destroy()) {
+        if(this.dungeonRegionGridManager != null) {
+            if(!this.dungeonRegionGridManager.destroy()) {
                 if(force)
-                    this.dungeonChunkGridManager = null;
+                    this.dungeonRegionGridManager = null;
                 return false;
             }
         }
 
         // Return the result
-        this.dungeonChunkGridManager = null;
+        this.dungeonRegionGridManager = null;
         return true;
     }
 
@@ -85,7 +85,7 @@ public class DungeonChunkGridManagerService extends Service {
      *
      * @return Dungeon chunk grid manager instance.
      */
-    public DungeonChunkGridManager getDungeonChunkGridManager() {
-        return this.dungeonChunkGridManager;
+    public DungeonRegionGridManager getDungeonRegionGridManager() {
+        return this.dungeonRegionGridManager;
     }
 }
