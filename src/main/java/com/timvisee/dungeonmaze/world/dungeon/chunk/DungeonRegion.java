@@ -4,8 +4,6 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGrid;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.msgpack.core.MessageBufferPacker;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessagePacker;
@@ -14,11 +12,6 @@ import org.msgpack.core.MessageUnpacker;
 import java.io.*;
 
 public class DungeonRegion {
-
-    /**
-     * Defines the dungeon region data section name.
-     */
-    private final static String CONFIG_DUNGEON_REGION_SECTION = "dungeonRegion";
 
     /**
      * Defines the size of the region on a single side of the region.
@@ -328,7 +321,6 @@ public class DungeonRegion {
     public static DungeonRegion load(DungeonRegionGrid regionGrid, int regionX, int regionY) throws IOException {
         // Get the region data file for the given region coordinates
         File regionFile = regionGrid.getRegionDataFile(regionX, regionY);
-        File regionFile2 = new File(regionFile.getParentFile(), regionFile.getName() + ".bin");
 
         // Make sure the region file exists before loading it
         if(!regionFile.exists())
@@ -336,20 +328,16 @@ public class DungeonRegion {
             return null;
 
         // Create a reader for the region data
-        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(new FileInputStream(regionFile2));
+        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(new FileInputStream(regionFile));
 
-        // Unpack the version number and name
-        System.out.println("Version code: " + unpacker.unpackInt());
-        System.out.println("Version name: " + unpacker.unpackString());
+        // Get the version code and version name of the plugin that was used to write the data file
+        //noinspection unused
+        int versionCode = unpacker.unpackInt();
+        //noinspection unused
+        String versionName = unpacker.unpackString();
 
-        // Load the configuration for the file
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(regionFile);
-
-        // Get the configuration section to load the region from
-        ConfigurationSection regionSection = config.getConfigurationSection(CONFIG_DUNGEON_REGION_SECTION);
-
-        // Load the region from the given configuration
-        DungeonRegion region = load(regionGrid, regionSection, unpacker);
+        // Load the region from the given unpacker
+        DungeonRegion region = load(regionGrid, unpacker);
 
         // Close the unpacker
         unpacker.close();
@@ -359,44 +347,33 @@ public class DungeonRegion {
     }
 
     /**
-     * Load a dungeon region from the given configuration section.
+     * Load a dungeon region from the given unpacker.
      *
      * @param regionGrid The dungeon region grid of the world.
-     * @param regionSection The configuration section load the region from.
+     * @param unpacker The unpacker the data should be unpacked from.
      *
      * @return The dungeon region instance.
      */
-    public static DungeonRegion load(DungeonRegionGrid regionGrid, ConfigurationSection regionSection, MessageUnpacker unpacker) throws IOException {
-        // Read the coordinates
-        System.out.println("Region X:" + unpacker.unpackInt());
-        System.out.println("Region Y:" + unpacker.unpackInt());
-
-        // Get the number of chunks
-        int chunkCount = unpacker.unpackInt();
-        System.out.println("Chunk count: " + chunkCount);
-
+    public static DungeonRegion load(DungeonRegionGrid regionGrid, MessageUnpacker unpacker) throws IOException {
         // Get the coordinates of the region
-        int x = regionSection.getInt("loc.x");
-        int y = regionSection.getInt("loc.y");
+        int x = unpacker.unpackInt();
+        int y = unpacker.unpackInt();
 
         // Construct the region instance
         DungeonRegion region = new DungeonRegion(regionGrid, x, y);
 
-        // Get the region the chunks are stored in
-        ConfigurationSection chunksSection = regionSection.getConfigurationSection("chunks");
+        // Get the number of chunks that are stored
+        int chunkCount = unpacker.unpackInt();
 
         // Loop through all the sections in the chunks section to load the chunks from
-        for(String key : chunksSection.getKeys(false)) {
-            // Get the section of the chunk
-            ConfigurationSection chunkSection = chunksSection.getConfigurationSection(key);
-
+        for(int i = 0; i < chunkCount; i++) {
             // Get the size of the chunk data, and read it's payload
             int chunkDataSize = unpacker.unpackInt();
             byte[] bytes = unpacker.readPayload(chunkDataSize);
             MessageUnpacker chunkUnpacker = MessagePack.newDefaultUnpacker(bytes);
 
-            // Load the given chunk in the region from the configuration section of the chunk
-            region.loadChunkFromConfig(chunkSection, chunkUnpacker);
+            // Load the given chunk in the region from the unpacker of the chunk
+            region.loadChunkFromUnpacker(chunkUnpacker);
 
             // Close the unpacker
             chunkUnpacker.close();
@@ -410,15 +387,15 @@ public class DungeonRegion {
     }
 
     /**
-     * Load a dungeon chunk from the given configuration section.
+     * Load a dungeon chunk from the given unpacker.
      *
-     * @param chunkSection Configuration section the chunk is stored in.
+     * @param unpacker The unpacker to unpack the data from.
      *
      * @return The dungeon chunk.
      */
-    public DungeonChunk loadChunkFromConfig(ConfigurationSection chunkSection, MessageUnpacker unpacker) throws IOException {
+    public DungeonChunk loadChunkFromUnpacker(MessageUnpacker unpacker) throws IOException {
         // Load the dungeon chunk
-        DungeonChunk chunk = DungeonChunk.load(this, chunkSection, unpacker);
+        DungeonChunk chunk = DungeonChunk.load(this, unpacker);
 
         // Add the chunk to the grid
         this.chunks[chunk.getX()][chunk.getY()] = chunk;
@@ -440,10 +417,9 @@ public class DungeonRegion {
     public int save(DungeonRegionGrid regionGrid) throws IOException {
         // Get the file to save the region to
         File regionFile = getRegionDataFile(regionGrid);
-        File regionFile2 = new File(regionFile.getParentFile(), regionFile.getName() + ".bin");
 
         // Save the file, and return the result
-        return save(regionFile, regionFile2);
+        return save(regionFile);
     }
 
     /**
@@ -456,9 +432,9 @@ public class DungeonRegion {
      *
      * @throws IOException Throws if an error occurred while saving the region file.
      */
-    public int save(File regionFile, File regionFile2) throws IOException {
+    public int save(File regionFile) throws IOException {
         // Open an output stream for the data to write to the target file
-        FileOutputStream out = new FileOutputStream(regionFile2);
+        FileOutputStream out = new FileOutputStream(regionFile);
 
         // Create the data packer
         MessagePacker packer = MessagePack.newDefaultPacker(out);
@@ -467,21 +443,8 @@ public class DungeonRegion {
         packer.packInt(DungeonMaze.getVersionCode());
         packer.packString(DungeonMaze.getVersionName());
 
-        // Create the Yaml configuration to store the data in
-        YamlConfiguration config = new YamlConfiguration();
-
-        // Create a section to save the region in
-        ConfigurationSection regionSection = config.createSection(CONFIG_DUNGEON_REGION_SECTION);
-
         // Save the actual region to the section
-        int saved = save(regionSection, packer);
-
-        // Append the current Dungeon Maze version to the file
-        config.set("version.name", DungeonMaze.getVersionName());
-        config.set("version.code", DungeonMaze.getVersionCode());
-
-        // Save the file
-        config.save(regionFile);
+        int saved = save(packer);
 
         // Close the file
         packer.close();
@@ -493,26 +456,21 @@ public class DungeonRegion {
     /**
      * Save all the loaded chunks in the current chunks grid.
      *
+     * @param packer The message packer for storage.
+     *
      * @return The number of chunks that were saved in this region.
      * This doesn't count the chunks that weren't available yet.
      */
-    public int save(ConfigurationSection config, MessagePacker packer) throws IOException {
+    public int save(MessagePacker packer) throws IOException {
         // Count how many chunks are saved
-        int saved = 0;
+        int chunkCount = getChunkCount();
 
         // Pack the X and Y coordinate of the region
         packer.packInt(this.x);
         packer.packInt(this.y);
 
         // Pack the number of chunks that will be stored
-        packer.packInt(getChunkCount());
-
-        // Store the location of the region
-        config.set("loc.x", getX());
-        config.set("loc.y", getY());
-
-        // Create a section to store the chunks in
-        ConfigurationSection chunksSection = config.createSection("chunks");
+        packer.packInt(chunkCount);
 
         // Loop through the chunk grid to save all of them
         for(int x = 0; x < REGION_SIZE; x++) {
@@ -522,25 +480,19 @@ public class DungeonRegion {
                 if(chunk == null)
                     continue;
 
-                // Calculate the index of the chunk
-                int chunkIndex = x * REGION_SIZE + y;
-
                 // Create a buffered packer for the chunk
                 MessageBufferPacker chunkPacker = MessagePack.newDefaultBufferPacker();
 
-                // Create a configuration section for the current chunk
-                ConfigurationSection chunkSection = chunksSection.createSection(String.valueOf(chunkIndex));
-
                 // Save the chunk to the given section
-                chunk.save(chunkSection, chunkPacker);
+                chunk.save(chunkPacker);
 
                 // Pack the chunk data
                 byte[] chunkPackerData = chunkPacker.toByteArray();
                 packer.packInt(chunkPackerData.length);
                 packer.writePayload(chunkPackerData);
 
-                // Increase the saved counter
-                saved++;
+                // Close the chunk packer
+                chunkPacker.close();
             }
         }
 
@@ -548,6 +500,6 @@ public class DungeonRegion {
         Core.getLogger().debug("Saved region for '" + getWorldName() + "' at (" + getX() + ", " + getY() + ")");
 
         // Return the number of saved chunks
-        return saved;
+        return chunkCount;
     }
 }

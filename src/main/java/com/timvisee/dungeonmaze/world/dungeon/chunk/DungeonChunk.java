@@ -3,9 +3,7 @@ package com.timvisee.dungeonmaze.world.dungeon.chunk;
 import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
 import org.bukkit.Chunk;
 import org.bukkit.World;
-import org.bukkit.configuration.ConfigurationSection;
 import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePacker;
 import org.msgpack.core.MessageUnpacker;
 
 import java.io.IOException;
@@ -196,51 +194,39 @@ public class DungeonChunk {
     }
 
     /**
-     * Load a dungeon chunk from a configuration section.
+     * Load a dungeon chunk from an unpacker.
      *
      * @param region The dungeon region the world is in.
-     * @param config The configuration section the dungeon chunk is in.
+     * @param unpacker Message unpacker to unpack the data from.
      *
      * @return The dungeon chunk.
      */
-    public static DungeonChunk load(DungeonRegion region, ConfigurationSection config, MessageUnpacker unpacker) throws IOException {
-        // Get the coordinates
-        System.out.println("Chunk X: " + unpacker.unpackInt());
-        System.out.println("Chunk Y: " + unpacker.unpackInt());
-        System.out.println("Custom chunk: " + unpacker.unpackBoolean());
-
-        // Get the position
-        int x = config.getInt("loc.x", 0);
-        int y = config.getInt("loc.y", 0);
+    public static DungeonChunk load(DungeonRegion region, MessageUnpacker unpacker) throws IOException {
+        // Get the position of the chunk
+        int x = unpacker.unpackInt();
+        int y = unpacker.unpackInt();
 
         // Construct a new dungeon chunk
         DungeonChunk dungeonChunk = new DungeonChunk(region, x, y);
 
         // Load whether this chunk is a custom chunk
-        dungeonChunk.setCustomChunk(config.getBoolean("customChunk.isCustom", false));
+        dungeonChunk.setCustomChunk(unpacker.unpackBoolean());
 
         // Return the instance
         return dungeonChunk;
     }
 
     /**
-     * Save the dungeon chunk in a configuration section.
+     * Save the dungeon chunk in an unpacker.
      *
-     * @param config The configuration section to save the dungeon chunk to.
+     * @param packer Message packer used for storage.
      */
-    public void save(ConfigurationSection config, MessageBufferPacker packer) throws IOException {
+    public void save(MessageBufferPacker packer) throws IOException {
         // Pack the X and Y coordinate
         packer.packInt(this.x);
         packer.packInt(this.y);
 
         // Define whether this chunk is custom
         packer.packBoolean(this.customChunk);
-
-        // Store the location of the chunk
-        config.set("loc.x", this.x);
-        config.set("loc.y", this.y);
-
-        // Save whether this is a custom chunk
-        config.set("customChunk.isCustom", this.customChunk);
     }
 }
