@@ -326,8 +326,8 @@ public class DungeonRegion {
             region.loadChunkFromConfig(chunkSection);
         }
 
-        // TODO: Remove this!
-        Core.getLogger().debug("Loading region at (" + x + ", " + y + ")");
+        // Show a status message, that the region was loaded
+        Core.getLogger().debug("Loaded region at (" + x + ", " + y + ")");
 
         // Return the dungeon region
         return region;
@@ -438,8 +438,8 @@ public class DungeonRegion {
         config.set("loc.x", getX());
         config.set("loc.y", getY());
 
-        // TODO: Remove this!
-        Core.getLogger().debug("Saving region at (" + getX() + ", " + getY() + ")");
+        // Show a status message, that the region was saved
+        Core.getLogger().debug("Saved region at (" + getX() + ", " + getY() + ")");
 
         // Return the number of saved chunks
         return saved;

@@ -236,9 +236,9 @@ public class DungeonRegionGridManager {
 
         // Show a status message
         if(world != null)
-            Core.getLogger().info((unload ? "Unloading" : "Saving") + " dungeon regions for '" + world.getName() + "'...");
+            Core.getLogger().debug((unload ? "Unloading" : "Saving") + " dungeon regions for '" + world.getName() + "'...");
         else
-            Core.getLogger().info((unload ? "Unloading" : "Saving") + " dungeon regions for all worlds...");
+            Core.getLogger().debug((unload ? "Unloading" : "Saving") + " dungeon regions for all worlds...");
 
         // Loop through each loaded region grid to see if it matches the world
         for(int i = this.grids.size() - 1; i >= 0; i--) {
@@ -259,7 +259,7 @@ public class DungeonRegionGridManager {
         }
 
         // Show a status message, return the number of saved regions
-        Core.getLogger().info((unload ? "Unloaded" : "Saved") + " " + saved + " regions, took " + p.getTimeFormatted() + "!");
+        Core.getLogger().debug((unload ? "Unloaded" : "Saved") + " " + saved + " regions, took " + p.getTimeFormatted() + "!");
         return saved;
     }
 
