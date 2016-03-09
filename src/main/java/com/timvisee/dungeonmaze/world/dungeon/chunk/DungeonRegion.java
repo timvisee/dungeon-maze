@@ -438,6 +438,9 @@ public class DungeonRegion {
         config.set("loc.x", getX());
         config.set("loc.y", getY());
 
+        // TODO: Remove this!
+        Core.getLogger().debug("Saving region at (" + getX() + ", " + getY() + ")");
+
         // Return the number of saved chunks
         return saved;
     }

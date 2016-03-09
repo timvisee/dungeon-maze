@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.WorldLoadEvent;
+import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 
 public class WorldListener implements Listener {
@@ -47,7 +48,21 @@ public class WorldListener implements Listener {
 		// Get the dungeon chunk grid manager
 		DungeonRegionGridManager chunkGridManager = Core.getDungeonRegionGridManager();
 		if(chunkGridManager != null)
-            // Unload the chunk grid for the specified world
-			chunkGridManager.unloadRegionGrid(event.getWorld());
+			// Unload the chunk grid for the specified world
+			chunkGridManager.unloadRegionGrid(world);
+	}
+
+	@EventHandler
+	public void onWorldSave(WorldSaveEvent event) {
+		// Make sure the world instance is valid
+		World world = event.getWorld();
+		if(world == null)
+			return;
+
+		// Get the dungeon chunk grid manager
+		DungeonRegionGridManager chunkGridManager = Core.getDungeonRegionGridManager();
+		if(chunkGridManager != null)
+			// Unload the chunk grid for the specified world
+			chunkGridManager.saveRegionGrid(world);
 	}
 }

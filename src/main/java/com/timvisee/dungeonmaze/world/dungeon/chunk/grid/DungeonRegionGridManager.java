@@ -202,9 +202,32 @@ public class DungeonRegionGridManager {
      *
      * @param world The world to unload the region grid for. Or null to unload the region grids for all the worlds.
      *
-     * @return The number of saved and unloaded region.
+     * @return The number of saved and unloaded regions.
      */
     public int unloadRegionGrid(World world) {
+        return saveRegionGrid(world, true);
+    }
+
+    /**
+     * Save the region grid with all regions for a specific world.
+     *
+     * @param world The world to save the region grid for. Or null to save the region grids for all the worlds.
+     *
+     * @return The number of saved regions.
+     */
+    public int saveRegionGrid(World world) {
+        return saveRegionGrid(world, false);
+    }
+
+    /**
+     * Save the region grid with all regions for a specific world.
+     *
+     * @param world The world to save the region grid for. Or null to save the region grids for all the worlds.
+     * @param unload True to unload all saved regions, false to leave them in memory.
+     *
+     * @return The number of saved regions.
+     */
+    public int saveRegionGrid(World world, boolean unload) {
         // Store the number of unloaded and saved dungeon region
         int saved = 0;
 
@@ -213,9 +236,9 @@ public class DungeonRegionGridManager {
 
         // Show a status message
         if(world != null)
-            Core.getLogger().info("Unloading all dungeon regions for '" + world.getName() + "'...");
+            Core.getLogger().info((unload ? "Unloading" : "Saving") + " dungeon regions for '" + world.getName() + "'...");
         else
-            Core.getLogger().info("Unloading all dungeon regions for all worlds...");
+            Core.getLogger().info((unload ? "Unloading" : "Saving") + " dungeon regions for all worlds...");
 
         // Loop through each loaded region grid to see if it matches the world
         for(int i = this.grids.size() - 1; i >= 0; i--) {
@@ -231,11 +254,12 @@ public class DungeonRegionGridManager {
             saved += grid.saveRegions();
 
             // Remove the grid from the list
-            this.grids.remove(i);
+            if(unload)
+                this.grids.remove(i);
         }
 
         // Show a status message, return the number of saved regions
-        Core.getLogger().info("Unloading " + saved + " regions, took " + p.getTimeFormatted() + "!");
+        Core.getLogger().info((unload ? "Unloaded" : "Saved") + " " + saved + " regions, took " + p.getTimeFormatted() + "!");
         return saved;
     }
 
