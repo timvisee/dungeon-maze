@@ -16,9 +16,9 @@ public class DungeonMazeLogger {
     /** The prefix to use for info messages. */
     private String infoPrefix = "";
     /** The prefix to use for debug messages. */
-    private String debugPrefix = "[DEBUG]";
+    private String debugPrefix = "[Debug]";
     /** The prefix to use for warning messages. */
-    private String warningPrefix = "[WARNING]";
+    private String warningPrefix = "[Warning]";
     /** The prefix to use for error messages. */
     private String errorPrefix = "[ERROR]";
 
