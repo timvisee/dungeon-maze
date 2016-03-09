@@ -331,11 +331,8 @@ public class DungeonRegionGrid {
      * @return True if succeed, false otherwise.
      */
     public boolean saveRegion(DungeonRegion dungeonRegion) throws IOException {
-        // Get the region data file
-        File regionDataFile = dungeonRegion.getRegionDataFile(this);
-
         // Save the data
-        dungeonRegion.save(regionDataFile);
+        dungeonRegion.save(this);
 
         // Return the result
         return true;
