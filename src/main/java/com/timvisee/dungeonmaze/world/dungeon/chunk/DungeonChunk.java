@@ -4,6 +4,11 @@ import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
+import org.msgpack.core.MessageBufferPacker;
+import org.msgpack.core.MessagePacker;
+import org.msgpack.core.MessageUnpacker;
+
+import java.io.IOException;
 
 public class DungeonChunk {
 
@@ -198,7 +203,12 @@ public class DungeonChunk {
      *
      * @return The dungeon chunk.
      */
-    public static DungeonChunk load(DungeonRegion region, ConfigurationSection config) {
+    public static DungeonChunk load(DungeonRegion region, ConfigurationSection config, MessageUnpacker unpacker) throws IOException {
+        // Get the coordinates
+        System.out.println("Chunk X: " + unpacker.unpackInt());
+        System.out.println("Chunk Y: " + unpacker.unpackInt());
+        System.out.println("Custom chunk: " + unpacker.unpackBoolean());
+
         // Get the position
         int x = config.getInt("loc.x", 0);
         int y = config.getInt("loc.y", 0);
@@ -218,7 +228,14 @@ public class DungeonChunk {
      *
      * @param config The configuration section to save the dungeon chunk to.
      */
-    public void save(ConfigurationSection config) {
+    public void save(ConfigurationSection config, MessageBufferPacker packer) throws IOException {
+        // Pack the X and Y coordinate
+        packer.packInt(this.x);
+        packer.packInt(this.y);
+
+        // Define whether this chunk is custom
+        packer.packBoolean(this.customChunk);
+
         // Store the location of the chunk
         config.set("loc.x", this.x);
         config.set("loc.y", this.y);

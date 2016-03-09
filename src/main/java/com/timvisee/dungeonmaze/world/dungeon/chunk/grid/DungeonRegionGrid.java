@@ -148,7 +148,14 @@ public class DungeonRegionGrid {
         }
 
         // Create or load the region data, return the result
-        return loadRegion(regionX, regionY);
+        try {
+            return loadRegion(regionX, regionY);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        // Failed, return null
+        return null;
     }
 
     /**
@@ -205,7 +212,7 @@ public class DungeonRegionGrid {
      * @return The dungeon region instance, or null on failure.
      */
     // TODO: Force load, to prevent an infinite loop with isRegionLoaded->loadRegion->...
-    public DungeonRegion loadRegion(int regionX, int regionY) {
+    public DungeonRegion loadRegion(int regionX, int regionY) throws IOException {
         // Make sure the region isn't loaded yet
         if(isRegionLoaded(regionX, regionY))
             return getOrCreateRegion(regionX, regionY);
