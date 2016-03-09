@@ -12,16 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import org.msgpack.core.*;
-import org.msgpack.core.MessagePack.PackerConfig;
-import org.msgpack.core.MessagePack.UnpackerConfig;
-import org.msgpack.value.ArrayValue;
-import org.msgpack.value.ExtensionValue;
-import org.msgpack.value.FloatValue;
-import org.msgpack.value.IntegerValue;
-import org.msgpack.value.Value;
-
-import java.io.IOException;
 import java.util.*;
 
 public class DungeonMaze extends JavaPlugin {
@@ -58,55 +48,6 @@ public class DungeonMaze extends JavaPlugin {
      * On enable method, called when plugin is being enabled.
      */
     public void onEnable() {
-
-
-        MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
-
-        try {
-            packer.packMapHeader(2);
-            packer.packString("comptact");
-            packer.packBoolean(true);
-            packer.packString("schema");
-            packer.packInt(0);
-            packer.close();
-
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-
-        MessageUnpacker unpacker = MessagePack.newDefaultUnpacker(packer.toByteArray());
-
-        try {
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("Map: " + unpacker.unpackMapHeader());
-            System.out.println("String: " + unpacker.unpackString());
-            System.out.println("Boolean: " + unpacker.unpackBoolean());
-            System.out.println("String: " + unpacker.unpackString());
-            System.out.println("Int: " + unpacker.unpackInt());
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-            System.out.println("");
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-
-
-
-
-
         // Profile the start up
         Profiler profiler = new Profiler(true);
 
