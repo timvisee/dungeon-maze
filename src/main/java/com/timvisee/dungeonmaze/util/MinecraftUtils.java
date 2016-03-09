@@ -39,6 +39,7 @@ public class MinecraftUtils {
         // Get the raw version
         final String rawVersion = Bukkit.getVersion();
 
+        // TODO: Remove this and revert the code, this is here for testing!
         return ServerType.BUKKIT;
 
 //        // TODO: Enable this code, to properly recognise Bukkit servers!

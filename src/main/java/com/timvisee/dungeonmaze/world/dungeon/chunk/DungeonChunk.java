@@ -193,28 +193,29 @@ public class DungeonChunk {
      * @return True on success, false on failure.
      */
     public boolean save(File file) {
-        // Save the configuration section
-        YamlConfiguration config = new YamlConfiguration();
-
-        // Create the dungeon chunk section and store the chunk
-        ConfigurationSection chunkSection = config.createSection(CONFIG_DUNGEON_CHUNK_SECTION);
-        save(config.getConfigurationSection(CONFIG_DUNGEON_CHUNK_SECTION));
-
-        // Save whether this is a custom chunk
-        chunkSection.set("customChunk.isCustom", this.customChunk);
-
-        // Append the current Dungeon Maze version to the file
-        config.set("version.name", DungeonMaze.getVersionName());
-        config.set("version.code", DungeonMaze.getVersionCode());
-
-        // Save the file
-        try {
-            config.save(file);
-            return true;
-        } catch(IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+//        // Save the configuration section
+//        YamlConfiguration config = new YamlConfiguration();
+//
+//        // Create the dungeon chunk section and store the chunk
+//        ConfigurationSection chunkSection = config.createSection(CONFIG_DUNGEON_CHUNK_SECTION);
+//        save(config.getConfigurationSection(CONFIG_DUNGEON_CHUNK_SECTION));
+//
+//        // Save whether this is a custom chunk
+//        chunkSection.set("customChunk.isCustom", this.customChunk);
+//
+//        // Append the current Dungeon Maze version to the file
+//        config.set("version.name", DungeonMaze.getVersionName());
+//        config.set("version.code", DungeonMaze.getVersionCode());
+//
+//        // Save the file
+//        try {
+//            config.save(file);
+//            return true;
+//        } catch(IOException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+        return true;
     }
 
     /**
