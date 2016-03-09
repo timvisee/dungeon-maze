@@ -37,8 +37,7 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
                 final DungeonRegionGrid dungeonRegionGrid = chunkGridManager.getOrCreateRegionGrid(world);
 
                 // Create or get the chunk data for the current chunk
-                // TODO: Gather the chunk instance from some sort of cache!
-                dungeonChunk = dungeonRegionGrid.getOrCreateChunk(chunk.getX(), chunk.getZ());
+                dungeonChunk = dungeonRegionGrid.getOrCreateChunk(chunk);
 
                 // Set the cached chunk
                 lastChunkCache = dungeonChunk;

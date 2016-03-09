@@ -3,6 +3,7 @@ package com.timvisee.dungeonmaze.world.dungeon.chunk.grid;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonRegion;
+import org.bukkit.Chunk;
 import org.bukkit.World;
 
 import java.io.File;
@@ -17,7 +18,6 @@ public class DungeonRegionGrid {
      */
     public static final String REGION_DATA_DIR = "region";
 
-    // TODO: Update these limits!
     /**
      * Defines the preferred number of loaded dungeon regions.
      */
@@ -42,6 +42,11 @@ public class DungeonRegionGrid {
      * The last region that has been accessed.
      */
     private DungeonRegion lastRegionCache = null;
+
+    /**
+     * The last chunk that has been accessed through this class.
+     */
+    private DungeonChunk lastChunkCache = null;
 
     /**
      * Constructor.
@@ -171,7 +176,24 @@ public class DungeonRegionGrid {
         DungeonRegion region = getOrCreateRegion(regionX, regionY);
 
         // Get or create the chunk, return it afterwards
-        return region.getOrCreateChunk(localChunkX, localChunkY);
+        return (lastChunkCache = region.getOrCreateChunk(localChunkX, localChunkY));
+    }
+
+    /**
+     * Get the specified dungeon chunk instance. The dungeon chunk will be retrieved from a dungeon region.
+     * If the region isn't loaded, or the chunk hasn't been created yet, it will be create automatically.
+     *
+     * @param chunk The Bukkit chunk.
+     *
+     * @return The dungeon chunk instance, or null on failure.
+     */
+    public DungeonChunk getOrCreateChunk(Chunk chunk) {
+        // Check whether the cached chunk is correct
+        if(lastChunkCache != null && lastChunkCache.isAt(chunk))
+            return lastChunkCache;
+
+        // Get the proper chunk
+        return getOrCreateChunk(chunk.getX(), chunk.getZ());
     }
 
     /**
