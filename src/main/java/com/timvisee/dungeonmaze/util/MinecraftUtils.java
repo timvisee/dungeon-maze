@@ -39,30 +39,32 @@ public class MinecraftUtils {
         // Get the raw version
         final String rawVersion = Bukkit.getVersion();
 
-        // TODO: Enable this code, to properly recognise Bukkit servers!
-        /*// Check whether this is a CraftBukkit or Bukkit server
-        if(rawVersion.toLowerCase().contains("bukkit"))
-            return ServerType.BUKKIT;*/
+        return ServerType.BUKKIT;
 
-        // Check whether this is a PaperSpigot server
-        if(rawVersion.toLowerCase().contains("paperspigot"))
-            return ServerType.PAPER_SPIGOT;
-
-        // Check whether this is a Spigot server
-        if(rawVersion.toLowerCase().contains("spigot"))
-            return ServerType.SPIGOT;
-
-        // Check whether this is a KCauldron server
-        // TODO: IMPORTANT: Make sure this is valid!
-        if(rawVersion.toLowerCase().contains("kcauldron"))
-            return ServerType.KCAULDRON;
-
-        // Check whether this is a Thermos server
-        // TODO: IMPORTANT: Make sure this is valid!
-        if(rawVersion.toLowerCase().contains("thermos"))
-            return ServerType.THERMOS;
-
-        // Return unknown
-        return ServerType.UNKNOWN;
+//        // TODO: Enable this code, to properly recognise Bukkit servers!
+//        /*// Check whether this is a CraftBukkit or Bukkit server
+//        if(rawVersion.toLowerCase().contains("bukkit"))
+//            return ServerType.BUKKIT;*/
+//
+//        // Check whether this is a PaperSpigot server
+//        if(rawVersion.toLowerCase().contains("paperspigot"))
+//            return ServerType.PAPER_SPIGOT;
+//
+//        // Check whether this is a Spigot server
+//        if(rawVersion.toLowerCase().contains("spigot"))
+//            return ServerType.SPIGOT;
+//
+//        // Check whether this is a KCauldron server
+//        // TODO: IMPORTANT: Make sure this is valid!
+//        if(rawVersion.toLowerCase().contains("kcauldron"))
+//            return ServerType.KCAULDRON;
+//
+//        // Check whether this is a Thermos server
+//        // TODO: IMPORTANT: Make sure this is valid!
+//        if(rawVersion.toLowerCase().contains("thermos"))
+//            return ServerType.THERMOS;
+//
+//        // Return unknown
+//        return ServerType.UNKNOWN;
     }
 }
