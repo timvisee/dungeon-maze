@@ -257,9 +257,9 @@
         <dependency>
             <groupId>de.bananaco</groupId>
             <artifactId>bpermissions</artifactId>
-            <version>1.12-DEV</version>
+            <version>1.12-B15-DEV</version>
             <scope>system</scope>
-            <systemPath>${basedir}/libs/bPermissions-2.12-DEV.jar</systemPath>
+            <systemPath>${basedir}/libs/bPermissions-2.12-Beta-15-DEV.jar</systemPath>
         </dependency>
 
         <!-- PermissionsBukkit plugin -->
