@@ -45,7 +45,6 @@
 
         <!-- Minecraft server API versions -->
         <bukkitVersion>1.9-R0.1-SNAPSHOT</bukkitVersion>
-        <spigotVersion>1.9-R0.1-SNAPSHOT</spigotVersion>
 
     </properties>
 
