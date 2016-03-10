@@ -11,9 +11,14 @@ import java.util.List;
 @SuppressWarnings("UnusedDeclaration")
 public class CommandPermissions {
 
-    /** Defines the permission nodes required to have permission to execute this command. */
+    /**
+     * Defines the permission nodes required to have permission to execute this command.
+     */
     private List<String> permissionNodes = new ArrayList<>();
-    /** Defines the default permission if the permission nodes couldn't be used. */
+
+    /**
+     * Defines the default permission if the permission nodes couldn't be used.
+     */
     private DefaultPermission defaultPermission = DefaultPermission.NOT_ALLOWED;
 
     /**

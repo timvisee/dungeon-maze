@@ -4,10 +4,14 @@ import com.timvisee.dungeonmaze.service.Service;
 
 public class CommandHandlerService extends Service {
 
-    /** Service name. */
+    /**
+     * Service name.
+     */
     private static final String SERVICE_NAME = "Command Handler";
 
-    /** Command handler instance. */
+    /**
+     * Command handler instance.
+     */
     private CommandHandler commandHandler;
 
     /**

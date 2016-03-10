@@ -8,23 +8,49 @@ import java.util.*;
 @SuppressWarnings("UnusedDeclaration")
 public class CommandDescription {
 
-    /** Defines the acceptable labels. */
+    /**
+     * Defines the acceptable labels.
+     */
     private List<String> labels = new ArrayList<>();
-    /** Command description. */
+
+    /**
+     * Command description.
+     */
     private String description = "";
-    /** Detailed description. */
+
+    /**
+     * Detailed description.
+     */
     private String detailedDescription = "";
-    /** The executable command instance. */
+
+    /**
+     * The executable command instance.
+     */
     private ExecutableCommand executableCommand;
-    /** The parent command. */
+
+    /**
+     * The parent command.
+     */
     private CommandDescription parent = null;
-    /** The child labels. */
+
+    /**
+     * The child labels.
+     */
     private List<CommandDescription> children = new ArrayList<>();
-    /** The command arguments. */
+
+    /**
+     * The command arguments.
+     */
     private List<CommandArgumentDescription> arguments = new ArrayList<>();
-    /** Defines whether there is an argument maximum or not. */
+
+    /**
+     * Defines whether there is an argument maximum or not.
+     */
     private boolean noArgumentMaximum = false;
-    /** Defines the command permissions. */
+
+    /**
+     * Defines the command permissions.
+     */
     private CommandPermissions permissions = new CommandPermissions();
 
     /**

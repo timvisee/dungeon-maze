@@ -8,7 +8,9 @@ import java.util.List;
 
 public class CommandParts {
 
-    /** The list of parts for this command. */
+    /**
+     * The list of parts for this command.
+     */
     private List<String> parts = new ArrayList<>();
 
     /**

@@ -10,7 +10,9 @@ import java.util.List;
 
 public class CommandHandler {
 
-    /** The command manager instance. */
+    /**
+     * The command manager instance.
+     */
     private CommandManager commandManager;
 
     /**

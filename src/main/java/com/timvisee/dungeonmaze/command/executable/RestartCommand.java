@@ -35,6 +35,7 @@ public class RestartCommand extends ExecutableCommand {
             if(arg.equalsIgnoreCase("force") || arg.equalsIgnoreCase("forced"))
                 force = true;
 
+            // TODO: Put this in some sort of utility class, because it's used multiple times!
             else if(arg.equalsIgnoreCase("true") || arg.equalsIgnoreCase("t") || arg.equalsIgnoreCase("yes") || arg.equalsIgnoreCase("y"))
                 force = true;
 

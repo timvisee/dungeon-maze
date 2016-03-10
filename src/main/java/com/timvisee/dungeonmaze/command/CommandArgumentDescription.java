@@ -4,11 +4,19 @@ public class CommandArgumentDescription {
 
     // TODO: Allow argument to consist of infinite parts. <label ...>
 
-    /** Argument label. */
+    /**
+     * Argument label.
+     */
     private String label;
-    /** Argument description. */
+
+    /**
+     * Argument description.
+     */
     private String description;
-    /** Defines whether the argument is optional. */
+
+    /**
+     * Defines whether the argument is optional.
+     */
     private boolean optional = false;
 
     /**

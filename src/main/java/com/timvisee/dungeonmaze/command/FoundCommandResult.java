@@ -4,13 +4,24 @@ import org.bukkit.command.CommandSender;
 
 public class FoundCommandResult {
 
-    /** The command description instance. */
+    /**
+     * The command description instance.
+     */
     private CommandDescription commandDescription;
-    /** The command reference. */
+
+    /**
+     * The command reference.
+     */
     private CommandParts commandReference;
-    /** The command arguments. */
+
+    /**
+     * The command arguments.
+     */
     private CommandParts commandArguments;
-    /** The original search query reference. */
+
+    /**
+     * The original search query reference.
+     */
     private CommandParts queryReference;
 
     /**

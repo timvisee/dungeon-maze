@@ -8,7 +8,9 @@ import java.util.List;
 @SuppressWarnings("UnusedDeclaration")
 public class CommandManager {
 
-    /** The list of commandDescriptions. */
+    /**
+     * The list of commandDescriptions.
+     */
     private List<CommandDescription> commandDescriptions = new ArrayList<>();
 
     /**
