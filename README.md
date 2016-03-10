@@ -31,7 +31,7 @@ McStats: http://mcstats.org/plugin/DungeonMaze
 
 #####Running Requirements:
 >- Java 1.8 or higher
->- CraftBukkit or Spigot (for Minecraft 1.8.8 or higher)
+>- CraftBukkit or Spigot (for Minecraft 1.9 or higher)
 
 #####License: 
 GNU GPL v3.0
