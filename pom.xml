@@ -316,7 +316,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20151123</version>
+			<version>20160212</version>
 			<scope>compile</scope>
 		</dependency>
 
