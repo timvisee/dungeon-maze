@@ -49,7 +49,7 @@ public class DungeonMaze extends JavaPlugin {
     /**
      * The Dungeon Maze chunk generator instance.
      */
-    private final Generator generator = new Generator(this);
+    private final Generator generator = new Generator();
 
     /**
      * Constructor.
