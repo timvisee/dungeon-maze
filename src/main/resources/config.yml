@@ -18,6 +18,7 @@ updateChecker:
 # Permission Support
 usePermissions: true
 useBypassPermissions: true
+alwaysAllowOp: false
 
 # Dungeon Maze API settings
 api:

@@ -26,6 +26,9 @@ public class PermissionsManagerService extends Service {
         // Set up the permissions manager
         this.permissionsManager.setup();
 
+        // Check and set whether OP players should always be allowed
+        this.permissionsManager.setAlwaysAllowOp(Core.getConfigHandler().alwaysAllowOp);
+
         // TODO: Do some error checking!
 
         return true;

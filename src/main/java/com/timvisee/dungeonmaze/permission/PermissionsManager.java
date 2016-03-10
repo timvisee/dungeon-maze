@@ -91,7 +91,12 @@ public class PermissionsManager {
     /**
      * Vault instance.
      */
-    public Permission vaultPerms = null;
+    private Permission vaultPerms = null;
+
+    /**
+     * True to always allow OP players, even if they don't have the proper permissions supplied by the permissions plugin.
+     */
+    private boolean alwaysAllowOp = false;
 
     /**
      * Constructor.
@@ -484,6 +489,10 @@ public class PermissionsManager {
         // Make sure the manager is enabled and is hooked into a permissions system
         if(!isEnabled() || !isHooked())
             return def;
+
+        // Check whether OP players always have permission
+        if(isAlwaysAllowOp() && player.isOp())
+            return true;
 
         // Use the proper API
         switch (this.permsType) {
@@ -995,6 +1004,24 @@ public class PermissionsManager {
 
         // Remove each group
         return removeGroups(player, groupNames);
+    }
+
+    /**
+     * Check whether OP players should always have permission.
+     *
+     * @return True to always allow OP players, false to use the regular permissions system.
+     */
+    public boolean isAlwaysAllowOp() {
+        return this.alwaysAllowOp;
+    }
+
+    /**
+     * Set whether OP players always have permission.
+     *
+     * @param alwaysAllowOp True if OP players should always have permission.
+     */
+    public void setAlwaysAllowOp(boolean alwaysAllowOp) {
+        this.alwaysAllowOp = alwaysAllowOp;
     }
 
     /**
