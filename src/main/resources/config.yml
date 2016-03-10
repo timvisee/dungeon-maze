@@ -16,8 +16,8 @@ updateChecker:
     notifyInGame: true
 
 # Permission Support
-usePermissions : true
-useBypassPermissions : true
+usePermissions: true
+useBypassPermissions: true
 
 # Dungeon Maze API settings
 api:
