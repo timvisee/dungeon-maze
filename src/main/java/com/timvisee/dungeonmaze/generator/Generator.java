@@ -27,18 +27,9 @@ import java.util.Random;
 public class Generator extends ChunkGenerator {
 
     /**
-     * Defines the Dungeon Maze plugin instance.
-     */
-    private static DungeonMaze plugin;
-
-    /**
      * Constructor.
-     *
-     * @param instance The Dungeon Maze instance.
      */
-    public Generator(DungeonMaze instance) {
-        plugin = instance;
-    }
+    public Generator() { }
 
     @Override
     public List<BlockPopulator> getDefaultPopulators(World world) {
