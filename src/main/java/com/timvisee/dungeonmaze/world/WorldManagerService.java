@@ -11,10 +11,14 @@ import java.util.stream.Collectors;
 
 public class WorldManagerService extends Service {
 
-    /** Service name. */
+    /**
+     * Service name.
+     */
     private static final String SERVICE_NAME = "World Manager";
 
-    /** World Manager instance. */
+    /**
+     * World Manager instance.
+     */
     private WorldManager worldManager;
 
     /**
@@ -112,6 +116,7 @@ public class WorldManagerService extends Service {
 
     /**
      * Get the world manager.
+     *
      * @return World manager instance.
      */
     public WorldManager getWorldManager() {

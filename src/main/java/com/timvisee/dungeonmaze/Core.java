@@ -37,43 +37,89 @@ public class Core {
 
     // TODO: Do we need to keep a non-static version of each method available?
 
-    /** Static Core instance. */
+    /**
+     * Static Core instance.
+     */
     public static Core instance;
 
-    /** Defines whether the core has been initialized. */
+    /**
+     * Defines whether the core has been initialized.
+     */
     private boolean init = false;
 
-    /** Service manager instance. */
+    /**
+     * Service manager instance.
+     */
     private ServiceManager serviceManager;
 
-    /** Logger service instance. */
+    /**
+     * Logger service instance.
+     */
     private LoggerService loggerService = new LoggerService();
-    /** Config handler service instance. */
-    private ConfigHandlerService configHandlerService = new ConfigHandlerService();
-    /** Command handler service instance. */
-    private CommandHandlerService commandHandlerService = new CommandHandlerService();
-    /** Multiverse handler service instance. */
-    private MultiverseHandlerService multiverseHandlerService = new MultiverseHandlerService();
-    /** World manager service instance. */
-    private WorldManagerService worldManagerService = new WorldManagerService();
-    /** Dungeon chunk grid manager service instance. */
-    private DungeonChunkGridManagerService dungeonChunkGridManagerService = new DungeonChunkGridManagerService();
-    /** Update checker service instance. */
-    private UpdateCheckerService updateCheckerService = new UpdateCheckerService();
-    /** Permissions manager service instance. */
-    private PermissionsManagerService permissionsManagerService = new PermissionsManagerService();
-    /** Custom structure manager service instance. */
-    private CustomStructureManagerService customStructureManagerService = new CustomStructureManagerService();
-    /** API Controller service instance. */
-    private ApiControllerService apiControllerService = new ApiControllerService();
-    /** Old API Controller service instance. */
-    private OldApiControllerService oldApiControllerService = new OldApiControllerService();
-    /** Event listener manager service instance. */
-    private EventListenerManagerService eventListenerManagerService = new EventListenerManagerService();
-    /** Metrics controller service instance. */
-    private MetricsControllerService metricsControllerService = new MetricsControllerService();// Enabled date
 
-    /** Defines the initialization time of the core. */
+    /**
+     * Config handler service instance.
+     */
+    private ConfigHandlerService configHandlerService = new ConfigHandlerService();
+
+    /**
+     * Command handler service instance.
+     */
+    private CommandHandlerService commandHandlerService = new CommandHandlerService();
+
+    /**
+     * Multiverse handler service instance.
+     */
+    private MultiverseHandlerService multiverseHandlerService = new MultiverseHandlerService();
+
+    /**
+     * World manager service instance.
+     */
+    private WorldManagerService worldManagerService = new WorldManagerService();
+
+    /**
+     * Dungeon chunk grid manager service instance.
+     */
+    private DungeonChunkGridManagerService dungeonChunkGridManagerService = new DungeonChunkGridManagerService();
+
+    /**
+     * Update checker service instance.
+     */
+    private UpdateCheckerService updateCheckerService = new UpdateCheckerService();
+
+    /**
+     * Permissions manager service instance.
+     */
+    private PermissionsManagerService permissionsManagerService = new PermissionsManagerService();
+
+    /**
+     * Custom structure manager service instance.
+     */
+    private CustomStructureManagerService customStructureManagerService = new CustomStructureManagerService();
+
+    /**
+     * API Controller service instance.
+     */
+    private ApiControllerService apiControllerService = new ApiControllerService();
+
+    /**
+     * Old API Controller service instance.
+     */
+    private OldApiControllerService oldApiControllerService = new OldApiControllerService();
+
+    /**
+     * Event listener manager service instance.
+     */
+    private EventListenerManagerService eventListenerManagerService = new EventListenerManagerService();
+
+    /**
+     * Metrics controller service instance.
+     */
+    private MetricsControllerService metricsControllerService = new MetricsControllerService();
+
+    /**
+     * Defines the initialization time of the core.
+     */
     private Date initTime = new Date();
 
     /**

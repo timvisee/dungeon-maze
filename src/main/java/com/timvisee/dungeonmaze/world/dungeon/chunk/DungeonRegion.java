@@ -47,7 +47,7 @@ public class DungeonRegion {
     /**
      * The grid of chunks inside this region.
      */
-    // TODO: Make sure this is initialized with null!
+    // TODO: Make sure this is initialized with null fields!
     private DungeonChunk[][] chunks = new DungeonChunk[REGION_SIZE][REGION_SIZE];
 
     /**
