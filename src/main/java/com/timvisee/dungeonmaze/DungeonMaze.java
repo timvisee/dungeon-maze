@@ -16,25 +16,39 @@ import java.util.*;
 
 public class DungeonMaze extends JavaPlugin {
 
-    /** Defines the name of the plugin. */
+    /**
+     * Defines the name of the plugin.
+     */
     private static final String PLUGIN_NAME = "Dungeon Maze";
 
-    /** Defines the current Dungeon Maze version name. */
+    /**
+     * Defines the current Dungeon Maze version name.
+     */
     private static final String PLUGIN_VERSION_NAME = "0.2.3";
 
-    /** Defines the current Dungeon Maze version code. */
+    /**
+     * Defines the current Dungeon Maze version code.
+     */
     private static final int PLUGIN_VERSION_CODE = 23;
 
-    /** Defines the application ID used when checking for updates. */
+    /**
+     * Defines the application ID used when checking for updates.
+     */
     private static final String UPDATER_APP_ID = "2";
 
-    /** Dungeon Maze instance. */
+    /**
+     * Dungeon Maze instance.
+     */
     public static DungeonMaze instance;
 
-    /** Core instance. */
+    /**
+     * Core instance.
+     */
     private Core core = new Core(false);
 
-    /** The Dungeon Maze chunk generator instance. */
+    /**
+     * The Dungeon Maze chunk generator instance.
+     */
     private final Generator generator = new Generator(this);
 
     /**
@@ -95,7 +109,7 @@ public class DungeonMaze extends JavaPlugin {
 
         // Initialize the core, show the result status, show a status message if it failed to initialize
         if(!this.core.init()) {
-            Core.getLogger().info("[ERROR] Failed to start the core, after " + profiler.getTimeFormatted() + "!");
+            Core.getLogger().error("Failed to start the core, after " + profiler.getTimeFormatted() + "!");
             return false;
         }
 
@@ -267,6 +281,13 @@ public class DungeonMaze extends JavaPlugin {
         return UPDATER_APP_ID;
     }
 
+
+
+    /*
+     *
+     * This is old code, this will be replaced soon.
+     *
+     */
 
     // TODO: Put all this code bellow in a manager class to handle all the hard stuff, and to clean up the code.
     // TODO: Also save this data into the data folder of the world files so it can be read if needed
