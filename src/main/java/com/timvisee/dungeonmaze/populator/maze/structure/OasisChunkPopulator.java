@@ -15,11 +15,11 @@ import org.bukkit.World;
 public class OasisChunkPopulator extends ChunkBlockPopulator {
 
     /** General populator constants. */
-    public static final float CHUNK_CHANCE = .003f;
+    private static final float CHUNK_CHANCE = .003f;
 
     /** Populator constants. */
-	public static final int CHANCE_CLAYINDIRT = 10;
-	public static final double SPAWN_DISTANCE_MIN = 7; // Chunks
+	private static final int CHANCE_CLAYINDIRT = 10;
+	private static final double SPAWN_DISTANCE_MIN = 7; // Chunks
 
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {

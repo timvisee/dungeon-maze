@@ -24,15 +24,15 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 	// TODO: Use material enums instead of ID's due to ID deprecation by Mojang
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 2;
-	public static final int LAYER_MAX = 6;
-	public static final float ROOM_CHANCE = .001f;
+	private static final int LAYER_MIN = 2;
+	private static final int LAYER_MAX = 6;
+	private static final float ROOM_CHANCE = .001f;
 
     /** Populator constants. */
-	public static final float MOSS_CHANCE = .7f;
-	public static final int MOSS_ITERATIONS = 80;
-	public static final float CRACKED_CHANCE = .7f;
-	public static final int CRACKED_ITERATIONS = 80;
+	private static final float MOSS_CHANCE = .7f;
+	private static final int MOSS_ITERATIONS = 80;
+	private static final float CRACKED_CHANCE = .7f;
+	private static final int CRACKED_ITERATIONS = 80;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -195,7 +195,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
         }
 	}
 	
-	public void addItemsToFurnace(Random random, Furnace furnace) {
+	private void addItemsToFurnace(Random random, Furnace furnace) {
         // Create a list to put the items in
 		List<ItemStack> items = new ArrayList<>();
 
@@ -263,7 +263,7 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 		furnace.update();
 	}
 
-	public List<ItemStack> genChestContent(Random random) {
+	private List<ItemStack> genChestContent(Random random) {
         // Create a list to put the chest items in
 		List<ItemStack> items = new ArrayList<>();
 

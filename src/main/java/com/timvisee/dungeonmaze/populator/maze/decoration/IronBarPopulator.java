@@ -12,13 +12,13 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class IronBarPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 4;
-	public static final float ROOM_ITERATIONS_CHANCE = .20f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 7;
+    private static final int ROOM_ITERATIONS = 4;
+	private static final float ROOM_ITERATIONS_CHANCE = .20f;
 
     /** Populator constants. */
-	public static final float CHANCE_DOUBLE_HEIGHT = .66f;
+	private static final float CHANCE_DOUBLE_HEIGHT = .66f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

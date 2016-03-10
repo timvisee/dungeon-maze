@@ -12,14 +12,14 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class SlabPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 7;
-	public static final int ROOM_ITERATIONS = 14;
-	public static final float ROOM_ITERATIONS_CHANCE = .6f;
-    public static final int ROOM_ITERATIONS_MAX = 12;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 7;
+	private static final int ROOM_ITERATIONS = 14;
+	private static final float ROOM_ITERATIONS_CHANCE = .6f;
+    private static final int ROOM_ITERATIONS_MAX = 12;
 
     /** Populator constants. */
-    public static final float CEILING_CHANCE = .5f;
+    private static final float CEILING_CHANCE = .5f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

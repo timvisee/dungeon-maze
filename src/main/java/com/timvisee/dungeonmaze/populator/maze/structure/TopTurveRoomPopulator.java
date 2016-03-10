@@ -17,9 +17,9 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 5;
-	public static final float ROOM_CHANCE = .002f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 5;
+	private static final float ROOM_CHANCE = .002f;
 
     // TODO: Implement this feature!
 	public static final double CHANCE_TOPTURVE_ADDITION_EACH_LEVEL = -0.167; /* to 2 */

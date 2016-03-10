@@ -12,9 +12,9 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 5;
-	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .04f;
+	private static final int LAYER_MIN = 5;
+	private static final int LAYER_MAX = 7;
+	private static final float ROOM_CHANCE = .04f;
 
     // TODO: Implement this!
 	public static final double CHANCE_WATER_ADDITION_EACH_LEVEL = -0.833; /* to 0 */

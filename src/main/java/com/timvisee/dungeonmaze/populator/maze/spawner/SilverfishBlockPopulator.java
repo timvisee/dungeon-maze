@@ -12,10 +12,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 3;
-	public static final int LAYER_MAX = 7;
-	public static final int ROOM_ITERATIONS = 8;
-	public static final float ROOM_ITERATIONS_CHANCE = .75f;
+	private static final int LAYER_MIN = 3;
+	private static final int LAYER_MAX = 7;
+	private static final int ROOM_ITERATIONS = 8;
+	private static final float ROOM_ITERATIONS_CHANCE = .75f;
 
     // TODO: Implement this feature!
 	public static final double CHANCE_ADDITION_EACH_LEVEL = -4.167; /* to 75 */

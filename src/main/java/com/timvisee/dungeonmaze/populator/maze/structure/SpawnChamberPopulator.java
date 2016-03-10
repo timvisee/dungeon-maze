@@ -23,9 +23,9 @@ import org.bukkit.material.Torch;
 public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-    public static final int LAYER_MIN = 7;
-    public static final int LAYER_MAX = 7;
-    public static final float ROOM_CHANCE = 1.0f;
+    private static final int LAYER_MIN = 7;
+    private static final int LAYER_MAX = 7;
+    private static final float ROOM_CHANCE = 1.0f;
 
     @Override
     public void populateRoom(MazeRoomBlockPopulatorArgs args) {

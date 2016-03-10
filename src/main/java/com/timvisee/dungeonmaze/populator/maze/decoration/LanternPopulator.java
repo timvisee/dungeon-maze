@@ -11,13 +11,13 @@ import java.util.Random;
 
 public class LanternPopulator extends MazeRoomBlockPopulator {
 
-	public static final int LAYER_MIN = 3;
-	public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 3;
-    public static final float ROOM_ITERATIONS_CHANCE = .3f;
-    public static final int ROOM_ITERATIONS_MAX = 3;
+	private static final int LAYER_MIN = 3;
+	private static final int LAYER_MAX = 7;
+    private static final int ROOM_ITERATIONS = 3;
+    private static final float ROOM_ITERATIONS_CHANCE = .3f;
+    private static final int ROOM_ITERATIONS_MAX = 3;
 
-    public static final float BROKEN_CHANCE = .33f;
+    private static final float BROKEN_CHANCE = .33f;
 
     // TODO: Implement this feature!
     public static final double CHANCE_SINGLE_ADDITION_EACH_LEVEL = 7.5; /* to 75 */

@@ -12,10 +12,10 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class SoulsandPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 3;
-	public static final int LAYER_MAX = 7;
-	public static final int ROOM_ITERATIONS = 15;
-	public static final float ROOM_ITERATIONS_CHANCE = .2f;
+	private static final int LAYER_MIN = 3;
+	private static final int LAYER_MAX = 7;
+	private static final int ROOM_ITERATIONS = 15;
+	private static final float ROOM_ITERATIONS_CHANCE = .2f;
 
     // TODO: Implement this!
 	public static final double CHANCE_ADDITION_EACH_LEVEL = -1.667; /* to 10 */

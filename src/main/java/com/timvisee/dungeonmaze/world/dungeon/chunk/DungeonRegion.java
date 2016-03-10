@@ -37,12 +37,17 @@ public class DungeonRegion {
     /**
      * Defines the dungeon region grid this region is in.
      */
-    private DungeonRegionGrid regionGrid;
+    private final DungeonRegionGrid regionGrid;
 
     /**
-     * Defines the X and Y coordinate of the region (on a 2D region plane) in the world.
+     * Defines the X of the region (on a 2D region plane) in the world.
      */
-    private int x, y;
+    private final int x;
+
+    /**
+     * Defines the Y of the region (on a 2D region plane) in the world.
+     */
+    private final int y;
 
     /**
      * The grid of chunks inside this region.

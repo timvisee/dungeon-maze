@@ -9,9 +9,9 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class StairsPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 6;
-	public static final float ROOM_CHANCE = .02f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 6;
+	private static final float ROOM_CHANCE = .02f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

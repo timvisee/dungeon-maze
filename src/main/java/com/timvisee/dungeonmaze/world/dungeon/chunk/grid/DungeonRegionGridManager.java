@@ -16,7 +16,7 @@ public class DungeonRegionGridManager {
     /**
      * Defines whether the manager is instantiated.
      */
-    boolean init = false;
+    private boolean init = false;
 
     /**
      * The list of loaded region grids.
@@ -26,7 +26,7 @@ public class DungeonRegionGridManager {
     /**
      * Defines the Dungeon Maze data directory name.
      */
-    public static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
+    private static final String DUNGEON_MAZE_DATA_DIRECTORY = "DungeonMaze";
 
     /**
      * The last accessed dungeon region grid.

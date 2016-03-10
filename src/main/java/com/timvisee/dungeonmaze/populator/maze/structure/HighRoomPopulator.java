@@ -10,9 +10,9 @@ import org.bukkit.World;
 public class HighRoomPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 6;
-	public static final float ROOM_CHANCE = .006f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 6;
+	private static final float ROOM_CHANCE = .006f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

@@ -24,8 +24,8 @@ public enum MazeStructureType {
 	WATER_WELL_ROOM("Water_Well_Room", 19),
 	CUSTOM_STRUCTURE("Custom_Structure", 1);
 
-	public String name;
-	public int id;
+	private String name;
+	private int id;
 	
 	/**
 	 * Constructor

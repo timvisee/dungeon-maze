@@ -12,14 +12,14 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class SandPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 4;
-	public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 2;
-    public static final float ROOM_ITERATIONS_CHANCE = .05f;
-    public static final int ROOM_ITERATIONS_MAX = 2;
+	private static final int LAYER_MIN = 4;
+	private static final int LAYER_MAX = 7;
+    private static final int ROOM_ITERATIONS = 2;
+    private static final float ROOM_ITERATIONS_CHANCE = .05f;
+    private static final int ROOM_ITERATIONS_MAX = 2;
 
     /** Populator constants. */
-	public static final BlockFace[] DIRECTIONS = new BlockFace[] {
+	private static final BlockFace[] SAND_DIRECTIONS = new BlockFace[] {
 			BlockFace.NORTH,
             BlockFace.SOUTH,
             BlockFace.EAST,
@@ -38,8 +38,8 @@ public class SandPopulator extends MazeRoomBlockPopulator {
         final int startHeight = rand.nextInt(2) + 1;
 
         // Choose two random directions for the structure
-        BlockFace dir1 = DIRECTIONS[rand.nextInt(DIRECTIONS.length)];
-        BlockFace dir2 = DIRECTIONS[rand.nextInt(DIRECTIONS.length)];
+        BlockFace dir1 = SAND_DIRECTIONS[rand.nextInt(SAND_DIRECTIONS.length)];
+        BlockFace dir2 = SAND_DIRECTIONS[rand.nextInt(SAND_DIRECTIONS.length)];
 
         int height = startHeight;
         int x2 = startX;

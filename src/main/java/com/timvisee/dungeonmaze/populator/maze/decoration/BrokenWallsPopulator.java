@@ -13,9 +13,9 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
     // TODO: 'Finish' this populator!
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .33f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 7;
+	private static final float ROOM_CHANCE = .33f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

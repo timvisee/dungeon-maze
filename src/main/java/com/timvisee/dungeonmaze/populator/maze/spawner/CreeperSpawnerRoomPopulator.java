@@ -20,12 +20,12 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 5;
-	public static final float ROOM_CHANCE = .003f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 5;
+	private static final float ROOM_CHANCE = .003f;
 
     /** Populator constants. */
-	public static final double SPAWN_DISTANCE_MIN = 5; // Chunks
+	private static final double SPAWN_DISTANCE_MIN = 5; // Chunks
 
     // TODO: Implement this!
     public static final double CHANCE_SPAWNER_ADDITION_EACH_LEVEL = -0.333; /* to 1 */

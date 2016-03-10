@@ -6,7 +6,7 @@ public class DungeonChunkRoom {
 
     // TODO: Make this variable?
     /** Defines the size (length and width) of a room. */
-    public static final int ROOM_SIZE = 8;
+    private static final int ROOM_SIZE = 8;
 
     /** Defines the dungeon chunk the room is in. */
     private DungeonChunk chunk;

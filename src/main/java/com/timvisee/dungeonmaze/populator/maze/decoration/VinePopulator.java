@@ -10,14 +10,14 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 
 public class VinePopulator extends MazeRoomBlockPopulator {
 
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 7;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 7;
 
-	public static final int CHANCE_VINE = 30;
-	public static final double CHANCE_VINE_ADDITION_EACH_LEVEL = -2.5; /* to 15 */
-	public static final int ITERATIONS = 5;
-	public static final int CHANCE_CEILING_VINE = 5;
-	public static final int ITERATIONS_CEILING_VINE = 5;
+	private static final int CHANCE_VINE = 30;
+	private static final double CHANCE_VINE_ADDITION_EACH_LEVEL = -2.5; /* to 15 */
+	private static final int ITERATIONS = 5;
+	private static final int CHANCE_CEILING_VINE = 5;
+	private static final int ITERATIONS_CEILING_VINE = 5;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

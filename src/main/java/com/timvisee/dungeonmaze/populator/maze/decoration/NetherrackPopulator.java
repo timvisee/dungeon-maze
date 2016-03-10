@@ -12,13 +12,13 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class NetherrackPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 2;
-	public static final int ROOM_ITERATIONS = 15;
-	public static final float ROOM_ITERATIONS_CHANCE = .05f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 2;
+	private static final int ROOM_ITERATIONS = 15;
+	private static final float ROOM_ITERATIONS_CHANCE = .05f;
 
     /** Populator constants. */
-	public static final float BURNING_CHANCE = .2f;
+	private static final float BURNING_CHANCE = .2f;
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {

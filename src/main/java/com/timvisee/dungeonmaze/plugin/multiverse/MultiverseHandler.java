@@ -11,7 +11,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 public class MultiverseHandler {
 
     /** Multiverse core instance. */
-    public MultiverseCore multiverseCore;
+    private MultiverseCore multiverseCore;
 
     /** Defines the required Multiverse version. */
     private final static String REQUIRED_MULTIVERSE_VERSION = "2.5";

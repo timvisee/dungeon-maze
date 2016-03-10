@@ -12,14 +12,14 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class RuinsPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 4;
-    public static final int ROOM_ITERATIONS = 5;
-    public static final float ROOM_ITERATIONS_CHANCE = .25f;
-    public static final int ROOM_ITERATIONS_MAX = 2;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 4;
+    private static final int ROOM_ITERATIONS = 5;
+    private static final float ROOM_ITERATIONS_CHANCE = .25f;
+    private static final int ROOM_ITERATIONS_MAX = 2;
 
     /** Populator constants. */
-	public static final BlockFace[] dirs = new BlockFace[] {
+	private static final BlockFace[] RUIN_DIRECTIONS = new BlockFace[] {
 			BlockFace.NORTH,
             BlockFace.SOUTH,
             BlockFace.EAST,
@@ -57,8 +57,8 @@ public class RuinsPopulator extends MazeRoomBlockPopulator {
         }
 
         // Choose two random directions
-        BlockFace dir1 = dirs[rand.nextInt(dirs.length)];
-        BlockFace dir2 = dirs[rand.nextInt(dirs.length)];
+        BlockFace dir1 = RUIN_DIRECTIONS[rand.nextInt(RUIN_DIRECTIONS.length)];
+        BlockFace dir2 = RUIN_DIRECTIONS[rand.nextInt(RUIN_DIRECTIONS.length)];
 
         int height = startHeight;
         int x2 = startX;

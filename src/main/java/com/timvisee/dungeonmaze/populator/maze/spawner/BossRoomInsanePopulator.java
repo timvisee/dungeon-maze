@@ -21,12 +21,12 @@ import java.util.Random;
 public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
 
     /** General populator constants. */
-    public static final int LAYER_MIN = 1;
-    public static final int LAYER_MAX = 3;
-    public static final float LAYER_CHANCE = .001f;
+    private static final int LAYER_MIN = 1;
+    private static final int LAYER_MAX = 3;
+    private static final float LAYER_CHANCE = .001f;
 
     /** Populator constants. */
-    public static final double SPAWN_DISTANCE_MIN = 10; // Chunks
+    private static final double SPAWN_DISTANCE_MIN = 10; // Chunks
 
     @Override
     public void populateLayer(MazeLayerBlockPopulatorArgs args) {
@@ -410,7 +410,7 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
         return LAYER_MAX;
     }
 
-    public void addItemsToChest(Random random, Chest chest) {
+    private void addItemsToChest(Random random, Chest chest) {
         // Create a list to put the chest items in
         List<ItemStack> items = new ArrayList<>();
 

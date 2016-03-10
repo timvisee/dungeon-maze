@@ -8,11 +8,12 @@ public abstract class AbstractChunk {
 
     /** The world of the chunk. */
     @SuppressWarnings("FieldCanBeLocal")
-    private World world;
+    private final World world;
     /** Defines the width (and length) of the chunk in blocks. */
-    private int chunkWidth;
+    // TODO: Make a constant for this?
+    private final int chunkWidth;
     /** Defines the height of the chunk in blocks. */
-    protected int chunkHeight;
+    protected final int chunkHeight;
     /** The X coordinate of the chunk. */
     private int chunkX;
     /** The Y coordinate of the chunk. */

@@ -20,9 +20,9 @@ import com.timvisee.dungeonmaze.util.ChestUtils;
 public class ChestPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .03f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 7;
+	private static final float ROOM_CHANCE = .03f;
 
     // TODO: Implement this!
 	public static final double CHANCE_CHEST_ADDITION_EACH_LEVEL = -0.333; // to 1
@@ -88,7 +88,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 		}
 	}
 
-	public List<ItemStack> generateChestContents(Random random) {
+	private List<ItemStack> generateChestContents(Random random) {
 		// TODO: Use class for this, to also add feature to re loot chests
         // Create a list to put the item stacks in
 		List<ItemStack> items = new ArrayList<>();

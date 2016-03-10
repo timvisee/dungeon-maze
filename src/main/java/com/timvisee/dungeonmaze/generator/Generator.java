@@ -29,7 +29,7 @@ public class Generator extends ChunkGenerator {
     /**
      * Defines the Dungeon Maze plugin instance.
      */
-    public static DungeonMaze plugin;
+    private static DungeonMaze plugin;
 
     /**
      * Constructor.

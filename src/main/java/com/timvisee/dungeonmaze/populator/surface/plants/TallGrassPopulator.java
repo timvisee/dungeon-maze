@@ -11,8 +11,8 @@ import com.timvisee.dungeonmaze.populator.surface.SurfaceBlockPopulatorArgs;
 public class TallGrassPopulator extends SurfaceBlockPopulator {
 
     /** General populator constants. */
-    public static final int CHUNK_ITERATIONS = 100;
-    public static final float CHUNK_ITERATIONS_CHANCE = .35f;
+    private static final int CHUNK_ITERATIONS = 100;
+    private static final float CHUNK_ITERATIONS_CHANCE = .35f;
 
 	@Override
 	public void populateSurface(SurfaceBlockPopulatorArgs args) {

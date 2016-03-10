@@ -13,14 +13,14 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class GravelPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 2;
-	public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 3;
-    public static final float ROOM_ITERATIONS_CHANCE = .05f;
-	public static final int ROOM_ITERATIONS_MAX = 2;
+	private static final int LAYER_MIN = 2;
+	private static final int LAYER_MAX = 7;
+    private static final int ROOM_ITERATIONS = 3;
+    private static final float ROOM_ITERATIONS_CHANCE = .05f;
+	private static final int ROOM_ITERATIONS_MAX = 2;
 
     /** Populator constants. */
-	public static final BlockFace[] DIRECTIONS = new BlockFace[] {
+	private static final BlockFace[] DIRECTIONS = new BlockFace[] {
 			BlockFace.NORTH,
             BlockFace.SOUTH,
             BlockFace.EAST,

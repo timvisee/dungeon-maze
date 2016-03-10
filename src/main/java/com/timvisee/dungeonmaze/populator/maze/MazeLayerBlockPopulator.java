@@ -11,9 +11,9 @@ import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 
 public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 
-	public static final int MIN_LAYER = 1;
-	public static final int MAX_LAYER = 7;
-	public static final int LAYER_COUNT = 7;
+	private static final int MIN_LAYER = 1;
+	private static final int MAX_LAYER = 7;
+	private static final int LAYER_COUNT = 7;
 	
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {

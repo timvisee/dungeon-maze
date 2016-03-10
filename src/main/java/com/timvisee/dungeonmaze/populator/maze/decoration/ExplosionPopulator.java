@@ -15,11 +15,11 @@ public class ExplosionPopulator extends ChunkBlockPopulator {
     // FIXME: This populator has some terrible performance issues, fix this!
 
     /** General populator constants. */
-	public static final float CHUNK_CHANCE = .8f;
+	private static final float CHUNK_CHANCE = .8f;
 
     /** Populator constants. */
-	public static final int CHANCE_EXPLOSION_BIG = 50;
-	public static final int CHANCE_EXPLOSION_HUGE = 10;
+	private static final int CHANCE_EXPLOSION_BIG = 50;
+	private static final int CHANCE_EXPLOSION_HUGE = 10;
 
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {

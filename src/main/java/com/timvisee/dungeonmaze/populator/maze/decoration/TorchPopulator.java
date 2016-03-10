@@ -14,9 +14,9 @@ public class TorchPopulator extends MazeRoomBlockPopulator {
     // TODO: Torches on the walls!
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 2;
-	public static final int LAYER_MAX = 7;
-	public static final float ROOM_CHANCE = .1f;
+	private static final int LAYER_MIN = 2;
+	private static final int LAYER_MAX = 7;
+	private static final float ROOM_CHANCE = .1f;
 
     // TODO: Implement this!
 	public static final double CHANCE_TORCH_ADDITION_EACH_LEVEL = 3.333; /* to 30 */

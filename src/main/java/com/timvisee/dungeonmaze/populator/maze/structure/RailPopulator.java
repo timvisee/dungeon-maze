@@ -15,21 +15,21 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 public class RailPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 3;
-	public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 3;
-	public static final float ROOM_ITERATIONS_CHANCE = .08f;
-    public static final int ROOM_ITERATIONS_MAX = 2;
+	private static final int LAYER_MIN = 3;
+	private static final int LAYER_MAX = 7;
+    private static final int ROOM_ITERATIONS = 3;
+	private static final float ROOM_ITERATIONS_CHANCE = .08f;
+    private static final int ROOM_ITERATIONS_MAX = 2;
 
     /** Populator constants. */
-    public static final float MINECART_CHANCE = .01f;
-	public static final float BROKEN_RAIL_CHANCE = .2f;
+    private static final float MINECART_CHANCE = .01f;
+	private static final float BROKEN_RAIL_CHANCE = .2f;
 
-	public static final BlockFace[] dirs = new BlockFace[] {
+	private static final BlockFace[] RAIL_DIRECTIONS = new BlockFace[] {
 			BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST };
 
     // TODO: Implement this feature!
-    public static final double RAIL_CHANCE_ADDITION_EACH_LEVEL = -0.333; /* to 6 */
+    private static final double RAIL_CHANCE_ADDITION_EACH_LEVEL = -0.333; /* to 6 */
 
 	@Override
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
@@ -53,8 +53,8 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 					int startX = x + rand.nextInt(6) + 1;
 					int startZ = z + rand.nextInt(6) + 1;
 
-					BlockFace dir1 = dirs[rand.nextInt(dirs.length)];
-					BlockFace dir2 = dirs[rand.nextInt(dirs.length)];
+					BlockFace dir1 = RAIL_DIRECTIONS[rand.nextInt(RAIL_DIRECTIONS.length)];
+					BlockFace dir2 = RAIL_DIRECTIONS[rand.nextInt(RAIL_DIRECTIONS.length)];
 
 					int x2 = startX;
 					int z2 = startZ;

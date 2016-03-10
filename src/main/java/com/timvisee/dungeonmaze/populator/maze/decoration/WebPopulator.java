@@ -12,13 +12,13 @@ import org.bukkit.World;
 public class WebPopulator extends MazeRoomBlockPopulator {
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 7;
-    public static final int ROOM_ITERATIONS = 4;
-	public static final float ROOM_ITERATIONS_CHANCE = .25f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 7;
+    private static final int ROOM_ITERATIONS = 4;
+	private static final float ROOM_ITERATIONS_CHANCE = .25f;
 
     /** Populator constants. */
-	public static final float CEILING_CHANCE = .4f;
+	private static final float CEILING_CHANCE = .4f;
 
     // TODO: Implement this!
     public static final double CHANCE_WEB_ADDITION_EACH_LEVEL = -1.667; /* to 30 */

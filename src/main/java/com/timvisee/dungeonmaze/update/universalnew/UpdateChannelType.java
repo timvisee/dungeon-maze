@@ -22,7 +22,7 @@ public enum UpdateChannelType {
     /**
      * Constructor.
      *
-     * @param name
+     * @param name Update channel name
      */
     UpdateChannelType(String name) {
         this.name = name;

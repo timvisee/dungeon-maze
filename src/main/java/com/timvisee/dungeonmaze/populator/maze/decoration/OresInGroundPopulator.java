@@ -10,7 +10,7 @@ import org.bukkit.Material;
 public class OresInGroundPopulator extends ChunkBlockPopulator {
 
     /** Populator constants. */
-	public static final float ORE_CHANCE = .005f;
+	private static final float ORE_CHANCE = .005f;
 
     @Override
     public void populateChunk(ChunkBlockPopulatorArgs args) {

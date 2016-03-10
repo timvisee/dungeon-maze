@@ -28,12 +28,12 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 	// TODO: Fix the treasure chests not spawning!
 
     /** General populator constants. */
-	public static final int LAYER_MIN = 1;
-	public static final int LAYER_MAX = 4;
-	public static final float ROOM_CHANCE = .002f;
+	private static final int LAYER_MIN = 1;
+	private static final int LAYER_MAX = 4;
+	private static final float ROOM_CHANCE = .002f;
 
     /** Populator constants. */
-	public static final double SPAWN_DISTANCE_MIN = 5; // Chunks
+	private static final double SPAWN_DISTANCE_MIN = 5; // Chunks
 
     // TODO: Implement this!
 	public static final double CHANCE_SPANWER_ROOM_ADDITION_EACH_LEVEL = -0.167; /* to 1 */
@@ -186,7 +186,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
         }
     }
 	
-	public List<ItemStack> generateChestContents(Random random) {
+	private List<ItemStack> generateChestContents(Random random) {
 		// Create a list to put the item stacks in
 		List<ItemStack> items = new ArrayList<>();
 

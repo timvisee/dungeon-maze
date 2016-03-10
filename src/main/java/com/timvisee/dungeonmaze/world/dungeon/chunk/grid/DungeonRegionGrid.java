@@ -31,7 +31,7 @@ public class DungeonRegionGrid {
     /**
      * Defines the world of the region grid.
      */
-    private World world;
+    private final World world;
 
     /**
      * The list of loaded regions.
