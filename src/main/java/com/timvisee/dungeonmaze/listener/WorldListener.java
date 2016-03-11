@@ -6,11 +6,40 @@ import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManage
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.event.world.WorldSaveEvent;
 import org.bukkit.event.world.WorldUnloadEvent;
 
 public class WorldListener implements Listener {
+
+	/**
+	 * Called when a world is being initialized.
+	 *
+	 * @param event Event reference.
+     */
+	@EventHandler
+	public void onWorldInit(WorldInitEvent event) {
+		// Make sure the world instance is valid
+		World world = event.getWorld();
+		if(world == null)
+			return;
+
+		// Get the world manager and make sure it's valid
+		WorldManager worldManager = Core.getWorldManager();
+		if(worldManager == null)
+			return;
+
+		// Disable the spawn in memory option for the dungeon maze world, to improve performance while generating the world
+		if(worldManager.isDungeonMazeWorld(world.getName())) {
+			// Show a status message
+			Core.getLogger().debug("Disabling 'keepSpawnInMemory' option for '" + world.getName() + "' to improve performance!");
+
+			// Disable the spawn in memory option
+			// TODO: Keep this, or make it configurable?
+			world.setKeepSpawnInMemory(false);
+		}
+	}
 
 	/**
 	 * Called when a world is loaded.

@@ -19,7 +19,8 @@ public class ArmoryRoomPopulator extends MazeRoomBlockPopulator {
     /** General populator constants. */
 	private static final int LAYER_MIN = 1;
 	private static final int LAYER_MAX = 7;
-	private static final float ROOM_CHANCE = .09f;
+//	private static final float ROOM_CHANCE = .09f;
+	private static final float ROOM_CHANCE = .3f;
 
 	// TODO: Armory room still not used, finish it and put it into Dungeon Maze
 

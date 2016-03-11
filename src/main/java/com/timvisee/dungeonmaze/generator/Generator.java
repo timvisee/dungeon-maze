@@ -1,7 +1,6 @@
 package com.timvisee.dungeonmaze.generator;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.generator.chunk.BukkitChunk;
 import com.timvisee.dungeonmaze.populator.maze.decoration.*;
 import com.timvisee.dungeonmaze.populator.maze.spawner.*;
@@ -43,7 +42,7 @@ public class Generator extends ChunkGenerator {
                 new BossRoomInsanePopulator(),
                 new LibraryRoomPopulator(),
                 new AbandonedDefenceCastleRoomPopulator(),
-                //new ArmoryRoomPopulator(),
+                new ArmoryRoomPopulator(),
                 new WaterWellRoomPopulator(),
                 new SanctuaryPopulator(),
                 new BlazeSpawnerRoomPopulator(),
