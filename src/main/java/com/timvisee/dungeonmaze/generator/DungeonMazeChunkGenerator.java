@@ -23,12 +23,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class Generator extends ChunkGenerator {
+public class DungeonMazeChunkGenerator extends ChunkGenerator {
 
     /**
      * Constructor.
      */
-    public Generator() { }
+    public DungeonMazeChunkGenerator() { }
 
     @Override
     public List<BlockPopulator> getDefaultPopulators(World world) {

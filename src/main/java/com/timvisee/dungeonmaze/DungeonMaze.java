@@ -3,7 +3,7 @@ package com.timvisee.dungeonmaze;
 import com.timvisee.dungeonmaze.api.ApiController;
 import com.timvisee.dungeonmaze.api.DungeonMazeApiOld;
 import com.timvisee.dungeonmaze.command.CommandHandler;
-import com.timvisee.dungeonmaze.generator.Generator;
+import com.timvisee.dungeonmaze.generator.DungeonMazeChunkGenerator;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.Chunk;
@@ -49,7 +49,7 @@ public class DungeonMaze extends JavaPlugin {
     /**
      * The Dungeon Maze chunk generator instance.
      */
-    private final Generator generator = new Generator();
+    private final DungeonMazeChunkGenerator generator = new DungeonMazeChunkGenerator();
 
     /**
      * Constructor.
