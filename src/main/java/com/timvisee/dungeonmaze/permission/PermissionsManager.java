@@ -467,6 +467,15 @@ public class PermissionsManager {
     }
 
     /**
+     * Get the permissions manager Bukkit listener instance.
+     *
+     * @return Listener instance.
+     */
+    public PermissionsManagerBukkitListener getListener() {
+        return this.bukkitListener;
+    }
+
+    /**
      * Check if the player has permission. If no permissions system is used, the player has to be OP.
      *
      * @param player    The player.
