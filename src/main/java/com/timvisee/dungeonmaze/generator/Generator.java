@@ -42,7 +42,7 @@ public class Generator extends ChunkGenerator {
                 new BossRoomInsanePopulator(),
                 new LibraryRoomPopulator(),
                 new AbandonedDefenceCastleRoomPopulator(),
-                new ArmoryRoomPopulator(),
+//                new ArmoryRoomPopulator(),
                 new WaterWellRoomPopulator(),
                 new SanctuaryPopulator(),
                 new BlazeSpawnerRoomPopulator(),
