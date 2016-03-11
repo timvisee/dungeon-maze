@@ -10,6 +10,8 @@ import com.timvisee.dungeonmaze.listener.EventListenerManager;
 import com.timvisee.dungeonmaze.logger.DungeonMazeLogger;
 import com.timvisee.dungeonmaze.logger.LoggerManager;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
+import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedHandler;
+import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedHandlerService;
 import com.timvisee.dungeonmaze.service.*;
 import com.timvisee.dungeonmaze.api.ApiControllerService;
 import com.timvisee.dungeonmaze.config.ConfigHandlerService;
@@ -112,6 +114,11 @@ public class Core {
     private EventListenerManagerService eventListenerManagerService = new EventListenerManagerService();
 
     /**
+     * AuthMe Reloaded handler service.
+     */
+    private AuthMeReloadedHandlerService authMeReloadedHandlerService = new AuthMeReloadedHandlerService();
+
+    /**
      * Metrics controller service instance.
      */
     private MetricsControllerService metricsControllerService = new MetricsControllerService();
@@ -166,6 +173,7 @@ public class Core {
         this.serviceManager.registerService(this.apiControllerService);
         this.serviceManager.registerService(this.oldApiControllerService);
         this.serviceManager.registerService(this.eventListenerManagerService);
+        this.serviceManager.registerService(this.authMeReloadedHandlerService);
         this.serviceManager.registerService(this.metricsControllerService);
 
         // Initialize all services
@@ -473,6 +481,24 @@ public class Core {
      */
     public EventListenerManager _getEventListenerManager() {
         return this.eventListenerManagerService.getEventListenerManager();
+    }
+
+    /**
+     * Get the AuthMe Reloaded handler.
+     *
+     * @return AuthMe Reloaded handler
+     */
+    public static AuthMeReloadedHandler getAuthMeReloadedHandler() {
+        return Core.instance._getAuthMeReloadedHandler();
+    }
+
+    /**
+     * Get the AuthMe Reloaded handler.
+     *
+     * @return AuthMe Reloaded handler.
+     */
+    public AuthMeReloadedHandler _getAuthMeReloadedHandler() {
+        return this.authMeReloadedHandlerService.getAuthMeReloadedHandler();
     }
 
     /**
