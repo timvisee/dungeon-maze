@@ -10,8 +10,14 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 public class MultiverseHandler {
 
+    /** Exact identifier and name of the Multiverse plugin. */
+    public static final String PLUGIN_NAME = "Multiverse-Core";
+
     /** Multiverse core instance. */
     private MultiverseCore multiverseCore;
+
+    /**
+     * The exact identifier and name of the Multiverse plugin.
 
     /** Defines the required Multiverse version. */
     private final static String REQUIRED_MULTIVERSE_VERSION = "2.5";
@@ -36,7 +42,7 @@ public class MultiverseHandler {
         // TODO: Try to re-hook if we're already hooked?
 
         // Try to get the multiverse plugin instance
-        Plugin multiversePlugin = Bukkit.getPluginManager().getPlugin("Multiverse-Core");
+        Plugin multiversePlugin = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
 
         // Make sure any plugin instance was found
         if(multiversePlugin == null) {
