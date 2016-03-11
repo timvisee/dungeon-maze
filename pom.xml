@@ -308,6 +308,7 @@
             <groupId>fr.xephi</groupId>
             <artifactId>authme</artifactId>
             <version>5.2-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Metrics API -->
