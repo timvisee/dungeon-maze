@@ -497,8 +497,8 @@ public class PermissionsManager {
      * @return True if the player has permission.
      */
     public boolean hasPermission(Player player, String permsNode, boolean def) {
-        // Make sure the manager is enabled and is hooked into a permissions system
-        if(!isEnabled() || !isHooked())
+        // Make sure the manager is started and is hooked into a permissions system
+        if(!isStarted() || !isHooked())
             return def;
 
         // Check whether OP players always have permission
@@ -756,8 +756,8 @@ public class PermissionsManager {
      * False is also returned if this feature isn't supported for the current permissions system.
      */
     public boolean addGroup(Player player, String groupName) {
-        // Make sure the manager is enabled and is hooked into a permissions system
-        if(!isEnabled() || !isHooked())
+        // Make sure the manager is started and is hooked into a permissions system
+        if(!isStarted() || !isHooked())
             return false;
 
         // Set the group the proper way
