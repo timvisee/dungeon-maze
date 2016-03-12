@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.plugin.authmereloaded;
 
 import com.timvisee.dungeonmaze.Core;
 import fr.xephi.authme.api.NewAPI;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 public class AuthMeReloadedHandler {
@@ -132,5 +133,29 @@ public class AuthMeReloadedHandler {
 
         // Get and return the plugins version number
         return getPluginDescription().getVersion();
+    }
+
+    /**
+     * Check whether a player is authenticated.
+     * The AuthMe Reloaded plugin must be hooked in order for this method to work properly.
+     *
+     * @param player The player to check for authentication.
+     *
+     * @return True if the player is authenticated by AuthMe Reloaded, false if not.
+     * False will also be returned if the authentication check failed as a security measure.
+     */
+    public boolean isAuthenticated(Player player) {
+        // Check whether the user is authenticated
+        try {
+            return this.api.isAuthenticated(player);
+
+        } catch(Exception ex) {
+            // Failed to check for authentication, show an error
+            Core.getLogger().error("Failed to check player authentication through AuthMe Reloaded. Chosen false for security reasons.");
+
+            // Print the stack trace and return
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

@@ -3,6 +3,8 @@ package com.timvisee.dungeonmaze.permission;
 import com.nijiko.permissions.Group;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedHandler;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.CalculableType;
 import net.milkbowl.vault.permission.Permission;
@@ -502,6 +504,13 @@ public class PermissionsManager {
         // Check whether OP players always have permission
         if(isAlwaysAllowOp() && player.isOp())
             return true;
+
+        // Get the AuthMe Reloaded handler
+        AuthMeReloadedHandler authMeReloadedHandler = Core.getAuthMeReloadedHandler();
+
+        // Make sure the user is authenticated if AuthMe Reloaded is hooked
+        if(authMeReloadedHandler.isHooked() && !authMeReloadedHandler.isAuthenticated(player))
+                return false;
 
         // Use the proper API
         switch (this.permsType) {
