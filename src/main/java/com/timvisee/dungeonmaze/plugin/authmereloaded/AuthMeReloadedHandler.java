@@ -42,8 +42,8 @@ public class AuthMeReloadedHandler {
             api = NewAPI.getInstance();
 
         } catch(Exception ex) {
-            Core.getLogger().info("Failed to hook into AuthMe Reloaded!");
-            return false;
+            Core.getLogger().info("AuthMe Reloaded not detected, disabling it's usage!");
+            return true;
         }
 
         // Validate the instance
