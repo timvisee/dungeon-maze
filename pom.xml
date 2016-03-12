@@ -77,8 +77,9 @@
                 <configuration>
                     <artifactSet>
                         <includes>
-                            <include>org.mcstats.bukkit:metrics</include>
                             <include>net.ricecode:similarity</include>
+                            <include>fr.xephi:authme</include>
+                            <include>org.mcstats.bukkit:metrics</include>
                             <include>org.msgpack:msgpack-core</include>
                         </includes>
                     </artifactSet>
@@ -308,7 +309,6 @@
             <groupId>fr.xephi</groupId>
             <artifactId>authme</artifactId>
             <version>5.2-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Metrics API -->
