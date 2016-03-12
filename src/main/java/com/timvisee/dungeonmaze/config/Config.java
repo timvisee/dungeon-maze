@@ -20,7 +20,8 @@ public class Config extends CustomConfig {
 	}
 
 	private void mergeConfig() {
-		// TODO: Load the default configuration file from the /res directory.
+		// TODO: Load the default configuration file from the /res directory,
+		// or make this code dynamic to fit the changes in the config.yml file.
 
 		if(!contains("worlds"))
 			set("worlds", new ArrayList<String>());
@@ -42,6 +43,10 @@ public class Config extends CustomConfig {
 			set("usePermissions", true);
 		if(!contains("useBypassPermissions"))
 			set("useBypassPermissions", true);
+		if(!contains("alwaysAllowOp"))
+			set("alwaysAllowOp", false);
+		if(!contains("authMeReloadedMustBeRegistered"))
+			set("authMeReloadedMustBeRegistered", true);
 		if(!contains("mobs")) {
 			List<String> mobs = new ArrayList<>();
 			mobs.add("Blaze");
