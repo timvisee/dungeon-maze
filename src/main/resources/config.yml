@@ -19,6 +19,7 @@ updateChecker:
 usePermissions: true
 useBypassPermissions: true
 alwaysAllowOp: false
+authMeReloadedMustBeRegistered: true
 
 # Dungeon Maze API settings
 api:

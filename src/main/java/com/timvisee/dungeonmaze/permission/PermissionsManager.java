@@ -509,7 +509,9 @@ public class PermissionsManager {
         AuthMeReloadedHandler authMeReloadedHandler = Core.getAuthMeReloadedHandler();
 
         // Make sure the user is authenticated if AuthMe Reloaded is hooked
-        if(authMeReloadedHandler.isHooked() && !authMeReloadedHandler.isAuthenticated(player))
+        if(Core.getConfigHandler().authMeReloadedMustBeRegistered &&
+                authMeReloadedHandler.isHooked() &&
+                !authMeReloadedHandler.isAuthenticated(player))
                 return false;
 
         // Use the proper API

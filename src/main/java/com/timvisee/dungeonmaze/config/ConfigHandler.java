@@ -20,6 +20,7 @@ public class ConfigHandler {
     public boolean usePermissions;
     public boolean useBypassPermissions;
     public boolean alwaysAllowOp;
+    public boolean authMeReloadedMustBeRegistered;
     public List<String> mobs;
 
     @SuppressWarnings("unchecked")
@@ -35,6 +36,7 @@ public class ConfigHandler {
         usePermissions = config.getBoolean("usePermissions", true);
         useBypassPermissions = config.getBoolean("useBypassPermissions", true);
         alwaysAllowOp = config.getBoolean("alwaysAllowOp", false);
+        authMeReloadedMustBeRegistered = config.getBoolean("authMeReloadedMustBeRegistered", true);
         blockWhiteList = (List<Object>) config.getList("blockWhiteList");
         mobs = config.getStringList("mobs");
     }
