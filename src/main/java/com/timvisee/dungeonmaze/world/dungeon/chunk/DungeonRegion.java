@@ -385,7 +385,7 @@ public class DungeonRegion {
         }
 
         // Show a status message, that the region was loaded
-        Core.getLogger().debug("Loaded region for '" + region.getWorldName() + "' at (, " + x + ", " + y + ")");
+        Core.getLogger().debug("Loaded region at (" + region.getWorldName() + ", " + x + ", " + y + ")");
 
         // Return the dungeon region
         return region;
