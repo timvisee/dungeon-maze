@@ -43,11 +43,11 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		final World world = args.getWorld();
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int y = args.getChunkY();
 		final int yFloor = args.getFloorY();
 		final int yCeiling = args.getCeilingY();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)

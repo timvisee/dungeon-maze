@@ -28,8 +28,8 @@ public class WebPopulator extends MazeRoomBlockPopulator {
         final World world = args.getWorld();
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-        final int x = args.getChunkX();
-        final int z = args.getChunkZ();
+        final int x = args.getRoomChunkX();
+        final int z = args.getRoomChunkZ();
 
         // Decide whether the web should be on the ground
         final boolean ceiling = rand.nextFloat() < CEILING_CHANCE;

@@ -19,8 +19,8 @@ public class LadderPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		final int x = args.getChunkX();
-		final int z = args.getChunkZ();
+		final int x = args.getRoomChunkX();
+		final int z = args.getRoomChunkZ();
         final int startX;
         final int startY = args.getFloorY() + 1;
         final int startZ;

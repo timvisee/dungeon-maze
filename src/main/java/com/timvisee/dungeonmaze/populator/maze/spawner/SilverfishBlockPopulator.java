@@ -24,10 +24,10 @@ public class SilverfishBlockPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int y = args.getChunkY();
 		final int floorOffset = args.getFloorOffset();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
         int blockX = x + rand.nextInt(8);
         int blockY = y + rand.nextInt(4 - floorOffset) + 1 + floorOffset;
         int blockZ = z + rand.nextInt(8);

@@ -26,9 +26,9 @@ public class GreatFurnaceRoomPopulator extends MazeRoomBlockPopulator {
 		final World world = args.getWorld();
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int y = args.getChunkY();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
 
         // Register the room as constant room
         DungeonMaze.instance.registerConstantRoom(world.getName(), chunk, x, y, z);

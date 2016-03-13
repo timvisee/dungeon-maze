@@ -26,8 +26,8 @@ public class GravePopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
-		final int x = args.getChunkX();
-		final int z = args.getChunkZ();
+		final int x = args.getRoomChunkX();
+		final int z = args.getRoomChunkZ();
         final int graveX = x + rand.nextInt(6 - 2) + 1 + 2; // +2 because the grave is 3 long (so you also need to put the random on 4)
         final  int graveY = args.getFloorY() + 1;
         final int graveZ = z + rand.nextInt(6) + 1;

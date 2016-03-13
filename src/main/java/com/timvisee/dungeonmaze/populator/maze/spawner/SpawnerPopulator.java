@@ -33,8 +33,8 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
-		final int x = args.getChunkX();
-		final int z = args.getChunkZ();
+		final int x = args.getRoomChunkX();
+		final int z = args.getRoomChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)

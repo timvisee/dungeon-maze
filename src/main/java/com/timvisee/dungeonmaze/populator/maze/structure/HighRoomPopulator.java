@@ -18,9 +18,9 @@ public class HighRoomPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final World world = args.getWorld();
 		final Chunk chunk = args.getSourceChunk();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int y = args.getChunkY();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
 
         // Register the room above as constant room
         DungeonMaze.instance.registerConstantRoom(world.getName(), chunk, x, y + 6, z);

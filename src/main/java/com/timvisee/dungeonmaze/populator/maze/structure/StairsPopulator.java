@@ -17,10 +17,10 @@ public class StairsPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         // Get various
 		final Chunk chunk = args.getSourceChunk();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int y = args.getChunkY();
 		final int yFloor = args.getFloorY();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
 
         // Make sure there's some air at the spot we want to place the stair
         if(chunk.getBlock(x, y - 1, z).getType() == Material.AIR)

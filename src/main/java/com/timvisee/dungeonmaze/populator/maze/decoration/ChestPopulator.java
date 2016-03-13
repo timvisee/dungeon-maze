@@ -31,8 +31,8 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
-        final int x = args.getChunkX();
-        final int z = args.getChunkZ();
+        final int x = args.getRoomChunkX();
+        final int z = args.getRoomChunkZ();
         final int chestX = x + rand.nextInt(6) + 1;
         final int chestY = args.getFloorY() + 1;
         final int chestZ = z + rand.nextInt(6) + 1;

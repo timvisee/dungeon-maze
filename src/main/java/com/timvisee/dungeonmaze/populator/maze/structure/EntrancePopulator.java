@@ -20,9 +20,9 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
+		int x = args.getRoomChunkX();
 		int y = args.getChunkY();
-		int z = args.getChunkZ();
+		int z = args.getRoomChunkZ();
 		
 		// Apply chances
 		if (rand.nextInt(1000) < CHANCE_ENTRANCE) {

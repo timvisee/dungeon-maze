@@ -9,7 +9,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 
@@ -33,10 +32,10 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
 		World world = args.getWorld();
 		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
+		int x = args.getRoomChunkX();
 		int y = args.getChunkY();
 		int yFloor = args.getFloorY();
-		int z = args.getChunkZ();
+		int z = args.getRoomChunkZ();
 		
 		// Make sure the distance between the spawn and this chunk is allowed
 		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)

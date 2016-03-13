@@ -30,8 +30,8 @@ public class SandPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		final int x = args.getChunkX();
-		final int z = args.getChunkZ();
+		final int x = args.getRoomChunkX();
+		final int z = args.getRoomChunkZ();
         final int startX = x + rand.nextInt(6) + 1;
         final int startY = args.getFloorY() + 1;
         final int startZ = z + rand.nextInt(6) + 1;

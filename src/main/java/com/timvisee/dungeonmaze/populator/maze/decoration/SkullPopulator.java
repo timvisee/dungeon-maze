@@ -30,8 +30,8 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final Chunk c = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		final int x = args.getChunkX();
-		final int z = args.getChunkZ();
+		final int x = args.getRoomChunkX();
+		final int z = args.getRoomChunkZ();
 
         // Determine the position of the skull
         int skullX = x + rand.nextInt(6) + 1;

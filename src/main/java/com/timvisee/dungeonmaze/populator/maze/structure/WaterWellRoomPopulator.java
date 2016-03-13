@@ -20,10 +20,10 @@ public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
     public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         final World world = args.getWorld();
         final Chunk chunk = args.getSourceChunk();
-        final int x = args.getChunkX();
+        final int x = args.getRoomChunkX();
         final int y = args.getChunkY();
         final int yFloor = args.getFloorY();
-        final int z = args.getChunkZ();
+        final int z = args.getRoomChunkZ();
 
         // Register the current room as constant room
         DungeonMaze.instance.registerConstantRoom(world.getName(), chunk.getX(), chunk.getZ(), x, y, z);

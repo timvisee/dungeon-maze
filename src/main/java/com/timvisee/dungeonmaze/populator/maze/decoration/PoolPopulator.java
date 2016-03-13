@@ -23,8 +23,8 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
-		final int x = args.getChunkX();
-		final int z = args.getChunkZ();
+		final int x = args.getRoomChunkX();
+		final int z = args.getRoomChunkZ();
 
         // Determine whether the lava liquid type is allowed
 		boolean allowLava = true;

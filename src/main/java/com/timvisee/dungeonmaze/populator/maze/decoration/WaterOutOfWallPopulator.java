@@ -23,9 +23,9 @@ public class WaterOutOfWallPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int y = args.getChunkY();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
 		final int floorOffset = args.getFloorOffset();
         final int lanternX = x + rand.nextInt(8);
         final int lanternY = y + rand.nextInt(4 - floorOffset) + 2 + floorOffset;

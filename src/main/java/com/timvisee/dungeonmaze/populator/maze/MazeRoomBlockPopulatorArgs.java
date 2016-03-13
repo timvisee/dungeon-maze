@@ -52,7 +52,7 @@ public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
      *
 	 * @return X coordinate inside the current chunk.
 	 */
-	public int getChunkX() {
+	public int getRoomChunkX() {
 		return (this.x % 16);
 	}
 	
@@ -79,7 +79,7 @@ public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
      *
 	 * @return Z coordinate inside the current chunk.
 	 */
-	public int getChunkZ() {
+	public int getRoomChunkZ() {
 		return (this.z % 16);
 	}
 	

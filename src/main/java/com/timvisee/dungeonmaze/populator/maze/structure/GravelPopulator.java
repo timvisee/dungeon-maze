@@ -31,9 +31,9 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int yFloor = args.getFloorY();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
         final int startX = x + rand.nextInt(6) + 1;
         final int startY = yFloor + 1;
         final int startZ = z + rand.nextInt(6) + 1;

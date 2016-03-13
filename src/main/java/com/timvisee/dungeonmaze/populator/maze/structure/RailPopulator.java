@@ -36,10 +36,10 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 		World world = args.getWorld();
 		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
+		int x = args.getRoomChunkX();
 		int y = args.getChunkY();
 		int yFloor = args.getFloorY();
-		int z = args.getChunkZ();
+		int z = args.getRoomChunkZ();
 		
 		// Count the amount of placed rails
 		int rails = 0;

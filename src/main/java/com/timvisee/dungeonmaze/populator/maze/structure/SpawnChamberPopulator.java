@@ -32,9 +32,9 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
         final World world = args.getWorld();
         final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
-        final int roomX = args.getChunkX();
+        final int roomX = args.getRoomChunkX();
         final int roomY = args.getChunkY();
-        final int roomZ = args.getChunkZ();
+        final int roomZ = args.getRoomChunkZ();
 
         // Make sure this is the chunk at (0, 0)
         if(chunk.getX() != 0 || chunk.getZ() != 0 || roomX != 0 || roomZ != 0)

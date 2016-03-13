@@ -23,9 +23,9 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
 		final Chunk chunk = args.getSourceChunk();
 		final Random rand = args.getRandom();
-		final int x = args.getChunkX();
+		final int x = args.getRoomChunkX();
 		final int yFloor = args.getFloorY();
-		final int z = args.getChunkZ();
+		final int z = args.getRoomChunkZ();
 
         // Set the mushroom type
         Material mushroomType = Material.BROWN_MUSHROOM;

@@ -25,8 +25,8 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 	public void populateRoom(MazeRoomBlockPopulatorArgs args) {
         final Chunk chunk = args.getSourceChunk();
         final Random rand = args.getRandom();
-        final int x = args.getChunkX();
-        final int z = args.getChunkZ();
+        final int x = args.getRoomChunkX();
+        final int z = args.getRoomChunkZ();
         final int slabX = x + rand.nextInt(6) + 1;
         int slabY = args.getFloorY() + 1;
         final int slabZ = z + rand.nextInt(6) + 1;

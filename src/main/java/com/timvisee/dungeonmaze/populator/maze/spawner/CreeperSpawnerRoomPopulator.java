@@ -35,10 +35,10 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		World world = args.getWorld();
 		Chunk chunk = args.getSourceChunk();
 		Random rand = args.getRandom();
-		int x = args.getChunkX();
+		int x = args.getRoomChunkX();
 		int y = args.getChunkY();
 		int yFloor = args.getFloorY();
-		int z = args.getChunkZ();
+		int z = args.getRoomChunkZ();
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
