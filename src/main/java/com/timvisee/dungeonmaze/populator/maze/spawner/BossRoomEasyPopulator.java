@@ -63,11 +63,17 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 // Change the block into a creature spawner
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
-                // Cast the created spawner into a CreatureSpawner object
-                CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+                try {
+                    // Cast the created spawner into a CreatureSpawner object
+                    CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
 
-                // Set the spawned type of the spawner
-                s.setSpawnedType(event.getSpawnedType());
+                    // Set the spawned type of the spawner
+                    s.setSpawnedType(event.getSpawnedType());
+
+                } catch(Exception ex) {
+                    // Show a proper error message
+                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
+                }
             }
         }
         if(Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
@@ -82,11 +88,17 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 // Change the block into a creature spawner
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
-                // Cast the created spawner into a CreatureSpawner object
-                CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+                try {
+                    // Cast the created spawner into a CreatureSpawner object
+                    CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
 
-                // Set the spawned type of the spawner
-                s.setSpawnedType(event.getSpawnedType());
+                    // Set the spawned type of the spawner
+                    s.setSpawnedType(event.getSpawnedType());
+
+                } catch(Exception ex) {
+                    // Show a proper error message
+                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
+                }
             }
         }
         if(Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
