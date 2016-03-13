@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -152,10 +153,15 @@ public class AbandonedDefenceCastleRoomPopulator extends MazeRoomBlockPopulator 
 
         chunk.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.FURNACE);
         chunk.getBlock(x + 5, yFloor + 1, z + 4).setData((byte) 4);
-        addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 5, yFloor + 1, z + 4).getState());
         chunk.getBlock(x + 5, yFloor + 1, z + 5).setType(Material.FURNACE);
         chunk.getBlock(x + 5, yFloor + 1, z + 5).setData((byte) 4);
-        addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 5, yFloor + 1, z + 5).getState());
+		try {
+			addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 5, yFloor + 1, z + 4).getState());
+			addItemsToFurnace(rand, (Furnace) chunk.getBlock(x + 5, yFloor + 1, z + 5).getState());
+		} catch(Exception ex) {
+			// Show a proper error message
+			Core.getLogger().error("Failed to add items to furnace inventory");
+		}
 
         // Place cake (with random pieces eaten)
         chunk.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.CAKE_BLOCK);

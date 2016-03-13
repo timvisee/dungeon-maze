@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.Skull;
+import org.bukkit.block.*;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
@@ -59,21 +57,27 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
         // Get and create the skull block
         skullBlock.setType(Material.SKULL);
         skullBlock.setData((byte) 1);
-        BlockState blockState = skullBlock.getState();
-        Skull skull = (Skull) blockState;
 
-        // Get a random name for the skull, and make sure the name is valid
-        final String skullOwner = getRandomOwner(rand);
-        if(skullOwner.trim().length() == 0)
-            return;
+		try {
+			Skull skull = (Skull) skullBlock.getState();
 
-        // Set the skull type, rotation and owner
-        skull.setSkullType(getRandomSkullType(rand));
-        skull.setRotation(getRandomSkullRotation(rand));
-        skull.setOwner(skullOwner);
+			// Get a random name for the skull, and make sure the name is valid
+			final String skullOwner = getRandomOwner(rand);
+			if(skullOwner.trim().length() == 0)
+				return;
 
-        // Force update the skull
-        skull.update(true, false);
+			// Set the skull type, rotation and owner
+			skull.setSkullType(getRandomSkullType(rand));
+			skull.setRotation(getRandomSkullRotation(rand));
+			skull.setOwner(skullOwner);
+
+			// Force update the skull
+			skull.update(true, false);
+
+		} catch(Exception ex) {
+			// Show a proper error message
+			Core.getLogger().error("Failed to configure player skull");
+		}
 	}
 	
 	private String getRandomOwner(Random rand) {
