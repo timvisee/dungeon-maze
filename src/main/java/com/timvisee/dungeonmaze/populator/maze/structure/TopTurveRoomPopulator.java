@@ -108,7 +108,7 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 
             } catch(Exception ex) {
                 // Show a proper error message
-                Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
+                Core.getLogger().error("Failed to set spawner type to " + EntityType.PIG.name());
             }
         }
 
@@ -124,7 +124,7 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
 
             } catch(Exception ex) {
                 // Show a proper error message
-                Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
+                Core.getLogger().error("Failed to set spawner type to " + EntityType.PIG.name());
             }
         }
 	}
