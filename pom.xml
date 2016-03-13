@@ -89,6 +89,14 @@
                             <shadedPattern>com.timvisee.dungeonmaze</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>fr.xephi:authme</artifact>
+                            <includes>
+                                <include>fr/xephi/authme/api/*</include>
+                            </includes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
