@@ -98,14 +98,34 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
         // Spawners
         if(Core.getConfigHandler().isMobSpawnerAllowed("Pig")) {
             chunk.getBlock(x + 3, yCeiling - 1, z + 4).setType(Material.MOB_SPAWNER);
-            CreatureSpawner PigSpawner = (CreatureSpawner) chunk.getBlock(x + 3, yCeiling - 1, z + 4).getState();
-            PigSpawner.setSpawnedType(EntityType.PIG);
+
+            try {
+                // Cast the created spawner into a CreatureSpawner object
+                CreatureSpawner pigSpawner = (CreatureSpawner) chunk.getBlock(x + 3, yCeiling - 1, z + 4).getState();
+
+                // Set the spawned type of the spawner
+                pigSpawner.setSpawnedType(EntityType.PIG);
+
+            } catch(Exception ex) {
+                // Show a proper error message
+                Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
+            }
         }
 
         if(Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
             chunk.getBlock(x + 4, yCeiling - 1, z + 3).setType(Material.MOB_SPAWNER);
-            CreatureSpawner PigSpawner2 = (CreatureSpawner) chunk.getBlock(x + 4, yCeiling - 1, z + 3).getState();
-            PigSpawner2.setSpawnedType(EntityType.SKELETON);
+
+            try {
+                // Cast the created spawner into a CreatureSpawner object
+                CreatureSpawner pigSpawner2 = (CreatureSpawner) chunk.getBlock(x + 4, yCeiling - 1, z + 3).getState();
+
+                // Set the spawned type of the spawner
+                pigSpawner2.setSpawnedType(EntityType.SKELETON);
+
+            } catch(Exception ex) {
+                // Show a proper error message
+                Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
+            }
         }
 	}
 
