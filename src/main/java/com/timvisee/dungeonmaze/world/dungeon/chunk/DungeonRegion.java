@@ -502,7 +502,7 @@ public class DungeonRegion {
         }
 
         // Show a status message, that the region was saved
-        Core.getLogger().debug("Saved region for '" + getWorldName() + "' at (" + getX() + ", " + getY() + ")");
+        Core.getLogger().debug("Saved region at (" + getWorldName() + ", " + getX() + ", " + getY() + ")");
 
         // Return the number of saved chunks
         return chunkCount;
