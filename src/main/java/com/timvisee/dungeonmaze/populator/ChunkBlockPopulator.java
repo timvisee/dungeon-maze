@@ -3,6 +3,8 @@ package com.timvisee.dungeonmaze.populator;
 import java.util.Random;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.test.DelayedPopulator;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGrid;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManager;
@@ -18,8 +20,17 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
     // TODO: Should we make this static, because every populator has a different instance?
     private DungeonChunk lastChunkCache = null;
 
-	@Override
-	public void populate(World world, Random rand, Chunk chunk) {
+    @Override
+    public void populate(World world, Random rand, Chunk chunk) {
+        populate(world, rand, chunk, false);
+    }
+
+	public void populate(World world, Random rand, Chunk chunk, boolean force) {
+        if(!force && !(chunk.getX() == 0 && chunk.getZ() == 0)) {
+            DungeonMaze.instance.queuedPopulators.add(new DelayedPopulator(this, world, rand, chunk));
+            return;
+        }
+
         // Get the dungeon chunk instance
         DungeonChunk dungeonChunk = lastChunkCache;
 
