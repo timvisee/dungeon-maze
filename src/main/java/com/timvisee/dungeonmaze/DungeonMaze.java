@@ -83,11 +83,11 @@ public class DungeonMaze extends JavaPlugin {
         // TODO: Test
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             if(queuedPopulators.size() > 0) {
-                for(int i = 0; i < 40; i++) {
+                for(int i = 0; i < 20; i++) {
                     // Get the queued populator
                     DelayedPopulator tc = queuedPopulators.get(0);
 
-                    if(queuedPopulators.size() < 10 || Math.random() < 0.0005 / 4.0)
+                    if(queuedPopulators.size() < 10 || Math.random() < 0.0005 / 2.0)
                         Core.getLogger().debug("Populating at (" + tc.getChunk().getX() + ", " + tc.getChunk().getZ() + "), " + queuedPopulators.size() + " left...");
 
                     tc.populate();
