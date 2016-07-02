@@ -19,8 +19,8 @@ public class OresInGroundPopulator extends ChunkBlockPopulator {
 
         // The layers for each 4 rooms in the variable y
         for(int y = 1; y <= 29; y += 1) {
-            for(int x = 0; x < 16; x += 1) {
-                for(int z = 0; z < 16; z += 1) {
+            for(int x = 0; x < 16; x++) {
+                for(int z = 0; z < 16; z++) {
                     if(rand.nextFloat() < ORE_CHANCE) {
                         switch (rand.nextInt(9)) {
                         case 0:
