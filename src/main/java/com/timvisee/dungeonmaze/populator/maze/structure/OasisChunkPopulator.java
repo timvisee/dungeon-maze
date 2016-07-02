@@ -109,7 +109,12 @@ public class OasisChunkPopulator extends ChunkBlockPopulator {
         }
 
         // Tree generation currently not working :@
-        Location treeLocation = new Location(world, (chunk.getX()*16) + (8 + treeOffsetX), 31, (chunk.getZ()*16) + (8 + treeOffsetZ));
+        Location treeLocation = new Location(
+                world,
+                (chunk.getX() * 16) + (8 + treeOffsetX),
+                31,
+                (chunk.getZ() * 16) + (8 + treeOffsetZ)
+        );
         world.generateTree(treeLocation, treeType);
 	}
 
