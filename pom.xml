@@ -334,7 +334,7 @@
             </exclusions>
         </dependency>
 
-        <!-- Json Library -->Media_Play_Pause
+        <!-- Json Library -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
