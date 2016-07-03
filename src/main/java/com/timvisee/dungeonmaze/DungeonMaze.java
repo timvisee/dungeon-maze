@@ -80,15 +80,33 @@ public class DungeonMaze extends JavaPlugin {
         Core.getLogger().info(getVersionComplete(true) + " started, took " + profiler.getTimeFormatted() + "!");
         Core.getLogger().info(getPluginName() + " developed by Tim Visee - timvisee.com");
 
-        // TODO: Test
+        // TODO: Async world generation test (with queued populators)
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             if(queuedPopulators.size() > 0) {
-                for(int i = 0; i < 20; i++) {
+                for(int i = 0; i < 200; i++) {
+                    if(queuedPopulators.size() == 0)
+                        break;
+
                     // Get the queued populator
                     DelayedPopulator tc = queuedPopulators.get(0);
 
-                    if(queuedPopulators.size() < 10 || Math.random() < 0.0005 / 2.0)
-                        Core.getLogger().debug("Populating at (" + tc.getChunk().getX() + ", " + tc.getChunk().getZ() + "), " + queuedPopulators.size() + " left...");
+                    // Get the chunk
+                    Chunk chunk = tc.getChunk();
+                    Chunk a = chunk.getWorld().getChunkAt(chunk.getX() - 1, chunk.getZ());
+                    Chunk b = chunk.getWorld().getChunkAt(chunk.getX(), chunk.getZ() - 1);
+                    Chunk c = chunk.getWorld().getChunkAt(chunk.getX() + 1, chunk.getZ());
+                    Chunk d = chunk.getWorld().getChunkAt(chunk.getX(), chunk.getZ() + 1);
+
+                    Core.getLogger().debug("Testing at (" + a.getX() + ", " + b.getZ() + ")");
+
+                    if(!a.isLoaded() || !b.isLoaded() || !c.isLoaded() || !d.isLoaded()) {
+                        Core.getLogger().debug("Skipped edge chunk population at (" + tc.getChunk().getX() + ", " + tc.getChunk().getZ() + ")");
+                        queuedPopulators.remove(0);
+                        continue;
+                    }
+
+                    if(queuedPopulators.size() < 100 || queuedPopulators.size() % 100 == 0)
+                        Core.getLogger().debug("Populating at (" + chunk.getX() + ", " + chunk.getZ() + "), " + queuedPopulators.size() + " left...");
 
                     tc.populate();
 
