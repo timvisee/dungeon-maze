@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.timvisee</groupId>
@@ -10,7 +10,8 @@
     <version>0.2.3</version>
 
     <name>DungeonMaze</name>
-    <description>Dungeon Maze is a maze world generator for the Bukkit/Spigot API. Give it a try! Will you survive?</description>
+    <description>Dungeon Maze is a maze world generator for the Bukkit/Spigot API. Give it a try! Will you survive?
+    </description>
     <inceptionYear>2012</inceptionYear>
     <url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
 
@@ -333,13 +334,13 @@
             </exclusions>
         </dependency>
 
-		<!-- Json Library -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20160212</version>
-			<scope>compile</scope>
-		</dependency>
+        <!-- Json Library -->Media_Play_Pause
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160212</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- MessagePack Library -->
         <dependency>
