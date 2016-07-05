@@ -58,7 +58,7 @@ public class VersionCommand extends ExecutableCommand {
         // Show the online status
         if(minecraftName.length() != 0)
             if(isPlayerOnline(minecraftName))
-                msg.append(ChatColor.GREEN + "" + ChatColor.ITALIC + " (In-Game)");
+                msg.append(ChatColor.GREEN + "" + ChatColor.ITALIC + " (Online)");
 
         // Print the message
         sender.sendMessage(msg.toString());
