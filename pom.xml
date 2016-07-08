@@ -224,12 +224,12 @@
                     <groupId>junit</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>spigot-api</artifactId>
-                	<groupId>org.spigotmc</groupId>
+                    <artifactId>spigot-api</artifactId>
+                    <groupId>org.spigotmc</groupId>
                 </exclusion>
                 <exclusion>
-                	<artifactId>jettison</artifactId>
-                	<groupId>org.codehaus.jettison</groupId>
+                    <artifactId>jettison</artifactId>
+                    <groupId>org.codehaus.jettison</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -362,20 +362,20 @@
             </exclusions>
         </dependency>
 
-		<!-- Json Library -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20160212</version>
-			<scope>compile</scope>
-		</dependency>
+        <!-- Json Library -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160212</version>
+            <scope>compile</scope>
+        </dependency>
 
         <!-- MessagePack Library -->
         <dependency>
             <groupId>org.msgpack</groupId>
             <artifactId>msgpack-core</artifactId>
             <version>0.8.3</version>
-			<scope>compile</scope>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
