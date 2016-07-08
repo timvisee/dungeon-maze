@@ -1,8 +1,5 @@
 package com.timvisee.dungeonmaze.permission;
 
-import com.nijiko.permissions.Group;
-import com.nijiko.permissions.PermissionHandler;
-import com.nijikokun.bukkit.Permissions.Permissions;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedHandler;
 import de.bananaco.bpermissions.api.ApiLayer;
@@ -29,7 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * PermissionsManager.
@@ -79,11 +75,6 @@ public class PermissionsManager {
      * Essentials group manager instance.
      */
     private GroupManager groupManagerPerms;
-
-    /**
-     * Permissions manager instance for the legacy permissions system.
-     */
-    private PermissionHandler defaultPerms;
 
     /**
      * zPermissions service instance.
@@ -307,19 +298,6 @@ public class PermissionsManager {
 
                         break;
 
-                    case PERMISSIONS:
-                        // Try to get the permissions instance and make sure it's valid
-                        Permissions permsPlugin = (Permissions) plugin;
-
-                        // Set the handler and make sure it's valid
-                        this.defaultPerms = permsPlugin.getHandler();
-                        if(this.defaultPerms == null) {
-                            this.log.info("Not using " + type.getName() + " because it's disabled!");
-                            continue;
-                        }
-
-                        break;
-
                     default:
                 }
 
@@ -360,7 +338,6 @@ public class PermissionsManager {
 
         // Reset the stored permissions API instances
         groupManagerPerms = null;
-        defaultPerms = null;
         zPermissionsService = null;
         vaultPerms = null;
     }
@@ -544,10 +521,6 @@ public class PermissionsManager {
             case VAULT:
                 // Vault
                 return vaultPerms.has(player, permsNode);
-
-            case PERMISSIONS:
-                // Permissions
-                return this.defaultPerms.has(player, permsNode);
         }
 
         // Failed, return the default
@@ -577,11 +550,6 @@ public class PermissionsManager {
             case VAULT:
                 // Vault
                 return vaultPerms.hasGroupSupport();
-
-            case PERMISSIONS:
-                // Legacy permissions
-                // FIXME: Add support for this! (is supported)
-                return false;
         }
 
         // Failed return false
@@ -630,17 +598,6 @@ public class PermissionsManager {
             case VAULT:
                 // Vault
                 return Arrays.asList(vaultPerms.getPlayerGroups(player));
-
-            case PERMISSIONS:
-                // Permissions
-                // Create a list to put the groups in
-                List<String> groups = new ArrayList<>();
-
-                // Get the groups and add each to the list
-                groups.addAll(this.defaultPerms.getGroups(player.getName()).stream().map(Group::getName).collect(Collectors.toList()));
-
-                // Return the groups
-                return groups;
         }
 
         // Failed, return an empty list
@@ -653,7 +610,7 @@ public class PermissionsManager {
      * @param player The player.
      * @return The name of the primary permission group. Or null.
      */
-    @SuppressWarnings({"unchecked", "rawtypes", "deprecation"})
+    @SuppressWarnings("deprecation")
     public String getPrimaryGroup(Player player) {
         // Make sure the manager is enabled and is hooked into a permissions system
         if(!isEnabled() || !isHooked())
@@ -664,7 +621,6 @@ public class PermissionsManager {
             case PERMISSIONS_EX:
             case PERMISSIONS_BUKKIT:
             case B_PERMISSIONS:
-            case PERMISSIONS:
                 // Get the groups of the player
                 List<String> groups = getGroups(player);
 
@@ -738,10 +694,6 @@ public class PermissionsManager {
             case VAULT:
                 // Vault
                 return vaultPerms.playerInGroup(player, groupName);
-
-            case PERMISSIONS:
-                // Permissions
-                return this.defaultPerms.inGroup(player.getWorld().getName(), player.getName(), groupName);
         }
 
         // Failed, return false
@@ -793,12 +745,6 @@ public class PermissionsManager {
                 // Vault
                 vaultPerms.playerAddGroup(player, groupName);
                 return true;
-
-            case PERMISSIONS:
-                // Permissions
-                // FIXME: Add support for this!
-                //return this.defaultPerms.group
-                return false;
         }
 
         // Failed, return false
@@ -873,12 +819,6 @@ public class PermissionsManager {
                 // Vault
                 vaultPerms.playerRemoveGroup(player, groupName);
                 return true;
-
-            case PERMISSIONS:
-                // Permissions
-                // FIXME: Add support for this!
-                //return this.defaultPerms.group
-                return false;
         }
 
         // Failed, return false
@@ -961,12 +901,6 @@ public class PermissionsManager {
                 removeAllGroups(player);
                 vaultPerms.playerAddGroup(player, groupName);
                 return true;
-
-            case PERMISSIONS:
-                // Permissions
-                // FIXME: Add support for this!
-                //return this.defaultPerms.group
-                return false;
         }
 
         // Failed, return false
@@ -1078,12 +1012,7 @@ public class PermissionsManager {
         /**
          * Vault.
          */
-        VAULT("Vault", "Vault"),
-
-        /**
-         * Permissions.
-         */
-        PERMISSIONS("Permissions", "Permissions");
+        VAULT("Vault", "Vault");
 
         /**
          * The display name of the permissions system.
