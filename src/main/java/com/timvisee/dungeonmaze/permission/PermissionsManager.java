@@ -929,7 +929,7 @@ public class PermissionsManager {
         boolean result = true;
         for (int i = 1; i < groupNames.size(); i++) {
             // Get the group name
-            String groupName = groupNames.get(0);
+            String groupName = groupNames.get(i);
 
             // Add this group
             if (!addGroup(player, groupName))
