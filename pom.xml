@@ -362,21 +362,5 @@
             </exclusions>
         </dependency>
 
-        <!-- Json Library -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>1.9.3</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <!-- MessagePack Library -->
-        <dependency>
-            <groupId>org.msgpack</groupId>
-            <artifactId>msgpack-core</artifactId>
-            <version>0.8.3</version>
-            <scope>compile</scope>
-        </dependency>
-
     </dependencies>
 </project>
