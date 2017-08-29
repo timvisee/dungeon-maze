@@ -15,9 +15,9 @@
     <url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
 
     <scm>
-        <connection>scm:git:https://github.com/timvisee/DungeonMaze.git</connection>
-        <developerConnection>scm:git:git@github.com:timvisee/DungeonMaze.git</developerConnection>
-        <url>https://github.com/timvisee/DungeonMaze</url>
+        <connection>scm:git:https://github.com/timvisee/dungeon-maze.git</connection>
+        <developerConnection>scm:git:git@github.com:timvisee/dungeon-maze.git</developerConnection>
+        <url>https://github.com/timvisee/dungeon-maze</url>
     </scm>
 
     <ciManagement>
@@ -27,7 +27,7 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/timvisee/DungeonMaze/issues</url>
+        <url>https://github.com/timvisee/dungeon-maze/issues</url>
     </issueManagement>
 
     <licenses>
