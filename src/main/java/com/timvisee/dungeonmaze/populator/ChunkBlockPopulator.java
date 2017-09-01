@@ -26,10 +26,12 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
     }
 
 	public void populate(World world, Random rand, Chunk chunk, boolean force) {
-        if(!force && !(chunk.getX() == 0 && chunk.getZ() == 0)) {
-            DungeonMaze.instance.queuedPopulators.add(new DelayedPopulator(this, world, rand, chunk));
-            return;
-        }
+        // TODO: Re-enable queued populators, and properly implement them for the next release
+//        // Queue populators when not force
+//        if(!force && !(chunk.getX() == 0 && chunk.getZ() == 0)) {
+//            DungeonMaze.instance.queuedPopulators.add(new DelayedPopulator(this, world, rand, chunk));
+//            return;
+//        }
 
         // Get the dungeon chunk instance
         DungeonChunk dungeonChunk = lastChunkCache;
