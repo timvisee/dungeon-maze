@@ -11,9 +11,8 @@ package com.timvisee.dungeonmaze.update.bukkit;
 import com.timvisee.dungeonmaze.util.Version;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -554,18 +553,18 @@ public class BukkitUpdater {
             final BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             final String response = reader.readLine();
 
-            final JSONArray array = (JSONArray) JSONValue.parse(response);
+            final JSONArray array = new JSONArray(response);
 
-            if (array.size() == 0) {
+            if (array.length() == 0) {
                 this.plugin.getLogger().warning("The updater could not find any files for the project id " + this.id);
                 this.result = UpdateResult.FAIL_BADID;
                 return false;
             }
 
-            this.versionName = (String) ((JSONObject) array.get(array.size() - 1)).get(BukkitUpdater.TITLE_VALUE);
-            this.versionLink = (String) ((JSONObject) array.get(array.size() - 1)).get(BukkitUpdater.LINK_VALUE);
-            this.versionType = (String) ((JSONObject) array.get(array.size() - 1)).get(BukkitUpdater.TYPE_VALUE);
-            this.versionGameVersion = (String) ((JSONObject) array.get(array.size() - 1)).get(BukkitUpdater.VERSION_VALUE);
+            this.versionName = (String) ((JSONObject) array.get(array.length() - 1)).get(BukkitUpdater.TITLE_VALUE);
+            this.versionLink = (String) ((JSONObject) array.get(array.length() - 1)).get(BukkitUpdater.LINK_VALUE);
+            this.versionType = (String) ((JSONObject) array.get(array.length() - 1)).get(BukkitUpdater.TYPE_VALUE);
+            this.versionGameVersion = (String) ((JSONObject) array.get(array.length() - 1)).get(BukkitUpdater.VERSION_VALUE);
 
             return true;
         } catch (final IOException e) {

@@ -1,22 +1,29 @@
 package com.timvisee.dungeonmaze.plugin.authmereloaded;
 
 import com.timvisee.dungeonmaze.Core;
-import fr.xephi.authme.api.NewAPI;
+import fr.xephi.authme.api.v3.AuthMeApi;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
 public class AuthMeReloadedHandler {
 
     /**
+     * Name of the plugin.
+     * Used to check whether it's available.
+     */
+    public static final String PLUGIN_NAME = "AuthMe";
+
+    /**
      * AuthMe Reloaded API instance.
      */
-    private NewAPI api;
+    private AuthMeApi api;
 
     /**
      * Defines the required AuthMe Reloaded version.
      */
     // TODO: Should we include the '...-SNAPSHOT' identifier?
-    private final static String REQUIRED_AUTHME_RELOADED_VERSION = "5.2";
+    private final static String REQUIRED_AUTHME_RELOADED_VERSION = "5.3.2";
 
     /**
      * Constructor.
@@ -35,12 +42,18 @@ public class AuthMeReloadedHandler {
      * True will also be returned if the handler didn't hook because AuthMe Reloaded wasn't found.
      */
     public boolean hook() {
+        // Validate the instance
+        if(!Bukkit.getPluginManager().isPluginEnabled(PLUGIN_NAME)) {
+            Core.getLogger().info("AuthMe Reloaded not detected, disabling it's usage!");
+            return true;
+        }
+
         // TODO: Try to re-hook if we're already hooked?
         // Create a variable to store the API instance in
-        NewAPI api;
+        AuthMeApi api;
         try {
             // Try to hook into AuthMe Reloaded by getting an API instance
-            api = NewAPI.getInstance();
+            api = AuthMeApi.getInstance();
 
         } catch(Exception ex) {
             Core.getLogger().info("Failed to hook into AuthMe Reloaded!");
@@ -95,7 +108,7 @@ public class AuthMeReloadedHandler {
      *
      * @return The AuthMe Reloaded core instance, or null if the handler isn't hooked yet.
      */
-    public NewAPI getAuthMeReloadedApi() {
+    public AuthMeApi getAuthMeReloadedApi() {
         // Make sure the handler is hooked
         if(!isHooked())
             return null;

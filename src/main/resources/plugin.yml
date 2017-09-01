@@ -11,6 +11,8 @@ softdepend:
     - Vault
     - Permissions
     - Multiverse-Core
+    - AuthMe
+    - AuthMeReloaded
 commands:
   dm:
     description: Dungeon Maze command
