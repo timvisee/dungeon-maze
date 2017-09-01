@@ -9,6 +9,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 
@@ -63,11 +64,17 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner s = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     s.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -88,11 +95,17 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner s = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     s.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -113,11 +126,17 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner s = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner s = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     s.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message

@@ -7,6 +7,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 
@@ -100,11 +101,17 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
             chunk.getBlock(x + 3, yCeiling - 1, z + 4).setType(Material.MOB_SPAWNER);
 
             try {
+                // Get the block state
+                BlockState state = chunk.getBlock(x + 3, yCeiling - 1, z + 4).getState();
+
                 // Cast the created spawner into a CreatureSpawner object
-                CreatureSpawner pigSpawner = (CreatureSpawner) chunk.getBlock(x + 3, yCeiling - 1, z + 4).getState();
+                CreatureSpawner pigSpawner = (CreatureSpawner) state;
 
                 // Set the spawned type of the spawner
                 pigSpawner.setSpawnedType(EntityType.PIG);
+
+                // Update the state
+                state.update();
 
             } catch(Exception ex) {
                 // Show a proper error message
@@ -116,11 +123,17 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
             chunk.getBlock(x + 4, yCeiling - 1, z + 3).setType(Material.MOB_SPAWNER);
 
             try {
+                // Get the block state
+                BlockState state = chunk.getBlock(x + 4, yCeiling - 1, z + 3).getState();
+
                 // Cast the created spawner into a CreatureSpawner object
-                CreatureSpawner pigSpawner2 = (CreatureSpawner) chunk.getBlock(x + 4, yCeiling - 1, z + 3).getState();
+                CreatureSpawner pigSpawner2 = (CreatureSpawner) state;
 
                 // Set the spawned type of the spawner
                 pigSpawner2.setSpawnedType(EntityType.SKELETON);
+
+                // Update the block state
+                state.update();
 
             } catch(Exception ex) {
                 // Show a proper error message

@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
@@ -161,11 +162,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -187,11 +194,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -212,11 +225,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 // Change the block into a creature spawner
                 spawnerBlock.setType(Material.MOB_SPAWNER);
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -238,11 +257,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -264,11 +289,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -290,11 +321,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -316,11 +353,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -342,11 +385,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -369,11 +418,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -395,11 +450,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -421,11 +482,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
@@ -447,11 +514,17 @@ public class BossRoomInsanePopulator extends MazeLayerBlockPopulator {
                 spawnerBlock.setType(Material.MOB_SPAWNER);
 
                 try {
+                    // Get the block state
+                    BlockState state = spawnerBlock.getState();
+
                     // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) spawnerBlock.getState();
+                    CreatureSpawner theSpawner = (CreatureSpawner) state;
 
                     // Set the spawned type of the spawner
                     theSpawner.setSpawnedType(event.getSpawnedType());
+
+                    // Update the block state
+                    state.update();
 
                 } catch(Exception ex) {
                     // Show a proper error message
