@@ -155,29 +155,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.GHAST, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 
         if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
@@ -187,29 +166,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 
         if (Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
@@ -219,29 +177,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 
         if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
@@ -251,29 +188,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 
         // Loose spawners
@@ -284,29 +200,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 
         if (Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
@@ -316,29 +211,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 
         if (Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
@@ -348,29 +222,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 
         if (Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
@@ -380,29 +233,8 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    theSpawner.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the event
+            event._apply();
         }
 	}
 	

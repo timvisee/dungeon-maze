@@ -11,8 +11,6 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
@@ -136,29 +134,8 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.BLAZE, GenerationSpawnerEvent.GenerationSpawnerCause.BLAZE_SPAWNER_ROOM, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-				try {
-				    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-					// Cast the created spawner into a CreatureSpawner object
-					CreatureSpawner theSpawner = (CreatureSpawner) state;
-
-					// Set the spawned type of the spawner
-					theSpawner.setSpawnedType(event.getSpawnedType());
-
-					// Update the block state
-                    state.update();
-
-				} catch(Exception ex) {
-					// Show a proper error message
-					Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-				}
-            }
+            // Apply the generation
+			event._apply();
         }
 
         // Generate hidden content/resources underneath the platform

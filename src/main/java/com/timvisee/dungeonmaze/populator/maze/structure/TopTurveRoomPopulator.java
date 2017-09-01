@@ -3,6 +3,8 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 import java.util.Random;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.event.generation.GenerationSpawnerEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -96,49 +98,30 @@ public class TopTurveRoomPopulator extends MazeRoomBlockPopulator {
         chunk.getBlock(x + 5, yCeiling - 1, z + 3).setType(Material.GLASS);
         chunk.getBlock(x + 5, yCeiling - 1, z + 4).setType(Material.NETHERRACK);
 
-        // Spawners
+        // Pig spawner
         if(Core.getConfigHandler().isMobSpawnerAllowed("Pig")) {
-            chunk.getBlock(x + 3, yCeiling - 1, z + 4).setType(Material.MOB_SPAWNER);
+            // Get the spawner block
+            Block spawnerBlock = chunk.getBlock(x + 3, yCeiling - 1, z + 4);
 
-            try {
-                // Get the block state
-                BlockState state = chunk.getBlock(x + 3, yCeiling - 1, z + 4).getState();
+            // Call the spawner generation event
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG, GenerationSpawnerEvent.GenerationSpawnerCause.NORMAL, rand);
+            Bukkit.getServer().getPluginManager().callEvent(event);
 
-                // Cast the created spawner into a CreatureSpawner object
-                CreatureSpawner pigSpawner = (CreatureSpawner) state;
-
-                // Set the spawned type of the spawner
-                pigSpawner.setSpawnedType(EntityType.PIG);
-
-                // Update the state
-                state.update();
-
-            } catch(Exception ex) {
-                // Show a proper error message
-                Core.getLogger().error("Failed to set spawner type to " + EntityType.PIG.name());
-            }
+            // Apply the generation event
+            event._apply();
         }
 
+        // Skeleton spawner
         if(Core.getConfigHandler().isMobSpawnerAllowed("Skeleton")) {
-            chunk.getBlock(x + 4, yCeiling - 1, z + 3).setType(Material.MOB_SPAWNER);
+            // Get the spawner block
+            Block spawnerBlock = chunk.getBlock(x + 4, yCeiling - 1, z + 3);
 
-            try {
-                // Get the block state
-                BlockState state = chunk.getBlock(x + 4, yCeiling - 1, z + 3).getState();
+            // Call the spawner generation event
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SKELETON, GenerationSpawnerEvent.GenerationSpawnerCause.NORMAL, rand);
+            Bukkit.getServer().getPluginManager().callEvent(event);
 
-                // Cast the created spawner into a CreatureSpawner object
-                CreatureSpawner pigSpawner2 = (CreatureSpawner) state;
-
-                // Set the spawned type of the spawner
-                pigSpawner2.setSpawnedType(EntityType.SKELETON);
-
-                // Update the block state
-                state.update();
-
-            } catch(Exception ex) {
-                // Show a proper error message
-                Core.getLogger().error("Failed to set spawner type to " + EntityType.PIG.name());
-            }
+            // Apply the generation event
+            event._apply();
         }
 	}
 

@@ -83,30 +83,8 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
                 GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, spawnedType, GenerationSpawnerEvent.GenerationSpawnerCause.NORMAL, rand);
                 Bukkit.getServer().getPluginManager().callEvent(event);
 
-                // Make sure the event isn't cancelled yet
-                if(event.isCancelled())
-                    return;
-
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner s = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    s.setSpawnedType(event.getSpawnedType());
-
-                    // Update the state after chaining the spawner
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
+                // Apply the generation event
+                event._apply();
             }
         }
 	}

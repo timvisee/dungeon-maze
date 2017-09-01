@@ -63,29 +63,8 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.CREEPER, GenerationSpawnerEvent.GenerationSpawnerCause.CREEPER_SPAWNER_ROOM, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-				try {
-					// Get the block state
-					BlockState state = spawnerBlock.getState();
-
-					// Cast the created s pawner into a CreatureSpawner object
-					CreatureSpawner s = (CreatureSpawner) state;
-
-					// Set the spawned type of the spawner
-					s.setSpawnedType(event.getSpawnedType());
-
-					// Update the state
-					state.update();
-
-				} catch(Exception ex) {
-					// Show a proper error message
-					Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-				}
-            }
+            // Apply the event
+            event._apply();
         }
     }
 

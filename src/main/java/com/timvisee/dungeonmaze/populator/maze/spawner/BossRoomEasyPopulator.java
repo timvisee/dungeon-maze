@@ -58,29 +58,8 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner s = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    s.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the spawner generation
+            event._apply();
         }
         if(Core.getConfigHandler().isMobSpawnerAllowed("PigZombie")) {
             Block spawnerBlock = chunk.getBlock(x + 3, yFloor + 1, z + 3);
@@ -89,29 +68,8 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner s = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    s.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the generation event
+            event._apply();
         }
         if(Core.getConfigHandler().isMobSpawnerAllowed("Spider")) {
             Block spawnerBlock = chunk.getBlock(x + 5, yFloor + 1, z + 5);
@@ -120,29 +78,8 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
             GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.SPIDER, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
-            // Make sure the event isn't cancelled yet
-            if(!event.isCancelled()) {
-                // Change the block into a creature spawner
-                spawnerBlock.setType(Material.MOB_SPAWNER);
-
-                try {
-                    // Get the block state
-                    BlockState state = spawnerBlock.getState();
-
-                    // Cast the created spawner into a CreatureSpawner object
-                    CreatureSpawner s = (CreatureSpawner) state;
-
-                    // Set the spawned type of the spawner
-                    s.setSpawnedType(event.getSpawnedType());
-
-                    // Update the block state
-                    state.update();
-
-                } catch(Exception ex) {
-                    // Show a proper error message
-                    Core.getLogger().error("Failed to set spawner type to " + event.getSpawnedType().name());
-                }
-            }
+            // Apply the generation event
+            event._apply();
         }
 
         // Coal ores
