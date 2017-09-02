@@ -1,5 +1,6 @@
 name: ${project.name}
 main: ${project.groupId}.${project.artifactId}.${project.name}
+authors: [timvisee, sgdc3, xephi, Metonymia]
 version: ${project.version}
 load: startup
 softdepend:
