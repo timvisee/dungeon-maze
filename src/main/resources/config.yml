@@ -45,5 +45,5 @@ logging:
     error: true
 
 # Version information of the Dungeon Maze plugin
-versionName: "0.2.3"
-versionCode: 23
+versionName: "0.2.4"
+versionCode: 24

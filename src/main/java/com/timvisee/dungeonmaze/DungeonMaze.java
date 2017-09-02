@@ -28,12 +28,12 @@ public class DungeonMaze extends JavaPlugin {
     /**
      * Defines the current Dungeon Maze version name.
      */
-    private static final String PLUGIN_VERSION_NAME = "0.2.3";
+    private static final String PLUGIN_VERSION_NAME = "0.2.4";
 
     /**
      * Defines the current Dungeon Maze version code.
      */
-    private static final int PLUGIN_VERSION_CODE = 23;
+    private static final int PLUGIN_VERSION_CODE = 24;
 
     /**
      * Defines the application ID used when checking for updates.

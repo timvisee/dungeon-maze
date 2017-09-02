@@ -167,7 +167,7 @@ public class Core {
         this.serviceManager.registerService(this.multiverseHandlerService);
         this.serviceManager.registerService(this.worldManagerService);
         this.serviceManager.registerService(this.dungeonChunkGridManagerService);
-        this.serviceManager.registerService(this.updateCheckerService);
+//        this.serviceManager.registerService(this.updateCheckerService);
         this.serviceManager.registerService(this.permissionsManagerService);
         this.serviceManager.registerService(this.customStructureManagerService);
         this.serviceManager.registerService(this.apiControllerService);
