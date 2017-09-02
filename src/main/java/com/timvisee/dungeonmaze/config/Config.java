@@ -1,11 +1,23 @@
 package com.timvisee.dungeonmaze.config;
 
+import com.timvisee.dungeonmaze.Core;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class Config extends CustomConfig {
 
+	/**
+	 * The name of the configuration file.
+	 */
+	public static final String CONFIG_FILE = "config.yml";
+
+	/**
+	 * The static configuration instance.
+	 */
 	private static Config config;
 
 	/**
@@ -14,62 +26,51 @@ public class Config extends CustomConfig {
 	public Config() {
 		super(new File("./plugins/DungeonMaze/config.yml"));
 		config = this;
+
 		load();
-		save();
+
+		// Merge the default configuration with the current
 		mergeConfig();
 	}
 
+	/**
+	 * Merge the current active configuration with the default.
+	 *
+	 * All keys available in the default configuration that are not in the current configuration, are added automatically.
+	 */
 	private void mergeConfig() {
-		// TODO: Load the default configuration file from the /res directory,
-		// or make this code dynamic to fit the changes in the config.yml file.
+        // Create an input stream of the defaults
+		final InputStream in = getClass().getResourceAsStream("/" + CONFIG_FILE);
+		final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-		if(!contains("worlds"))
-			set("worlds", new ArrayList<String>());
-		if(!contains("preloadWorlds"))
-			set("preloadWorlds", new ArrayList<String>());
-		if(!contains("unloadWorldsOnPluginDisable"))
-			set("unloadWorldsOnPluginDisable", true);
-		if(!contains("allowSurface"))
-			set("allowSurface", true);
-		if(!contains("worldProtection"))
-			set("worldProtection", false);
-		if(!contains("blockWhiteList"))
-			set("blockWhiteList", new ArrayList<String>());
-		if(!contains("updateChecker.enabled"))
-			set("updateChecker.enabled", true);
-		if(!contains("updateChecker.notifyInGame"))
-			set("updateChecker.notifyInGame", true);
-		if(!contains("usePermissions"))
-			set("usePermissions", true);
-		if(!contains("useBypassPermissions"))
-			set("useBypassPermissions", true);
-		if(!contains("alwaysAllowOp"))
-			set("alwaysAllowOp", false);
-		if(!contains("authMeReloadedMustBeRegistered"))
-			set("authMeReloadedMustBeRegistered", true);
-		if(!contains("mobs")) {
-			List<String> mobs = new ArrayList<>();
-			mobs.add("Blaze");
-			mobs.add("Creeper");
-			mobs.add("Enderman");
-			mobs.add("Ghast");
-			mobs.add("MagmaCube");
-			mobs.add("Pig");
-			mobs.add("PigZombie");
-			mobs.add("SilverFish");
-			mobs.add("Skeleton");
-			mobs.add("Spider");
-			mobs.add("Zombie");
-			set("mobs", mobs);
-		}
-		
+		// Load the defaults, and set them
+		final YamlConfiguration defaults = YamlConfiguration.loadConfiguration(reader);
+		setDefaults(defaults);
+
+		// Loop through each default configuration key
+		int changedProperties = 0;
+		for(String key : defaults.getKeys(true))
+			if(!contains(key, true)) {
+				set(key, defaults.get(key));
+				changedProperties++;
+			}
+
+		// Return early if nothing has changed
+		if(changedProperties == 0)
+			return;
+
+        Core.getLogger().info("Set " + changedProperties + " missing configuration properties to their defaults.");
+
+		Core.getLogger().debug("Saving configuration...");
 		this.save();
 	}
 
+	/**
+	 * Get the singleton configuration instance
+	 *
+	 * @return Configuration.
+	 */
 	public static Config getInstance() {
-        if (config == null)
-            config = new Config();
-            
-        return config;
+	    return config != null ? config : new Config();
     }
 }
