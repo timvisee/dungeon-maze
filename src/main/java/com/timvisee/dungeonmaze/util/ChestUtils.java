@@ -189,7 +189,6 @@ public class ChestUtils {
                 );
         }
 
-        // Force update the chests, don't update physics
-        return chest.update(true, false);
+        return true;
     }
 }
