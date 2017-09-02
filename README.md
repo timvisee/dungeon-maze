@@ -15,9 +15,6 @@ It's a very cool map to explore with some friends. Give it a try! Will you survi
 * The Dungeon Maze plugin does have some commands to easily generate a new Dungeon Maze world.
 * And a lot more...
 
-##### Statistics:
-McStats: http://mcstats.org/plugin/DungeonMaze
-
 ##### Compiling Requirements:
 >- JDK 1.8
 >- Maven
