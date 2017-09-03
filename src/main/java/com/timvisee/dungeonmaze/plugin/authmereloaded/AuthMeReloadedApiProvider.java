@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-public class AuthMeReloadedHandler {
+public class AuthMeReloadedApiProvider {
 
     /**
      * Name of the plugin.
@@ -28,7 +28,7 @@ public class AuthMeReloadedHandler {
     /**
      * Constructor.
      */
-    public AuthMeReloadedHandler(boolean hook) {
+    public AuthMeReloadedApiProvider(boolean hook) {
         // Should the handler hook immediately
         // TODO: Do some error handling
         if(hook)

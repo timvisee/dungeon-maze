@@ -2,13 +2,13 @@ package com.timvisee.dungeonmaze.plugin.metrics;
 
 import com.timvisee.dungeonmaze.service.Service;
 
-public class MetricsControllerService extends Service {
+public class MetricsApiProviderService extends Service {
 
     /** Service name. */
-    private static final String SERVICE_NAME = "Metrics Controller";
+    private static final String SERVICE_NAME = "Metrics API Provider";
 
     /** Metrics controller instance. */
-    private MetricsController metricsController;
+    private MetricsApiProvider metricsApiProvider;
 
     /**
      * Initialize the service.
@@ -22,8 +22,8 @@ public class MetricsControllerService extends Service {
             return true;
 
         // Initialize the metrics controller, return the result
-        this.metricsController = new MetricsController(false);
-        return this.metricsController.init();
+        this.metricsApiProvider = new MetricsApiProvider(false);
+        return this.metricsApiProvider.init();
     }
 
     /**
@@ -34,11 +34,11 @@ public class MetricsControllerService extends Service {
     @Override
     public boolean isInit() {
         // Check whether the controller is constructed
-        if(this.metricsController == null)
+        if(this.metricsApiProvider == null)
             return false;
 
         // Check whether the controller is initialized
-        return this.metricsController.isInit();
+        return this.metricsApiProvider.isInit();
     }
 
     /**
@@ -58,11 +58,11 @@ public class MetricsControllerService extends Service {
             return true;
 
         // Destroy the controller, return false on failure
-        if(!this.metricsController.destroy())
+        if(!this.metricsApiProvider.destroy())
             return false;
 
         // Unset the controller, return the result
-        this.metricsController = null;
+        this.metricsApiProvider = null;
         return true;
     }
 
@@ -81,7 +81,7 @@ public class MetricsControllerService extends Service {
      *
      * @return Metrics controller instance.
      */
-    public MetricsController getMetricsController() {
-        return this.metricsController;
+    public MetricsApiProvider getMetricsApiProvider() {
+        return this.metricsApiProvider;
     }
 }

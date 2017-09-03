@@ -10,18 +10,18 @@ import com.timvisee.dungeonmaze.listener.EventListenerManager;
 import com.timvisee.dungeonmaze.logger.DungeonMazeLogger;
 import com.timvisee.dungeonmaze.logger.LoggerManager;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
-import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedHandler;
-import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedHandlerService;
+import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedApiProvider;
+import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedApiProviderService;
 import com.timvisee.dungeonmaze.service.*;
 import com.timvisee.dungeonmaze.api.ApiControllerService;
 import com.timvisee.dungeonmaze.config.ConfigHandlerService;
-import com.timvisee.dungeonmaze.plugin.metrics.MetricsController;
-import com.timvisee.dungeonmaze.plugin.metrics.MetricsControllerService;
+import com.timvisee.dungeonmaze.plugin.metrics.MetricsApiProvider;
+import com.timvisee.dungeonmaze.plugin.metrics.MetricsApiProviderService;
 import com.timvisee.dungeonmaze.structure.CustomStructureManagerService;
 import com.timvisee.dungeonmaze.listener.EventListenerManagerService;
 import com.timvisee.dungeonmaze.logger.LoggerService;
-import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandler;
-import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandlerService;
+import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseApiProvider;
+import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseApiProviderService;
 import com.timvisee.dungeonmaze.permission.PermissionsManagerService;
 import com.timvisee.dungeonmaze.update.UpdateChecker;
 import com.timvisee.dungeonmaze.update.UpdateCheckerService;
@@ -71,7 +71,7 @@ public class Core {
     /**
      * Multiverse handler service instance.
      */
-    private MultiverseHandlerService multiverseHandlerService = new MultiverseHandlerService();
+    private MultiverseApiProviderService multiverseApiProviderService = new MultiverseApiProviderService();
 
     /**
      * World manager service instance.
@@ -116,12 +116,12 @@ public class Core {
     /**
      * AuthMe Reloaded handler service.
      */
-    private AuthMeReloadedHandlerService authMeReloadedHandlerService = new AuthMeReloadedHandlerService();
+    private AuthMeReloadedApiProviderService authMeReloadedApiProviderService = new AuthMeReloadedApiProviderService();
 
     /**
      * Metrics controller service instance.
      */
-    private MetricsControllerService metricsControllerService = new MetricsControllerService();
+    private MetricsApiProviderService metricsApiProviderService = new MetricsApiProviderService();
 
     /**
      * Defines the initialization time of the core.
@@ -164,7 +164,7 @@ public class Core {
         this.serviceManager.registerService(this.loggerService);
         this.serviceManager.registerService(this.configHandlerService);
         this.serviceManager.registerService(this.commandHandlerService);
-        this.serviceManager.registerService(this.multiverseHandlerService);
+        this.serviceManager.registerService(this.multiverseApiProviderService);
         this.serviceManager.registerService(this.worldManagerService);
         this.serviceManager.registerService(this.dungeonChunkGridManagerService);
 //        this.serviceManager.registerService(this.updateCheckerService);
@@ -173,8 +173,8 @@ public class Core {
         this.serviceManager.registerService(this.apiControllerService);
         this.serviceManager.registerService(this.oldApiControllerService);
         this.serviceManager.registerService(this.eventListenerManagerService);
-        this.serviceManager.registerService(this.authMeReloadedHandlerService);
-        this.serviceManager.registerService(this.metricsControllerService);
+        this.serviceManager.registerService(this.authMeReloadedApiProviderService);
+        this.serviceManager.registerService(this.metricsApiProviderService);
 
         // Initialize all services
         if(!this.serviceManager.initServices())
@@ -308,7 +308,7 @@ public class Core {
      *
      * @return Multiverse handler instance.
      */
-    public static MultiverseHandler getMultiverseHandler() {
+    public static MultiverseApiProvider getMultiverseHandler() {
         return Core.instance._getMultiverseHandler();
     }
 
@@ -317,8 +317,8 @@ public class Core {
      *
      * @return Multiverse handler instance.
      */
-    public MultiverseHandler _getMultiverseHandler() {
-        return this.multiverseHandlerService.getMultiverseHandler();
+    public MultiverseApiProvider _getMultiverseHandler() {
+        return this.multiverseApiProviderService.getMultiverseApiProvider();
     }
 
     /**
@@ -488,7 +488,7 @@ public class Core {
      *
      * @return AuthMe Reloaded handler
      */
-    public static AuthMeReloadedHandler getAuthMeReloadedHandler() {
+    public static AuthMeReloadedApiProvider getAuthMeReloadedHandler() {
         return Core.instance._getAuthMeReloadedHandler();
     }
 
@@ -497,8 +497,8 @@ public class Core {
      *
      * @return AuthMe Reloaded handler.
      */
-    public AuthMeReloadedHandler _getAuthMeReloadedHandler() {
-        return this.authMeReloadedHandlerService.getAuthMeReloadedHandler();
+    public AuthMeReloadedApiProvider _getAuthMeReloadedHandler() {
+        return this.authMeReloadedApiProviderService.getAuthMeReloadedApiProvider();
     }
 
     /**
@@ -506,7 +506,7 @@ public class Core {
      *
      * @return Metrics controller instance.
      */
-    public static MetricsController getMetricsController() {
+    public static MetricsApiProvider getMetricsController() {
         return Core.instance._getMetricsController();
     }
 
@@ -515,8 +515,8 @@ public class Core {
      *
      * @return Metrics controller instance.
      */
-    public MetricsController _getMetricsController() {
-        return this.metricsControllerService.getMetricsController();
+    public MetricsApiProvider _getMetricsController() {
+        return this.metricsApiProviderService.getMetricsApiProvider();
     }
 
     /**

@@ -2,13 +2,13 @@ package com.timvisee.dungeonmaze.plugin.authmereloaded;
 
 import com.timvisee.dungeonmaze.service.Service;
 
-public class AuthMeReloadedHandlerService extends Service {
+public class AuthMeReloadedApiProviderService extends Service {
 
     /** Service name. */
-    private static final String SERVICE_NAME = "AuthMe Reloaded Handler";
+    private static final String SERVICE_NAME = "AuthMe Reloaded API Provider";
 
     /** AuthMe Reloaded handler instance. */
-    private AuthMeReloadedHandler authMeReloadedHandler;
+    private AuthMeReloadedApiProvider authMeReloadedApiProvider;
 
     /**
      * Initialize the service.
@@ -18,10 +18,10 @@ public class AuthMeReloadedHandlerService extends Service {
     @Override
     public boolean init() {
         // Initialize the AuthMe Reloaded handler
-        this.authMeReloadedHandler = new AuthMeReloadedHandler(false);
+        this.authMeReloadedApiProvider = new AuthMeReloadedApiProvider(false);
 
         // Hook the handler into the AuthMe Reloaded core, return the result
-        return this.authMeReloadedHandler.hook();
+        return this.authMeReloadedApiProvider.hook();
     }
 
     /**
@@ -32,7 +32,7 @@ public class AuthMeReloadedHandlerService extends Service {
     @Override
     public boolean isInit() {
         // TODO: Better check!
-        return this.authMeReloadedHandler != null;
+        return this.authMeReloadedApiProvider != null;
     }
 
     /**
@@ -52,16 +52,16 @@ public class AuthMeReloadedHandlerService extends Service {
             return true;
 
         // Unhook the AuthMe Reloaded handler
-        if(this.authMeReloadedHandler != null) {
-            if(!this.authMeReloadedHandler.unhook()) {
+        if(this.authMeReloadedApiProvider != null) {
+            if(!this.authMeReloadedApiProvider.unhook()) {
                 if(force)
-                    this.authMeReloadedHandler = null;
+                    this.authMeReloadedApiProvider = null;
                 return false;
             }
         }
 
         // Return the result
-        this.authMeReloadedHandler = null;
+        this.authMeReloadedApiProvider = null;
         return true;
     }
 
@@ -80,7 +80,7 @@ public class AuthMeReloadedHandlerService extends Service {
      *
      * @return AuthMe Reloaded handler instance.
      */
-    public AuthMeReloadedHandler getAuthMeReloadedHandler() {
-        return this.authMeReloadedHandler;
+    public AuthMeReloadedApiProvider getAuthMeReloadedApiProvider() {
+        return this.authMeReloadedApiProvider;
     }
 }

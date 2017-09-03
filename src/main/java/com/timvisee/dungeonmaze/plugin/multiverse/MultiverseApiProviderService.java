@@ -2,13 +2,13 @@ package com.timvisee.dungeonmaze.plugin.multiverse;
 
 import com.timvisee.dungeonmaze.service.Service;
 
-public class MultiverseHandlerService extends Service {
+public class MultiverseApiProviderService extends Service {
 
     /** Service name. */
-    private static final String SERVICE_NAME = "Multiverse Handler";
+    private static final String SERVICE_NAME = "Multiverse API Provider";
 
     /** Multiverse handler instance. */
-    private MultiverseHandler multiverseHandler;
+    private MultiverseApiProvider multiverseApiProvider;
 
     /**
      * Initialize the service.
@@ -18,10 +18,10 @@ public class MultiverseHandlerService extends Service {
     @Override
     public boolean init() {
         // Initialize the multiverse handler
-        this.multiverseHandler = new MultiverseHandler(false);
+        this.multiverseApiProvider = new MultiverseApiProvider(false);
 
         // Hook the handler into the multiverse core, return the result
-        return this.multiverseHandler.hook();
+        return this.multiverseApiProvider.hook();
     }
 
     /**
@@ -32,7 +32,7 @@ public class MultiverseHandlerService extends Service {
     @Override
     public boolean isInit() {
         // TODO: Better check!
-        return this.multiverseHandler != null;
+        return this.multiverseApiProvider != null;
     }
 
     /**
@@ -52,16 +52,16 @@ public class MultiverseHandlerService extends Service {
             return true;
 
         // Unhook the multiverse handler
-        if(this.multiverseHandler != null) {
-            if(!this.multiverseHandler.unhook()) {
+        if(this.multiverseApiProvider != null) {
+            if(!this.multiverseApiProvider.unhook()) {
                 if(force)
-                    this.multiverseHandler = null;
+                    this.multiverseApiProvider = null;
                 return false;
             }
         }
 
         // Return the result
-        this.multiverseHandler = null;
+        this.multiverseApiProvider = null;
         return true;
     }
 
@@ -80,7 +80,7 @@ public class MultiverseHandlerService extends Service {
      *
      * @return Multiverse handler instance.
      */
-    public MultiverseHandler getMultiverseHandler() {
-        return this.multiverseHandler;
+    public MultiverseApiProvider getMultiverseApiProvider() {
+        return this.multiverseApiProvider;
     }
 }

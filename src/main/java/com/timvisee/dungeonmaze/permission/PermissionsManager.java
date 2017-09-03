@@ -1,7 +1,7 @@
 package com.timvisee.dungeonmaze.permission;
 
 import com.timvisee.dungeonmaze.Core;
-import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedHandler;
+import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedApiProvider;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.CalculableType;
 import net.milkbowl.vault.permission.Permission;
@@ -483,13 +483,13 @@ public class PermissionsManager {
             return true;
 
         // Get the AuthMe Reloaded handler
-        AuthMeReloadedHandler authMeReloadedHandler = Core.getAuthMeReloadedHandler();
+        AuthMeReloadedApiProvider authMeReloadedApiProvider = Core.getAuthMeReloadedHandler();
 
         // Make sure the user is authenticated if AuthMe Reloaded is hooked
         // TODO: Move this to some sort of listener, to keep this permissions manager universal!
         if(Core.getConfigHandler().authMeReloadedMustBeRegistered &&
-                authMeReloadedHandler.isHooked() &&
-                !authMeReloadedHandler.isAuthenticated(player))
+                authMeReloadedApiProvider.isHooked() &&
+                !authMeReloadedApiProvider.isAuthenticated(player))
                 return false;
 
         // Use the proper API

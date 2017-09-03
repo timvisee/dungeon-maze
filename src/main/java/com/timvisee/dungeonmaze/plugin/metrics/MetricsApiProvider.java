@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MetricsController {
+public class MetricsApiProvider {
 
     /** Metrics instance. */
     private Metrics metrics;
@@ -20,7 +20,7 @@ public class MetricsController {
      *
      * @param init True to immediately initialize, false otherwise.
      */
-    public MetricsController(boolean init) {
+    public MetricsApiProvider(boolean init) {
         // Check whether the controller should initialize
         if(init)
             init();

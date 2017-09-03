@@ -5,7 +5,7 @@ import java.util.List;
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.api.DungeonMazeApi;
-import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseHandler;
+import com.timvisee.dungeonmaze.plugin.multiverse.MultiverseApiProvider;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.World;
 
@@ -294,11 +294,11 @@ public class ApiWorldManager {
 			return null;
 
 		// Get the Multiverse Core handler, and make sure it's valid
-		MultiverseHandler multiverseHandler = core._getMultiverseHandler();
-		if(multiverseHandler == null)
+		MultiverseApiProvider multiverseApiProvider = core._getMultiverseHandler();
+		if(multiverseApiProvider == null)
 			return null;
 
 		// Get and return the Multiverse Core instance
-		return multiverseHandler.getMultiverseCore();
+		return multiverseApiProvider.getMultiverseCore();
     }
 }

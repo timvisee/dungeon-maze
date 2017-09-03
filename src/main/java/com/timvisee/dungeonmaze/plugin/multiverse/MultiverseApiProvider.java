@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-public class MultiverseHandler {
+public class MultiverseApiProvider {
 
     /** Exact identifier and name of the Multiverse plugin. */
     public static final String PLUGIN_NAME = "Multiverse-Core";
@@ -25,7 +25,7 @@ public class MultiverseHandler {
     /**
      * Constructor.
      */
-    public MultiverseHandler(boolean hook) {
+    public MultiverseApiProvider(boolean hook) {
         // Should the handler hook immediately
         // TODO: Do some error handling
         if(hook)
@@ -76,7 +76,7 @@ public class MultiverseHandler {
 
             // Get  the multiverse plugin and required version number
             Version multiverseVersion = new Version(multiverseCore.getDescription().getVersion());
-            Version requiredVersion = new Version(MultiverseHandler.REQUIRED_MULTIVERSE_VERSION);
+            Version requiredVersion = new Version(MultiverseApiProvider.REQUIRED_MULTIVERSE_VERSION);
 
             // Make sure the multiverse core version is acceptable, if not, return false
             if(multiverseVersion.compareTo(requiredVersion) > 0) {
