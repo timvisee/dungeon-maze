@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.update;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
+import com.timvisee.dungeonmaze.server.ServerType;
 import com.timvisee.dungeonmaze.update.bukkit.BukkitUpdater;
 import com.timvisee.dungeonmaze.update.universal.UniversalUpdater;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
@@ -23,26 +24,52 @@ public class UpdateChecker {
 
     /**
      * Constructor.
+     *
+     * This automatically chooses the update checker type depending on the server type that the plugin is running on.
      */
-    public UpdateChecker() { }
+    public UpdateChecker() {
+        this(null);
+    }
 
     /**
-     * Start the update checker of the specified type.
+     * Constructor.
      *
-     * @param type Update checker type.
+     * @param type Update checker type to use.
      */
-    public void start(UpdateCheckerType type) {
-        // Set the updater type
-        this.type = type;
+    public UpdateChecker(UpdateCheckerType type) {
+        // Figure out the update checker type to use
+        if(type == null) {
+            // Get the server type this plugin is running on
+            ServerType serverType = MinecraftUtils.getServerType();
 
+            // Select the update checker type.
+            UpdateCheckerType updateCheckerType;
+            switch(serverType) {
+                case BUKKIT:
+                    type = UpdateCheckerType.BUKKIT;
+                    break;
+
+                default:
+                    type = UpdateCheckerType.UNIVERSAL;
+            }
+        }
+
+        // Set the the updater type
+        this.type = type;
+    }
+
+    /**
+     * Start the updater.
+     */
+    public void start() {
         // Start the proper updater
-        switch(type) {
+        switch(this.type) {
         case BUKKIT:
             startBukkit();
             break;
 
-        case UNIVERSAL:
         default:
+        case UNIVERSAL:
             startUniversal();
         }
 
@@ -150,14 +177,12 @@ public class UpdateChecker {
     public boolean isUpdateAvailable() {
         // Check with the correct updater
         switch(getType()) {
+            default:
             case UNIVERSAL:
                 return getUniversalUpdater().isUpdateAvailable();
 
             case BUKKIT:
                 return getBukkitUpdater().getResult() != BukkitUpdater.UpdateResult.NO_UPDATE;
-
-            default:
-                return false;
         }
     }
 
@@ -169,9 +194,9 @@ public class UpdateChecker {
     public String getUpdateVersionName() {
         // Check with the correct updater
         switch(getType()) {
+            default:
             case UNIVERSAL:
-                // TODO: Return the version number of the new update!
-                return DungeonMaze.getVersionName();
+                return getUniversalUpdater().getUpdateDataUpdateName();
 
             case BUKKIT:
                 // Get the update version
@@ -182,9 +207,6 @@ public class UpdateChecker {
 
                 // Return the actual version number
                 return version;
-
-            default:
-                return DungeonMaze.getVersionName();
         }
     }
 
@@ -197,13 +219,12 @@ public class UpdateChecker {
     public int getUpdateVersionCode() {
         // Check with the correct updater
         switch(getType()) {
+            default:
             case UNIVERSAL:
-                // TODO: Return the version code of the new update!
-                return DungeonMaze.getVersionCode();
+                return getUniversalUpdater().getUpdateDataUpdateCode();
 
             case BUKKIT:
-            default:
-                // TODO: Return the correct version code here!
+                // Imagine a new version code, as these are not present with the Bukkit update data
                 return DungeonMaze.getVersionCode() + 1;
         }
     }

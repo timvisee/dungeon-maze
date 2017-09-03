@@ -25,12 +25,22 @@ public class UniversalUpdater {
     /**
      * Updater checker query.
      */
-    private static final String UPDATER_QUERY = "/check.php?";
+    private static final String UPDATER_QUERY = "/check.php";
 
     /**
      * Updater application ID key.
      */
     private static final String UPDATER_APP_ID_KEY = "app";
+
+    /**
+     * Updater current version key.
+     */
+    private static final String UPDATER_APP_VERSION_NAME_KEY = "version";
+
+    /**
+     * Updater current version code key.
+     */
+    private static final String UPDATER_APP_VERSION_CODE_KEY = "versionCode";
 
     /**
      * The application ID to identify the current application when updating.
@@ -98,9 +108,9 @@ public class UniversalUpdater {
         // Build and return the URL
         return UPDATER_HOST +
                 UPDATER_QUERY +
-                UPDATER_APP_ID_KEY +
-                '=' +
-                getApplicationId();
+                "?" + UPDATER_APP_ID_KEY + "=" + getApplicationId() +
+                "&" + UPDATER_APP_VERSION_NAME_KEY + "=" + DungeonMaze.getVersionName() +
+                "&" + UPDATER_APP_VERSION_CODE_KEY + "=" + DungeonMaze.getVersionCode();
     }
 
     /**
@@ -156,27 +166,6 @@ public class UniversalUpdater {
             // Get the update data and store it in the data field
             lastUpdateCheckData = rootObj.getJSONObject("app");
 
-            // Get a few application update and request parameters
-            String updateVersion = lastUpdateCheckData.getString("version");
-            int updateVersionCode = lastUpdateCheckData.getInt("versionCode");
-            String updateRequiredJavaVersion = lastUpdateCheckData.getString("requiredJavaVersion");
-            String updateRequiredBukkitVersion = lastUpdateCheckData.getString("requiredBukkitVersion");
-            boolean updateImportantUpdate = lastUpdateCheckData.getBoolean("importantUpdate");
-            String updateDownloadUrl = lastUpdateCheckData.getString("downloadUrl");
-            String requestDate = rootObj.getString("date");
-
-            // TODO: Remove these debug messages when finished
-            Bukkit.broadcastMessage(ChatColor.GOLD + "RETRIEVED JSON VALUES:");
-            Bukkit.broadcastMessage(ChatColor.GOLD + "updateVersion: " + updateVersionCode);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "updateVersionCode: " + updateVersion);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "updateRequiredJavaVersion: " + updateRequiredJavaVersion);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "updateRequiredBukkitVersion: " + updateRequiredBukkitVersion);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "updateImportantUpdate: " + updateImportantUpdate);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "updateDownloadUrl: " + updateDownloadUrl);
-            Bukkit.broadcastMessage(ChatColor.GOLD + "requestDate: " + requestDate);
-
-            // TODO: Determine whether a new update is available
-
             // Set the last update check time
             this.lastUpdateCheck = System.currentTimeMillis();
 
@@ -185,7 +174,9 @@ public class UniversalUpdater {
             return false;
         }
 
-        // TODO: Make sure the download URL is reachable
+        // Skip if there's no update available
+        if(!isUpdateAvailable())
+            return true;
 
         // If there's an update and it should be downloaded automatically, download it
         return !isAutomaticDownload() || downloadUpdate();
@@ -202,10 +193,15 @@ public class UniversalUpdater {
     public boolean downloadUpdate() {
         // Ensure we recently did an update check
         // TODO: Make this value customizable, put this in a method, or put it in a constant
-        if(this.lastUpdateCheck == -1 || this.lastUpdateCheck < (System.currentTimeMillis() - 60 * 60 * 100))
+        if(this.lastUpdateCheck == -1 || this.lastUpdateCheck < (System.currentTimeMillis() - 60 * 60 * 1000))
             return false;
 
-        // TODO: Make sure the file is compatible, by comparing required Bukkit versionAdded update downloading in the universal updater
+        // Make sure an update is available
+        if(!isUpdateAvailable())
+            return false;
+
+        // TODO: Check the Java version compatibility
+        // TODO: Check the Bukkit version compatibility
 
         // Get the download URL of the update file
         String updateDownloadUrl = lastUpdateCheckData.getString("downloadUrl");
@@ -227,7 +223,6 @@ public class UniversalUpdater {
             // Define the copy options
             CopyOption[] copyOptions = new CopyOption[]{
                     StandardCopyOption.REPLACE_EXISTING,
-                    StandardCopyOption.COPY_ATTRIBUTES,
             };
 
             // Try to copy the file
@@ -269,18 +264,78 @@ public class UniversalUpdater {
             if(!checkUpdates())
                 return false;
 
-        // Compare the version code of the installed version with the report of the last update check
-        int updateVersionCode = -1;
         try {
-            // Get the version code of the newest update
-            updateVersionCode = lastUpdateCheckData.getInt("versionCode");
+            // Compare the version code
+            return DungeonMaze.getVersionCode() < lastUpdateCheckData.getInt("versionCode");
 
         } catch(JSONException e) {
             e.printStackTrace();
+            return false;
         }
+    }
 
-        // Compare the version
-        return DungeonMaze.getVersionCode() < updateVersionCode;
+    /**
+     * Get the download URL of an update.
+     * Null is returned if not checked for updates.
+     *
+     * @return The download URL or null.
+     */
+    public String getUpdateDataDownloadUrl() {
+        // Make sure an update check has been done
+        if(!hasChecked())
+            if(!checkUpdates())
+                return null;
+
+        try {
+            // Get the download URL
+            return lastUpdateCheckData.getString("downloadUrl");
+
+        } catch(JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Get the update name for the update.
+     *
+     * @return The update name, the current Dungeon Maze version name is returned if not checked for updates yet.
+     */
+    public String getUpdateDataUpdateName() {
+        // Make sure an update check has been done
+        if(!hasChecked())
+            if(!checkUpdates())
+                return DungeonMaze.getVersionName();
+
+        try {
+            // Get the version name
+            return lastUpdateCheckData.getString("version");
+
+        } catch(JSONException e) {
+            e.printStackTrace();
+            return DungeonMaze.getVersionName();
+        }
+    }
+
+    /**
+     * Get the update name for the update.
+     *
+     * @return The update name, the current Dungeon Maze version code is returned if not checked for updates yet.
+     */
+    public int getUpdateDataUpdateCode() {
+        // Make sure an update check has been done
+        if(!hasChecked())
+            if(!checkUpdates())
+                return DungeonMaze.getVersionCode();
+
+        try {
+            // Get the version code
+            return lastUpdateCheckData.getInt("versionCode");
+
+        } catch(JSONException e) {
+            e.printStackTrace();
+            return DungeonMaze.getVersionCode();
+        }
     }
 
     /**
@@ -330,7 +385,6 @@ public class UniversalUpdater {
             // Define the copy options
             CopyOption[] copyOptions = new CopyOption[]{
                     StandardCopyOption.REPLACE_EXISTING,
-                    StandardCopyOption.COPY_ATTRIBUTES,
             };
 
             // Try to copy and replace the plugin file with the update

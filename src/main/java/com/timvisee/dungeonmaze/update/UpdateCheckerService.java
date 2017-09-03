@@ -82,25 +82,9 @@ public class UpdateCheckerService extends Service {
         if(isUpdateCheckerSetup())
             return;
 
-        // Get the server type this plugin is running on
-        ServerType serverType = MinecraftUtils.getServerType();
-
-        // Determine the update checker type to use
-        UpdateCheckerType updateCheckerType;
-        switch(serverType) {
-        case BUKKIT:
-            updateCheckerType = UpdateCheckerType.BUKKIT;
-            break;
-
-        default:
-            updateCheckerType = UpdateCheckerType.UNIVERSAL;
-        }
-
-        // Set up the update checker
+        // Set up the update checker and start it
         this.updateChecker = new UpdateChecker();
-
-        // Start the update checker
-        this.updateChecker.start(updateCheckerType);
+        this.updateChecker.start();
     }
 
     /**
