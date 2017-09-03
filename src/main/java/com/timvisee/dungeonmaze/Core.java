@@ -15,8 +15,6 @@ import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedApiProviderS
 import com.timvisee.dungeonmaze.service.*;
 import com.timvisee.dungeonmaze.api.ApiControllerService;
 import com.timvisee.dungeonmaze.config.ConfigHandlerService;
-import com.timvisee.dungeonmaze.plugin.metrics.MetricsApiProvider;
-import com.timvisee.dungeonmaze.plugin.metrics.MetricsApiProviderService;
 import com.timvisee.dungeonmaze.structure.CustomStructureManagerService;
 import com.timvisee.dungeonmaze.listener.EventListenerManagerService;
 import com.timvisee.dungeonmaze.logger.LoggerService;
@@ -119,11 +117,6 @@ public class Core {
     private AuthMeReloadedApiProviderService authMeReloadedApiProviderService = new AuthMeReloadedApiProviderService();
 
     /**
-     * Metrics controller service instance.
-     */
-    private MetricsApiProviderService metricsApiProviderService = new MetricsApiProviderService();
-
-    /**
      * Defines the initialization time of the core.
      */
     private Date initTime = new Date();
@@ -174,7 +167,6 @@ public class Core {
         this.serviceManager.registerService(this.oldApiControllerService);
         this.serviceManager.registerService(this.eventListenerManagerService);
         this.serviceManager.registerService(this.authMeReloadedApiProviderService);
-        this.serviceManager.registerService(this.metricsApiProviderService);
 
         // Initialize all services
         if(!this.serviceManager.initServices())
@@ -499,24 +491,6 @@ public class Core {
      */
     public AuthMeReloadedApiProvider _getAuthMeReloadedHandler() {
         return this.authMeReloadedApiProviderService.getAuthMeReloadedApiProvider();
-    }
-
-    /**
-     * Get the metrics controller.
-     *
-     * @return Metrics controller instance.
-     */
-    public static MetricsApiProvider getMetricsController() {
-        return Core.instance._getMetricsController();
-    }
-
-    /**
-     * Get the metrics controller.
-     *
-     * @return Metrics controller instance.
-     */
-    public MetricsApiProvider _getMetricsController() {
-        return this.metricsApiProviderService.getMetricsApiProvider();
     }
 
     /**
