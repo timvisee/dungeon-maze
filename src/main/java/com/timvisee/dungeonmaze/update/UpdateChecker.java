@@ -45,8 +45,8 @@ public class UpdateChecker {
             // Select the update checker type.
             switch(serverType) {
                 case BUKKIT:
-                    type = UpdateCheckerType.BUKKIT;
-                    break;
+//                    type = UpdateCheckerType.BUKKIT;
+//                    break;
 
                 default:
                     type = UpdateCheckerType.UNIVERSAL;
