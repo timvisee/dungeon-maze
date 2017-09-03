@@ -4,7 +4,9 @@ import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.command.CommandParts;
 import com.timvisee.dungeonmaze.command.ExecutableCommand;
+import com.timvisee.dungeonmaze.config.ConfigHandler;
 import com.timvisee.dungeonmaze.permission.PermissionsManager;
+import com.timvisee.dungeonmaze.update.UpdateChecker;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.SystemUtils;
 import com.timvisee.dungeonmaze.world.WorldManager;
@@ -12,6 +14,7 @@ import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManage
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.text.DateFormat;
@@ -91,12 +94,90 @@ public class StatusCommand extends ExecutableCommand {
         // Show the version status
         sender.sendMessage(ChatColor.GOLD + "Version: " + ChatColor.WHITE + "Dungeon Maze v" + DungeonMaze.getVersionName() + ChatColor.GRAY + " (code: " + DungeonMaze.getVersionCode() + ")");
 
-        // Print the server status
+        printUpdaterStatus(sender);
         printServerStatus(sender);
-
-        // Print the machine status
         printMachineStatus(sender);
         return true;
+    }
+
+    /**
+     * Print the updater status.
+     *
+     * @param sender Command sender to print the output to.
+     */
+    private void printUpdaterStatus(CommandSender sender) {
+        // Get the Dungeon Maze config
+        ConfigHandler configHandler = DungeonMaze.instance.getCore()._getConfigHandler();
+        FileConfiguration config = configHandler.config;
+
+        // Determine the sub description
+        String updaterSub = "";
+        if(config != null) {
+            if(config.getBoolean("updateChecker.enabled", true))
+                updaterSub = ChatColor.GRAY + " (Automatic updates enabled)";
+            else
+                updaterSub = ChatColor.DARK_RED + " (Automatic updates disabled in config)";
+        }
+
+        // Show the update checker status
+        sender.sendMessage(ChatColor.GOLD + "Updater: " + ChatColor.WHITE + Core.getUpdateChecker().getType().getName() + updaterSub);
+
+        // Get the update checker
+        final UpdateChecker updateChecker = Core.getUpdateChecker();
+
+        // No new version found
+        if(!updateChecker.isUpdateAvailable()) {
+            sender.sendMessage(ChatColor.GOLD + "Update status: " + ChatColor.WHITE + "Up to date");
+            return;
+        }
+
+        // Make sure the new version is compatible
+        if(!updateChecker.isUpdateCompatible()) {
+            sender.sendMessage(ChatColor.GOLD + "Update status: " + ChatColor.DARK_RED + "Update available, but not compatible");
+            sender.sendMessage(ChatColor.GRAY + " - Update: " + ChatColor.DARK_RED + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GRAY +
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+
+            // Show the Minecraft version
+            if(!updateChecker.isUpdateMinecraftCompatible())
+                sender.sendMessage(ChatColor.GRAY + " - Required Minecraft version " + ChatColor.DARK_RED + MinecraftUtils.getMinecraftVersion() + " " +
+                        ChatColor.GRAY + ChatColor.STRIKETHROUGH + " -->" +
+                        ChatColor.GRAY + " " + updateChecker.getUpdateMinecraftVersion());
+
+            // Show the Java version
+            if(!updateChecker.isUpdateJavaCompatible())
+                sender.sendMessage(ChatColor.GRAY + " - Required Java version: " + ChatColor.DARK_RED + SystemUtils.getJavaVersion() + " " +
+                        ChatColor.GRAY + ChatColor.STRIKETHROUGH + " -->" +
+                        ChatColor.GRAY + " " + updateChecker.getUpdateJavaVersion());
+
+            return;
+        }
+
+        // Check whether the update has already been installed
+        if(updateChecker.isUpdateInstalled()) {
+            sender.sendMessage(ChatColor.GOLD + "Update status: " + ChatColor.GREEN + "Installed, restart required");
+            sender.sendMessage(ChatColor.GRAY + " - Update: " + ChatColor.GRAY + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GREEN +
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            return;
+        }
+
+        // Check whether the update has already been downloaded
+        if(updateChecker.isUpdateDownloaded()) {
+            sender.sendMessage(ChatColor.GOLD + "Update status: " + ChatColor.DARK_RED + "Downloaded, but not installed");
+            sender.sendMessage(ChatColor.GRAY + " - Update: " + ChatColor.DARK_RED + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GRAY +
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+            return;
+        }
+
+        // Check whether an update is available
+        if(updateChecker.isUpdateAvailable()) {
+            sender.sendMessage(ChatColor.GOLD + "Update status: " + ChatColor.DARK_RED + "Available, but not installed");
+            sender.sendMessage(ChatColor.GRAY + " - Update: " + ChatColor.DARK_RED + DungeonMaze.getVersionName() + " (" + DungeonMaze.getVersionCode() + ") " +
+                    ChatColor.GRAY + ChatColor.STRIKETHROUGH + "-->" + ChatColor.GRAY +
+                    " " + updateChecker.getUpdateVersionName() + " (" + updateChecker.getUpdateVersionCode() + ")");
+        }
     }
 
     /**

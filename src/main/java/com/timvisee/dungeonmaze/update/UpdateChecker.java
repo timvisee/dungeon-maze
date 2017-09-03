@@ -43,7 +43,6 @@ public class UpdateChecker {
             ServerType serverType = MinecraftUtils.getServerType();
 
             // Select the update checker type.
-            UpdateCheckerType updateCheckerType;
             switch(serverType) {
                 case BUKKIT:
                     type = UpdateCheckerType.BUKKIT;
