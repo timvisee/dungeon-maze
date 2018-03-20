@@ -7,12 +7,10 @@ softdepend:
     - PermissionsEx
     - PermissionsBukkit
     - bPermissions
-    - EssentialsGroupManager
     - zPermissions
     - Vault
     - Permissions
     - Multiverse-Core
-    - AuthMe
     - AuthMeReloaded
 commands:
   dm:
