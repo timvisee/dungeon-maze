@@ -7,6 +7,7 @@ import com.timvisee.dungeonmaze.generator.DungeonMazeChunkGenerator;
 import com.timvisee.dungeonmaze.test.DelayedPopulator;
 import com.timvisee.dungeonmaze.util.MinecraftUtils;
 import com.timvisee.dungeonmaze.util.Profiler;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -75,6 +76,9 @@ public class DungeonMaze extends JavaPlugin {
 
         // Initialize the core
         initCore();
+
+        // Send metrics data
+        new Metrics(this);
 
         // Show a startup message
         Core.getLogger().info(getVersionComplete(true) + " started, took " + profiler.getTimeFormatted() + "!");

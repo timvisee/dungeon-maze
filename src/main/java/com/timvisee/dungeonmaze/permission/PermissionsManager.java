@@ -5,8 +5,6 @@ import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedApiProvider;
 import de.bananaco.bpermissions.api.ApiLayer;
 import de.bananaco.bpermissions.api.CalculableType;
 import net.milkbowl.vault.permission.Permission;
-import org.anjocaido.groupmanager.GroupManager;
-import org.anjocaido.groupmanager.permissions.AnjoPermissionsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -70,11 +68,6 @@ public class PermissionsManager {
      * Null if no permissions system is used.
      */
     private PermissionsSystemType permsType = null;
-
-    /**
-     * Essentials group manager instance.
-     */
-    private GroupManager groupManagerPerms;
 
     /**
      * zPermissions service instance.
@@ -266,11 +259,6 @@ public class PermissionsManager {
 
                         break;
 
-                    case ESSENTIALS_GROUP_MANAGER:
-                        // Set the plugin instance
-                        groupManagerPerms = (GroupManager) plugin;
-                        break;
-
                     case Z_PERMISSIONS:
                         // Set the zPermissions service and make sure it's valid
                         zPermissionsService = Bukkit.getServicesManager().load(ZPermissionsService.class);
@@ -337,7 +325,6 @@ public class PermissionsManager {
             this.log.info("Unhooked from " + hookedSystem.getName() + "!");
 
         // Reset the stored permissions API instances
-        groupManagerPerms = null;
         zPermissionsService = null;
         vaultPerms = null;
     }
@@ -507,11 +494,6 @@ public class PermissionsManager {
                 // bPermissions
                 return ApiLayer.hasPermission(player.getWorld().getName(), CalculableType.USER, player.getName(), permsNode);
 
-            case ESSENTIALS_GROUP_MANAGER:
-                // Essentials Group Manager
-                final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(player);
-                return handler != null && handler.has(player, permsNode);
-
             case Z_PERMISSIONS:
                 // zPermissions
                 @SuppressWarnings("deprecation")
@@ -543,7 +525,6 @@ public class PermissionsManager {
             case PERMISSIONS_EX:
             case PERMISSIONS_BUKKIT:
             case B_PERMISSIONS:
-            case ESSENTIALS_GROUP_MANAGER:
             case Z_PERMISSIONS:
                 return true;
 
@@ -584,13 +565,6 @@ public class PermissionsManager {
                 // bPermissions
                 return Arrays.asList(ApiLayer.getGroups(player.getWorld().getName(), CalculableType.USER, player.getName()));
 
-            case ESSENTIALS_GROUP_MANAGER:
-                // Essentials Group Manager
-                final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(player);
-                if (handler == null)
-                    return new ArrayList<>();
-                return Arrays.asList(handler.getGroups(player.getName()));
-
             case Z_PERMISSIONS:
                 //zPermissions
                 return new ArrayList(zPermissionsService.getPlayerGroups(player.getName()));
@@ -630,13 +604,6 @@ public class PermissionsManager {
 
                 // Return the first group
                 return groups.get(0);
-
-            case ESSENTIALS_GROUP_MANAGER:
-                // Essentials Group Manager
-                final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(player);
-                if (handler == null)
-                    return null;
-                return handler.getGroup(player.getName());
 
             case Z_PERMISSIONS:
                 //zPermissions
@@ -686,11 +653,6 @@ public class PermissionsManager {
                 // bPermissions
                 return ApiLayer.hasGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
 
-            case ESSENTIALS_GROUP_MANAGER:
-                // Essentials Group Manager
-                final AnjoPermissionsHandler handler = groupManagerPerms.getWorldsHolder().getWorldPermissions(player);
-                return handler != null && handler.inGroup(player.getName(), groupName);
-
             case VAULT:
                 // Vault
                 return vaultPerms.playerInGroup(player, groupName);
@@ -730,11 +692,6 @@ public class PermissionsManager {
                 // bPermissions
                 ApiLayer.addGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
                 return true;
-
-            case ESSENTIALS_GROUP_MANAGER:
-                // Essentials Group Manager
-                // Add the group to the user using a command
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddsub " + player.getName() + " " + groupName);
 
             case Z_PERMISSIONS:
                 // zPermissions
@@ -804,11 +761,6 @@ public class PermissionsManager {
                 // bPermissions
                 ApiLayer.removeGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
                 return true;
-
-            case ESSENTIALS_GROUP_MANAGER:
-                // Essentials Group Manager
-                // Remove the group to the user using a command
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelsub " + player.getName() + " " + groupName);
 
             case Z_PERMISSIONS:
                 // zPermissions
@@ -883,12 +835,6 @@ public class PermissionsManager {
                 // bPermissions
                 ApiLayer.setGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
                 return true;
-
-            case ESSENTIALS_GROUP_MANAGER:
-                // Essentials Group Manager
-                // Clear the list of groups, add the player to the specified group afterwards using a command
-                removeAllGroups(player);
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuadd " + player.getName() + " " + groupName);
 
             case Z_PERMISSIONS:
                 //zPermissions
@@ -998,11 +944,6 @@ public class PermissionsManager {
          * bPermissions.
          */
         B_PERMISSIONS("bPermissions", "bPermissions"),
-
-        /**
-         * Essentials Group Manager.
-         */
-        ESSENTIALS_GROUP_MANAGER("Essentials Group Manager", "GroupManager"),
 
         /**
          * zPermissions.
