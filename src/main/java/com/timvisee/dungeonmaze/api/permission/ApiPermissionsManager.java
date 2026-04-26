@@ -110,8 +110,8 @@ public class ApiPermissionsManager {
 		if(!isPermissionsManagerValid())
 			return false;
 
-		// Check if the permissions manager is enabled
-		return getPermissionsManager().isEnabled();
+		// Check if the permissions manager is hooked
+		return getPermissionsManager().isHooked();
 	}
 	
 	/**

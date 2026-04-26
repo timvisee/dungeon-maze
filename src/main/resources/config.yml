@@ -8,6 +8,7 @@ unloadWorldsOnPluginDisable: true
 # Gameplay settings
 allowSurface: true
 worldProtection: false
+# Use 1.13+ Bukkit material names, for example: STONE_BRICKS, OAK_PLANKS
 blockWhiteList: []
 
 # Update checker

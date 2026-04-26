@@ -1,103 +1,21 @@
 package com.timvisee.dungeonmaze.util;
 
-import org.bukkit.DyeColor;
+import java.util.EnumSet;
+import java.util.function.Consumer;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.material.MaterialData;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Directional;
+import org.bukkit.block.data.MultipleFacing;
+import org.bukkit.block.data.type.Door;
+import org.bukkit.block.data.type.Stairs;
+import org.bukkit.inventory.ItemStack;
 
-@SuppressWarnings({"UnusedDeclaration", "deprecation"})
+@SuppressWarnings("UnusedDeclaration")
 public class MaterialUtils {
-
-    /** Defines the material ID for air. */
-    public final static short AIR_ID = getMaterialId(Material.AIR);
-
-    /**
-     * Get the ID of a material.
-     *
-     * @param material The material to get the ID for.
-     *
-     * @return The ID of the material.
-     */
-    public static short getMaterialId(Material material) {
-        return (short) material.getId();
-    }
-
-    /**
-     * Get the material ID of a block.
-     *
-     * @param block The block to get the material ID for.
-     *
-     * @return The material ID of the block.
-     */
-    public static short getMaterialId(Block block) {
-        return (short) block.getTypeId();
-    }
-
-    /**
-     * Get the material by it's ID.
-     *
-     * @param id Material ID.
-     *
-     * @return The material of the ID.
-     */
-    public static Material getMaterialById(int id) {
-        return Material.getMaterial(id);
-    }
-
-    /**
-     * Get the material data of a block.
-     *
-     * @param block The block to get the material data for.
-     *
-     * @return The material data.
-     */
-    public static short getMaterialData(Block block) {
-        return (short) block.getData();
-    }
-
-    /**
-     * Get the material data value as a short.
-     *
-     * @param data The material data to get the short value for.
-     *
-     * @return The short value of the material data.
-     */
-    public static short getMaterialData(MaterialData data) {
-        return data.getData();
-    }
-
-    /**
-     * Set the material of a block by a material ID.
-     *
-     * @param block The block to set.
-     * @param materialId The material ID.
-     */
-    public static void setBlockType(Block block, int materialId) {
-        block.setTypeId(materialId);
-    }
-
-    /**
-     * Set the type of a block.
-     *
-     * @param block The block to set.
-     * @param materialId The material ID to set the block to.
-     * @param rawData The raw data.
-     *
-     * @return True on success, false on failure.
-     */
-    public static boolean setBlockType(Block block, int materialId, int rawData) {
-        // Get the block state and set the material by ID
-        BlockState state = block.getState();
-        state.setTypeId(materialId);
-
-        // Apply the raw data
-        if(rawData != 0)
-            state.setRawData((byte) (rawData & 0xff));
-
-        // Check if the block update succeed, return the result
-        return state.update(true);
-    }
 
     /**
      * Set the material of a block.
@@ -108,65 +26,126 @@ public class MaterialUtils {
      * @return True on success, false on failure.
      */
     public static boolean setBlockType(Block block, Material material) {
-        return setBlockType(block, material, 0);
+        block.setType(material);
+        return true;
     }
 
-    /**
-     * Set the material of a block.
-     *
-     * @param block The block to set the material for.
-     * @param material The material to set the block to.
-     * @param rawData The raw data.
-     *
-     * @return True on success, false on failure.
-     */
-    public static boolean setBlockType(Block block, Material material, int rawData) {
-        return setBlockType(block, material, rawData, true, true);
+    public static ItemStack createItemStack(Material material, int amount) {
+        return new ItemStack(material, amount);
     }
 
-    /**
-     * Set the material of a block.
-     *
-     * @param block The block to set the material for.
-     * @param material The material to set the block to.
-     * @param rawData The raw data.
-     * @param update True to update the block, false otherwise.
-     * @param physics True to apply the block physics, false otherwise.
-     *
-     * @return True on success, false on failure.
-     */
-    public static boolean setBlockType(Block block, Material material, int rawData, boolean update, boolean physics) {
-        // Get the block state, set the material
-        BlockState state = block.getState();
-        state.setType(material);
+    public static ItemStack createItemStack(Material material, int amount, short legacyData) {
+        if(legacyData == 0)
+            return createItemStack(material, amount);
 
-        // Apply the raw data
-        if(rawData != 0)
-            state.setRawData((byte) (rawData & 0xff));
+        if(material == Material.COAL && legacyData == 1)
+            return createItemStack(Material.CHARCOAL, amount);
 
-        // Check if the block update succeed, return the result
-        return state.update(update, physics);
+        if(material == Material.INK_SAC && legacyData == 3)
+            return createItemStack(Material.COCOA_BEANS, amount);
+
+        throw new IllegalArgumentException("Unsupported legacy item data " + material + ":" + legacyData);
     }
 
-    /**
-     * Set the color of a block.
-     *
-     * @param state The block state.
-     * @param color The color to set.
-     */
-    public static void setBlockStateColor(BlockState state, DyeColor color) {
-        state.setRawData(color.getWoolData());
+    public static boolean setBlockType(Block block, String... materialNames) {
+        return setBlockType(block, requireBlockMaterial(materialNames));
     }
 
-    /**
-     * Check whether the specified material is empty (air).
-     *
-     * @param materialId The material ID to check.
-     *
-     * @return True if the material ID is empty (air), false otherwise.
-     */
-    public static boolean isEmpty(short materialId) {
-        return materialId == MaterialUtils.AIR_ID;
+    public static Material requireBlockMaterial(String... materialNames) {
+        if(materialNames == null || materialNames.length == 0)
+            throw new IllegalArgumentException("At least one material name must be provided");
+
+        for(String materialName : materialNames) {
+            if(materialName == null || materialName.isEmpty())
+                continue;
+
+            try {
+                final Material material = Material.valueOf(materialName);
+                if(material.isBlock())
+                    return material;
+            } catch(IllegalArgumentException ignored) {
+                // Try the next material alias.
+            }
+        }
+
+        throw new IllegalArgumentException("No compatible block material found for aliases: " + String.join(", ", materialNames));
+    }
+
+    public static boolean setChestFacing(Block block, BlockFace facing) {
+        return setDirectionalBlock(block, Material.CHEST, facing);
+    }
+
+    public static boolean setFurnaceFacing(Block block, BlockFace facing) {
+        return setDirectionalBlock(block, Material.FURNACE, facing);
+    }
+
+    public static boolean setLadderFacing(Block block, BlockFace facing) {
+        return setDirectionalBlock(block, Material.LADDER, facing);
+    }
+
+    public static boolean setWallTorch(Block block, BlockFace facing) {
+        return setDirectionalBlock(block, Material.WALL_TORCH, facing);
+    }
+
+    public static boolean setStairs(Block block, Material material, BlockFace facing) {
+        return setStairs(block, material, facing, Bisected.Half.BOTTOM);
+    }
+
+    public static boolean setStairs(Block block, Material material, BlockFace facing, Bisected.Half half) {
+        if(facing == null || half == null)
+            return false;
+
+        return setTypedBlockData(block, material, Stairs.class, stairs -> {
+            stairs.setFacing(facing);
+            stairs.setHalf(half);
+        }, true);
+    }
+
+    public static boolean setDoorHalf(Block block, Material material, BlockFace facing, Bisected.Half half, Door.Hinge hinge, boolean open) {
+        if(facing == null || half == null || hinge == null)
+            return false;
+
+        return setTypedBlockData(block, material, Door.class, door -> {
+            door.setFacing(facing);
+            door.setHalf(half);
+            door.setHinge(hinge);
+            door.setOpen(open);
+        }, true);
+    }
+
+    public static boolean setVines(Block block, BlockFace... faces) {
+        if(faces == null)
+            return false;
+
+        return setTypedBlockData(block, Material.VINE, MultipleFacing.class, vine -> {
+            final EnumSet<BlockFace> requestedFaces = EnumSet.noneOf(BlockFace.class);
+            for(BlockFace face : faces)
+                if(face != null)
+                    requestedFaces.add(face);
+
+            for(BlockFace face : new BlockFace[] {BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST})
+                if(vine.getAllowedFaces().contains(face))
+                    vine.setFace(face, requestedFaces.contains(face));
+        }, true);
+    }
+
+    private static boolean setDirectionalBlock(Block block, Material material, BlockFace facing) {
+        if(facing == null)
+            return false;
+
+        return setTypedBlockData(block, material, Directional.class, directional -> directional.setFacing(facing), true);
+    }
+
+    private static <T extends BlockData> boolean setTypedBlockData(Block block, Material material, Class<T> type, Consumer<T> mutator, boolean physics) {
+        block.setType(material, false);
+        final BlockData blockData = block.getBlockData();
+        if(!type.isInstance(blockData))
+            return false;
+
+        final T typedBlockData = type.cast(blockData);
+        mutator.accept(typedBlockData);
+        block.setBlockData(typedBlockData, physics);
+        return true;
     }
 
     /**

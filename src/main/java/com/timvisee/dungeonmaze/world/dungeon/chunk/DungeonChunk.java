@@ -119,7 +119,7 @@ public class DungeonChunk {
      * @return The Z coordinate of the chunk in the chunk space.
      */
     public final int getChunkZ() {
-        return this.region.getX() * DungeonRegion.REGION_SIZE + this.y;
+        return this.region.getY() * DungeonRegion.REGION_SIZE + this.y;
     }
 
     /**

@@ -3,9 +3,11 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
 
 public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
 
@@ -31,44 +33,36 @@ public class WaterWellRoomPopulator extends MazeRoomBlockPopulator {
         // Floor
         for(int x2 = x; x2 <= x + 7; x2 += 1)
             for(int z2 = z; z2 <= z + 7; z2 += 1)
-                chunk.getBlock(x2, yFloor, z2).setType(Material.STONE);
+                setGeneratedBlock(chunk.getBlock(x2, yFloor, z2), Material.STONE);
 
         // Floor (cobblestone underneath the stone floor)
         for(int x2 = x; x2 <= x + 7; x2 += 1)
             for(int z2 = z; z2 <= z + 7; z2 += 1)
-                chunk.getBlock(x2, yFloor - 1, z2).setType(Material.COBBLESTONE);
+                setGeneratedBlock(chunk.getBlock(x2, yFloor - 1, z2), Material.COBBLESTONE);
 
         // Well
         for(int x2 = x + 2; x2 <= x + 4; x2 += 1)
             for(int z2 = z + 2; z2 <= z + 4; z2 += 1)
-                chunk.getBlock(x2, yFloor + 1, z2).setType(Material.SMOOTH_BRICK);
+                setGeneratedBlock(chunk.getBlock(x2, yFloor + 1, z2), Material.STONE_BRICKS);
 
-        chunk.getBlock(x + 3, yFloor + 1, z + 3).setType(Material.STATIONARY_WATER);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1, z + 3), Material.WATER);
 
         // Poles
-        chunk.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.FENCE);
-        chunk.getBlock(x + 2, yFloor + 2, z + 4).setType(Material.FENCE);
-        chunk.getBlock(x + 4, yFloor + 2, z + 2).setType(Material.FENCE);
-        chunk.getBlock(x + 4, yFloor + 2, z + 4).setType(Material.FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 2, z + 2), Material.OAK_FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 2, z + 4), Material.OAK_FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 2, z + 2), Material.OAK_FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 2, z + 4), Material.OAK_FENCE);
 
         // Roof
-        chunk.getBlock(x + 2, yFloor + 3, z + 2).setType(Material.STEP);
-        chunk.getBlock(x + 2, yFloor + 3, z + 2).setData((byte) 2);
-        chunk.getBlock(x + 2, yFloor + 3, z + 3).setType(Material.WOOD_STAIRS);
-        chunk.getBlock(x + 2, yFloor + 3, z + 3).setData((byte) 0);
-        chunk.getBlock(x + 2, yFloor + 3, z + 4).setType(Material.STEP);
-        chunk.getBlock(x + 2, yFloor + 3, z + 4).setData((byte) 2);
-        chunk.getBlock(x + 3, yFloor + 3, z + 2).setType(Material.WOOD_STAIRS);
-        chunk.getBlock(x + 3, yFloor + 3, z + 2).setData((byte) 2);
-        chunk.getBlock(x + 3, yFloor + 3, z + 3).setType(Material.GLOWSTONE);
-        chunk.getBlock(x + 3, yFloor + 3, z + 4).setType(Material.WOOD_STAIRS);
-        chunk.getBlock(x + 3, yFloor + 3, z + 4).setData((byte) 3);
-        chunk.getBlock(x + 4, yFloor + 3, z + 2).setType(Material.STEP);
-        chunk.getBlock(x + 4, yFloor + 3, z + 2).setData((byte) 2);
-        chunk.getBlock(x + 4, yFloor + 3, z + 3).setType(Material.WOOD_STAIRS);
-        chunk.getBlock(x + 4, yFloor + 3, z + 3).setData((byte) 1);
-        chunk.getBlock(x + 4, yFloor + 3, z + 4).setType(Material.STEP);
-        chunk.getBlock(x + 4, yFloor + 3, z + 4).setData((byte) 2);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 3, z + 2), Material.OAK_SLAB);
+        MaterialUtils.setStairs(chunk.getBlock(x + 2, yFloor + 3, z + 3), Material.OAK_STAIRS, BlockFace.EAST);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 3, z + 4), Material.OAK_SLAB);
+        MaterialUtils.setStairs(chunk.getBlock(x + 3, yFloor + 3, z + 2), Material.OAK_STAIRS, BlockFace.SOUTH);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 3, z + 3), Material.GLOWSTONE);
+        MaterialUtils.setStairs(chunk.getBlock(x + 3, yFloor + 3, z + 4), Material.OAK_STAIRS, BlockFace.NORTH);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 3, z + 2), Material.OAK_SLAB);
+        MaterialUtils.setStairs(chunk.getBlock(x + 4, yFloor + 3, z + 3), Material.OAK_STAIRS, BlockFace.WEST);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 3, z + 4), Material.OAK_SLAB);
     }
 
     @Override

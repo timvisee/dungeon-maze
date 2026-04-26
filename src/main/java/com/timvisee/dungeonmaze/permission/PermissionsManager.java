@@ -2,9 +2,6 @@ package com.timvisee.dungeonmaze.permission;
 
 import com.timvisee.dungeonmaze.Core;
 import com.timvisee.dungeonmaze.plugin.authmereloaded.AuthMeReloadedApiProvider;
-import de.bananaco.bpermissions.api.ApiLayer;
-import de.bananaco.bpermissions.api.CalculableType;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -14,15 +11,9 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.tyrannyofheaven.bukkit.zPermissions.ZPermissionsService;
-import ru.tehkode.permissions.PermissionUser;
-import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -68,16 +59,6 @@ public class PermissionsManager {
      * Null if no permissions system is used.
      */
     private PermissionsSystemType permsType = null;
-
-    /**
-     * zPermissions service instance.
-     */
-    private ZPermissionsService zPermissionsService;
-
-    /**
-     * Vault instance.
-     */
-    private Permission vaultPerms = null;
 
     /**
      * True to always allow OP players, even if they don't have the proper permissions supplied by the permissions plugin.
@@ -192,6 +173,7 @@ public class PermissionsManager {
      *
      * @deprecated Replaced with isStarted() and isHooked()
      */
+    @Deprecated
     public boolean isEnabled() {
         return isHooked();
     }
@@ -222,91 +204,10 @@ public class PermissionsManager {
      * @return The detected permissions system.
      */
     public PermissionsSystemType setup() {
-        // Force-unhook from current hooked permissions systems
         unhook();
-
-        // Define the plugin manager
-        final PluginManager pluginManager = this.server.getPluginManager();
-
-        // Reset used permissions system type flag
-        permsType = null;
-
-        // Loop through all the available permissions system types
-        for(PermissionsSystemType type : PermissionsSystemType.values()) {
-            // Try to find and hook the current plugin if available, print an error if failed
-            try {
-                // Try to find the plugin for the current permissions system
-                Plugin plugin = pluginManager.getPlugin(type.getPluginName());
-
-                // Make sure a plugin with this name was found
-                if(plugin == null)
-                    continue;
-
-                // Make sure the plugin is enabled before hooking
-                if(!plugin.isEnabled()) {
-                    this.log.info("Not hooking into " + type.getName() + " because it's disabled!");
-                    continue;
-                }
-
-                // Use the proper method to hook this plugin
-                switch(type) {
-                    case PERMISSIONS_EX:
-                        // Get the permissions manager for PermissionsEx and make sure it isn't null
-                        if(PermissionsEx.getPermissionManager() == null) {
-                            this.log.info("Failed to hook into " + type.getName() + "!");
-                            continue;
-                        }
-
-                        break;
-
-                    case Z_PERMISSIONS:
-                        // Set the zPermissions service and make sure it's valid
-                        zPermissionsService = Bukkit.getServicesManager().load(ZPermissionsService.class);
-                        if(zPermissionsService == null) {
-                            this.log.info("Failed to hook into " + type.getName() + "!");
-                            continue;
-                        }
-
-                        break;
-
-                    case VAULT:
-                        // Get the permissions provider service
-                        RegisteredServiceProvider<Permission> permissionProvider = this.server.getServicesManager().getRegistration(Permission.class);
-                        if (permissionProvider == null) {
-                            this.log.info("Failed to hook into " + type.getName() + "!");
-                            continue;
-                        }
-
-                        // Get the Vault provider and make sure it's valid
-                        vaultPerms = permissionProvider.getProvider();
-                        if(vaultPerms == null) {
-                            this.log.info("Not using " + type.getName() + " because it's disabled!");
-                            continue;
-                        }
-
-                        break;
-
-                    default:
-                }
-
-                // Set the hooked permissions system type
-                this.permsType = type;
-
-                // Show a success message
-                this.log.info("Hooked into " + type.getName() + "!");
-
-                // Return the used permissions system type
-                return type;
-
-            } catch (Exception ex) {
-                // An error occurred, show a warning message
-                this.log.info("Error while hooking into " + type.getName() + "!");
-            }
-        }
-
-        // No recognized permissions system found, show a message and return
-        this.log.info("No supported permissions system found! Permissions are disabled!");
-        return null;
+        this.permsType = PermissionsSystemType.PERMISSIONS_BUKKIT;
+        this.log.info("Using Bukkit permissions!");
+        return this.permsType;
     }
 
     /**
@@ -323,10 +224,6 @@ public class PermissionsManager {
         // Print a status message to the console
         if (hookedSystem != null)
             this.log.info("Unhooked from " + hookedSystem.getName() + "!");
-
-        // Reset the stored permissions API instances
-        zPermissionsService = null;
-        vaultPerms = null;
     }
 
     /**
@@ -481,28 +378,8 @@ public class PermissionsManager {
 
         // Use the proper API
         switch (this.permsType) {
-            case PERMISSIONS_EX:
-                // Permissions Ex
-                PermissionUser user = PermissionsEx.getUser(player);
-                return user.has(permsNode);
-
             case PERMISSIONS_BUKKIT:
-                // Permissions Bukkit
                 return player.hasPermission(permsNode);
-
-            case B_PERMISSIONS:
-                // bPermissions
-                return ApiLayer.hasPermission(player.getWorld().getName(), CalculableType.USER, player.getName(), permsNode);
-
-            case Z_PERMISSIONS:
-                // zPermissions
-                @SuppressWarnings("deprecation")
-                Map<String, Boolean> perms = zPermissionsService.getPlayerPermissions(player.getWorld().getName(), null, player.getName());
-                return perms.containsKey(permsNode) ? perms.get(permsNode) : def;
-
-            case VAULT:
-                // Vault
-                return vaultPerms.has(player, permsNode);
         }
 
         // Failed, return the default
@@ -520,20 +397,6 @@ public class PermissionsManager {
         if(!isEnabled() || !isHooked())
             return false;
 
-        // Use the proper API
-        switch (this.permsType) {
-            case PERMISSIONS_EX:
-            case PERMISSIONS_BUKKIT:
-            case B_PERMISSIONS:
-            case Z_PERMISSIONS:
-                return true;
-
-            case VAULT:
-                // Vault
-                return vaultPerms.hasGroupSupport();
-        }
-
-        // Failed return false
         return false;
     }
 
@@ -543,38 +406,11 @@ public class PermissionsManager {
      * @param player The player.
      * @return Permission groups, or an empty list if this feature is not supported.
      */
-    @SuppressWarnings({"unchecked", "rawtypes", "deprecation"})
     public List<String> getGroups(Player player) {
         // Make sure the manager is enabled and is hooked into a permissions system
         if(!isEnabled() || !isHooked())
             return new ArrayList<>();
 
-        // Use the proper API
-        switch (this.permsType) {
-            case PERMISSIONS_EX:
-                // Permissions Ex
-                PermissionUser user = PermissionsEx.getUser(player);
-                return user.getParentIdentifiers(null);
-
-            case PERMISSIONS_BUKKIT:
-                // Permissions Bukkit
-                // FIXME: Add support for this!
-                return new ArrayList<>();
-
-            case B_PERMISSIONS:
-                // bPermissions
-                return Arrays.asList(ApiLayer.getGroups(player.getWorld().getName(), CalculableType.USER, player.getName()));
-
-            case Z_PERMISSIONS:
-                //zPermissions
-                return new ArrayList(zPermissionsService.getPlayerGroups(player.getName()));
-
-            case VAULT:
-                // Vault
-                return Arrays.asList(vaultPerms.getPlayerGroups(player));
-        }
-
-        // Failed, return an empty list
         return new ArrayList<>();
     }
 
@@ -584,38 +420,13 @@ public class PermissionsManager {
      * @param player The player.
      * @return The name of the primary permission group. Or null.
      */
-    @SuppressWarnings("deprecation")
     public String getPrimaryGroup(Player player) {
         // Make sure the manager is enabled and is hooked into a permissions system
         if(!isEnabled() || !isHooked())
             return null;
 
-        // Use the proper API
-        switch (this.permsType) {
-            case PERMISSIONS_EX:
-            case PERMISSIONS_BUKKIT:
-            case B_PERMISSIONS:
-                // Get the groups of the player
-                List<String> groups = getGroups(player);
-
-                // Make sure there is any group available, or return null
-                if (groups.size() == 0)
-                    return null;
-
-                // Return the first group
-                return groups.get(0);
-
-            case Z_PERMISSIONS:
-                //zPermissions
-                return zPermissionsService.getPlayerPrimaryGroup(player.getName());
-
-            case VAULT:
-                // Vault
-                return vaultPerms.getPrimaryGroup(player);
-        }
-
-        // Failed, return null
-        return null;
+        List<String> groups = getGroups(player);
+        return groups.isEmpty() ? null : groups.get(0);
     }
 
     /**
@@ -631,35 +442,7 @@ public class PermissionsManager {
         if(!isEnabled() || !isHooked())
             return false;
 
-        // Use the proper API
-        switch (this.permsType) {
-            case PERMISSIONS_EX:
-                // Permissions Ex
-                PermissionUser user = PermissionsEx.getUser(player);
-                return user.inGroup(groupName);
-
-            case PERMISSIONS_BUKKIT:
-            case Z_PERMISSIONS:
-                // Get the current list of groups
-                List<String> groupNames = getGroups(player);
-
-                // Check whether the list contains the group name, return the result
-                for (String entry : groupNames)
-                    if (entry.equals(groupName))
-                        return true;
-                return false;
-
-            case B_PERMISSIONS:
-                // bPermissions
-                return ApiLayer.hasGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
-
-            case VAULT:
-                // Vault
-                return vaultPerms.playerInGroup(player, groupName);
-        }
-
-        // Failed, return false
-        return false;
+        return getGroups(player).contains(groupName);
     }
 
     /**
@@ -675,36 +458,6 @@ public class PermissionsManager {
         if(!isStarted() || !isHooked())
             return false;
 
-        // Set the group the proper way
-        switch (this.permsType) {
-            case PERMISSIONS_EX:
-                // Permissions Ex
-                PermissionUser user = PermissionsEx.getUser(player);
-                user.addGroup(groupName);
-                return true;
-
-            case PERMISSIONS_BUKKIT:
-                // Permissions Bukkit
-                // Add the group to the user using a command
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "permissions player addgroup " + player.getName() + " " + groupName);
-
-            case B_PERMISSIONS:
-                // bPermissions
-                ApiLayer.addGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
-                return true;
-
-            case Z_PERMISSIONS:
-                // zPermissions
-                // Add the group to the user using a command
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "permissions player " + player.getName() + " addgroup " + groupName);
-
-            case VAULT:
-                // Vault
-                vaultPerms.playerAddGroup(player, groupName);
-                return true;
-        }
-
-        // Failed, return false
         return false;
     }
 
@@ -744,36 +497,6 @@ public class PermissionsManager {
         if(!isEnabled() || !isHooked())
             return false;
 
-        // Set the group the proper way
-        switch (this.permsType) {
-            case PERMISSIONS_EX:
-                // Permissions Ex
-                PermissionUser user = PermissionsEx.getUser(player);
-                user.removeGroup(groupName);
-                return true;
-
-            case PERMISSIONS_BUKKIT:
-                // Permissions Bukkit
-                // Remove the group to the user using a command
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "permissions player removegroup " + player.getName() + " " + groupName);
-
-            case B_PERMISSIONS:
-                // bPermissions
-                ApiLayer.removeGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
-                return true;
-
-            case Z_PERMISSIONS:
-                // zPermissions
-                // Remove the group to the user using a command
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "permissions player " + player.getName() + " removegroup " + groupName);
-
-            case VAULT:
-                // Vault
-                vaultPerms.playerRemoveGroup(player, groupName);
-                return true;
-        }
-
-        // Failed, return false
         return false;
     }
 
@@ -814,42 +537,6 @@ public class PermissionsManager {
         if(!isEnabled() || !isHooked())
             return false;
 
-        // Create a list of group names
-        List<String> groupNames = new ArrayList<>();
-        groupNames.add(groupName);
-
-        // Set the group the proper way
-        switch (this.permsType) {
-            case PERMISSIONS_EX:
-                // Permissions Ex
-                PermissionUser user = PermissionsEx.getUser(player);
-                user.setParentsIdentifier(groupNames);
-                return true;
-
-            case PERMISSIONS_BUKKIT:
-                // Permissions Bukkit
-                // Set the user's group using a command
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "permissions player setgroup " + player.getName() + " " + groupName);
-
-            case B_PERMISSIONS:
-                // bPermissions
-                ApiLayer.setGroup(player.getWorld().getName(), CalculableType.USER, player.getName(), groupName);
-                return true;
-
-            case Z_PERMISSIONS:
-                //zPermissions
-                // Set the players group through the plugin commands
-                return Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "permissions player " + player.getName() + " setgroup " + groupName);
-
-            case VAULT:
-                // Vault
-                // Remove all current groups, add the player to the specified group afterwards
-                removeAllGroups(player);
-                vaultPerms.playerAddGroup(player, groupName);
-                return true;
-        }
-
-        // Failed, return false
         return false;
     }
 
@@ -931,29 +618,9 @@ public class PermissionsManager {
      */
     public enum PermissionsSystemType {
         /**
-         * Permissions Ex.
-         */
-        PERMISSIONS_EX("PermissionsEx", "PermissionsEx"),
-
-        /**
          * Permissions Bukkit.
          */
-        PERMISSIONS_BUKKIT("Permissions Bukkit", "PermissionsBukkit"),
-
-        /**
-         * bPermissions.
-         */
-        B_PERMISSIONS("bPermissions", "bPermissions"),
-
-        /**
-         * zPermissions.
-         */
-        Z_PERMISSIONS("zPermissions", "zPermissions"),
-
-        /**
-         * Vault.
-         */
-        VAULT("Vault", "Vault");
+        PERMISSIONS_BUKKIT("Permissions Bukkit", "PermissionsBukkit");
 
         /**
          * The display name of the permissions system.

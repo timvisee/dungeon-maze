@@ -9,7 +9,10 @@ import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGrid;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.grid.DungeonRegionGridManager;
 import org.bukkit.Chunk;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.generator.BlockPopulator;
 
 public abstract class ChunkBlockPopulator extends BlockPopulator {
@@ -18,7 +21,7 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
      * The last accessed dungeon chunk.
      */
     // TODO: Should we make this static, because every populator has a different instance?
-    private DungeonChunk lastChunkCache = null;
+    private final ThreadLocal<DungeonChunk> lastChunkCache = new ThreadLocal<>();
 
     @Override
     public void populate(World world, Random rand, Chunk chunk) {
@@ -34,7 +37,7 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
 //        }
 
         // Get the dungeon chunk instance
-        DungeonChunk dungeonChunk = lastChunkCache;
+        DungeonChunk dungeonChunk = lastChunkCache.get();
 
         // Make sure the cached chunk is correct, load the correct chunk if that's not the case
         if(dungeonChunk == null || !dungeonChunk.is(world, chunk))  {
@@ -48,12 +51,20 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
 
                 // Create or get the chunk grid for the current world
                 final DungeonRegionGrid dungeonRegionGrid = chunkGridManager.getOrCreateRegionGrid(world);
+                if(dungeonRegionGrid == null) {
+                    Core.getLogger().error("Unable to populate Dungeon Maze chunk (" + world.getName() + ", " + chunk.getX() + ", " + chunk.getZ() + "), couldn't access the region grid!");
+                    return;
+                }
 
                 // Create or get the chunk data for the current chunk
                 dungeonChunk = dungeonRegionGrid.getOrCreateChunk(chunk);
+                if(dungeonChunk == null) {
+                    Core.getLogger().error("Unable to populate Dungeon Maze chunk (" + world.getName() + ", " + chunk.getX() + ", " + chunk.getZ() + "), couldn't access dungeon chunk metadata!");
+                    return;
+                }
 
                 // Set the cached chunk
-                lastChunkCache = dungeonChunk;
+                lastChunkCache.set(dungeonChunk);
 
             } catch(Exception ex) {
                 Core.getLogger().error("Unable to generate Dungeon Maze chunk, couldn't access the chunk grid manager!");
@@ -99,7 +110,15 @@ public abstract class ChunkBlockPopulator extends BlockPopulator {
      *
 	 * @param args Populator arguments.
 	 */
-	public abstract void populateChunk(ChunkBlockPopulatorArgs args);
+    public abstract void populateChunk(ChunkBlockPopulatorArgs args);
+
+    protected final void setGeneratedBlock(Block block, Material material) {
+        block.setType(material, false);
+    }
+
+    protected final void setGeneratedBlockData(Block block, BlockData blockData) {
+        block.setBlockData(blockData, false);
+    }
 
     /**
      * Get the chunk population chance. This value is between 0.0 and 1.0.

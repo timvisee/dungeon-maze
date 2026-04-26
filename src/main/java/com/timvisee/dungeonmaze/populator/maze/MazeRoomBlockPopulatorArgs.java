@@ -8,9 +8,13 @@ import org.bukkit.World;
 
 public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
 
-	/** Defines the X coordinate of the chunk. */
+	/** Defines the room origin X coordinate in the current chunk. */
+	private int roomChunkX = 0;
+	/** Defines the room origin Z coordinate in the current chunk. */
+	private int roomChunkZ = 0;
+	/** Defines the room origin X coordinate in the world. */
 	private int x = 0;
-	/** Defines the Z coordinate of the chunk. */
+	/** Defines the room origin Z coordinate in the world. */
 	private int z = 0;
 	/** Defines the floor offset. */
 	private int floorOffset = 0;
@@ -24,26 +28,37 @@ public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
 	 * @param rand Random instance.
 	 * @param chunk Source chunk.
 	 * @param layer Layer.
-	 * @param x X coordinate.
+	 * @param x Room origin X coordinate in the current chunk.
 	 * @param y Y coordinate.
-	 * @param z Z coordinate.
+	 * @param z Room origin Z coordinate in the current chunk.
 	 * @param floorOffset Floor offset.
 	 * @param ceilingOffset Ceiling offset.
 	 */
 	public MazeRoomBlockPopulatorArgs(World world, Random rand, Chunk chunk, DungeonChunk dungeonChunk, int layer, int x, int y, int z, int floorOffset, int ceilingOffset) {
 		super(world, rand, chunk, dungeonChunk, layer, y);
-		this.x = x;
-		this.z = z;
+		this.roomChunkX = x;
+		this.roomChunkZ = z;
+		this.x = (chunk.getX() * 16) + x;
+		this.z = (chunk.getZ() * 16) + z;
 		this.floorOffset = floorOffset;
 		this.ceilingOffset = ceilingOffset;
 	}
 	
 	/**
-	 * Get the X coordinate.
+	 * Get the room origin X coordinate in the world.
      *
-	 * @return X coordinate.
+	 * @return Room origin X coordinate in the world.
 	 */
 	public int getX() {
+		return this.x;
+	}
+
+	/**
+	 * Get the room origin X coordinate in the world.
+     *
+	 * @return Room origin X coordinate in the world.
+	 */
+	public int getWorldX() {
 		return this.x;
 	}
 	
@@ -53,24 +68,34 @@ public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
 	 * @return X coordinate inside the current chunk.
 	 */
 	public int getRoomChunkX() {
-		return (this.x % 16);
+		return this.roomChunkX;
 	}
 	
 	/**
-	 * Set the X coordinate.
+	 * Set the room origin X coordinate in the world.
      *
-	 * @param x X coordinate.
+	 * @param x Room origin X coordinate in the world.
 	 */
 	public void setX(int x) {
 		this.x = x;
+		this.roomChunkX = Math.floorMod(x, 16);
 	}
 	
 	/**
-	 * Get the Z coordinate.
+	 * Get the room origin Z coordinate in the world.
      *
-	 * @return Z coordinate.
+	 * @return Room origin Z coordinate in the world.
 	 */
 	public int getZ() {
+		return this.z;
+	}
+
+	/**
+	 * Get the room origin Z coordinate in the world.
+     *
+	 * @return Room origin Z coordinate in the world.
+	 */
+	public int getWorldZ() {
 		return this.z;
 	}
 	
@@ -80,16 +105,17 @@ public class MazeRoomBlockPopulatorArgs extends MazeLayerBlockPopulatorArgs {
 	 * @return Z coordinate inside the current chunk.
 	 */
 	public int getRoomChunkZ() {
-		return (this.z % 16);
+		return this.roomChunkZ;
 	}
 	
 	/**
-	 * Set the Z coordinate.
+	 * Set the room origin Z coordinate in the world.
      *
-	 * @param z Z coordinate.
+	 * @param z Room origin Z coordinate in the world.
 	 */
 	public void setZ(int z) {
 		this.z = z;
+		this.roomChunkZ = Math.floorMod(z, 16);
 	}
 	
 	/**

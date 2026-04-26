@@ -36,14 +36,14 @@ public class BrokenWallsPopulator extends MazeRoomBlockPopulator {
             posZ = roomZ + rand.nextInt(6) + 1;
 
         } else {
-            posX = roomZ + rand.nextInt(6) + 1;
-            posZ = roomX + (rand.nextBoolean() ? 0 : 7);
+            posX = roomX + rand.nextInt(6) + 1;
+            posZ = roomZ + (rand.nextBoolean() ? 0 : 7);
         }
 
 		// TODO: Improve this!
         // Make a gap in the wall
-        chunk.getBlock(posX, posY, posZ).setType(Material.AIR);
-        chunk.getBlock(posX, posY + 1, posZ).setType(Material.AIR);
+        setGeneratedBlock(chunk.getBlock(posX, posY, posZ), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(posX, posY + 1, posZ), Material.AIR);
 	}
 
     @Override

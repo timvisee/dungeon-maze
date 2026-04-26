@@ -1,6 +1,5 @@
 package com.timvisee.dungeonmaze.api;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import com.timvisee.dungeonmaze.Core;
@@ -8,6 +7,7 @@ import com.timvisee.dungeonmaze.api.permission.ApiPermissionsManager;
 import com.timvisee.dungeonmaze.api.world.ApiWorldManager;
 import com.timvisee.dungeonmaze.util.Profiler;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -264,21 +264,8 @@ public class DungeonMazeApi {
 		return true;
 	}
 	
-	/**
-	 * @param target (int)
-	 *
-	 * @return True if the object is in the list, false otherwise.
-	 */
-	public boolean isInWhiteList(Object target){
-		List<Object> list = Core.getConfigHandler().blockWhiteList;
-		
-		if(list == null)
-			return(false);
-
-		for(Object aList : list)
-			if(aList.equals(target))
-				return true;
-		return false;
+	public boolean isInWhiteList(Material target) {
+		return Core.getConfigHandler().isInWhiteList(target);
 	}
 	
 	/**

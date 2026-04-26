@@ -11,7 +11,7 @@
     <name>DungeonMaze</name>
     <description>Dungeon Maze is a maze world generator for the Bukkit/Spigot API. Give it a try! Will you survive?</description>
     <inceptionYear>2012</inceptionYear>
-    <url>http://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
+    <url>https://dev.bukkit.org/bukkit-plugins/dungeon-maze/</url>
 
     <scm>
         <connection>scm:git:https://github.com/timvisee/dungeon-maze.git</connection>
@@ -21,7 +21,7 @@
 
     <ciManagement>
         <system>jenkins</system>
-        <url>https://ci.codemc.org/job/Timvisee/job/DungeonMaze/</url>
+        <url>https://ci.codemc.io/job/Timvisee/job/DungeonMaze/</url>
     </ciManagement>
 
     <issueManagement>
@@ -32,18 +32,18 @@
     <distributionManagement>
         <snapshotRepository>
             <id>codemc-snapshots</id>
-            <url>https://repo.codemc.org/repository/maven-snapshots/</url>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>codemc-releases</id>
-            <url>https://repo.codemc.org/repository/maven-releases/</url>
+            <url>https://repo.codemc.io/repository/maven-releases/</url>
         </repository>
     </distributionManagement>
 
     <licenses>
         <license>
             <name>The GNU General Public Licence version 3 (GPLv3)</name>
-            <url>http://www.gnu.org/licenses/gpl-3.0.html</url>
+            <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
@@ -52,15 +52,28 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- Compiler Version (JDK) -->
-        <java.version>1.8</java.version>
-        <!-- Minecraft server API versions -->
-        <spigot.version>1.12.2-R0.1-SNAPSHOT</spigot.version>
+        <!-- Build toolchain -->
+        <module.java.version>17</module.java.version>
+        <maven.minimumVersion>3.8.8</maven.minimumVersion>
+        <argLine></argLine>
+
+        <!-- Minecraft API -->
+        <spigot.version>1.16.5-R0.1-SNAPSHOT</spigot.version>
+
+        <!-- Shaded library versions -->
+        <deps.json.version>20231013</deps.json.version>
+        <deps.msgpack.version>0.9.8</deps.msgpack.version>
+        <deps.string-similarity.version>1.0.0</deps.string-similarity.version>
+        <deps.bstats.version>3.1.0</deps.bstats.version>
+
+        <!-- Plugin integration versions -->
+        <deps.multiverse.version>4.3.16</deps.multiverse.version>
+        <deps.authme.version>6.0.0-R1-SNAPSHOT</deps.authme.version>
     </properties>
 
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>${project.name}-${project.version}-noshade</finalName>
+        <finalName>${project.name}-${project.version}</finalName>
 
         <resources>
             <resource>
@@ -79,41 +92,63 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+                    <execution>
+                        <id>enforce-environment</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireJavaVersion>
+                                    <version>[${module.java.version},)</version>
+                                </requireJavaVersion>
+                                <requireMavenVersion>
+                                    <version>${maven.minimumVersion}</version>
+                                </requireMavenVersion>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.4.0</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.3.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.15.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${module.java.version}</release>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20.1</version>
+                <version>3.5.5</version>
                 <configuration>
-                    <!-- Force the right file encoding during unit testing -->
                     <argLine>-Dfile.encoding=${project.build.sourceEncoding} @{argLine}</argLine>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>3.4.2</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.12.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadoc</id>
@@ -137,7 +172,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -153,7 +188,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -164,9 +199,20 @@
                 </executions>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <finalName>${project.name}-${project.version}</finalName>
-
+                    <shadedArtifactAttached>false</shadedArtifactAttached>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                    </transformers>
                     <relocations>
                         <relocation>
                             <pattern>net.ricecode.similarity</pattern>
@@ -190,12 +236,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>2.5.2</version>
+                <version>3.1.2</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
+                <version>3.1.2</version>
             </plugin>
         </plugins>
     </build>
@@ -204,27 +250,45 @@
         <!-- SpigotMC repository (Bukkit and SpigotAPI) -->
         <repository>
             <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public</url>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <!-- Multiverse repository -->
         <repository>
-            <id>onarandombox</id>
-            <url>http://repo.onarandombox.com/content/groups/public</url>
+            <id>onarandombox-releases</id>
+            <url>https://repo.onarandombox.com/content/repositories/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
-        <!-- Vault repository -->
         <repository>
-            <id>vault-repo</id>
-            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+            <id>onarandombox-snapshots</id>
+            <url>https://repo.onarandombox.com/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
-        <!-- CodeMC repository -->
+        <!-- CodeMC repository (bStats, VaultAPI, PermissionsEx, zPermissions, AuthMeReloaded) -->
         <repository>
             <id>codemc-repo</id>
-            <url>https://repo.codemc.org/repository/maven-public/</url>
-        </repository>
-        <!-- bStats repository -->
-        <repository>
-            <id>bstats-repo</id>
-            <url>http://repo.bstats.org/content/groups/public</url>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
@@ -233,42 +297,43 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20180130</version>
+            <version>${deps.json.version}</version>
             <optional>true</optional>
         </dependency>
         <!-- MessagePack library -->
         <dependency>
             <groupId>org.msgpack</groupId>
             <artifactId>msgpack-core</artifactId>
-            <version>0.8.15</version>
+            <version>${deps.msgpack.version}</version>
             <optional>true</optional>
         </dependency>
         <!-- String comparison library. Used for dynamic help system. -->
         <dependency>
             <groupId>net.ricecode</groupId>
             <artifactId>string-similarity</artifactId>
-            <version>1.0.0</version>
+            <version>${deps.string-similarity.version}</version>
             <optional>true</optional>
         </dependency>
         <!-- bStats metrics -->
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>1.2</version>
+            <version>${deps.bstats.version}</version>
             <optional>true</optional>
         </dependency>
-        <!-- Spigot-Api, http://www.spigotmc.org/ Based on the Bukkit project, http://bukkit.org/ -->
+        <!-- Spigot-Api, https://www.spigotmc.org/ -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>${spigot.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Multi World plugin, http://www.spigotmc.org/resources/multiverse-core.390/ -->
+        <!-- Multi World plugin, https://www.spigotmc.org/resources/multiverse-core.390/ -->
         <dependency>
             <groupId>com.onarandombox.multiversecore</groupId>
             <artifactId>Multiverse-Core</artifactId>
-            <version>2.6.0-SNAPSHOT</version>
+            <version>${deps.multiverse.version}</version>
+            <type>jar</type>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -325,124 +390,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- Vault, http://dev.bukkit.org/bukkit-plugins/vault/ -->
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.6</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>craftbukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- PermissionsEx plugin -->
-        <dependency>
-            <groupId>ru.tehkode</groupId>
-            <artifactId>PermissionsEx</artifactId>
-            <version>1.23.5-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>net.gravitydevelopment.updater</groupId>
-                    <artifactId>updater</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-dbcp</artifactId>
-                    <groupId>commons-dbcp</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>AccountsClient</artifactId>
-                    <groupId>com.mojang</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- bPermissions plugin -->
-        <dependency>
-            <groupId>de.bananaco</groupId>
-            <artifactId>bPermissions</artifactId>
-            <version>2.12-DEV</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- zPermissions plugin -->
-        <dependency>
-            <groupId>org.tyrannyofheaven.bukkit</groupId>
-            <artifactId>zPermissions</artifactId>
-            <version>1.4-SNAPSHOT</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.bukkit</groupId>
-                    <artifactId>bukkit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.sk89q</groupId>
-                    <artifactId>worldguard</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.sk89q</groupId>
-                    <artifactId>worldedit</artifactId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>VaultAPI</artifactId>
-                    <groupId>net.milkbowl.vault</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>uuidprovider</artifactId>
-                    <groupId>net.kaikk.mc</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>ToHPluginUtils</artifactId>
-                    <groupId>org.tyrannyofheaven.bukkit</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>Residence</artifactId>
-                    <groupId>com.bekvon.bukkit</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>Factions</artifactId>
-                    <groupId>com.massivecraft</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mcore</artifactId>
-                    <groupId>com.massivecraft</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>Factoid</artifactId>
-                    <groupId>me.tabinol.factoid</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>ebean</artifactId>
-                    <groupId>org.avaje</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>persistence-api</artifactId>
-                    <groupId>javax.persistence</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <!-- AuthMeReloaded plugin -->
         <dependency>
             <groupId>fr.xephi</groupId>
-            <artifactId>authme</artifactId>
-            <version>5.5.0-SNAPSHOT</version>
+            <artifactId>authme-core</artifactId>
+            <version>${deps.authme.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.12.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

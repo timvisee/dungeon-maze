@@ -41,7 +41,7 @@ public class MushroomPopulator extends MazeRoomBlockPopulator {
         if(chunk.getBlock(spawnerX, spawnerY - 1, spawnerZ).getType() != Material.AIR) {
             Block b = chunk.getBlock(spawnerX, spawnerY, spawnerZ);
             if(b.getType() == Material.AIR)
-                b.setType(mushroomType);
+                setGeneratedBlock(b, mushroomType);
         }
 	}
 

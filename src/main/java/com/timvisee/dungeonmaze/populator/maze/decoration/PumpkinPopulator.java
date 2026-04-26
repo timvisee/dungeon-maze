@@ -5,6 +5,8 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
@@ -39,13 +41,15 @@ public class PumpkinPopulator extends MazeRoomBlockPopulator {
         if(chunk.getBlock(xPumpkin, yPumpkin - 1, zPumpkin).getType() != Material.AIR) {
             Block slabBlock = chunk.getBlock(xPumpkin, yPumpkin, zPumpkin);
             if(slabBlock.getType() == Material.AIR) {
-                if(!illuminated)
-                    slabBlock.setType(Material.PUMPKIN);
-                else
-                    slabBlock.setType(Material.JACK_O_LANTERN);
-
-                // Randomly rotate the pumpkin
-                slabBlock.setData((byte) rand.nextInt(4));
+                if(!illuminated) {
+                    setGeneratedBlock(slabBlock, Material.PUMPKIN);
+                } else {
+                    BlockFace[] faces = {BlockFace.SOUTH, BlockFace.WEST, BlockFace.NORTH, BlockFace.EAST};
+                    setGeneratedBlock(slabBlock, Material.JACK_O_LANTERN);
+                    Directional jol = (Directional) slabBlock.getBlockData();
+                    jol.setFacing(faces[rand.nextInt(4)]);
+                    setGeneratedBlockData(slabBlock, jol);
+                }
             }
         }
     }

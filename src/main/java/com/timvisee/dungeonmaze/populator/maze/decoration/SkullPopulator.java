@@ -8,8 +8,9 @@ import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
-import org.bukkit.SkullType;
 import org.bukkit.block.*;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Rotatable;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
@@ -52,24 +53,25 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
         Block skullBlock = c.getBlock(skullX, skullY, skullZ);
 
         if(withPole)
-            poleBlock.setType(Material.FENCE);
+            setGeneratedBlock(poleBlock, Material.OAK_FENCE);
 
         // Get and create the skull block
-        skullBlock.setType(Material.SKULL);
-        skullBlock.setData((byte) 1);
+        setGeneratedBlock(skullBlock, getRandomSkullMaterial(rand));
 
 		try {
 			Skull skull = (Skull) skullBlock.getState();
 
-			// Get a random name for the skull, and make sure the name is valid
-			final String skullOwner = getRandomOwner(rand);
-			if(skullOwner.trim().length() == 0)
-				return;
+			// Get a random online owner for player heads when available
+			final Player skullOwner = getRandomOwner(rand);
 
-			// Set the skull type, rotation and owner
-			skull.setSkullType(getRandomSkullType(rand));
-			skull.setRotation(getRandomSkullRotation(rand));
-			skull.setOwner(skullOwner);
+			// Set the rotation and owner
+            final BlockData blockData = skullBlock.getBlockData();
+            if(blockData instanceof Rotatable) {
+                ((Rotatable) blockData).setRotation(getRandomSkullRotation(rand));
+                setGeneratedBlockData(skullBlock, blockData);
+            }
+            if(skullOwner != null && skullBlock.getType() == Material.PLAYER_HEAD)
+                skull.setOwningPlayer(skullOwner);
 
 			// Force update the skull
 			skull.update(true, false);
@@ -80,20 +82,25 @@ public class SkullPopulator extends MazeRoomBlockPopulator {
 		}
 	}
 	
-	private String getRandomOwner(Random rand) {
-		String name = "timvisee";
-		if(Bukkit.getOnlinePlayers().size() > 0) {
-			List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
-			name = onlinePlayers.get(rand.nextInt(onlinePlayers.size())).getName();
-		}
-		return name;
+	private Player getRandomOwner(Random rand) {
+		if(Bukkit.getOnlinePlayers().size() == 0)
+			return null;
+
+		List<Player> onlinePlayers = new ArrayList<>(Bukkit.getOnlinePlayers());
+		return onlinePlayers.get(rand.nextInt(onlinePlayers.size()));
 	}
 
-	private SkullType getRandomSkullType(Random rand) {
-		SkullType[] types = SkullType.values();
-		return types[rand.nextInt(types.length)];
+	private Material getRandomSkullMaterial(Random rand) {
+		Material[] skulls = {
+			Material.SKELETON_SKULL,
+			Material.ZOMBIE_HEAD,
+			Material.CREEPER_HEAD,
+			Material.WITHER_SKELETON_SKULL,
+			Material.PLAYER_HEAD
+		};
+		return skulls[rand.nextInt(skulls.length)];
 	}
-	
+
 	private BlockFace getRandomSkullRotation(Random rand) {
 		BlockFace[] faces = new BlockFace[]{
 				BlockFace.EAST,

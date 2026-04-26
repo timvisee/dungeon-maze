@@ -41,20 +41,20 @@ public class IronBarPopulator extends MazeRoomBlockPopulator {
             blockZ = z + rand.nextInt(6) + 1;
 
         } else {
-            blockX = z + rand.nextInt(6) + 1;
-            blockZ = x + (rand.nextBoolean() ? 0 : 7);
+            blockX = x + rand.nextInt(6) + 1;
+            blockZ = z + (rand.nextBoolean() ? 0 : 7);
         }
 
         // Specify the bars base block
         Block barsBase = chunk.getBlock(blockX, blockY, blockZ);
-        if(barsBase.getType() == Material.COBBLESTONE || barsBase.getType() == Material.MOSSY_COBBLESTONE || barsBase.getType() == Material.SMOOTH_BRICK) {
+        if(barsBase.getType() == Material.COBBLESTONE || barsBase.getType() == Material.MOSSY_COBBLESTONE || barsBase.getType() == Material.STONE_BRICKS) {
             // Set the block type to the iron bars
-            barsBase.setType(Material.IRON_FENCE);
+            setGeneratedBlock(barsBase, Material.IRON_BARS);
 
             // Check whether bars of two blocks height should be spawned
             if(rand.nextFloat() < CHANCE_DOUBLE_HEIGHT) {
                 Block block2 = chunk.getBlock(blockX, blockY + 1, blockZ);
-                block2.setType(Material.IRON_FENCE);
+                setGeneratedBlock(block2, Material.IRON_BARS);
             }
         }
 	}

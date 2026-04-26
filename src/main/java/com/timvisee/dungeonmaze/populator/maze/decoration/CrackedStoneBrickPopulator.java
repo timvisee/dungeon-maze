@@ -29,8 +29,8 @@ public class CrackedStoneBrickPopulator extends MazeRoomBlockPopulator {
         Block crackedStoneBlock = chunk.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
 
         // Change the block if it's currently a smooth stone brick block
-        if(crackedStoneBlock.getType() == Material.SMOOTH_BRICK)
-            crackedStoneBlock.setData((byte) 2);
+        if(crackedStoneBlock.getType() == Material.STONE_BRICKS)
+            setGeneratedBlock(crackedStoneBlock, Material.CRACKED_STONE_BRICKS);
 	}
 
     @Override

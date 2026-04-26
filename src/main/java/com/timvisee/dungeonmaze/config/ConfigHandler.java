@@ -1,21 +1,22 @@
 package com.timvisee.dungeonmaze.config;
 
-import java.util.List;
-
 import com.timvisee.dungeonmaze.Core;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
-public class ConfigHandler {
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Set;
 
-    // TODO: Use material enums instead of ID's due to ID deprecation by Mojang
+public class ConfigHandler {
 
     // Configuration cache
     public FileConfiguration config;
     public boolean unloadWorldsOnPluginDisable;
     public boolean allowSurface;
     public boolean worldProtection;
-    public List<Object> blockWhiteList;
+    public Set<Material> blockWhiteList;
     public boolean enableUpdateCheckerOnStartup;
     public boolean usePermissions;
     public boolean useBypassPermissions;
@@ -23,7 +24,6 @@ public class ConfigHandler {
     public boolean authMeReloadedMustBeRegistered;
     public List<String> mobs;
 
-    @SuppressWarnings("unchecked")
     public void load() {
         // Get the config instance
         config = new Config();
@@ -37,29 +37,39 @@ public class ConfigHandler {
         useBypassPermissions = config.getBoolean("useBypassPermissions", true);
         alwaysAllowOp = config.getBoolean("alwaysAllowOp", false);
         authMeReloadedMustBeRegistered = config.getBoolean("authMeReloadedMustBeRegistered", true);
-        blockWhiteList = (List<Object>) config.getList("blockWhiteList");
+        blockWhiteList = loadBlockWhiteList();
         mobs = config.getStringList("mobs");
     }
 
     /**
-     * Check whether a block is in the block whitelist or not
+     * Load the block whitelist as 1.13+ material names.
      *
-     * @param target Block type ID
-     *
-     * @return true if the object is in the list
+     * @return Parsed whitelist materials.
      */
-    @SuppressWarnings("UnusedDeclaration")
-    @Deprecated // Deprecate this for use Material enum
-    public boolean isInWhiteList(int target) {
-        List<Object> list = Core.getConfigHandler().blockWhiteList;
+    private Set<Material> loadBlockWhiteList() {
+        final Set<Material> whiteList = EnumSet.noneOf(Material.class);
 
-        if(list == null)
-            return (false);
+        for(Object entry : config.getList("blockWhiteList", Collections.emptyList())) {
+            if(entry instanceof String) {
+                final Material material = Material.matchMaterial((String) entry);
+                if(material == null) {
+                    Core.getLogger().warning("Ignoring unknown blockWhiteList material: " + entry);
+                    continue;
+                }
+                if(!material.isBlock()) {
+                    Core.getLogger().warning("Ignoring non-block blockWhiteList material: " + entry);
+                    continue;
+                }
 
-        for(Object entry : list)
-            if(entry instanceof Integer)
-                return ((Integer) entry == target);
-        return false;
+                whiteList.add(material);
+                continue;
+            }
+
+            if(entry != null)
+                Core.getLogger().warning("Ignoring legacy blockWhiteList entry '" + entry + "'. Use 1.13+ material names.");
+        }
+
+        return whiteList;
     }
 
     /**
@@ -69,21 +79,8 @@ public class ConfigHandler {
      *
      * @return true if the object is in the list
      */
-    /*
-	 *  TODO: Actually use the getId() magic value,
-	 *  need to update when Minecraft/Bukkit will remove them
-	 */
     public boolean isInWhiteList(Material material) {
-        int target = material.getId();
-        List<Object> list = Core.getConfigHandler().blockWhiteList;
-
-        if(list == null)
-            return (false);
-
-        for(Object entry : list)
-            if(entry instanceof Integer)
-                return ((Integer) entry == target);
-        return false;
+        return material != null && Core.getConfigHandler().blockWhiteList.contains(material);
     }
 
     /**

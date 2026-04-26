@@ -62,7 +62,7 @@ public class SpawnerPopulator extends MazeRoomBlockPopulator {
                     spawnedType = EntityType.SPIDER;
 
                 else if(i >= 21 && i <= 22 && Core.getConfigHandler().isMobSpawnerAllowed("PigZombie"))
-                    spawnedType = EntityType.PIG_ZOMBIE;
+                    spawnedType = EntityType.ZOMBIFIED_PIGLIN;
 
                 else if(i == 23 && Core.getConfigHandler().isMobSpawnerAllowed("Enderman"))
                     spawnedType = EntityType.ENDERMAN;

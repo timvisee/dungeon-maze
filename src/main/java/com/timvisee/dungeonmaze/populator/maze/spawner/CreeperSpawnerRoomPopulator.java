@@ -17,6 +17,7 @@ import com.timvisee.dungeonmaze.DungeonMaze;
 import com.timvisee.dungeonmaze.event.generation.GenerationSpawnerEvent;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 
 public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
@@ -38,8 +39,9 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		Random rand = args.getRandom();
 		int x = args.getRoomChunkX();
 		int y = args.getChunkY();
-		int yFloor = args.getFloorY();
-		int z = args.getRoomChunkZ();
+        int yFloor = args.getFloorY();
+        int z = args.getRoomChunkZ();
+        final Material netherBricks = MaterialUtils.requireBlockMaterial("NETHER_BRICKS", "NETHER_BRICK");
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
@@ -49,11 +51,11 @@ public class CreeperSpawnerRoomPopulator extends MazeRoomBlockPopulator {
         DungeonMaze.instance.registerConstantRoom(world.getName(), chunk.getX(), chunk.getZ(), x, y, z);
 
         // Create the core
-        chunk.getBlock(x + 3, yFloor + 1, z + 4).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 4, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 3, yFloor + 2, z + 3).setType(Material.NETHER_BRICK);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1, z + 4), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1, z + 3), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1, z + 2), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1, z + 3), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 2, z + 3), netherBricks);
 
         // Create the spawner
         if(Core.getConfigHandler().isMobSpawnerAllowed("Creeper")) {

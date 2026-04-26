@@ -48,7 +48,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
         // Create the floor
         for(int x2 = x; x2 < x + 7; x2 += 1)
             for(int z2 = z; z2 < z + 7; z2 += 1)
-                chunk.getBlock(x2, yFloor, z2).setType(Material.MOSSY_COBBLESTONE);
+                setGeneratedBlock(chunk.getBlock(x2, yFloor, z2), Material.MOSSY_COBBLESTONE);
 
         // Create the spawners
         if(Core.getConfigHandler().isMobSpawnerAllowed("Zombie")) {
@@ -65,7 +65,7 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
             Block spawnerBlock = chunk.getBlock(x + 3, yFloor + 1, z + 3);
 
             // Call the spawner generation event
-            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIFIED_PIGLIN, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_EASY, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
             // Apply the generation event
@@ -83,8 +83,8 @@ public class BossRoomEasyPopulator extends MazeRoomBlockPopulator {
         }
 
         // Coal ores
-        chunk.getBlock(x + 1, yFloor + 1, z + 5).setType(Material.COAL_ORE);
-        chunk.getBlock(x + 5, yFloor + 1, z + 1).setType(Material.COAL_ORE);
+        setGeneratedBlock(chunk.getBlock(x + 1, yFloor + 1, z + 5), Material.COAL_ORE);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1, z + 1), Material.COAL_ORE);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class ShortChunk extends AbstractChunk {
     /**
      * Defines the chunk data (blocks).
      */
-    private short[][] blocks;
+    private Material[][] blocks;
 
     /**
      * Defines the size in bytes of each block section.
@@ -22,6 +22,12 @@ public class ShortChunk extends AbstractChunk {
      * Defines the number of block sections per chunk.
      */
     private final static int SECTIONS_PER_CHUNK = 16;
+
+    private static Material[] createSection() {
+        final Material[] section = new Material[BYTES_PER_SECTION];
+        Arrays.fill(section, Material.AIR);
+        return section;
+    }
 
     /**
      * Constructor.
@@ -39,7 +45,7 @@ public class ShortChunk extends AbstractChunk {
         setChunkZ(chunkZ);
 
         // Instantiate the blocks array
-        this.blocks = new short[SECTIONS_PER_CHUNK][];
+        this.blocks = new Material[SECTIONS_PER_CHUNK][];
     }
 
     /**
@@ -47,7 +53,7 @@ public class ShortChunk extends AbstractChunk {
      *
      * @return The chunk data.
      */
-    public short[][] getChunkData() {
+    public Material[][] getChunkData() {
         return this.blocks;
     }
 
@@ -60,10 +66,10 @@ public class ShortChunk extends AbstractChunk {
      *
      * @return The block material.
      */
-    public short getBlock(int x, int y, int z) {
+    public Material getBlock(int x, int y, int z) {
         // Check whether the block is set, if not return Air
         if(this.blocks[y >> 4] == null)
-            return MaterialUtils.AIR_ID;
+            return Material.AIR;
 
         // Get and return the block material
         return blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x];
@@ -75,15 +81,15 @@ public class ShortChunk extends AbstractChunk {
      * @param x The X coordinate of the block relative to the chunk's origin.
      * @param y The Y coordinate of the block relative to the chunk's origin.
      * @param z The Z coordinate of the block relative to the chunk's origin.
-     * @param materialId The material ID to set the block to.
+     * @param material The material to set the block to.
      */
-    public void setBlock(int x, int y, int z, short materialId) {
+    private void setBlockInternal(int x, int y, int z, Material material) {
         // Make sure the block section has been set, if not create it
         if(blocks[y >> 4] == null)
-            blocks[y >> 4] = new short[BYTES_PER_SECTION];
+            blocks[y >> 4] = createSection();
 
         // Set the block material
-        blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = materialId;
+        blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = material;
     }
 
     /**
@@ -92,12 +98,12 @@ public class ShortChunk extends AbstractChunk {
      * @param x The X coordinate of the block relative to the chunk's origin.
      * @param y The Y coordinate of the block relative to the chunk's origin.
      * @param z The Z coordinate of the block relative to the chunk's origin.
-     * @param materialId The material ID to compare the block to.
+     * @param material The material to compare the block to.
      *
-     * @return True if the block has the same material ID, false otherwise.
+     * @return True if the block has the same material, false otherwise.
      */
-    public boolean isType(int x, int y, int z, short materialId) {
-        return getBlock(x, y, z) == materialId;
+    public boolean isType(int x, int y, int z, Material material) {
+        return getBlock(x, y, z) == material;
     }
 
     /**
@@ -106,17 +112,17 @@ public class ShortChunk extends AbstractChunk {
      * @param x The X coordinate of the block relative to the chunk's origin.
      * @param y The Y coordinate of the block relative to the chunk's origin.
      * @param z The Z coordinate of the block relative to the chunk's origin.
-     * @param materialIds A list of material ID's the block will be compared to.
+     * @param materials A list of materials the block will be compared to.
      *
-     * @return True if the material ID of the block exists in the material ID's list, false otherwise.
+     * @return True if the material of the block exists in the materials list, false otherwise.
      */
-    public boolean isType(int x, int y, int z, short[] materialIds) {
-        // Get the material ID of the block
-        short materialId = getBlock(x, y, z);
+    public boolean isType(int x, int y, int z, Material[] materials) {
+        // Get the material of the block
+        Material material = getBlock(x, y, z);
 
-        // Check if the material ID's list contains the ID
-        for(short testId : materialIds)
-            if(materialId == testId)
+        // Check if the material list contains the material
+        for(Material testMaterial : materials)
+            if(material == testMaterial)
                 return true;
 
         // The material ID isn't in the list, return false
@@ -138,40 +144,25 @@ public class ShortChunk extends AbstractChunk {
 
     @Override
     public boolean replaceBlock(int x, int y, int z, Material oldMaterial, Material newMaterial) {
-        return replaceBlock(x, y, z, MaterialUtils.getMaterialId(oldMaterial), MaterialUtils.getMaterialId(newMaterial));
-    }
-
-    /**
-     * Replace a block at the specified position.
-     *
-     * @param x The X coordinate of the block to set.
-     * @param y The Y coordinate of the block to set.
-     * @param z The Z coordinate of the block to set.
-     * @param oldId The old material ID to replace.
-     * @param newId The new material ID to set.
-     *
-     * @return True if the block was replaced, false otherwise.
-     */
-    public boolean replaceBlock(int x, int y, int z, short oldId, short newId) {
         // Make sure the current block equals the old material
-        if(!isType(x, y, z, oldId))
+        if(!isType(x, y, z, oldMaterial))
             return false;
 
         // Replace the block, return the result
-        setBlock(x, y, z, newId);
+        setBlock(x, y, z, newMaterial);
         return true;
     }
 
     @Override
     public void setBlock(int x, int y, int z, Material material) {
-        setBlock(x, y, z, MaterialUtils.getMaterialId(material));
+        setBlockInternal(x, y, z, material);
     }
 
     @Override
     public void clearBlock(int x, int y, int z) {
         // Clear a block if it isn't cleared already
         if(blocks[y >> 4] != null)
-            blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = MaterialUtils.AIR_ID;
+            blocks[y >> 4][((y & 0xF) << 8) | (z << 4) | x] = Material.AIR;
     }
 
     @Override
@@ -192,91 +183,53 @@ public class ShortChunk extends AbstractChunk {
      * @param y2 The second Y coordinate of the block range relative to the chunk's origin.
      * @param z1 The first Z coordinate of the block range relative to the chunk's origin.
      * @param z2 The second Z coordinate of the block range relative to the chunk's origin.
-     * @param materialId The material ID to set the blocks to.
+     * @param material The material to set the blocks to.
      */
-    public void setBlocks(int x1, int x2, int y1, int y2, int z1, int z2, short materialId) {
+    private void setBlocksInternal(int x1, int x2, int y1, int y2, int z1, int z2, Material material) {
         for(int x = x1; x <= x2; x++)
             for(int z = z1; z <= z2; z++)
                 for(int y = y1; y <= y2; y++)
-                    setBlock(x, y, z, materialId);
+                    setBlock(x, y, z, material);
     }
 
     @Override
     public void setBlocks(int x1, int x2, int y1, int y2, int z1, int z2, Material material) {
-        setBlocks(x1, x2, y1, y2, z1, z2, MaterialUtils.getMaterialId(material));
+        setBlocksInternal(x1, x2, y1, y2, z1, z2, material);
     }
 
     @Override
     public final boolean setEmptyBlock(int x, int y, int z, Material material) {
-        return setEmptyBlock(x, y, z, MaterialUtils.getMaterialId(material));
-    }
-
-    /**
-     * Set a block if it's empty (air).
-     *
-     * @param x The X coordinate of the block relative to the chunk's origin.
-     * @param y The Y coordinate of the block relative to the chunk's origin.
-     * @param z The Z coordinate of the block relative to the chunk´s origin.
-     * @param materialId The material ID to set the block to.
-     *
-     * @return True if the block was empty and changed, false if the block wasn't empty.
-     */
-    public boolean setEmptyBlock(int x, int y, int z, short materialId) {
         // Make sure the block is empty (air)
         if(!isEmpty(x, y, z))
             return false;
 
         // Set the block, return the result
-        setBlock(x, y, z, materialId);
+        setBlock(x, y, z, material);
         return true;
     }
 
     @Override
     public void setEmptyBlocks(int x1, int x2, int y1, int y2, int z1, int z2, Material material) {
-        // Get the material ID
-        short materialId = MaterialUtils.getMaterialId(material);
-
         // Set all empty blocks
         for(int x = x1; x <= x2; x++)
             for(int z = z1; z <= z2; z++)
                 for(int y = y1; y <= y2; y++)
-                    setEmptyBlock(x, y, z, materialId);
+                    setEmptyBlock(x, y, z, material);
     }
 
     @Override
     public void setLayer(int y, Material material) {
-        setLayer(y, MaterialUtils.getMaterialId(material));
-    }
-
-    /**
-     * Set a layer in the chunk.
-     *
-     * @param y The Y coordinate of the layer.
-     * @param materialId The material ID to set the blocks to.
-     */
-    public void setLayer(int y, short materialId) {
         // Set the layer
-        for(int x = 0; x <= CHUNK_BLOCK_WIDTH; x++)
-            for(int z = 0; z <= CHUNK_BLOCK_WIDTH; z++)
-                setBlock(x, y, z, materialId);
+        for(int x = 0; x < CHUNK_BLOCK_WIDTH; x++)
+            for(int z = 0; z < CHUNK_BLOCK_WIDTH; z++)
+                setBlock(x, y, z, material);
     }
 
     @Override
     public void setLayers(int y1, int y2, Material material) {
-        setLayers(y1, y2, MaterialUtils.getMaterialId(material));
-    }
-
-    /**
-     * Set some layers in the chunk.
-     *
-     * @param y1 The first Y coordinate of the layer.
-     * @param y2 The second Y coordinate of the layer.
-     * @param materialId The material ID to set the blocks to.
-     */
-    public void setLayers(int y1, int y2, short materialId) {
         // Loop through each layer
         for(int y = y1; y <= y2; y++)
-            setLayer(y, materialId);
+            setLayer(y, material);
     }
 
     @Override
@@ -323,9 +276,9 @@ public class ShortChunk extends AbstractChunk {
 
 
     @Override
-    public void setAllBlocks(short materialId) {
+    public void setAllBlocks(Material material) {
         // Clear the blocks array if the chunks needs to be cleared
-        if(MaterialUtils.isEmpty(materialId)) {
+        if(MaterialUtils.isEmpty(material)) {
             for(int c = 0; c < SECTIONS_PER_CHUNK; c++)
                 blocks[c] = null;
 
@@ -333,27 +286,27 @@ public class ShortChunk extends AbstractChunk {
             // Set all blocks
             for(int c = 0; c < SECTIONS_PER_CHUNK; c++) {
                 if(blocks[c] == null)
-                    blocks[c] = new short[BYTES_PER_SECTION];
-                Arrays.fill(blocks[c], 0, BYTES_PER_SECTION, materialId);
+                    blocks[c] = createSection();
+                Arrays.fill(blocks[c], 0, BYTES_PER_SECTION, material);
             }
         }
     }
 
     @Override
-    public void replaceAllBlocks(short fromId, short toId) {
+    public void replaceAllBlocks(Material fromMaterial, Material toMaterial) {
         // Loop through each section
         for(int c = 0; c < SECTIONS_PER_CHUNK; c++) {
             // Use a more efficient method when replacing empty blocks
-            if(MaterialUtils.isEmpty(fromId)) {
+            if(MaterialUtils.isEmpty(fromMaterial)) {
                 // Create the block section if it doesn't exist yet
                 if(blocks[c] == null)
-                    blocks[c] = new short[BYTES_PER_SECTION];
+                    blocks[c] = createSection();
 
                 // Loop through all the blocks in the section
                 for(int i = 0; i < BYTES_PER_SECTION; i++)
-                    // Replace the block if the current material ID equals fromId
-                    if(blocks[c][i] == fromId)
-                        blocks[c][i] = toId;
+                    // Replace the block if the current material equals fromMaterial
+                    if(blocks[c][i] == fromMaterial)
+                        blocks[c][i] = toMaterial;
 
             // Replace the blocks
             } else {
@@ -361,9 +314,9 @@ public class ShortChunk extends AbstractChunk {
                 if(blocks[c] != null) {
                     // Loop through all the blocks in the section
                     for(int i = 0; i < BYTES_PER_SECTION; i++)
-                        // Replace the block if the current material ID equals fromId
-                        if(blocks[c][i] == fromId)
-                            blocks[c][i] = toId;
+                        // Replace the block if the current material equals fromMaterial
+                        if(blocks[c][i] == fromMaterial)
+                            blocks[c][i] = toMaterial;
                 }
             }
         }

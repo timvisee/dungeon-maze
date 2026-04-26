@@ -16,6 +16,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
 import com.timvisee.dungeonmaze.util.ChestUtils;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 
 public class ChestPopulator extends MazeRoomBlockPopulator {
 
@@ -43,7 +44,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 
                 // Generate new inventory contents
                 List<ItemStack> contents = generateChestContents(rand);
-                chestBlock.setType(Material.CHEST);
+                setGeneratedBlock(chestBlock, Material.CHEST);
 
                 // Call the chest generation event
                 GenerationChestEvent event = new GenerationChestEvent(chestBlock, rand, contents, MazeStructureType.UNSTRUCTURE);
@@ -60,7 +61,7 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
                 } else {
                     // The event is cancelled
                     // Put the chest back to it's original state (air)
-                    chestBlock.setType(Material.AIR);
+                    setGeneratedBlock(chestBlock, Material.AIR);
                 }
 
             } else if (chestBlock.getType() == Material.CHEST) {
@@ -95,93 +96,93 @@ public class ChestPopulator extends MazeRoomBlockPopulator {
 
         // Add items to the stack
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.TORCH, 4, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 4, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.TORCH, 8, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 8, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.TORCH, 12, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 12, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.APPLE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.APPLE, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.ARROW, 16, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.ARROW, 16, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.ARROW, 24, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.ARROW, 24, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.DIAMOND, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.DIAMOND, 1, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(Material.IRON_INGOT, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_INGOT, 1, (short) 0));
 		if(random.nextInt(100) < 60)
-			items.add(new ItemStack(Material.GOLD_INGOT, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.GOLD_INGOT, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_SWORD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.WOOD_SWORD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WOODEN_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.STONE_SWORD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.STONE_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.WHEAT, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WHEAT, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.WHEAT, 2, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WHEAT, 2, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.WHEAT, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WHEAT, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.BREAD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.BREAD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(Material.FLINT, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.FLINT, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.FLINT, 5, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.FLINT, 5, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.FLINT, 7, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.FLINT, 7, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.PORK, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.PORKCHOP, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.GRILLED_PORK, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKED_PORKCHOP, 1, (short) 0));
 		if(random.nextInt(100) < 15)
-			items.add(new ItemStack(Material.REDSTONE, 5, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 5, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.REDSTONE, 8, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 8, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.REDSTONE, 13, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 13, (short) 0));
 		if(random.nextInt(100) < 3)
-			items.add(new ItemStack(Material.REDSTONE, 21, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 21, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.COMPASS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COMPASS, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.RAW_FISH, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.COOKED_FISH, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKED_COD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.INK_SACK, 1, (short) 3));
+			items.add(MaterialUtils.createItemStack(Material.INK_SAC, 1, (short) 3));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.CAKE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CAKE, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.COOKIE, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKIE, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.COOKIE, 5, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKIE, 5, (short) 0));
 		
 		int itemCountInChest;
 		switch (random.nextInt(8)) {

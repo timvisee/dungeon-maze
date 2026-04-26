@@ -27,31 +27,31 @@ public class SanctuaryPopulator extends MazeRoomBlockPopulator {
 
         for (int x2=x; x2 < x+8; x2+=1)
             for (int z2=z; z2 < z+8; z2+=1)
-                chunk.getBlock(x2, yFloor, z2).setType(Material.OBSIDIAN);
+                setGeneratedBlock(chunk.getBlock(x2, yFloor, z2), Material.OBSIDIAN);
 
         // Outline altar right
-        chunk.getBlock(x + 2, yFloor + 1, z + 2).setType(Material.GOLD_BLOCK);
-        chunk.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHERRACK);
-        chunk.getBlock(x + 4, yFloor + 1, z + 2).setType(Material.NETHERRACK);
-        chunk.getBlock(x + 5, yFloor + 1, z + 2).setType(Material.GOLD_BLOCK);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1, z + 2), Material.GOLD_BLOCK);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1, z + 2), Material.NETHERRACK);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1, z + 2), Material.NETHERRACK);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1, z + 2), Material.GOLD_BLOCK);
 
         // Center altar
-        chunk.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHERRACK);
-        chunk.getBlock(x + 3, yFloor + 1, z + 3).setType(Material.SOUL_SAND);
-        chunk.getBlock(x + 4, yFloor + 1, z + 3).setType(Material.SOUL_SAND);
-        chunk.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.NETHERRACK);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1, z + 3), Material.NETHERRACK);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1, z + 3), Material.SOUL_SAND);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1, z + 3), Material.SOUL_SAND);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1, z + 3), Material.NETHERRACK);
 
         // Outline altar left
-        chunk.getBlock(x + 2, yFloor + 1, z + 4).setType(Material.GOLD_BLOCK);
-        chunk.getBlock(x + 3, yFloor + 1, z + 4).setType(Material.NETHERRACK);
-        chunk.getBlock(x + 4, yFloor + 1, z + 4).setType(Material.NETHERRACK);
-        chunk.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.GOLD_BLOCK);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1, z + 4), Material.GOLD_BLOCK);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1, z + 4), Material.NETHERRACK);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1, z + 4), Material.NETHERRACK);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1, z + 4), Material.GOLD_BLOCK);
 
         // Torches
-        chunk.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.TORCH);
-        chunk.getBlock(x + 5, yFloor + 2, z + 2).setType(Material.TORCH);
-        chunk.getBlock(x + 2, yFloor + 2, z + 4).setType(Material.TORCH);
-        chunk.getBlock(x + 5, yFloor + 2, z + 4).setType(Material.TORCH);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 2, z + 2), Material.TORCH);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 2, z + 2), Material.TORCH);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 2, z + 4), Material.TORCH);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 2, z + 4), Material.TORCH);
 	}
 
     @Override

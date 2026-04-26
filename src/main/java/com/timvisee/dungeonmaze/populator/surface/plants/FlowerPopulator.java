@@ -25,17 +25,14 @@ public class FlowerPopulator extends SurfaceBlockPopulator {
         final int ySurface = args.getSurfaceLevel(xFlower, zFlower);
 
         // Make sure the surface block is grass
-        if(chunk.getBlock(xFlower, ySurface, zFlower).getType() == Material.GRASS) {
+        if(chunk.getBlock(xFlower, ySurface, zFlower).getType() == Material.GRASS_BLOCK) {
             final int flowerY = ySurface + 1;
 
             // Spawn the flower
             if (rand.nextInt(2) == 0)
-                chunk.getBlock(xFlower, flowerY, zFlower).setType(Material.YELLOW_FLOWER);
-
-            else {
-                chunk.getBlock(xFlower, flowerY, zFlower).setType(Material.RED_ROSE);
-                chunk.getBlock(xFlower, flowerY, zFlower).setData(getRandomFlowerType(rand));
-            }
+                setGeneratedBlock(chunk.getBlock(xFlower, flowerY, zFlower), Material.DANDELION);
+            else
+                setGeneratedBlock(chunk.getBlock(xFlower, flowerY, zFlower), Material.POPPY);
         }
 	}
 	

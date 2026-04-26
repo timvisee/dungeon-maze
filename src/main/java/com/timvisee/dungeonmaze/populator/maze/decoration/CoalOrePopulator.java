@@ -30,7 +30,7 @@ public class CoalOrePopulator extends MazeRoomBlockPopulator {
 
         // Change the block to coal if it's a cobblestone or mossy cobble stone block
         if(coalOreBlock.getType() == Material.COBBLESTONE || coalOreBlock.getType() == Material.MOSSY_COBBLESTONE)
-            coalOreBlock.setType(Material.COAL_ORE);
+            setGeneratedBlock(coalOreBlock, Material.COAL_ORE);
 	}
 
     @Override

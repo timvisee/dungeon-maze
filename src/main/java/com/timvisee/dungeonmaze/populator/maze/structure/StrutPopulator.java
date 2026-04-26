@@ -38,12 +38,12 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 				if(chunk.getBlock(x + 2, yStrutBar, z).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int xx = 1; xx < 7; xx++)
-						chunk.getBlock(x + xx, yStrutBar, z).setType(Material.WOOD);
+						setGeneratedBlock(chunk.getBlock(x + xx, yStrutBar, z), Material.OAK_PLANKS);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutBar; yy++) {
-						chunk.getBlock(x + 1, yy, z).setType(Material.FENCE);
-						chunk.getBlock(x + 6, yy, z).setType(Material.FENCE);
+						setGeneratedBlock(chunk.getBlock(x + 1, yy, z), Material.OAK_FENCE);
+						setGeneratedBlock(chunk.getBlock(x + 6, yy, z), Material.OAK_FENCE);
 					}
 				}	
 			}
@@ -53,12 +53,12 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 				if(chunk.getBlock(x, yStrutBar, z + 2).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int zz = 1; zz < 7; zz++)
-						chunk.getBlock(x, yStrutBar, z + zz).setType(Material.WOOD);
+						setGeneratedBlock(chunk.getBlock(x, yStrutBar, z + zz), Material.OAK_PLANKS);
 
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutBar; yy++) {
-						chunk.getBlock(x, yy, z+1).setType(Material.FENCE);
-						chunk.getBlock(x, yy, z+6).setType(Material.FENCE);
+						setGeneratedBlock(chunk.getBlock(x, yy, z+1), Material.OAK_FENCE);
+						setGeneratedBlock(chunk.getBlock(x, yy, z+6), Material.OAK_FENCE);
 					}
 				}
 				
@@ -71,12 +71,12 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 				if(chunk.getBlock(x + 2, yStrutBar, z).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int xx = 1; xx < 7; xx++)
-						chunk.getBlock(x + xx, yStrutBar, z).setType(Material.WOOD);
+						setGeneratedBlock(chunk.getBlock(x + xx, yStrutBar, z), Material.OAK_PLANKS);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutBar; yy++) {
-						chunk.getBlock(x+1, yy, z).setType(Material.FENCE);
-						chunk.getBlock(x+6, yy, z).setType(Material.FENCE);
+						setGeneratedBlock(chunk.getBlock(x+1, yy, z), Material.OAK_FENCE);
+						setGeneratedBlock(chunk.getBlock(x+6, yy, z), Material.OAK_FENCE);
 					}
 				}
 					
@@ -87,12 +87,12 @@ public class StrutPopulator extends MazeRoomBlockPopulator {
 				if(chunk.getBlock(x, yStrutBar, z + 2).getType() == Material.AIR) {
 					// Generate strut bar
 					for(int zz = 1; zz < 7; zz++)
-						chunk.getBlock(x, yStrutBar, z + zz).setType(Material.WOOD);
+						setGeneratedBlock(chunk.getBlock(x, yStrutBar, z + zz), Material.OAK_PLANKS);
 						
 					// Generate strut poles
 					for(int yy = yFloor + 1; yy < yStrutBar; yy++) {
-						chunk.getBlock(x, yy, z+1).setType(Material.FENCE);
-						chunk.getBlock(x, yy, z+6).setType(Material.FENCE);
+						setGeneratedBlock(chunk.getBlock(x, yy, z+1), Material.OAK_FENCE);
+						setGeneratedBlock(chunk.getBlock(x, yy, z+6), Material.OAK_FENCE);
 					}
 				}
 					

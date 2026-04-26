@@ -10,6 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.type.Stairs;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
@@ -21,6 +23,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
 import com.timvisee.dungeonmaze.util.ChestUtils;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 
 public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
@@ -47,6 +50,7 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 		final int yFloor = args.getFloorY();
 		final int yCeiling = args.getCeilingY();
 		final int z = args.getRoomChunkZ();
+        final Material netherBricks = MaterialUtils.requireBlockMaterial("NETHER_BRICKS", "NETHER_BRICK");
 		
 		// Make sure the distance between the spawn and the current chunk is allowed
 		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
@@ -58,70 +62,59 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
         // Netherbrick floor in the bottom of the room
         for(int xx = x; xx <= x + 7; xx += 1)
             for(int zz = z; zz <= z + 7; zz += 1)
-                chunk.getBlock(xx, yFloor, zz).setType(Material.NETHER_BRICK);
+                setGeneratedBlock(chunk.getBlock(xx, yFloor, zz), netherBricks);
 
         // Cobblestone layer underneath the stone floor
         for(int xx = x; xx <= x + 7; xx += 1)
             for(int zz = z + 1; zz <= z + 6; zz += 1)
-                chunk.getBlock(xx, yFloor - 1, zz).setType(Material.COBBLESTONE);
+                setGeneratedBlock(chunk.getBlock(xx, yFloor - 1, zz), Material.COBBLESTONE);
 
         // Break out the walls and things inside the room
         for (int xx = 0; xx < 8; xx++)
             for (int yy = yFloor + 1; yy < yCeiling; yy++)
                 for(int zz = 0; zz < 8; zz++)
-                    chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+                    setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 
         // Generate corners
         for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-            chunk.getBlock(x, yy, z).setType(Material.NETHER_BRICK);
-            chunk.getBlock(x + 7, yy, z).setType(Material.NETHER_BRICK);
-            chunk.getBlock(x, yy, z + 7).setType(Material.NETHER_BRICK);
-            chunk.getBlock(x + 7, yy, z + 7).setType(Material.NETHER_BRICK);
+            setGeneratedBlock(chunk.getBlock(x, yy, z), netherBricks);
+            setGeneratedBlock(chunk.getBlock(x + 7, yy, z), netherBricks);
+            setGeneratedBlock(chunk.getBlock(x, yy, z + 7), netherBricks);
+            setGeneratedBlock(chunk.getBlock(x + 7, yy, z + 7), netherBricks);
         }
 
         // Generate fences in the corners
         for(int yy = yFloor + 1; yy < yCeiling; yy++) {
-            chunk.getBlock(x + 1, yy, z).setType(Material.NETHER_FENCE);
-            chunk.getBlock(x, yy, z + 1).setType(Material.NETHER_FENCE);
-            chunk.getBlock(x + 6, yy, z).setType(Material.NETHER_FENCE);
-            chunk.getBlock(x + 7, yy, z + 1).setType(Material.NETHER_FENCE);
-            chunk.getBlock(x + 1, yy, z + 7).setType(Material.NETHER_FENCE);
-            chunk.getBlock(x, yy, z + 6).setType(Material.NETHER_FENCE);
-            chunk.getBlock(x + 6, yy, z + 7).setType(Material.NETHER_FENCE);
-            chunk.getBlock(x + 7, yy, z + 6).setType(Material.NETHER_FENCE);
+            setGeneratedBlock(chunk.getBlock(x + 1, yy, z), Material.NETHER_BRICK_FENCE);
+            setGeneratedBlock(chunk.getBlock(x, yy, z + 1), Material.NETHER_BRICK_FENCE);
+            setGeneratedBlock(chunk.getBlock(x + 6, yy, z), Material.NETHER_BRICK_FENCE);
+            setGeneratedBlock(chunk.getBlock(x + 7, yy, z + 1), Material.NETHER_BRICK_FENCE);
+            setGeneratedBlock(chunk.getBlock(x + 1, yy, z + 7), Material.NETHER_BRICK_FENCE);
+            setGeneratedBlock(chunk.getBlock(x, yy, z + 6), Material.NETHER_BRICK_FENCE);
+            setGeneratedBlock(chunk.getBlock(x + 6, yy, z + 7), Material.NETHER_BRICK_FENCE);
+            setGeneratedBlock(chunk.getBlock(x + 7, yy, z + 6), Material.NETHER_BRICK_FENCE);
         }
 
         // Generate platform in the middle
         for (int xx=x + 2; xx <= x + 5; xx+=1)
             for (int zz=z + 2; zz <= z + 5; zz+=1)
-                chunk.getBlock(xx, yFloor + 1, zz).setType(Material.NETHER_BRICK);
+                setGeneratedBlock(chunk.getBlock(xx, yFloor + 1, zz), netherBricks);
 
         // Generate stairs off the platform
-        chunk.getBlock(x + 3, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 3, yFloor + 1, z + 2).setData((byte) 2);
-        chunk.getBlock(x + 4, yFloor + 1, z + 2).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 4, yFloor + 1, z + 2).setData((byte) 2);
-
-        chunk.getBlock(x + 3, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 3, yFloor + 1, z + 5).setData((byte) 3);
-        chunk.getBlock(x + 4, yFloor + 1, z + 5).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 4, yFloor + 1, z + 5).setData((byte) 3);
-
-        chunk.getBlock(x + 2, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 2, yFloor + 1, z + 3).setData((byte) 0);
-        chunk.getBlock(x + 2, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 2, yFloor + 1, z + 4).setData((byte) 0);
-
-        chunk.getBlock(x + 5, yFloor + 1, z + 3).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 5, yFloor + 1, z + 3).setData((byte) 1);
-        chunk.getBlock(x + 5, yFloor + 1, z + 4).setType(Material.NETHER_BRICK_STAIRS);
-        chunk.getBlock(x + 5, yFloor + 1, z + 4).setData((byte) 1);
+        placeStair(chunk, x + 3, yFloor + 1, z + 2, BlockFace.SOUTH);
+        placeStair(chunk, x + 4, yFloor + 1, z + 2, BlockFace.SOUTH);
+        placeStair(chunk, x + 3, yFloor + 1, z + 5, BlockFace.NORTH);
+        placeStair(chunk, x + 4, yFloor + 1, z + 5, BlockFace.NORTH);
+        placeStair(chunk, x + 2, yFloor + 1, z + 3, BlockFace.EAST);
+        placeStair(chunk, x + 2, yFloor + 1, z + 4, BlockFace.EAST);
+        placeStair(chunk, x + 5, yFloor + 1, z + 3, BlockFace.WEST);
+        placeStair(chunk, x + 5, yFloor + 1, z + 4, BlockFace.WEST);
 
         // Generate poles on the platform
-        chunk.getBlock(x + 2, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
-        chunk.getBlock(x + 5, yFloor + 2, z + 2).setType(Material.NETHER_FENCE);
-        chunk.getBlock(x + 2, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
-        chunk.getBlock(x + 5, yFloor + 2, z + 5).setType(Material.NETHER_FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 2, z + 2), Material.NETHER_BRICK_FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 2, z + 2), Material.NETHER_BRICK_FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 2, z + 5), Material.NETHER_BRICK_FENCE);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 2, z + 5), Material.NETHER_BRICK_FENCE);
 
         // Generate the spawner
         if(Core.getConfigHandler().isMobSpawnerAllowed("Blaze")) {
@@ -182,93 +175,93 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 
 		// Add items to the stack
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.TORCH, 4, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 4, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.TORCH, 8, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 8, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.TORCH, 12, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 12, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.APPLE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.APPLE, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.ARROW, 16, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.ARROW, 16, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.ARROW, 24, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.ARROW, 24, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.DIAMOND, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.DIAMOND, 1, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(Material.IRON_INGOT, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_INGOT, 1, (short) 0));
 		if(random.nextInt(100) < 60)
-			items.add(new ItemStack(Material.GOLD_INGOT, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.GOLD_INGOT, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_SWORD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.WOOD_SWORD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WOODEN_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.STONE_SWORD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.STONE_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.WHEAT, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WHEAT, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.WHEAT, 2, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WHEAT, 2, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.WHEAT, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.WHEAT, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.BREAD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.BREAD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.LEATHER_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.LEATHER_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.CHAINMAIL_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CHAINMAIL_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.IRON_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 30)
-			items.add(new ItemStack(Material.FLINT, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.FLINT, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.FLINT, 5, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.FLINT, 5, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.FLINT, 7, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.FLINT, 7, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.PORK, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.PORKCHOP, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.GRILLED_PORK, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKED_PORKCHOP, 1, (short) 0));
 		if(random.nextInt(100) < 15)
-			items.add(new ItemStack(Material.REDSTONE, 5, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 5, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.REDSTONE, 8, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 8, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.REDSTONE, 13, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 13, (short) 0));
 		if(random.nextInt(100) < 3)
-			items.add(new ItemStack(Material.REDSTONE, 21, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 21, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.COMPASS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COMPASS, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.RAW_FISH, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.COOKED_FISH, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKED_COD, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.INK_SACK, 1, (short) 3));
+			items.add(MaterialUtils.createItemStack(Material.INK_SAC, 1, (short) 3));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.CAKE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CAKE, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.COOKIE, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKIE, 3, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.COOKIE, 5, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKIE, 5, (short) 0));
 		
 		int itemCountInChest;
 		switch (random.nextInt(8)) {
@@ -306,6 +299,14 @@ public class BlazeSpawnerRoomPopulator extends MazeRoomBlockPopulator {
 			newContents.add(items.get(random.nextInt(items.size())));
 		return newContents;
 	}
+
+    private void placeStair(Chunk chunk, int x, int y, int z, BlockFace facing) {
+        org.bukkit.block.Block b = chunk.getBlock(x, y, z);
+        setGeneratedBlock(b, Material.NETHER_BRICK_STAIRS);
+        Stairs stair = (Stairs) b.getBlockData();
+        stair.setFacing(facing);
+        setGeneratedBlockData(b, stair);
+    }
 
     @Override
     public float getRoomChance() {

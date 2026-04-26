@@ -4,6 +4,8 @@ import java.util.Random;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Directional;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
@@ -25,26 +27,20 @@ public class LadderPopulator extends MazeRoomBlockPopulator {
         final int startY = args.getFloorY() + 1;
         final int startZ;
 			
-        byte ladderData = (byte) 0;
+        BlockFace ladderFace = BlockFace.NORTH;
         switch (rand.nextInt(2)) {
         case 0:
             int r = rand.nextInt(2);
             startX = x + 1 + (r * 5);
             startZ = z + rand.nextInt(2) * 7;
-            if(r == 0)
-                ladderData = (byte) 5; // North
-            else
-                ladderData = (byte) 4; // South
+            ladderFace = (r == 0) ? BlockFace.NORTH : BlockFace.SOUTH;
             break;
 
         case 1:
             int r2 = rand.nextInt(2);
             startX = x + rand.nextInt(2) * 7;
             startZ = z + 1 + (r2*5);
-            if(r2 == 0)
-                ladderData = (byte) 3; // East
-            else
-                ladderData = (byte) 2; // West
+            ladderFace = (r2 == 0) ? BlockFace.EAST : BlockFace.WEST;
             break;
 
         default:
@@ -55,8 +51,11 @@ public class LadderPopulator extends MazeRoomBlockPopulator {
         // Make sure there's no wall or anything else
         if(chunk.getBlock(startX, startY, startZ).getType() == Material.AIR) {
             for (int ladderY=startY; ladderY <= startY + 8; ladderY++) {
-                chunk.getBlock(startX, ladderY, startZ).setType(Material.LADDER);
-                chunk.getBlock(startX, ladderY, startZ).setData(ladderData);
+                org.bukkit.block.Block lb = chunk.getBlock(startX, ladderY, startZ);
+                setGeneratedBlock(lb, Material.LADDER);
+                Directional ladderData = (Directional) lb.getBlockData();
+                ladderData.setFacing(ladderFace);
+                setGeneratedBlockData(lb, ladderData);
             }
         }
 	}

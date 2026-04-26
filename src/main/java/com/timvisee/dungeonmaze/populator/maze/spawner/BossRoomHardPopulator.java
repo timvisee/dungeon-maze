@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.timvisee.dungeonmaze.Core;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 import com.timvisee.dungeonmaze.util.NumberUtils;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.Bukkit;
@@ -39,6 +40,7 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
         final int x = 0;
         final int y = args.getY();
         final int z = 0;
+        final Material netherBricks = MaterialUtils.requireBlockMaterial("NETHER_BRICKS", "NETHER_BRICK");
 
 		// Make sure the distance between the spawn chunk and the current chunk is allowed
 		if(NumberUtils.distanceFromZero(chunk.getX(), chunk.getZ()) < SPAWN_DISTANCE_MIN)
@@ -51,100 +53,100 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
         for(int x2 = x; x2 < x + 15; x2 += 1)
             for(int y2 = y + 1; y2 <= y + (6 * 3) - 1; y2 += 1)
                 for(int z2 = z; z2 < z + 15; z2 += 1)
-                    chunk.getBlock(x2, y2, z2).setType(Material.AIR);
+                    setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.AIR);
 
         // Floor
         for(int x2 = x; x2 < x + 15; x2 += 1)
             for(int z2 = z; z2 < z + 15; z2 += 1)
-                chunk.getBlock(x2, y, z2).setType(Material.OBSIDIAN);
+                setGeneratedBlock(chunk.getBlock(x2, y, z2), Material.OBSIDIAN);
 
         // Glass shields
-        chunk.getBlock(x + 2, y + 1, z + 3).setType(Material.GLASS);
-        chunk.getBlock(x + 2, y + 1, z + 12).setType(Material.GLASS);
-        chunk.getBlock(x + 3, y + 1, z + 2).setType(Material.GLASS);
-        chunk.getBlock(x + 3, y + 1, z + 4).setType(Material.GLASS);
-        chunk.getBlock(x + 3, y + 1, z + 11).setType(Material.GLASS);
-        chunk.getBlock(x + 3, y + 1, z + 13).setType(Material.GLASS);
-        chunk.getBlock(x + 4, y + 1, z + 3).setType(Material.GLASS);
-        chunk.getBlock(x + 4, y + 1, z + 12).setType(Material.GLASS);
-        chunk.getBlock(x + 5, y + 1, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 5, y + 1, z + 8).setType(Material.GLASS);
-        chunk.getBlock(x + 6, y + 1, z + 6).setType(Material.GLASS);
-        chunk.getBlock(x + 6, y + 1, z + 9).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 1, z + 5).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 1, z + 10).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 1, z + 5).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 1, z + 10).setType(Material.GLASS);
-        chunk.getBlock(x + 9, y + 1, z + 6).setType(Material.GLASS);
-        chunk.getBlock(x + 9, y + 1, z + 9).setType(Material.GLASS);
-        chunk.getBlock(x + 10, y + 1, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 10, y + 1, z + 8).setType(Material.GLASS);
-        chunk.getBlock(x + 11, y + 1, z + 3).setType(Material.GLASS);
-        chunk.getBlock(x + 11, y + 1, z + 12).setType(Material.GLASS);
-        chunk.getBlock(x + 12, y + 1, z + 2).setType(Material.GLASS);
-        chunk.getBlock(x + 12, y + 1, z + 4).setType(Material.GLASS);
-        chunk.getBlock(x + 12, y + 1, z + 11).setType(Material.GLASS);
-        chunk.getBlock(x + 12, y + 1, z + 13).setType(Material.GLASS);
-        chunk.getBlock(x + 13, y + 1, z + 3).setType(Material.GLASS);
-        chunk.getBlock(x + 13, y + 1, z + 12).setType(Material.GLASS);
-        chunk.getBlock(x + 3, y + 2, z + 3).setType(Material.GLASS);
-        chunk.getBlock(x + 3, y + 2, z + 12).setType(Material.GLASS);
-        chunk.getBlock(x + 5, y + 2, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 5, y + 2, z + 8).setType(Material.GLASS);
-        chunk.getBlock(x + 6, y + 2, z + 6).setType(Material.GLASS);
-        chunk.getBlock(x + 6, y + 2, z + 9).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 2, z + 5).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 2, z + 10).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 2, z + 5).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 2, z + 10).setType(Material.GLASS);
-        chunk.getBlock(x + 9, y + 2, z + 6).setType(Material.GLASS);
-        chunk.getBlock(x + 9, y + 2, z + 9).setType(Material.GLASS);
-        chunk.getBlock(x + 10, y + 2, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 10, y + 2, z + 8).setType(Material.GLASS);
-        chunk.getBlock(x + 12, y + 2, z + 3).setType(Material.GLASS);
-        chunk.getBlock(x + 12, y + 2, z + 12).setType(Material.GLASS);
-        chunk.getBlock(x + 6, y + 3, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 6, y + 3, z + 8).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 3, z + 6).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 3, z + 9).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 3, z + 6).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 3, z + 9).setType(Material.GLASS);
-        chunk.getBlock(x + 9, y + 3, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 9, y + 3, z + 8).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 4, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 7, y + 4, z + 8).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 4, z + 7).setType(Material.GLASS);
-        chunk.getBlock(x + 8, y + 4, z + 8).setType(Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 2, y + 1, z + 3), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 2, y + 1, z + 12), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 3, y + 1, z + 2), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 3, y + 1, z + 4), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 3, y + 1, z + 11), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 3, y + 1, z + 13), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 4, y + 1, z + 3), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 4, y + 1, z + 12), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 5, y + 1, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 5, y + 1, z + 8), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 1, z + 6), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 1, z + 9), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 1, z + 5), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 1, z + 10), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 1, z + 5), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 1, z + 10), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 1, z + 6), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 1, z + 9), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 10, y + 1, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 10, y + 1, z + 8), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 11, y + 1, z + 3), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 11, y + 1, z + 12), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 12, y + 1, z + 2), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 12, y + 1, z + 4), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 12, y + 1, z + 11), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 12, y + 1, z + 13), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 13, y + 1, z + 3), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 13, y + 1, z + 12), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 3, y + 2, z + 3), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 3, y + 2, z + 12), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 5, y + 2, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 5, y + 2, z + 8), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 2, z + 6), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 2, z + 9), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 2, z + 5), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 2, z + 10), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 2, z + 5), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 2, z + 10), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 2, z + 6), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 2, z + 9), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 10, y + 2, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 10, y + 2, z + 8), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 12, y + 2, z + 3), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 12, y + 2, z + 12), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 3, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 3, z + 8), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 3, z + 6), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 3, z + 9), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 3, z + 6), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 3, z + 9), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 3, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 3, z + 8), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 4, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 4, z + 8), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 4, z + 7), Material.GLASS);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 4, z + 8), Material.GLASS);
 
         // Netherbrick hull
-        chunk.getBlock(x + 6, y + 1, z + 7).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 6, y + 1, z + 8).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 7, y + 1, z + 6).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 7, y + 1, z + 9).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 8, y + 1, z + 6).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 8, y + 1, z + 9).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 9, y + 1, z + 7).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 9, y + 1, z + 8).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 6, y + 2, z + 7).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 6, y + 2, z + 8).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 7, y + 2, z + 6).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 7, y + 2, z + 9).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 8, y + 2, z + 6).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 8, y + 2, z + 9).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 9, y + 2, z + 7).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 9, y + 2, z + 8).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 7, y + 3, z + 7).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 7, y + 3, z + 8).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 8, y + 3, z + 7).setType(Material.NETHER_BRICK);
-        chunk.getBlock(x + 8, y + 3, z + 8).setType(Material.NETHER_BRICK);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 1, z + 7), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 1, z + 8), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 1, z + 6), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 1, z + 9), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 1, z + 6), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 1, z + 9), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 1, z + 7), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 1, z + 8), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 2, z + 7), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 6, y + 2, z + 8), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 2, z + 6), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 2, z + 9), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 2, z + 6), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 2, z + 9), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 2, z + 7), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 9, y + 2, z + 8), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 3, z + 7), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 3, z + 8), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 3, z + 7), netherBricks);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 3, z + 8), netherBricks);
 
         // Ores
-        chunk.getBlock(x + 7, y + 1, z + 7).setType(Material.IRON_ORE);
-        chunk.getBlock(x + 7, y + 1, z + 8).setType(Material.REDSTONE_ORE);
-        chunk.getBlock(x + 8, y + 1, z + 7).setType(Material.IRON_ORE);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 1, z + 7), Material.IRON_ORE);
+        setGeneratedBlock(chunk.getBlock(x + 7, y + 1, z + 8), Material.REDSTONE_ORE);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 1, z + 7), Material.IRON_ORE);
 
         // Chest
-        chunk.getBlock(x + 8, y + 1, z + 8).setType(Material.CHEST);
+        setGeneratedBlock(chunk.getBlock(x + 8, y + 1, z + 8), Material.CHEST);
         addItemsToChest(rand, (Chest) chunk.getBlock(x + 8, y + 1, z + 8).getState());
 
         // Core spawners
@@ -174,7 +176,7 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
             Block spawnerBlock = chunk.getBlock(x + 8, y + 2, z + 7);
 
             // Call the spawner generation event
-            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.PIG_ZOMBIE, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
+            GenerationSpawnerEvent event = new GenerationSpawnerEvent(spawnerBlock, EntityType.ZOMBIFIED_PIGLIN, GenerationSpawnerEvent.GenerationSpawnerCause.BOSSROOM_HARD, rand);
             Bukkit.getServer().getPluginManager().callEvent(event);
 
             // Apply the event
@@ -262,51 +264,51 @@ public class BossRoomHardPopulator extends MazeLayerBlockPopulator {
 
         // Put the items in the list
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.TORCH, 16, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 16, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.TORCH, 20, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.TORCH, 20, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.ARROW, 24, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.ARROW, 24, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.ARROW, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.ARROW, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.DIAMOND, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.DIAMOND, 3, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(Material.IRON_INGOT, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_INGOT, 3, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(Material.GOLD_INGOT, 3, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.GOLD_INGOT, 3, (short) 0));
 		if(random.nextInt(100) < 50)
-			items.add(new ItemStack(Material.IRON_SWORD, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_SWORD, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.MUSHROOM_SOUP, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.MUSHROOM_STEW, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.IRON_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.IRON_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.IRON_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.DIAMOND_HELMET, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.DIAMOND_HELMET, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.DIAMOND_CHESTPLATE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.DIAMOND_CHESTPLATE, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.DIAMOND_LEGGINGS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.DIAMOND_LEGGINGS, 1, (short) 0));
 		if(random.nextInt(100) < 5)
-			items.add(new ItemStack(Material.DIAMOND_BOOTS, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.DIAMOND_BOOTS, 1, (short) 0));
 		if(random.nextInt(100) < 40)
-			items.add(new ItemStack(Material.FLINT, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.FLINT, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.GRILLED_PORK, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKED_PORKCHOP, 1, (short) 0));
 		if(random.nextInt(100) < 10)
-			items.add(new ItemStack(Material.GOLDEN_APPLE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.GOLDEN_APPLE, 1, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.REDSTONE, 7, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.REDSTONE, 7, (short) 0));
 		if(random.nextInt(100) < 20)
-			items.add(new ItemStack(Material.CAKE, 1, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.CAKE, 1, (short) 0));
 		if(random.nextInt(100) < 80)
-			items.add(new ItemStack(Material.COOKIE, 8, (short) 0));
+			items.add(MaterialUtils.createItemStack(Material.COOKIE, 8, (short) 0));
 		
 		int itemCountInChest;
 		switch (random.nextInt(8)) {

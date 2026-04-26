@@ -32,8 +32,8 @@ public class LavaOutOfWallPopulator extends MazeRoomBlockPopulator {
         final int lanternZ = z + rand.nextInt(8);
         final Block b = chunk.getBlock(lanternX, lanternY, lanternZ);
 
-        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.SMOOTH_BRICK)
-            b.setType(Material.LAVA);
+        if(b.getType() == Material.COBBLESTONE || b.getType() == Material.MOSSY_COBBLESTONE || b.getType() == Material.STONE_BRICKS)
+            setGeneratedBlock(b, Material.LAVA);
 	}
 
     @Override

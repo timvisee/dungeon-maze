@@ -35,7 +35,7 @@ public class TorchPopulator extends MazeRoomBlockPopulator {
             Block torchBlock = chunk.getBlock(torchX, torchY, torchZ);
             if(torchBlock.getType() == Material.AIR) {
                 torchBlock = chunk.getBlock(torchX, torchY, torchZ);
-                torchBlock.setType(Material.TORCH);
+                setGeneratedBlock(torchBlock, Material.TORCH);
             }
         }
 	}

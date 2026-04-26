@@ -5,6 +5,7 @@ import com.timvisee.dungeonmaze.util.ChestUtils;
 import com.timvisee.dungeonmaze.util.MazeUtils;
 import com.timvisee.dungeonmaze.world.WorldManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -187,16 +188,8 @@ public class DungeonMazeApiOld {
 	 * @return True if the object is in the list, false otherwise.
 	 */
 	@Deprecated
-	public static boolean isInWhiteList(Object target){
-		List<Object> list = DungeonMaze.instance.getCore()._getConfigHandler().blockWhiteList;
-		
-		if(list == null)
-			return(false);
-
-		for(Object aList : list)
-			if(aList.equals(target))
-				return true;
-		return false;
+	public static boolean isInWhiteList(Material target) {
+		return target != null && DungeonMaze.instance.getCore()._getConfigHandler().isInWhiteList(target);
 	}
 	
 	/**

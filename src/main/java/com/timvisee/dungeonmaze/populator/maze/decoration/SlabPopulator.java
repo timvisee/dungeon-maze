@@ -5,6 +5,7 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Slab;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
@@ -46,14 +47,10 @@ public class SlabPopulator extends MazeRoomBlockPopulator {
 
         // Make sure the slab could be placed on the specified position
         if(baseBlock.getType() != Material.AIR && slabBlock.getType() == Material.AIR) {
-            // Set the material type to a slab
-            slabBlock.setType(Material.STEP);
-
-            // Set the proper data value
-            if(!ceiling)
-                slabBlock.setData((byte) 3);
-            else
-                slabBlock.setData((byte) 11);
+            setGeneratedBlock(slabBlock, Material.STONE_BRICK_SLAB);
+            Slab slab = (Slab) slabBlock.getBlockData();
+            slab.setType(ceiling ? Slab.Type.TOP : Slab.Type.BOTTOM);
+            setGeneratedBlockData(slabBlock, slab);
         }
 	}
 	

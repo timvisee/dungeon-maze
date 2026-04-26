@@ -46,15 +46,15 @@ public class PoolPopulator extends MazeRoomBlockPopulator {
         // Create/spawn the pool with the specified liquid
         for(int i = Math.max(xPool - poolWidth / 2, 1); i < Math.min(xPool - poolWidth / 2 + poolWidth, 6); i++) {
             for(int j = Math.max(zPool - poolLength / 2, 1); j < Math.min(zPool - poolLength / 2 + poolLength, 6); j++) {
-                chunk.getBlock(i, yPool, j).setType(liquidType.getMaterial());
-                chunk.getBlock(i, yPool - 1, j).setType(Material.MOSSY_COBBLESTONE);
+                setGeneratedBlock(chunk.getBlock(i, yPool, j), liquidType.getMaterial());
+                setGeneratedBlock(chunk.getBlock(i, yPool - 1, j), Material.MOSSY_COBBLESTONE);
             }
         }
     }
 	
 	public enum LiquidType {
-		WATER(Material.STATIONARY_WATER),
-		LAVA(Material.STATIONARY_LAVA);
+		WATER(Material.WATER),
+		LAVA(Material.LAVA);
 
         /** The liquid type as a Bukkit material. */
 		private final Material mat;

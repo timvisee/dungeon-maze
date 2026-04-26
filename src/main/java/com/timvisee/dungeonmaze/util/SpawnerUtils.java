@@ -52,7 +52,7 @@ public class SpawnerUtils {
 	 */
 	public static boolean createSpawner(Block block, EntityType type) {
         // Change the block to a spawner
-        block.setType(Material.MOB_SPAWNER);
+        block.setType(Material.SPAWNER);
 
         // Set the spawning type
         return setSpawnerType(block, type);

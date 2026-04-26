@@ -60,7 +60,7 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 					int z2 = startZ;
 					while(0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 						if(rand.nextFloat() > BROKEN_RAIL_CHANCE) {
-							chunk.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
+							setGeneratedBlock(chunk.getBlock(x2, yFloor + 1, z2), Material.RAIL);
 							if(rand.nextFloat() < MINECART_CHANCE)
 								spawnMinecart(world, (chunk.getX() * 16) + x + x2, yFloor + 1, (chunk.getZ() * 16) + z + z2);
 						}
@@ -74,7 +74,7 @@ public class RailPopulator extends MazeRoomBlockPopulator {
 						z2 = startZ;
 						while (0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
 							if(rand.nextFloat() > BROKEN_RAIL_CHANCE) {
-								chunk.getBlock(x2, yFloor + 1, z2).setType(Material.RAILS);
+								setGeneratedBlock(chunk.getBlock(x2, yFloor + 1, z2), Material.RAIL);
 								if(rand.nextFloat() < MINECART_CHANCE)
 									spawnMinecart(world, (chunk.getX() * 16) + x + x2, yFloor + 1, (chunk.getZ() * 16) + z + z2);
 							}

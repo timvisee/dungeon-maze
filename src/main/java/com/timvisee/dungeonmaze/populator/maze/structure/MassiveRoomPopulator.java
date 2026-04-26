@@ -34,14 +34,14 @@ public class MassiveRoomPopulator extends MazeRoomBlockPopulator {
         // Walls
         for(int x2 = x; x2 <= x + 7; x2 += 1) {
             for(int y2 = yFloor + 1; y2 <= yCeiling - 1; y2 += 1) {
-                chunk.getBlock(x2, y2, z).setType(Material.SMOOTH_BRICK);
-                chunk.getBlock(x2, y2, z + 7).setType(Material.SMOOTH_BRICK);
+                setGeneratedBlock(chunk.getBlock(x2, y2, z), Material.STONE_BRICKS);
+                setGeneratedBlock(chunk.getBlock(x2, y2, z + 7), Material.STONE_BRICKS);
             }
         }
         for(int z2 = z; z2 <= z + 7; z2 += 1) {
             for(int y2 = yFloor + 1; y2 <= yCeiling - 1; y2 += 1) {
-                chunk.getBlock(x, y2, z2).setType(Material.SMOOTH_BRICK);
-                chunk.getBlock(x + 7, y2, z2).setType(Material.SMOOTH_BRICK);
+                setGeneratedBlock(chunk.getBlock(x, y2, z2), Material.STONE_BRICKS);
+                setGeneratedBlock(chunk.getBlock(x + 7, y2, z2), Material.STONE_BRICKS);
             }
         }
 
@@ -49,7 +49,7 @@ public class MassiveRoomPopulator extends MazeRoomBlockPopulator {
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1)
             for(int y2 = yFloor + 1; y2 <= yCeiling - 1; y2 += 1)
                 for(int z2 = z + 1; z2 <= z + 6; z2 += 1)
-                    chunk.getBlock(x2, y2, z2).setType(Material.STONE);
+                    setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.STONE);
 
         // Fill the massive room with some ores!
         for(int x2 = x + 1; x2 <= x + 6; x2 += 1) {
@@ -58,34 +58,34 @@ public class MassiveRoomPopulator extends MazeRoomBlockPopulator {
                     if(rand.nextInt(100) < 2) {
                         switch(rand.nextInt(8)) {
                         case 0:
-                            chunk.getBlock(x2, y2, z2).setType(Material.GOLD_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.GOLD_ORE);
                             break;
                         case 1:
-                            chunk.getBlock(x2, y2, z2).setType(Material.IRON_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.IRON_ORE);
                             break;
                         case 2:
-                            chunk.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.COAL_ORE);
                             break;
                         case 3:
-                            chunk.getBlock(x2, y2, z2).setType(Material.LAPIS_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.LAPIS_ORE);
                             break;
                         case 4:
-                            chunk.getBlock(x2, y2, z2).setType(Material.DIAMOND_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.DIAMOND_ORE);
                             break;
                         case 5:
-                            chunk.getBlock(x2, y2, z2).setType(Material.REDSTONE_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.REDSTONE_ORE);
                             break;
                         case 6:
-                            chunk.getBlock(x2, y2, z2).setType(Material.EMERALD_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.EMERALD_ORE);
                             break;
                         case 7:
-                            chunk.getBlock(x2, y2, z2).setType(Material.CLAY);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.CLAY);
                             break;
                         case 8:
-                            chunk.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.COAL_ORE);
                             break;
                         default:
-                            chunk.getBlock(x2, y2, z2).setType(Material.COAL_ORE);
+                            setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.COAL_ORE);
                         }
                     }
                 }

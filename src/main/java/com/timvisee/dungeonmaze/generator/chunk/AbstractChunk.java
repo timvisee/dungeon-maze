@@ -308,15 +308,15 @@ public abstract class AbstractChunk {
     /**
      * Set all the blocks in the chunk.
      *
-     * @param materialId The material ID to set the blocks to.
+     * @param material The material to set the blocks to.
      */
-    public abstract void setAllBlocks(short materialId);
+    public abstract void setAllBlocks(Material material);
 
     /**
      * Replace all blocks in the chunk.
      *
-     * @param fromId The material ID of the blocks that need to be replaced.
-     * @param toId The material ID to set the blocks to.
+     * @param fromMaterial The material of the blocks that need to be replaced.
+     * @param toMaterial The material to set the blocks to.
      */
-    public abstract void replaceAllBlocks(short fromId, short toId);
+    public abstract void replaceAllBlocks(Material fromMaterial, Material toMaterial);
 }

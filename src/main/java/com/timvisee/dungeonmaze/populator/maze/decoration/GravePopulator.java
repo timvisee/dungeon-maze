@@ -8,12 +8,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Rotatable;
 import org.bukkit.entity.Player;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 
 public class GravePopulator extends MazeRoomBlockPopulator {
 
@@ -31,15 +34,19 @@ public class GravePopulator extends MazeRoomBlockPopulator {
         final int graveX = x + rand.nextInt(6 - 2) + 1 + 2; // +2 because the grave is 3 long (so you also need to put the random on 4)
         final  int graveY = args.getFloorY() + 1;
         final int graveZ = z + rand.nextInt(6) + 1;
+        final Material graveSlab = MaterialUtils.requireBlockMaterial("SMOOTH_STONE_SLAB", "STONE_SLAB");
 
         // The grave
-        chunk.getBlock(graveX, graveY, graveZ).setType(Material.DOUBLE_STEP);
-        chunk.getBlock(graveX - 1, graveY, graveZ).setType(Material.STEP);
-        chunk.getBlock(graveX - 2, graveY, graveZ).setType(Material.STEP);
+        setGeneratedBlock(chunk.getBlock(graveX, graveY, graveZ), graveSlab);
+        setGeneratedBlock(chunk.getBlock(graveX - 1, graveY, graveZ), graveSlab);
+        setGeneratedBlock(chunk.getBlock(graveX - 2, graveY, graveZ), graveSlab);
 
         // Put a sign on a grave and write some text on it
-        chunk.getBlock(graveX, graveY + 1, graveZ).setType(Material.SIGN_POST);
-        chunk.getBlock(graveX, graveY + 1, graveZ).setData((byte) 4);
+        Block signBlock = chunk.getBlock(graveX, graveY + 1, graveZ);
+        setGeneratedBlock(signBlock, Material.OAK_SIGN);
+        Rotatable signData = (Rotatable) signBlock.getBlockData();
+        signData.setRotation(BlockFace.WEST);
+        setGeneratedBlockData(signBlock, signData);
 
         // Update the text on the sign
         Block b = chunk.getBlock(graveX, graveY + 1, graveZ);

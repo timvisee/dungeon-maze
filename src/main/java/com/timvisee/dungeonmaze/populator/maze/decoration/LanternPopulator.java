@@ -42,19 +42,19 @@ public class LanternPopulator extends MazeRoomBlockPopulator {
         final Block b = chunk.getBlock(lanternX, lanternY, lanternZ);
 
         // Make sure the lantern can be placed
-        if(b.getType() != Material.COBBLESTONE && b.getType() != Material.MOSSY_COBBLESTONE && b.getType() != Material.SMOOTH_BRICK)
+        if(b.getType() != Material.COBBLESTONE && b.getType() != Material.MOSSY_COBBLESTONE && b.getType() != Material.STONE_BRICKS)
             return;
 
         // Place the actual lantern
         if(!broken) {
             // Use the sea lantern if the current version is compatible, use glowstone otherwise
             if(MinecraftUtils.getMinecraftVersion().startsWith("1.8"))
-                b.setType(Material.SEA_LANTERN);
+                setGeneratedBlock(b, Material.SEA_LANTERN);
             else
-                b.setType(Material.GLOWSTONE);
+                setGeneratedBlock(b, Material.GLOWSTONE);
 
         } else
-            b.setType(Material.REDSTONE_LAMP_OFF);
+            setGeneratedBlock(b, Material.REDSTONE_LAMP);
 	}
 
     /**

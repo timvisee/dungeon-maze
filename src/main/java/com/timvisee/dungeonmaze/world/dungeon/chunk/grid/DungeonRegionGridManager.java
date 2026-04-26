@@ -21,7 +21,7 @@ public class DungeonRegionGridManager {
     /**
      * The list of loaded region grids.
      */
-    private List<DungeonRegionGrid> grids = new ArrayList<>();
+    private final List<DungeonRegionGrid> grids = new ArrayList<>();
 
     /**
      * Defines the Dungeon Maze data directory name.
@@ -97,8 +97,8 @@ public class DungeonRegionGridManager {
      *
      * @return The list of loaded region grids.
      */
-    public List<DungeonRegionGrid> getRegions() {
-        return this.grids;
+    public synchronized List<DungeonRegionGrid> getRegions() {
+        return new ArrayList<>(this.grids);
     }
 
     /**
@@ -108,7 +108,10 @@ public class DungeonRegionGridManager {
      *
      * @return The dungeon region grid, or null if the grid couldn't be loaded.
      */
-    public DungeonRegionGrid getOrCreateRegionGrid(World world) {
+    public synchronized DungeonRegionGrid getOrCreateRegionGrid(World world) {
+        if(world == null)
+            return null;
+
         // Check whether the last cached grid is the correct one
         if(lastRegionGridCache != null && lastRegionGridCache.isWorld(world))
             return lastRegionGridCache;
@@ -116,12 +119,12 @@ public class DungeonRegionGridManager {
         // Check whether the dungeon region grid for this world is already loaded, return it if that's the case
         DungeonRegionGrid dungeonRegionGrid = getLoadedRegionGrid(world);
         if(dungeonRegionGrid != null)
-            return dungeonRegionGrid;
+            return (lastRegionGridCache = dungeonRegionGrid);
 
         // Load the dungeon region grid if it's available
         dungeonRegionGrid = loadRegionGrid(world);
         if(dungeonRegionGrid != null)
-            return dungeonRegionGrid;
+            return (lastRegionGridCache = dungeonRegionGrid);
 
         // Create the region grid, return the result
         return (lastRegionGridCache = createRegionGridData(world));
@@ -134,7 +137,10 @@ public class DungeonRegionGridManager {
      *
      * @return The dungeon region grid, or null on failure.
      */
-    public DungeonRegionGrid loadRegionGrid(World world) {
+    public synchronized DungeonRegionGrid loadRegionGrid(World world) {
+        if(world == null)
+            return null;
+
         // Make sure the dungeon region grid isn't loaded already
         DungeonRegionGrid dungeonRegionGrid = getLoadedRegionGrid(world);
         if(dungeonRegionGrid != null)
@@ -165,7 +171,7 @@ public class DungeonRegionGridManager {
      * @return The list of loaded region grids. The list may contain null elements for worlds the chunk grid couldn't
      * be loaded for.
      */
-    public List<DungeonRegionGrid> loadRegionGrids(List<World> worlds) {
+    public synchronized List<DungeonRegionGrid> loadRegionGrids(List<World> worlds) {
         // Create a list of region grids
         List<DungeonRegionGrid> grids = new ArrayList<>();
 
@@ -190,7 +196,7 @@ public class DungeonRegionGridManager {
      * @return The list of loaded region grids. The list may contain null elements for worlds the chunk grid couldn't be
      * loaded for.
      */
-    public List<DungeonRegionGrid> loadRegionGridsForWorldNames(List<String> worldNames) {
+    public synchronized List<DungeonRegionGrid> loadRegionGridsForWorldNames(List<String> worldNames) {
         // Get the world manager, and make sure it's valid
         WorldManager worldManager = Core.getWorldManager();
         if(worldManager == null)
@@ -213,7 +219,7 @@ public class DungeonRegionGridManager {
      *
      * @return The number of saved and unloaded regions.
      */
-    public int unloadRegionGrid(World world) {
+    public synchronized int unloadRegionGrid(World world) {
         return saveRegionGrid(world, true);
     }
 
@@ -224,7 +230,7 @@ public class DungeonRegionGridManager {
      *
      * @return The number of saved regions.
      */
-    public int saveRegionGrid(World world) {
+    public synchronized int saveRegionGrid(World world) {
         return saveRegionGrid(world, false);
     }
 
@@ -236,7 +242,7 @@ public class DungeonRegionGridManager {
      *
      * @return The number of saved regions.
      */
-    public int saveRegionGrid(World world, boolean unload) {
+    public synchronized int saveRegionGrid(World world, boolean unload) {
         // Store the number of unloaded and saved dungeon region
         int saved = 0;
 
@@ -277,7 +283,7 @@ public class DungeonRegionGridManager {
      *
      * @return True if all region grids are unloaded.
      */
-    public boolean unloadAllRegionGrids() {
+    public synchronized boolean unloadAllRegionGrids() {
         // Unload all region grids
         unloadRegionGrid(null);
 
@@ -293,7 +299,10 @@ public class DungeonRegionGridManager {
      * @return True if any data is created, false otherwise. True will also be returned if the region grid data was
      * already available for this world.
      */
-    public DungeonRegionGrid createRegionGridData(World world) {
+    public synchronized DungeonRegionGrid createRegionGridData(World world) {
+        if(world == null)
+            return null;
+
         // Make sure no region grid is loaded for this world
         if(isLoadedRegionGrid(world))
             return getLoadedRegionGrid(world);
@@ -304,13 +313,13 @@ public class DungeonRegionGridManager {
             File regionGridDataFolder = getRegionDataDirectory(world);
 
             // Create the region grid data for a world, return the result
-            if(!regionGridDataFolder.mkdirs())
+            if(!regionGridDataFolder.mkdirs() && !regionGridDataFolder.isDirectory())
                 return null;
         }
 
         DungeonRegionGrid dungeonRegionGrid = new DungeonRegionGrid(world);
         this.grids.add(dungeonRegionGrid);
-        return dungeonRegionGrid;
+        return (lastRegionGridCache = dungeonRegionGrid);
     }
 
     /**
@@ -320,7 +329,10 @@ public class DungeonRegionGridManager {
      *
      * @return True if the world has any region grid data, false otherwise. False will also be returned on error.
      */
-    public boolean hasRegionGridData(World world) {
+    public synchronized boolean hasRegionGridData(World world) {
+        if(world == null)
+            return false;
+
         // Get the world manager and make sure it's valid
         WorldManager worldManager = Core.getWorldManager();
         if(worldManager == null)
@@ -344,7 +356,10 @@ public class DungeonRegionGridManager {
      *
      * @return The dungeon region grid, or null if the region grid for the world isn't loaded.
      */
-    public DungeonRegionGrid getLoadedRegionGrid(World world) {
+    public synchronized DungeonRegionGrid getLoadedRegionGrid(World world) {
+        if(world == null)
+            return null;
+
         // Loop through all the loaded grids, check whether one matches the world
         for(DungeonRegionGrid grid : this.grids)
             if(grid.getWorld().equals(world))
@@ -361,7 +376,7 @@ public class DungeonRegionGridManager {
      *
      * @return True if the region grid for this world is loaded, false otherwise.
      */
-    public boolean isLoadedRegionGrid(World world) {
+    public synchronized boolean isLoadedRegionGrid(World world) {
         return getLoadedRegionGrid(world) != null;
     }
 
@@ -370,7 +385,7 @@ public class DungeonRegionGridManager {
      *
      * @return The number of loaded regions.
      */
-    public int getLoadedGridCount() {
+    public synchronized int getLoadedGridCount() {
         return this.grids.size();
     }
 
@@ -379,7 +394,7 @@ public class DungeonRegionGridManager {
      *
      * @return The number of loaded regions.
      */
-    public int getLoadedRegionCount() {
+    public synchronized int getLoadedRegionCount() {
         // Store the number of loaded regions
         int loaded = 0;
 

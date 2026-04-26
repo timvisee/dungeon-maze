@@ -2,6 +2,7 @@ package com.timvisee.dungeonmaze.populator.maze;
 
 import java.util.Random;
 
+import com.timvisee.dungeonmaze.generator.DungeonMazeLayout;
 import com.timvisee.dungeonmaze.world.dungeon.chunk.DungeonChunk;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -11,9 +12,9 @@ import com.timvisee.dungeonmaze.populator.ChunkBlockPopulatorArgs;
 
 public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
 
-	private static final int MIN_LAYER = 1;
-	private static final int MAX_LAYER = 7;
-	private static final int LAYER_COUNT = 7;
+	private static final int MIN_LAYER = DungeonMazeLayout.MIN_LAYER;
+	private static final int MAX_LAYER = DungeonMazeLayout.MAX_LAYER;
+	private static final int LAYER_COUNT = DungeonMazeLayout.LAYER_COUNT;
 	
 	@Override
 	public void populateChunk(ChunkBlockPopulatorArgs args) {
@@ -57,7 +58,7 @@ public abstract class MazeLayerBlockPopulator extends ChunkBlockPopulator {
                     return;
 
                 // Calculate the Y coordinate based on the current layer
-                int y = 30 + ((l - 1) * 6);
+                int y = DungeonMazeLayout.getLayerBaseY(l);
 
                 // Construct the MazePopulatorArgs to use the the populateMaze method
                 MazeLayerBlockPopulatorArgs newArgs = new MazeLayerBlockPopulatorArgs(world, rand, chunk, dungeonChunk, l, y);

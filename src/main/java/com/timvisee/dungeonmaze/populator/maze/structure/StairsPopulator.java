@@ -2,9 +2,11 @@ package com.timvisee.dungeonmaze.populator.maze.structure;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 
 public class StairsPopulator extends MazeRoomBlockPopulator {
 
@@ -27,75 +29,75 @@ public class StairsPopulator extends MazeRoomBlockPopulator {
             return;
 
         // Build the stairs
-        chunk.getBlock(x + 5, yFloor + 1, z + 2).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 6, yFloor + 1, z + 2).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 5, yFloor + 1 + 1, z + 3).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 6, yFloor + 1 + 1, z + 3).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 5, yFloor + 1 + 2, z + 4).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 6, yFloor + 1 + 2, z + 4).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 5, yFloor + 1 + 2, z + 5).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 6, yFloor + 1 + 2, z + 5).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 5, yFloor + 1 + 2, z + 6).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 6, yFloor + 1 + 2, z + 6).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 4, yFloor + 1 + 3, z + 5).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 4, yFloor + 1 + 3, z + 6).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 3, yFloor + 1 + 4, z + 5).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 3, yFloor + 1 + 4, z + 6).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 2, yFloor + 1 + 5, z + 5).setType(Material.COBBLESTONE_STAIRS);
-        chunk.getBlock(x + 2, yFloor + 1 + 5, z + 6).setType(Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1, z + 2), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1, z + 2), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 1, z + 3), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1 + 1, z + 3), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 2, z + 4), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1 + 2, z + 4), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 2, z + 5), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1 + 2, z + 5), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 2, z + 6), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1 + 2, z + 6), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 3, z + 5), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 3, z + 6), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 4, z + 5), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 4, z + 6), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 5, z + 5), Material.COBBLESTONE_STAIRS);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 5, z + 6), Material.COBBLESTONE_STAIRS);
 
         // Remove blocks blocking the stairway
-        chunk.getBlock(x + 3, yFloor + 1 + 5, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 3, yFloor + 1 + 5, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 4, yFloor + 1 + 5, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 4, yFloor + 1 + 5, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 5, yFloor + 1 + 5, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 5, yFloor + 1 + 5, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 2, yFloor + 1 + 6, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 2, yFloor + 1 + 6, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 3, yFloor + 1 + 6, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 3, yFloor + 1 + 6, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 4, yFloor + 1 + 6, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 4, yFloor + 1 + 6, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 5, yFloor + 1 + 6, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 5, yFloor + 1 + 6, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 2, yFloor + 1 + 7, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 2, yFloor + 1 + 7, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 3, yFloor + 1 + 7, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 3, yFloor + 1 + 7, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 4, yFloor + 1 + 7, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 4, yFloor + 1 + 7, z + 6).setType(Material.AIR);
-        chunk.getBlock(x + 5, yFloor + 1 + 7, z + 5).setType(Material.AIR);
-        chunk.getBlock(x + 5, yFloor + 1 + 7, z + 6).setType(Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 5, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 5, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 5, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 5, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 5, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 5, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 6, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 6, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 6, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 6, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 6, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 6, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 6, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 6, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 7, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 7, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 7, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 7, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 7, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 7, z + 6), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 7, z + 5), Material.AIR);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 7, z + 6), Material.AIR);
 
         // Properly set the data values of the stair blocks
         // TODO: Use the stair block instance instead (because of deprecation)
-        chunk.getBlock(x + 5, yFloor + 1, z + 2).setData((byte) 2);
-        chunk.getBlock(x + 6, yFloor + 1, z + 2).setData((byte) 2);
-        chunk.getBlock(x + 5, yFloor + 1 + 1, z + 3).setData((byte) 2);
-        chunk.getBlock(x + 6, yFloor + 1 + 1, z + 3).setData((byte) 2);
-        chunk.getBlock(x + 5, yFloor + 1 + 2, z + 4).setData((byte) 2);
-        chunk.getBlock(x + 6, yFloor + 1 + 2, z + 4).setData((byte) 2);
-        chunk.getBlock(x + 4, yFloor + 1 + 3, z + 5).setData((byte) 1);
-        chunk.getBlock(x + 4, yFloor + 1 + 3, z + 6).setData((byte) 1);
-        chunk.getBlock(x + 3, yFloor + 1 + 4, z + 5).setData((byte) 1);
-        chunk.getBlock(x + 3, yFloor + 1 + 4, z + 6).setData((byte) 1);
-        chunk.getBlock(x + 2, yFloor + 1 + 5, z + 5).setData((byte) 1);
-        chunk.getBlock(x + 2, yFloor + 1 + 5, z + 6).setData((byte) 1);
+        MaterialUtils.setStairs(chunk.getBlock(x + 5, yFloor + 1, z + 2), Material.COBBLESTONE_STAIRS, BlockFace.SOUTH);
+        MaterialUtils.setStairs(chunk.getBlock(x + 6, yFloor + 1, z + 2), Material.COBBLESTONE_STAIRS, BlockFace.SOUTH);
+        MaterialUtils.setStairs(chunk.getBlock(x + 5, yFloor + 2, z + 3), Material.COBBLESTONE_STAIRS, BlockFace.SOUTH);
+        MaterialUtils.setStairs(chunk.getBlock(x + 6, yFloor + 2, z + 3), Material.COBBLESTONE_STAIRS, BlockFace.SOUTH);
+        MaterialUtils.setStairs(chunk.getBlock(x + 5, yFloor + 3, z + 4), Material.COBBLESTONE_STAIRS, BlockFace.SOUTH);
+        MaterialUtils.setStairs(chunk.getBlock(x + 6, yFloor + 3, z + 4), Material.COBBLESTONE_STAIRS, BlockFace.SOUTH);
+        MaterialUtils.setStairs(chunk.getBlock(x + 4, yFloor + 4, z + 5), Material.COBBLESTONE_STAIRS, BlockFace.WEST);
+        MaterialUtils.setStairs(chunk.getBlock(x + 4, yFloor + 4, z + 6), Material.COBBLESTONE_STAIRS, BlockFace.WEST);
+        MaterialUtils.setStairs(chunk.getBlock(x + 3, yFloor + 5, z + 5), Material.COBBLESTONE_STAIRS, BlockFace.WEST);
+        MaterialUtils.setStairs(chunk.getBlock(x + 3, yFloor + 5, z + 6), Material.COBBLESTONE_STAIRS, BlockFace.WEST);
+        MaterialUtils.setStairs(chunk.getBlock(x + 2, yFloor + 6, z + 5), Material.COBBLESTONE_STAIRS, BlockFace.WEST);
+        MaterialUtils.setStairs(chunk.getBlock(x + 2, yFloor + 6, z + 6), Material.COBBLESTONE_STAIRS, BlockFace.WEST);
 
         // Put some supports under the staircase
-        chunk.getBlock(x + 5, yFloor + 1 + 1, z + 4).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 6, yFloor + 1 + 1, z + 4).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 5, yFloor + 1 + 1, z + 5).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 6, yFloor + 1 + 1, z + 5).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 5, yFloor + 1 + 1, z + 6).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 6, yFloor + 1 + 1, z + 6).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 4, yFloor + 1 + 2, z + 5).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 4, yFloor + 1 + 2, z + 6).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 3, yFloor + 1 + 3, z + 5).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 3, yFloor + 1 + 3, z + 6).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 2, yFloor + 1 + 4, z + 5).setType(Material.COBBLESTONE);
-        chunk.getBlock(x + 2, yFloor + 1 + 4, z + 6).setType(Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 1, z + 4), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1 + 1, z + 4), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 1, z + 5), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1 + 1, z + 5), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 5, yFloor + 1 + 1, z + 6), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 6, yFloor + 1 + 1, z + 6), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 2, z + 5), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 4, yFloor + 1 + 2, z + 6), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 3, z + 5), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 3, yFloor + 1 + 3, z + 6), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 4, z + 5), Material.COBBLESTONE);
+        setGeneratedBlock(chunk.getBlock(x + 2, yFloor + 1 + 4, z + 6), Material.COBBLESTONE);
 	}
 
     @Override

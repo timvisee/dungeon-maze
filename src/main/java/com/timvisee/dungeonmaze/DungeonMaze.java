@@ -77,8 +77,8 @@ public class DungeonMaze extends JavaPlugin {
         // Initialize the core
         initCore();
 
-        // Send metrics data
-        new Metrics(this);
+        // Send metrics data (register this plugin at https://bstats.org to obtain a real service ID)
+        new Metrics(this, 0);
 
         // Show a startup message
         Core.getLogger().info(getVersionComplete(true) + " started, took " + profiler.getTimeFormatted() + "!");

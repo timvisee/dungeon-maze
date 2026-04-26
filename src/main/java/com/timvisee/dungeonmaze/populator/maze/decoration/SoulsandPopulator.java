@@ -30,7 +30,7 @@ public class SoulsandPopulator extends MazeRoomBlockPopulator {
         final Block b = chunk.getBlock(x + rand.nextInt(8), rand.nextInt(2) + y, z + rand.nextInt(8));
 
         if (b.getType() == Material.COBBLESTONE)
-            b.setType(Material.SOUL_SAND);
+            setGeneratedBlock(b, Material.SOUL_SAND);
 	}
 
     @Override

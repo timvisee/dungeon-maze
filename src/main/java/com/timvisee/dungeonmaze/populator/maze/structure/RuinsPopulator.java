@@ -49,7 +49,7 @@ public class RuinsPopulator extends MazeRoomBlockPopulator {
             break;
 
         case 1:
-            blockTypeId = Material.SMOOTH_BRICK;
+            blockTypeId = Material.STONE_BRICKS;
             break;
 
         default:
@@ -66,7 +66,7 @@ public class RuinsPopulator extends MazeRoomBlockPopulator {
         while (height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
             for (int y2 = startY; y2 < startY + height; y2++)
                 if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
-                    chunk.getBlock(x2, y2, z2).setType(blockTypeId);
+                    setGeneratedBlock(chunk.getBlock(x2, y2, z2), blockTypeId);
 
             height -= rand.nextInt(3);
 
@@ -81,7 +81,7 @@ public class RuinsPopulator extends MazeRoomBlockPopulator {
             while(height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
                 for(int y2 = startY; y2 < startY + height; y2++)
                     if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
-                        chunk.getBlock(x2, y2, z2).setType(blockTypeId);
+                        setGeneratedBlock(chunk.getBlock(x2, y2, z2), blockTypeId);
 
                 height -= rand.nextInt(3);
 

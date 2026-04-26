@@ -5,9 +5,11 @@ import java.util.Random;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 
 public class EntrancePopulator extends MazeRoomBlockPopulator {
 
@@ -23,6 +25,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 		int x = args.getRoomChunkX();
 		int y = args.getChunkY();
 		int z = args.getRoomChunkZ();
+        final Material netherBricks = MaterialUtils.requireBlockMaterial("NETHER_BRICKS", "NETHER_BRICK");
 		
 		// Apply chances
 		if (rand.nextInt(1000) < CHANCE_ENTRANCE) {
@@ -41,9 +44,9 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						for(int yy = y; yy < yGround + 1; yy++) {
 							if(xx == 0 || xx == 7 || zz == 0 || zz == 7)
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.SMOOTH_BRICK);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.STONE_BRICKS);
 							else
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 						}
 					}
 				}
@@ -51,12 +54,10 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				// Generate ladders in the hole with some randomness for ladders which looks like broken and old ladders
 				for(int yy = y; yy < yGround + 1; yy++) {
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 1, yy, z + 3).setType(Material.LADDER);
-						chunk.getBlock(x + 1, yy, z + 3).setData((byte) 5);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 1, yy, z + 3), BlockFace.EAST);
 					}
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 1, yy, z + 4).setType(Material.LADDER);
-						chunk.getBlock(x + 1, yy, z + 4).setData((byte) 5);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 1, yy, z + 4), BlockFace.EAST);
 					}
 				}
 				
@@ -64,7 +65,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				for(int xx = 0; xx < 8; xx++) {
 					for(int yy = yGround + 1; yy < yGround + 4; yy++) {
 						for(int zz = 0; zz < 8; zz++) {
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 						}
 					}
 				}
@@ -79,35 +80,35 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 
 				// Generate corner poles inside the hole
 				if(chunk.getBlock(x + 1, yFloor, z + 1).getType() == Material.AIR) {
-					chunk.getBlock(x + 1, yFloor, z + 1).setType(Material.WOOD);
-					chunk.getBlock(x + 1, yFloor, z + 6).setType(Material.WOOD);
-					chunk.getBlock(x + 6, yFloor, z + 1).setType(Material.WOOD);
-					chunk.getBlock(x + 6, yFloor, z + 6).setType(Material.WOOD);
+					setGeneratedBlock(chunk.getBlock(x + 1, yFloor, z + 1), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + 1, yFloor, z + 6), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + 6, yFloor, z + 1), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + 6, yFloor, z + 6), Material.OAK_PLANKS);
 				}
 				for(int yy = yFloor + 1; yy < yGround + 4; yy++) {
-					chunk.getBlock(x + 1, yy, z + 1).setType(Material.WOOD);
-					chunk.getBlock(x + 1, yy, z + 6).setType(Material.WOOD);
-					chunk.getBlock(x + 6, yy, z + 1).setType(Material.WOOD);
-					chunk.getBlock(x + 6, yy, z + 6).setType(Material.WOOD);
+					setGeneratedBlock(chunk.getBlock(x + 1, yy, z + 1), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + 1, yy, z + 6), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + 6, yy, z + 1), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + 6, yy, z + 6), Material.OAK_PLANKS);
 				}
 
 
 				// Generate the house on the hole
 				//   corners
 				for(int yy = yGround + 1; yy < yGround + 4; yy++) {
-					chunk.getBlock(x, yy, z).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x, yy, z + 7).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x + 7, yy, z).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x + 7, yy, z + 7).setType(Material.SMOOTH_BRICK);
+					setGeneratedBlock(chunk.getBlock(x, yy, z), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x, yy, z + 7), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x + 7, yy, z), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x + 7, yy, z + 7), Material.STONE_BRICKS);
 				}
 
 				//   walls
 				for(int xx = 1; xx < 7; xx++) {
 					for(int yy = yGround + 1; yy < yGround + 4; yy++) {
-						chunk.getBlock(x + xx, yy, z).setType(Material.COBBLESTONE);
-						chunk.getBlock(x + xx, yy, z + 7).setType(Material.COBBLESTONE);
-						chunk.getBlock(x, yy, z + xx).setType(Material.COBBLESTONE);
-						chunk.getBlock(x + 7, yy, z + xx).setType(Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x + xx, yy, z), Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x + xx, yy, z + 7), Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x, yy, z + xx), Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x + 7, yy, z + xx), Material.COBBLESTONE);
 					}
 				}
 
@@ -116,7 +117,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						int yy = yGround + 4;
 						if(rand.nextInt(100) < 90 || (xx == 0 || xx == 7 || zz == 0 || zz == 7)) {
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.SMOOTH_BRICK);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.STONE_BRICKS);
 						}
 					}
 				}
@@ -124,23 +125,23 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				//   struct bars
 				for(int zz = 1; zz < 7; zz++) {
 					int yy = yGround + 3;
-					chunk.getBlock(x + 2, yy, z + zz).setType(Material.WOOD);
-					chunk.getBlock(x + 5, yy, z + zz).setType(Material.WOOD);
+					setGeneratedBlock(chunk.getBlock(x + 2, yy, z + zz), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + 5, yy, z + zz), Material.OAK_PLANKS);
 				}
 
 				//   gate
-				chunk.getBlock(x, yGround + 1, z + 2).setType(Material.FENCE);
-				chunk.getBlock(x, yGround + 1, z + 5).setType(Material.FENCE);
-				chunk.getBlock(x, yGround + 2, z + 2).setType(Material.FENCE);
-				chunk.getBlock(x, yGround + 2, z + 5).setType(Material.FENCE);
-				chunk.getBlock(x, yGround + 1, z + 3).setType(Material.AIR);
-				chunk.getBlock(x, yGround + 1, z + 4).setType(Material.AIR);
-				chunk.getBlock(x, yGround + 2, z + 3).setType(Material.AIR);
-				chunk.getBlock(x, yGround + 2, z + 4).setType(Material.AIR);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z + 2), Material.OAK_FENCE);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z + 5), Material.OAK_FENCE);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 2, z + 2), Material.OAK_FENCE);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 2, z + 5), Material.OAK_FENCE);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z + 3), Material.AIR);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z + 4), Material.AIR);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 2, z + 3), Material.AIR);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 2, z + 4), Material.AIR);
 				for(int zz = 2; zz < 6; zz++)
-					chunk.getBlock(x, yGround + 3, z + zz).setType(Material.WOOD);
-				chunk.getBlock(x - 1, yGround + 2, z + 1).setType(Material.TORCH);
-				chunk.getBlock(x - 1, yGround + 2, z + 6).setType(Material.TORCH);
+					setGeneratedBlock(chunk.getBlock(x, yGround + 3, z + zz), Material.OAK_PLANKS);
+				MaterialUtils.setWallTorch(chunk.getBlock(x + 1, yGround + 2, z + 2), BlockFace.EAST);
+				MaterialUtils.setWallTorch(chunk.getBlock(x + 1, yGround + 2, z + 5), BlockFace.EAST);
 
 				break;
 
@@ -155,9 +156,9 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						for(int yy = y; yy < yGround + 1; yy++) {
 							if(xx == 0 || xx == 7 || zz == 0 || zz == 7)
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.SMOOTH_BRICK);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.STONE_BRICKS);
 							else
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 						}
 					}
 				}
@@ -165,12 +166,10 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				// Generate ladders in the hole with some noise for ladders which looks like broken & old ladders
 				for(int yy = y; yy < yGround + 1; yy++) {
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 3, yy, z + 6).setType(Material.LADDER);
-						chunk.getBlock(x + 3, yy, z + 6).setData((byte) 2);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 3, yy, z + 6), BlockFace.NORTH);
 					}
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 4, yy, z + 6).setType(Material.LADDER);
-						chunk.getBlock(x + 4, yy, z + 6).setData((byte) 2);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 4, yy, z + 6), BlockFace.NORTH);
 					}
 				}
 
@@ -178,24 +177,24 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				for(int xx = 0; xx < 8; xx++)
 					for(int yy = yGround + 1; yy < yGround + 4; yy++)
 						for(int zz = 0; zz < 8; zz++)
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 
 				// Generate the house on the hole
 				// Corners
 				for(int yy = yGround + 1; yy < yGround + 4; yy++) {
-					chunk.getBlock(x, yy, z).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x, yy, z + 7).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x + 7, yy, z).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x + 7, yy, z + 7).setType(Material.SMOOTH_BRICK);
+					setGeneratedBlock(chunk.getBlock(x, yy, z), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x, yy, z + 7), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x + 7, yy, z), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x + 7, yy, z + 7), Material.STONE_BRICKS);
 				}
 
 				// Walls
 				for(int xx = 1; xx < 7; xx++) {
 					for(int yy = yGround + 1; yy < yGround + 4; yy++) {
-						chunk.getBlock(x + xx, yy, z).setType(Material.COBBLESTONE);
-						chunk.getBlock(x + xx, yy, z + 7).setType(Material.COBBLESTONE);
-						chunk.getBlock(x, yy, z + xx).setType(Material.COBBLESTONE);
-						chunk.getBlock(x + 7, yy, z + xx).setType(Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x + xx, yy, z), Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x + xx, yy, z + 7), Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x, yy, z + xx), Material.COBBLESTONE);
+						setGeneratedBlock(chunk.getBlock(x + 7, yy, z + xx), Material.COBBLESTONE);
 					}
 				}
 
@@ -204,7 +203,7 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						int yy = yGround + 4;
 						if(rand.nextInt(100) < 90 || (xx == 0 || xx == 7 || zz == 0 || zz == 7)) {
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.SMOOTH_BRICK);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.STONE_BRICKS);
 						}
 					}
 				}
@@ -212,17 +211,17 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				// Struct bars
 				for(int xx = 1; xx < 7; xx++) {
 					int yy = yGround + 3;
-					chunk.getBlock(x + xx, yy, z + 2).setType(Material.WOOD);
-					chunk.getBlock(x + xx, yy, z + 5).setType(Material.WOOD);
+					setGeneratedBlock(chunk.getBlock(x + xx, yy, z + 2), Material.OAK_PLANKS);
+					setGeneratedBlock(chunk.getBlock(x + xx, yy, z + 5), Material.OAK_PLANKS);
 				}
 
 				// Doors
-				chunk.getBlock(x + 3, yGround + 1, z + 7).setType(Material.AIR);
-				chunk.getBlock(x + 4, yGround + 1, z + 7).setType(Material.AIR);
-				chunk.getBlock(x + 3, yGround + 2, z + 7).setType(Material.AIR);
-				chunk.getBlock(x + 4, yGround + 2, z + 7).setType(Material.AIR);
-				chunk.getBlock(x + 2, yGround + 2, z + 8).setType(Material.TORCH);
-				chunk.getBlock(x + 5, yGround + 2, z + 8).setType(Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x + 3, yGround + 1, z + 7), Material.AIR);
+				setGeneratedBlock(chunk.getBlock(x + 4, yGround + 1, z + 7), Material.AIR);
+				setGeneratedBlock(chunk.getBlock(x + 3, yGround + 2, z + 7), Material.AIR);
+				setGeneratedBlock(chunk.getBlock(x + 4, yGround + 2, z + 7), Material.AIR);
+				MaterialUtils.setWallTorch(chunk.getBlock(x + 2, yGround + 2, z + 6), BlockFace.NORTH);
+				MaterialUtils.setWallTorch(chunk.getBlock(x + 5, yGround + 2, z + 6), BlockFace.NORTH);
 
 				break;
 
@@ -237,9 +236,9 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						for(int yy = y; yy < yGround + 1; yy++) {
 							if(xx == 0 || xx == 7 || zz == 0 || zz == 7)
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.SMOOTH_BRICK);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.STONE_BRICKS);
 							else
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 						}
 					}
 				}
@@ -247,12 +246,10 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				// Generate ladders in the hole with some noise for ladders which looks like broken & old ladders
 				for(int yy = y; yy < yGround + 1; yy++) {
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 1, yy, z + 3).setType(Material.LADDER);
-						chunk.getBlock(x + 1, yy, z + 3).setData((byte) 5);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 1, yy, z + 3), BlockFace.EAST);
 					}
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 1, yy, z + 4).setType(Material.LADDER);
-						chunk.getBlock(x + 1, yy, z + 4).setData((byte) 5);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 1, yy, z + 4), BlockFace.EAST);
 					}
 				}
 
@@ -260,16 +257,16 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				for(int xx = 0; xx < 8; xx++)
 					for(int yy = yGround + 1; yy < yGround + 4; yy++)
 						for(int zz = 0; zz < 8; zz++)
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 
 
 				// Generate the house on the hole
 				//   corners
 				for(int yy = yGround + 1; yy < yGround + 4; yy++) {
-					chunk.getBlock(x, yy, z).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x, yy, z + 7).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x + 7, yy, z).setType(Material.SMOOTH_BRICK);
-					chunk.getBlock(x + 7, yy, z + 7).setType(Material.SMOOTH_BRICK);
+					setGeneratedBlock(chunk.getBlock(x, yy, z), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x, yy, z + 7), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x + 7, yy, z), Material.STONE_BRICKS);
+					setGeneratedBlock(chunk.getBlock(x + 7, yy, z + 7), Material.STONE_BRICKS);
 				}
 
 				//   ceiling
@@ -277,11 +274,10 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						int yy = yGround + 4;
 						if(xx == 0 || xx == 7 || zz == 0 || zz == 7)
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.NETHER_BRICK);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), netherBricks);
 
                         else if(rand.nextInt(100) < 95) {
-							chunk.getBlock(x + xx, yy + 1, z + zz).setType(Material.STEP);
-							chunk.getBlock(x + xx, yy + 1, z + zz).setData((byte) 5);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy + 1, z + zz), Material.STONE_BRICK_SLAB);
 						}
 					}
 				}
@@ -289,8 +285,8 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				//   struct bars
 				for(int xx = 1; xx < 7; xx++) {
 					int yy = yGround + 4;
-					chunk.getBlock(x + xx, yy, z + 2).setType(Material.NETHER_BRICK);
-					chunk.getBlock(x + xx, yy, z + 5).setType(Material.NETHER_BRICK);
+					setGeneratedBlock(chunk.getBlock(x + xx, yy, z + 2), netherBricks);
+					setGeneratedBlock(chunk.getBlock(x + xx, yy, z + 5), netherBricks);
 				}
 
 				break;
@@ -305,9 +301,9 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						for(int yy = y; yy < yGround + 1; yy++) {
 							if(xx == 0 || xx == 7 || zz == 0 || zz == 7)
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.SMOOTH_BRICK);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.STONE_BRICKS);
 							else
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 						}
 					}
 				}
@@ -316,23 +312,19 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				if(rand.nextInt(2) == 0) {
 					for(int yy = y; yy < yGround + 1; yy++) {
 						if(rand.nextInt(100) < 80) {
-							chunk.getBlock(x + 3, yy, z + 6).setType(Material.LADDER);
-							chunk.getBlock(x + 3, yy, z + 6).setData((byte) 2);
+							MaterialUtils.setLadderFacing(chunk.getBlock(x + 3, yy, z + 6), BlockFace.NORTH);
 						}
 						if(rand.nextInt(100) < 80) {
-							chunk.getBlock(x + 4, yy, z + 6).setType(Material.LADDER);
-							chunk.getBlock(x + 4, yy, z + 6).setData((byte) 2);
+							MaterialUtils.setLadderFacing(chunk.getBlock(x + 4, yy, z + 6), BlockFace.NORTH);
 						}
 					}
 				} else {
 					for(int yy = y; yy < yGround + 1; yy++) {
 						if(rand.nextInt(100) < 60) {
-							chunk.getBlock(x + 3, yy, z + 1).setType(Material.VINE);
-							chunk.getBlock(x + 3, yy, z + 1).setData((byte) 4);
+							MaterialUtils.setVines(chunk.getBlock(x + 3, yy, z + 1), BlockFace.NORTH);
 						}
 						if(rand.nextInt(100) < 60) {
-							chunk.getBlock(x + 4, yy, z + 1).setType(Material.VINE);
-							chunk.getBlock(x + 4, yy, z + 1).setData((byte) 4);
+							MaterialUtils.setVines(chunk.getBlock(x + 4, yy, z + 1), BlockFace.NORTH);
 						}
 					}
 				}
@@ -342,14 +334,14 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				for(int xx = 0; xx < 8; xx++)
 					for(int yy = yGround + 1; yy < yGround + 4; yy++)
 						for(int zz = 0; zz < 8; zz++)
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 
 				// Generate torches on the corners
 				//   corners
-				chunk.getBlock(x, yGround + 1, z).setType(Material.TORCH);
-				chunk.getBlock(x, yGround + 1, z + 7).setType(Material.TORCH);
-				chunk.getBlock(x + 7, yGround + 1, z).setType(Material.TORCH);
-				chunk.getBlock(x + 7, yGround + 1, z + 7).setType(Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z), Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z + 7), Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x + 7, yGround + 1, z), Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x + 7, yGround + 1, z + 7), Material.TORCH);
 				break;
 
 			default:
@@ -362,9 +354,9 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 					for(int zz = 0; zz < 8; zz++) {
 						for(int yy = y; yy < yGround + 1; yy++) {
 							if(xx == 0 || xx == 7 || zz == 0 || zz == 7)
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.SMOOTH_BRICK);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.STONE_BRICKS);
 							else
-								chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+								setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 						}
 					}
 				}
@@ -372,12 +364,10 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				// Generate ladders in the hole with some noise for ladders which looks like broken & old ladders
 				for(int yy = y; yy < yGround + 1; yy++) {
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 3, yy, z + 6).setType(Material.LADDER);
-						chunk.getBlock(x + 3, yy, z + 6).setData((byte) 2);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 3, yy, z + 6), BlockFace.NORTH);
 					}
 					if(rand.nextInt(100) < 80) {
-						chunk.getBlock(x + 4, yy, z + 6).setType(Material.LADDER);
-						chunk.getBlock(x + 4, yy, z + 6).setData((byte) 2);
+						MaterialUtils.setLadderFacing(chunk.getBlock(x + 4, yy, z + 6), BlockFace.NORTH);
 					}
 				}
 
@@ -385,14 +375,14 @@ public class EntrancePopulator extends MazeRoomBlockPopulator {
 				for(int xx = 0; xx < 8; xx++)
 					for(int yy = yGround + 1; yy < yGround + 4; yy++)
 						for(int zz = 0; zz < 8; zz++)
-							chunk.getBlock(x + xx, yy, z + zz).setType(Material.AIR);
+							setGeneratedBlock(chunk.getBlock(x + xx, yy, z + zz), Material.AIR);
 
 
 				// Generate torches on the corners
-				chunk.getBlock(x, yGround + 1, z).setType(Material.TORCH);
-				chunk.getBlock(x, yGround + 1, z + 7).setType(Material.TORCH);
-				chunk.getBlock(x + 7, yGround + 1, z).setType(Material.TORCH);
-				chunk.getBlock(x + 7, yGround + 1, z + 7).setType(Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z), Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x, yGround + 1, z + 7), Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x + 7, yGround + 1, z), Material.TORCH);
+				setGeneratedBlock(chunk.getBlock(x + 7, yGround + 1, z + 7), Material.TORCH);
 			}
 		}
 	}

@@ -24,43 +24,43 @@ public class OresInGroundPopulator extends ChunkBlockPopulator {
                     if(rand.nextFloat() < ORE_CHANCE) {
                         switch (rand.nextInt(9)) {
                         case 0:
-                            chunk.getBlock(x, y, z).setType(Material.GOLD_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.GOLD_ORE);
                             break;
 
                         case 1:
-                            chunk.getBlock(x, y, z).setType(Material.IRON_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.IRON_ORE);
                             break;
 
                         case 2:
-                            chunk.getBlock(x, y, z).setType(Material.COAL_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.COAL_ORE);
                             break;
 
                         case 3:
-                            chunk.getBlock(x, y, z).setType(Material.LAPIS_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.LAPIS_ORE);
                             break;
 
                         case 4:
-                            chunk.getBlock(x, y, z).setType(Material.DIAMOND_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.DIAMOND_ORE);
                             break;
 
                         case 5:
-                            chunk.getBlock(x, y, z).setType(Material.REDSTONE_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.REDSTONE_ORE);
                             break;
 
                         case 6:
-                            chunk.getBlock(x, y, z).setType(Material.EMERALD_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.EMERALD_ORE);
                             break;
 
                         case 7:
-                            chunk.getBlock(x, y, z).setType(Material.CLAY);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.CLAY);
                             break;
 
                         case 8:
-                            chunk.getBlock(x, y, z).setType(Material.COAL_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.COAL_ORE);
                             break;
 
                         default:
-                            chunk.getBlock(x, y, z).setType(Material.COAL_ORE);
+                            setGeneratedBlock(chunk.getBlock(x, y, z), Material.COAL_ORE);
                         }
                     }
                 }

@@ -18,7 +18,7 @@ import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
 import com.timvisee.dungeonmaze.populator.maze.MazeStructureType;
 import com.timvisee.dungeonmaze.util.ChestUtils;
-import org.bukkit.material.Torch;
+import com.timvisee.dungeonmaze.util.MaterialUtils;
 
 public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
 
@@ -49,63 +49,62 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
                 for(int z = 0; z < 8; z++)
                     // Make sure this isn't a corner
                     if((x == 0 || x == 7) && (z == 0 || z == 7))
-                        chunk.getBlock(roomX + x, y, roomZ + z).setType(Material.AIR);
+                        setGeneratedBlock(chunk.getBlock(roomX + x, y, roomZ + z), Material.AIR);
 
         // Floor of a layer stone bricks with cobble stone below it
         for(int x = roomX; x < roomX + 8; x++) {
             for(int z = roomZ; z < roomZ + 8; z++) {
-                chunk.getBlock(x, roomY + 1, z).setType(Material.SMOOTH_BRICK);
-                chunk.getBlock(x, roomY, z).setType(Material.COBBLESTONE);
+                setGeneratedBlock(chunk.getBlock(x, roomY + 1, z), Material.STONE_BRICKS);
+                setGeneratedBlock(chunk.getBlock(x, roomY, z), Material.COBBLESTONE);
             }
         }
 
         // Ceiling
         for(int x = roomX; x < roomX + 8; x++)
             for(int z = roomZ; z < roomZ + 8; z++)
-                chunk.getBlock(x, roomY + 6, z).setType(Material.SMOOTH_BRICK);
+                setGeneratedBlock(chunk.getBlock(x, roomY + 6, z), Material.STONE_BRICKS);
 
         // Generate 4 circular blocks in the middle of the floor
         for(int x = roomX + 3; x <= roomX + 4; x++) {
             for(int z = roomZ + 3; z <= roomZ + 4; z++) {
-                chunk.getBlock(x, roomY + 1, z).setType(Material.SMOOTH_BRICK);
-                chunk.getBlock(x, roomY + 1, z).setData((byte) 3);
+                setGeneratedBlock(chunk.getBlock(x, roomY + 1, z), Material.CHISELED_STONE_BRICKS);
             }
         }
 
         // Create iron fence walls
         for(int i = 1; i < 7; i++) {
             for(int y = roomY + 2; y < roomY + 6; y++) {
-                chunk.getBlock(roomX + i, y, roomZ).setType(Material.IRON_FENCE);
-                chunk.getBlock(roomX + i, y, roomZ + 7).setType(Material.IRON_FENCE);
+                setGeneratedBlock(chunk.getBlock(roomX + i, y, roomZ), Material.IRON_BARS);
+                setGeneratedBlock(chunk.getBlock(roomX + i, y, roomZ + 7), Material.IRON_BARS);
 
-                chunk.getBlock(roomX, y, roomZ + i).setType(Material.IRON_FENCE);
-                chunk.getBlock(roomX + 7, y, roomZ + i).setType(Material.IRON_FENCE);
+                setGeneratedBlock(chunk.getBlock(roomX, y, roomZ + i), Material.IRON_BARS);
+                setGeneratedBlock(chunk.getBlock(roomX + 7, y, roomZ + i), Material.IRON_BARS);
             }
         }
 
         // Create gates
         for(int x = roomX + 2; x < roomX + 6; x++) {
             for(int y = roomY + 2; y < roomY + 5; y++) {
-                chunk.getBlock(x, y, roomZ).setType(Material.SMOOTH_BRICK);
-                chunk.getBlock(x, y, roomZ + 7).setType(Material.SMOOTH_BRICK);
+                setGeneratedBlock(chunk.getBlock(x, y, roomZ), Material.STONE_BRICKS);
+                setGeneratedBlock(chunk.getBlock(x, y, roomZ + 7), Material.STONE_BRICKS);
             }
         }
         for(int z = roomZ + 2; z < roomZ + 6; z++) {
             for(int y = roomY + 2; y < roomY + 5; y++) {
-                chunk.getBlock(roomX, y, z).setType(Material.SMOOTH_BRICK);
-                chunk.getBlock(roomX + 7, y, z).setType(Material.SMOOTH_BRICK);
+                setGeneratedBlock(chunk.getBlock(roomX, y, z), Material.STONE_BRICKS);
+                setGeneratedBlock(chunk.getBlock(roomX + 7, y, z), Material.STONE_BRICKS);
             }
         }
         for(int x = roomX + 3; x < roomX + 5; x++) {
             for(int y = roomY + 2; y < roomY + 4; y++) {
-                chunk.getBlock(x, y, roomZ).setType(Material.AIR);
-                chunk.getBlock(x, y, roomZ + 7).setType(Material.AIR);
+                setGeneratedBlock(chunk.getBlock(x, y, roomZ), Material.AIR);
+                setGeneratedBlock(chunk.getBlock(x, y, roomZ + 7), Material.AIR);
             }
         }
         for(int z = roomZ + 3; z < roomZ + 5; z++) {
             for(int y = roomY + 2; y < roomY + 4; y++) {
-                chunk.getBlock(roomX, y, z).setType(Material.AIR);
-                chunk.getBlock(roomX + 7, y, z).setType(Material.AIR);
+                setGeneratedBlock(chunk.getBlock(roomX, y, z), Material.AIR);
+                setGeneratedBlock(chunk.getBlock(roomX + 7, y, z), Material.AIR);
             }
         }
 
@@ -113,17 +112,10 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
         List<ItemStack> emptyList = new ArrayList<>();
 
         // Create chests
-        chunk.getBlock(roomX + 1, roomY + 2, roomZ + 1).setType(Material.CHEST);
-        chunk.getBlock(roomX + 1, roomY + 2, roomZ + 1).setData((byte) 3);
-
-        chunk.getBlock(roomX + 1, roomY + 2, roomZ + 6).setType(Material.CHEST);
-        chunk.getBlock(roomX + 1, roomY + 2, roomZ + 6).setData((byte) 2);
-
-        chunk.getBlock(roomX + 6, roomY + 2, roomZ + 1).setType(Material.CHEST);
-        chunk.getBlock(roomX + 6, roomY + 2, roomZ + 1).setData((byte) 3);
-
-        chunk.getBlock(roomX + 6, roomY + 2, roomZ + 6).setType(Material.CHEST);
-        chunk.getBlock(roomX + 6, roomY + 2, roomZ + 6).setData((byte) 2);
+        MaterialUtils.setChestFacing(chunk.getBlock(roomX + 1, roomY + 2, roomZ + 1), BlockFace.SOUTH);
+        MaterialUtils.setChestFacing(chunk.getBlock(roomX + 1, roomY + 2, roomZ + 6), BlockFace.NORTH);
+        MaterialUtils.setChestFacing(chunk.getBlock(roomX + 6, roomY + 2, roomZ + 1), BlockFace.SOUTH);
+        MaterialUtils.setChestFacing(chunk.getBlock(roomX + 6, roomY + 2, roomZ + 6), BlockFace.NORTH);
 
         // Call the Chest generation event
         GenerationChestEvent event = new GenerationChestEvent(chunk.getBlock(roomX + 1, roomY + 2, roomZ + 1), rand, emptyList, MazeStructureType.SPAWN_ROOM);
@@ -146,7 +138,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
             // Make sure the chest is still there, a developer could change the chest through the event!
             if(event2.getBlock().getType() == Material.CHEST)
                 // Add the contents to the chest
-                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                ChestUtils.addItemsToChest(event2.getBlock(), event2.getContents(), !event2.getAddContentsInOrder(), rand);
         }
 
         // Call the Chest generation event
@@ -158,7 +150,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
             // Make sure the chest is still there, a developer could change the chest through the event!
             if(event3.getBlock().getType() == Material.CHEST)
                 // Add the contents to the chest
-                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                ChestUtils.addItemsToChest(event3.getBlock(), event3.getContents(), !event3.getAddContentsInOrder(), rand);
         }
 
         // Call the Chest generation event
@@ -170,7 +162,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
             // Make sure the chest is still there, a developer could change the chest through the event!
             if(event4.getBlock().getType() == Material.CHEST)
                 // Add the contents to the chest
-                ChestUtils.addItemsToChest(event.getBlock(), event.getContents(), !event.getAddContentsInOrder(), rand);
+                ChestUtils.addItemsToChest(event4.getBlock(), event4.getContents(), !event4.getAddContentsInOrder(), rand);
         }
 
         // Define the relative positions of the torches in the spawn chamber
@@ -195,10 +187,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
             Block b = chunk.getBlock(roomX + xTorch, roomY + 3, roomZ + zTorch);
 
             // Set the material of the block
-            b.setType(Material.TORCH);
-
-            // Get the torch data instance
-            Torch torch = new Torch();
+            setGeneratedBlock(b, Material.TORCH);
 
             // Determine and set the facing of the torch
             BlockFace torchFace = BlockFace.NORTH;
@@ -208,11 +197,7 @@ public class SpawnChamberPopulator extends MazeRoomBlockPopulator {
                 torchFace = BlockFace.EAST;
             else if(zTorch == 1)
                 torchFace = BlockFace.SOUTH;
-            torch.setFacingDirection(torchFace);
-
-            // Set the data value based on the torch facing, and update the block
-            b.setData(torch.getData());
-            b.getState().update(true);
+            MaterialUtils.setWallTorch(b, torchFace);
         }
     }
 

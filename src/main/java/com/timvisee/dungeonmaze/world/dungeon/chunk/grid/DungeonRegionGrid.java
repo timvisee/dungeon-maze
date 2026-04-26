@@ -36,7 +36,7 @@ public class DungeonRegionGrid {
     /**
      * The list of loaded regions.
      */
-    private List<DungeonRegion> regions = new ArrayList<>();
+    private final List<DungeonRegion> regions = new ArrayList<>();
 
     /**
      * The last region that has been accessed.
@@ -92,8 +92,8 @@ public class DungeonRegionGrid {
      * @return The list of loaded dungeon region.
      */
     @SuppressWarnings("UnusedDeclaration")
-    public List<DungeonRegion> getLoadedRegions() {
-        return this.regions;
+    public synchronized List<DungeonRegion> getLoadedRegions() {
+        return new ArrayList<>(this.regions);
     }
 
     /**
@@ -101,7 +101,7 @@ public class DungeonRegionGrid {
      *
      * @return The number of loaded dungeon regions.
      */
-    public int getLoadedRegionCount() {
+    public synchronized int getLoadedRegionCount() {
         return this.regions.size();
     }
 
@@ -131,7 +131,7 @@ public class DungeonRegionGrid {
      *
      * @return The dungeon region instance, or null on failure.
      */
-    public DungeonRegion getOrCreateRegion(int regionX, int regionY) {
+    public synchronized DungeonRegion getOrCreateRegion(int regionX, int regionY) {
         // Check whether the last handled region is the correct one
         if(lastRegionCache != null && lastRegionCache.isAt(regionX, regionY))
             return lastRegionCache;
@@ -168,7 +168,7 @@ public class DungeonRegionGrid {
      * @return The dungeon chunk instance, or null on failure.
      */
     // TODO: Use some sort of caching here!
-    public DungeonChunk getOrCreateChunk(int chunkX, int chunkY) {
+    public synchronized DungeonChunk getOrCreateChunk(int chunkX, int chunkY) {
         // Get the coordinates of the region
         // TODO: Does this still work fine with big numbers?
         int regionX = (int) Math.floor((float) chunkX / (float) DungeonRegion.REGION_SIZE);
@@ -181,6 +181,8 @@ public class DungeonRegionGrid {
 
         // Get or create the region
         DungeonRegion region = getOrCreateRegion(regionX, regionY);
+        if(region == null)
+            return null;
 
         // Get or create the chunk, return it afterwards
         return (lastChunkCache = region.getOrCreateChunk(localChunkX, localChunkY));
@@ -194,7 +196,7 @@ public class DungeonRegionGrid {
      *
      * @return The dungeon chunk instance, or null on failure.
      */
-    public DungeonChunk getOrCreateChunk(Chunk chunk) {
+    public synchronized DungeonChunk getOrCreateChunk(Chunk chunk) {
         // Check whether the cached chunk is correct
         if(lastChunkCache != null && lastChunkCache.isAt(chunk))
             return lastChunkCache;
@@ -212,7 +214,7 @@ public class DungeonRegionGrid {
      * @return The dungeon region instance, or null on failure.
      */
     // TODO: Force load, to prevent an infinite loop with isRegionLoaded->loadRegion->...
-    public DungeonRegion loadRegion(int regionX, int regionY) throws IOException {
+    public synchronized DungeonRegion loadRegion(int regionX, int regionY) throws IOException {
         // Make sure the region isn't loaded yet
         if(isRegionLoaded(regionX, regionY))
             return getOrCreateRegion(regionX, regionY);
@@ -246,7 +248,7 @@ public class DungeonRegionGrid {
      *
      * @return The dungeon region instance on success, or null on failure.
      */
-    public DungeonRegion createRegionData(int regionX, int regionY) {
+    public synchronized DungeonRegion createRegionData(int regionX, int regionY) {
         // Make sure no data exists for this region
         if(hasRegionData(regionX, regionY))
             return getOrCreateRegion(regionX, regionY);
@@ -273,7 +275,7 @@ public class DungeonRegionGrid {
      *
      * @return True if this region has any data stored, false otherwise.
      */
-    public boolean hasRegionData(int regionX, int regionY) {
+    public synchronized boolean hasRegionData(int regionX, int regionY) {
         // Get the data file of the region and check whether it has any data file
         return getRegionDataFile(regionX, regionY).exists();
     }
@@ -286,7 +288,7 @@ public class DungeonRegionGrid {
      *
      * @return True if the region is loaded, false otherwise.
      */
-    public boolean isRegionLoaded(int regionX, int regionY) {
+    public synchronized boolean isRegionLoaded(int regionX, int regionY) {
         // Loop through all the loaded region to see if it's loaded
         for(DungeonRegion region : this.regions)
             if(region.isAt(regionX, regionY))
@@ -301,7 +303,7 @@ public class DungeonRegionGrid {
      *
      * @return The number of saved regions in this region.
      */
-    public int saveRegions() {
+    public synchronized int saveRegions() {
         // Count how many region are saved
         int saved = 0;
 
@@ -326,7 +328,7 @@ public class DungeonRegionGrid {
      *
      * @return True if succeed, false otherwise.
      */
-    public boolean saveRegion(int i) throws IOException {
+    public synchronized boolean saveRegion(int i) throws IOException {
         return saveRegion(this.regions.get(i));
     }
 
@@ -337,7 +339,7 @@ public class DungeonRegionGrid {
      *
      * @return True if succeed, false otherwise.
      */
-    public boolean saveRegion(DungeonRegion dungeonRegion) throws IOException {
+    public synchronized boolean saveRegion(DungeonRegion dungeonRegion) throws IOException {
         // Save the data
         dungeonRegion.save(this);
 
@@ -352,7 +354,7 @@ public class DungeonRegionGrid {
      *
      * @return True if succeed, false otherwise.
      */
-    public boolean unloadRegion(int i) {
+    public synchronized boolean unloadRegion(int i) {
         // Reset the cached region
         lastRegionCache = null;
 
@@ -376,9 +378,9 @@ public class DungeonRegionGrid {
      *
      * @return True if succeed, false otherwise.
      */
-    public boolean unloadRegion(DungeonRegion dungeonRegion) {
+    public synchronized boolean unloadRegion(DungeonRegion dungeonRegion) {
         // Reset the region cache if that region is being unloaded
-        if(lastRegionCache.equals(dungeonRegion))
+        if(lastRegionCache != null && lastRegionCache.equals(dungeonRegion))
             lastRegionCache = null;
 
         // Save the region
@@ -408,7 +410,7 @@ public class DungeonRegionGrid {
      *
      * @return The number of unloaded region.
      */
-    public int unloadExcessRegions() {
+    public synchronized int unloadExcessRegions() {
         // Get the number of loaded region higher than the maximum allowed count
         final int excessCount = getLoadedRegionCount() - getMaximumLoadedRegions();
         final int preferredUnload = Math.max(getLoadedRegionCount() - REGION_LOADED_PREFERRED, 0);

@@ -195,7 +195,7 @@ public class DungeonRegion {
      *
      * @return Numbers in this chunk.
      */
-    public int getChunkCount() {
+    public synchronized int getChunkCount() {
         // Keep track of the count
         int count = 0;
 
@@ -217,7 +217,7 @@ public class DungeonRegion {
      *
      * @return The dungeon chunk instance, or null on failure.
      */
-    public DungeonChunk getOrCreateChunk(int chunkX, int chunkY) {
+    public synchronized DungeonChunk getOrCreateChunk(int chunkX, int chunkY) {
         // Compare the requested chunk with the cache
         if(lastChunkCache != null && lastChunkCache.isAt(chunkX, chunkY))
             return lastChunkCache;
@@ -245,7 +245,7 @@ public class DungeonRegion {
      *
      * @return The dungeon chunk, or null if it doesn't exist yet.
      */
-    public DungeonChunk getChunk(int chunkX, int chunkY) {
+    public synchronized DungeonChunk getChunk(int chunkX, int chunkY) {
         return this.chunks[chunkX][chunkY];
     }
 
@@ -257,7 +257,7 @@ public class DungeonRegion {
      *
      * @return The dungeon chunk instance on success, or null on failure.
      */
-    public DungeonChunk createChunk(int chunkX, int chunkY) {
+    public synchronized DungeonChunk createChunk(int chunkX, int chunkY) {
         // Make sure no data exists for this chunk
         if(hasChunk(chunkX, chunkY))
             return getOrCreateChunk(chunkX, chunkY);
@@ -285,7 +285,7 @@ public class DungeonRegion {
      *
      * @return True if the chunk is available, false if not.
      */
-    public boolean hasChunk(int chunkX, int chunkY) {
+    public synchronized boolean hasChunk(int chunkX, int chunkY) {
         return getChunk(chunkX, chunkY) != null;
     }
 
@@ -398,7 +398,7 @@ public class DungeonRegion {
      *
      * @return The dungeon chunk.
      */
-    public DungeonChunk loadChunkFromUnpacker(MessageUnpacker unpacker) throws IOException {
+    public synchronized DungeonChunk loadChunkFromUnpacker(MessageUnpacker unpacker) throws IOException {
         // Load the dungeon chunk
         DungeonChunk chunk = DungeonChunk.load(this, unpacker);
 
@@ -419,7 +419,7 @@ public class DungeonRegion {
      *
      * @throws IOException Throws if an error occurred while saving the region file.
      */
-    public int save(DungeonRegionGrid regionGrid) throws IOException {
+    public synchronized int save(DungeonRegionGrid regionGrid) throws IOException {
         // Get the file to save the region to
         File regionFile = getRegionDataFile(regionGrid);
 
@@ -437,7 +437,7 @@ public class DungeonRegion {
      *
      * @throws IOException Throws if an error occurred while saving the region file.
      */
-    public int save(File regionFile) throws IOException {
+    public synchronized int save(File regionFile) throws IOException {
         // Open an output stream for the data to write to the target file
         FileOutputStream out = new FileOutputStream(regionFile);
 
@@ -466,7 +466,7 @@ public class DungeonRegion {
      * @return The number of chunks that were saved in this region.
      * This doesn't count the chunks that weren't available yet.
      */
-    public int save(MessagePacker packer) throws IOException {
+    public synchronized int save(MessagePacker packer) throws IOException {
         // Count how many chunks are saved
         int chunkCount = getChunkCount();
 

@@ -27,10 +27,10 @@ public class MossPopulator extends MazeRoomBlockPopulator {
         final Block block = chunk.getBlock(x + rand.nextInt(8), rand.nextInt((y + 6) - y + 1) + y, z + rand.nextInt(8));
 
         if (block.getType() == Material.COBBLESTONE)
-            block.setType(Material.MOSSY_COBBLESTONE);
+            setGeneratedBlock(block, Material.MOSSY_COBBLESTONE);
 
-        if (block.getType() == Material.SMOOTH_BRICK)
-            block.setData((byte) 1);
+        if (block.getType() == Material.STONE_BRICKS)
+            setGeneratedBlock(block, Material.MOSSY_STONE_BRICKS);
 	}
 
     @Override

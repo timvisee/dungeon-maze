@@ -49,7 +49,7 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
         while(height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
             for(int y2 = startY; y2 < startY + height; y2++)
                 if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
-                    chunk.getBlock(x2, y2, z2).setType(Material.GRAVEL);
+                    setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.GRAVEL);
 
             height -= rand.nextInt(1);
 
@@ -64,7 +64,7 @@ public class GravelPopulator extends MazeRoomBlockPopulator {
             while(height > 0 && 0 <= x2 && x2 < 8 && 0 <= z2 && z2 < 8) {
                 for(int y2 = startY; y2 < startY + height; y2++)
                     if(chunk.getBlock(x2, y2, z2).getType() == Material.AIR)
-                        chunk.getBlock(x2, y2, z2).setType(Material.GRAVEL);
+                        setGeneratedBlock(chunk.getBlock(x2, y2, z2), Material.GRAVEL);
 
                 height -= rand.nextInt(1);
 

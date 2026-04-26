@@ -53,16 +53,12 @@ public abstract class MazeRoomBlockPopulator extends MazeLayerBlockPopulator {
                     if(DungeonMaze.instance.isConstantRoom(world.getName(), chunk, chunkX, y, chunkZ))
                         continue;
 
-                    // Calculate the global X and Y coordinates
-                    int x = (chunk.getX() * 16) + chunkX;
-                    int z = (chunk.getZ() * 16) + chunkZ;
-
                     // Get the floor and ceiling offset
                     int floorOffset = getFloorOffset(chunkX, y, chunkZ, chunk);
                     int ceilingOffset = getCeilingOffset(chunkX, y, chunkZ, chunk);
 
                     // Construct the DMMazePopulatorArgs to use the the populateMaze method
-                    MazeRoomBlockPopulatorArgs newArgs = new MazeRoomBlockPopulatorArgs(world, rand, chunk, dungeonChunk, layer, x, y, z, floorOffset, ceilingOffset);
+                    MazeRoomBlockPopulatorArgs newArgs = new MazeRoomBlockPopulatorArgs(world, rand, chunk, dungeonChunk, layer, chunkX, y, chunkZ, floorOffset, ceilingOffset);
 
                     // Populate the maze
                     populateRoom(newArgs);

@@ -4,6 +4,8 @@ import java.util.Random;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.MultipleFacing;
 
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulator;
 import com.timvisee.dungeonmaze.populator.maze.MazeRoomBlockPopulatorArgs;
@@ -40,61 +42,75 @@ public class VinePopulator extends MazeRoomBlockPopulator {
 					vineX = 0;
 					vineY = rand.nextInt(4) + 2;
 					vineZ = rand.nextInt(6) + 1;
-					
-					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
-						chunk.getBlock(x + vineX + 1, y + vineY, z + vineZ).setType(Material.VINE);
-						chunk.getBlock(x + vineX + 1, y + vineY, z + vineZ).setData((byte) 2);
+
+					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.STONE_BRICKS) {
+						org.bukkit.block.Block vb0 = chunk.getBlock(x + vineX + 1, y + vineY, z + vineZ);
+						setGeneratedBlock(vb0, Material.VINE);
+						MultipleFacing vd0 = (MultipleFacing) vb0.getBlockData();
+						vd0.setFace(BlockFace.WEST, true);
+						setGeneratedBlockData(vb0, vd0);
 					}
-					
+
 					break;
 				case 1:
 					vineX = 7;
 					vineY = rand.nextInt(3) + 3;
 					vineZ = rand.nextInt(6) + 1;
-					
-					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
-						chunk.getBlock(x + vineX - 1, y + vineY, z + vineZ).setType(Material.VINE);
-						chunk.getBlock(x + vineX - 1, y + vineY, z + vineZ).setData((byte) 8);
+
+					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.STONE_BRICKS) {
+						org.bukkit.block.Block vb1 = chunk.getBlock(x + vineX - 1, y + vineY, z + vineZ);
+						setGeneratedBlock(vb1, Material.VINE);
+						MultipleFacing vd1 = (MultipleFacing) vb1.getBlockData();
+						vd1.setFace(BlockFace.EAST, true);
+						setGeneratedBlockData(vb1, vd1);
 					}
-					
+
 					break;
 				case 2:
 					vineX = rand.nextInt(6) + 1;
 					vineY = rand.nextInt(3) + 3;
 					vineZ = 0;
-					
-					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
-						chunk.getBlock(x + vineX, y + vineY, z + vineZ + 1).setType(Material.VINE);
-						chunk.getBlock(x + vineX, y + vineY, z + vineZ + 1).setData((byte) 4);
+
+					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.STONE_BRICKS) {
+						org.bukkit.block.Block vb2 = chunk.getBlock(x + vineX, y + vineY, z + vineZ + 1);
+						setGeneratedBlock(vb2, Material.VINE);
+						MultipleFacing vd2 = (MultipleFacing) vb2.getBlockData();
+						vd2.setFace(BlockFace.NORTH, true);
+						setGeneratedBlockData(vb2, vd2);
 					}
-					
+
 					break;
 				case 3:
 					vineX = rand.nextInt(6) + 1;
 					vineY = rand.nextInt(3) + 3;
 					vineZ = 7;
-					
-					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.SMOOTH_BRICK) {
-						chunk.getBlock(x + vineX, y + vineY, z + vineZ - 1).setType(Material.VINE);
-						chunk.getBlock(x + vineX, y + vineY, z + vineZ - 1).setData((byte) 1);
+
+					if(chunk.getBlock(x + vineX, y + vineY, z + vineZ).getType() == Material.STONE_BRICKS) {
+						org.bukkit.block.Block vb3 = chunk.getBlock(x + vineX, y + vineY, z + vineZ - 1);
+						setGeneratedBlock(vb3, Material.VINE);
+						MultipleFacing vd3 = (MultipleFacing) vb3.getBlockData();
+						vd3.setFace(BlockFace.SOUTH, true);
+						setGeneratedBlockData(vb3, vd3);
 					}
-					
+
 					break;
 				default:
-				}	
+				}
 			}
 		}
-		
+
 		// Iterate
 		for(int i = 0; i < ITERATIONS_CEILING_VINE; i++) {
 			if (rand.nextInt(100) < CHANCE_CEILING_VINE) {
-				
 				int vineX = rand.nextInt(6) + 1;
 				int vineY = args.getCeilingY() - 1;
 				int vineZ = rand.nextInt(6) + 1;
-				
-				chunk.getBlock(x + vineX, vineY, z + vineZ).setType(Material.VINE);
-				chunk.getBlock(x + vineX, vineY, z + vineZ).setData((byte) 0);
+
+				org.bukkit.block.Block cvb = chunk.getBlock(x + vineX, vineY, z + vineZ);
+				setGeneratedBlock(cvb, Material.VINE);
+				MultipleFacing cvd = (MultipleFacing) cvb.getBlockData();
+				cvd.setFace(BlockFace.UP, true);
+				setGeneratedBlockData(cvb, cvd);
 			}
 		}
 	}
