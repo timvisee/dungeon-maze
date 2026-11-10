@@ -61,7 +61,7 @@
         <spigot.version>1.16.5-R0.1-SNAPSHOT</spigot.version>
 
         <!-- Shaded library versions -->
-        <deps.json.version>20231013</deps.json.version>
+        <deps.json.version>20260719</deps.json.version>
         <deps.msgpack.version>0.9.8</deps.msgpack.version>
         <deps.string-similarity.version>1.0.0</deps.string-similarity.version>
         <deps.bstats.version>3.1.0</deps.bstats.version>
